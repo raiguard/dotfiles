@@ -1,0 +1,174 @@
+# TODO: change config repository format to use bare repo
+# ref: https://www.atlassian.com/git/tutorials/dotfiles
+# ========================================
+# PLUG.KAK
+
+declare-option -docstring "plug.kak's directory" str plugkakdir "%val{config}/plugins/plug.kak"
+declare-option -docstring "plug.kak's main script" str plugkak "%opt{plugkakdir}/rc/plug.kak"
+
+try %{
+    source "%opt{plugkak}"
+} catch %sh{
+    if [ ! -d "$kak_opt_plugkakdir" ]; then
+        git clone https://github.com/robertmeta/plug.kak.git "$kak_opt_plugkakdir"
+        echo "source '%opt{plugkak}"
+    fi
+}
+plug "andreyorst/plug.kak" noload
+
+# ========================================
+# PLUGINS
+
+plug "andreyorst/fzf.kak" # TODO: Doesn't appear to work with kitty
+plug "andreyorst/smarttab.kak"
+plug "caksoylar/kakoune-mysticaltutor"
+plug "crizan/kak-rainbower"
+plug "danr/kakoune-easymotion"
+plug "delapouite/kakoune-buffers"
+plug "delapouite/kakoune-mirror"
+plug "delapouite/kakoune-palette"
+plug "delapouite/kakoune-text-objects" %{ text-object-map }
+plug "jordan-yee/kakoune-git-mode"
+plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
+    # TODO: reorganize
+
+    set-face global InlayHint comment
+
+    set-option global lsp_diagnostic_line_error_sign 'E'
+    set-option global lsp_diagnostic_line_warning_sign 'W'
+
+    set-option global lsp_hover_anchor true
+
+    define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
+
+    hook global WinSetOption filetype=(c|cpp|cc|rust|javascript|typescript|lua) %{
+        echo -debug "Enabling LSP for filetype %opt{filetype}"
+        lsp-enable-window
+
+        set-option window lsp_auto_highlight_references true
+
+        # Enable inlay diagnostics in normal mode, but disable in insert mode
+        lsp-inlay-diagnostics-enable window
+        hook window ModeChange push:.*:insert %{
+            lsp-inlay-diagnostics-disable window
+        }
+        hook window ModeChange pop:insert:.* %{
+            lsp-inlay-diagnostics-enable window
+        }
+
+        # Semantic tokens
+        hook window -group semantic-tokens BufReload .* lsp-semantic-tokens
+        hook window -group semantic-tokens NormalIdle .* lsp-semantic-tokens
+        hook window -group semantic-tokens InsertIdle .* lsp-semantic-tokens
+        hook -once -always window WinSetOption filetype=.* %{
+            remove-hooks window semantic-tokens
+        }
+     }
+
+    hook global WinSetOption filetype=rust %{
+        # Format on save
+        set-option window formatcmd rustfmt
+        hook window BufWritePre .* format
+        # Clippy
+        set-option window lsp_server_configuration rust.clippy_preference="on"
+
+        # Inlay hints
+        hook window -group rust-inlay-hints BufReload .* rust-analyzer-inlay-hints
+        hook window -group rust-inlay-hints NormalIdle .* rust-analyzer-inlay-hints
+        hook window -group rust-inlay-hints InsertIdle .* rust-analyzer-inlay-hints
+        hook -once -always window WinSetOption filetype=.* %{
+            remove-hooks window rust-inlay-hints
+        }
+    }
+
+    hook global KakEnd .* lsp-exit
+}
+plug "occivink/kakoune-vertical-selection"
+plug "raiguard/one.kak" theme
+
+# ========================================
+# EDITOR SETTINGS
+# TODO: Separate into separate sections / scripts
+
+# Highlighters
+add-highlighter global/ number-lines -relative -hlcursor -separator " | " -min-digits 4
+add-highlighter global/ show-matching
+
+# RIP clippy
+set-option global ui_options ncurses_assistant=off
+
+# Color scheme
+colorscheme one-darker
+
+# Remove trailing whitespace on save
+hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
+
+# Keep cursor away from the edges
+set-option global scrolloff 10,10
+
+# Rainbow brackets
+hook global WinSetOption filetype=(rust|python|go|javascript|typescript|c|cpp|kak|toml|lua) %{
+    rainbow-enable-window
+}
+set-option global rainbow_mode 0
+set-option global rainbow_colors "rgb:ffd700" "rgb:da70d6" "rgb:87cefa"
+
+# ========================================
+# SYSTEM CLIPBOARD HANDLING
+
+map global user y '<a-|>xclip -i -selection clipboard<ret>' -docstring "yank to system clipboard"
+map global user p '!xclip -selection clipboard -o<ret>' -docstring "paste from system clipboard"
+
+# ========================================
+# KEYBINDINGS
+
+# Misc
+map global normal "#" ":comment-line<ret>"
+map global normal "=" ":prompt math: %{exec 'a%val{text}<lt>esc>|bc<lt>ret>'}<ret>"
+
+# Jumps centered please
+map global normal "<c-i>" "<c-i>vv"
+map global normal "<c-o>" "<c-o>vv"
+
+# Search results centered please
+map global normal "n" "nvv"
+map global normal "N" "Nvv"
+map global normal "<a-n>" "<a-n>vv"
+map global normal "<a-N>" "<a-N>vv"
+
+# Rotations centered please
+map global normal "(" "(vv"
+map global normal "<a-(>" "<a-(>vv"
+map global normal ")" ")vv"
+map global normal "<a-)>" "<a-)>vv"
+
+# Swap user mode and clear selection keys
+map global normal <space> ,
+map global normal , <space>
+
+# Less awkward keybind for outer object
+map global normal <a-o> <a-a>
+
+# User mode keybinds
+map global normal "'" ":enter-user-mode -lock mirror<ret>"
+map global user "b" ":enter-user-mode buffers<ret>" -docstring "buffers..."
+map global user "c" ":enter-user-mode comment<ret>" -docstring "comment..."
+map global user "g" ":enter-user-mode git<ret>" -docstring "git..."
+map global user "l" ":enter-user-mode lsp<ret>" -docstring "lsp..."
+map global user "v" ":enter-user-mode vertical-selection<ret>" -docstring "vertical selection..."
+
+# ========================================
+# CUSTOM MODES
+
+# Vertical selection mode
+# TODO: Do I really use this?
+declare-user-mode vertical-selection
+map global vertical-selection "j" ":vertical-selection-down<ret>" -docstring "down"
+map global vertical-selection "k" ":vertical-selection-up<ret>" -docstring "up"
+map global vertical-selection "l" ":vertical-selection-up-and-down" -docstring "both"
+
+# ========================================
+# SCRIPTS
+
+source "fandt.kak"
+require-module "fandt"
