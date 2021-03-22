@@ -19,7 +19,6 @@ plug "andreyorst/plug.kak" noload
 
 plug "andreyorst/fzf.kak" # TODO: Doesn't appear to work with kitty
 plug "andreyorst/smarttab.kak"
-plug "caksoylar/kakoune-mysticaltutor"
 plug "crizan/kak-rainbower"
 plug "danr/kakoune-easymotion"
 plug "delapouite/kakoune-buffers"
@@ -183,6 +182,3 @@ declare-option str scripts "%val{config}/scripts"
 
 source "%opt{scripts}/fandt.kak"
 require-module "fandt"
-
-# TEMPORARY
-# source "~/dev/projects/personal/one.kak/one-darker.kak"
