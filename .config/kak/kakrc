@@ -154,10 +154,20 @@ map global user "b" ":enter-user-mode buffers<ret>" -docstring "buffers..."
 map global user "c" ":enter-user-mode comment<ret>" -docstring "comment..."
 map global user "g" ":enter-user-mode git<ret>" -docstring "git..."
 map global user "l" ":enter-user-mode lsp<ret>" -docstring "lsp..."
+# TODO: this conflicts with paste to system clipboard
+map global user "p" ":enter-user-mode phantom-selection<ret>" -docstring "phantom selection..."
 map global user "v" ":enter-user-mode vertical-selection<ret>" -docstring "vertical selection..."
 
 # ========================================
 # CUSTOM MODES
+
+# Phantom selection mode
+declare-user-mode phantom-selection
+map global phantom-selection "a" ":phantom-selection-add-selection<ret>" -docstring "add selection"
+map global phantom-selection "s" ":phantom-selection-select-all<ret>" -docstring "select all"
+map global phantom-selection "c" ":phantom-selection-clear<ret>" -docstring "clear"
+map global phantom-selection "n" ":phantom-selection-iterate-next<ret>" -docstring "next"
+map global phantom-selection "p" ":phantom-selection-iterate-previous<ret>" -docstring "previous"
 
 # Vertical selection mode
 # TODO: Do I really use this?
