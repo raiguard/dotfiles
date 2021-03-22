@@ -20,7 +20,6 @@ plug "andreyorst/plug.kak" noload
 plug "andreyorst/fzf.kak" # TODO: Doesn't appear to work with kitty
 plug "andreyorst/smarttab.kak"
 plug "crizan/kak-rainbower"
-plug "danr/kakoune-easymotion"
 plug "delapouite/kakoune-buffers"
 plug "delapouite/kakoune-mirror"
 plug "delapouite/kakoune-palette"
