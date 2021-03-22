@@ -81,6 +81,7 @@ plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
 
     hook global KakEnd .* lsp-exit
 }
+plug "occivink/kakoune-phantom-selection"
 plug "occivink/kakoune-vertical-selection"
 plug "raiguard/one.kak" theme
 
@@ -102,7 +103,7 @@ colorscheme one-darker
 hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
 
 # Keep cursor away from the edges
-set-option global scrolloff 10,10
+set-option global scrolloff 5,5
 
 # Rainbow brackets
 hook global WinSetOption filetype=(rust|python|go|javascript|typescript|c|cpp|kak|toml|lua) %{
@@ -172,3 +173,6 @@ declare-option str scripts "%val{config}/scripts"
 
 source "%opt{scripts}/fandt.kak"
 require-module "fandt"
+
+# TEMPORARY
+# source "~/dev/projects/personal/one.kak/one-darker.kak"
