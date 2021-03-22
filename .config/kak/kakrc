@@ -1,5 +1,3 @@
-# TODO: change config repository format to use bare repo
-# ref: https://www.atlassian.com/git/tutorials/dotfiles
 # ========================================
 # PLUG.KAK
 
@@ -170,5 +168,7 @@ map global vertical-selection "l" ":vertical-selection-up-and-down" -docstring "
 # ========================================
 # SCRIPTS
 
-source "fandt.kak"
+declare-option str scripts "%val{config}/scripts"
+
+source "%opt{scripts}/fandt.kak"
 require-module "fandt"
