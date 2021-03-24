@@ -17,31 +17,52 @@ plug "andreyorst/plug.kak" noload
 # ========================================
 # PLUGINS
 
+plug "alexherbo2/move-line.kak" %{ require-module move-line }
+plug "alexherbo2/replace-mode.kak" %{
+    require-module replace-mode
+    map global normal "r" ":enter-replace-mode<ret>"
+}
+plug "alexherbo2/search-highlighter.kak" %{
+    require-module search-highlighter
+    search-highlighter-enable
+}
 plug "andreyorst/fzf.kak" # TODO: Doesn't appear to work with kitty
+plug "andreyorst/powerline.kak" defer powerline %{
+    powerline-separator none
+    # powerline-theme one-darker
+} config %{
+    powerline-start
+}
 plug "andreyorst/smarttab.kak"
-plug "crizan/kak-rainbower"
+plug "crizan/kak-rainbower" config %{
+    set global rainbow_mode 0
+    set global rainbow_colors "rgb:ffd700" "rgb:da70d6" "rgb:87cefa"
+}
 plug "delapouite/kakoune-buffers"
 plug "delapouite/kakoune-mirror"
 plug "delapouite/kakoune-palette"
 plug "delapouite/kakoune-text-objects" %{ text-object-map }
 plug "jordan-yee/kakoune-git-mode"
 plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
-    # TODO: reorganize
+    set global lsp_diagnostic_line_error_sign 'E'
+    # Workaround for the lack of a proper LineFlagWarnings face
+    set global lsp_diagnostic_line_warning_sign '{LineFlagWarnings}W'
 
-    set-face global InlayHint comment
-
-    set-option global lsp_diagnostic_line_error_sign 'E'
-    set-option global lsp_diagnostic_line_warning_sign 'W'
-
-    set-option global lsp_hover_anchor true
+    set global lsp_hover_anchor true
 
     define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
 
-    hook global WinSetOption filetype=(c|cpp|cc|rust|javascript|typescript|lua) %{
+    define-command -hidden lsp-init -docstring "enable lsp and set up generic hooks" %{
         echo -debug "Enabling LSP for filetype %opt{filetype}"
-        lsp-enable-window
+        # lsp-enable-window
 
-        set-option window lsp_auto_highlight_references true
+        # TEMPORARY: enabling LSP will reset the faces?
+        # face global LineFlagErrors rgb:be5046
+        # face global DiagnosticError rgb:be5046
+        # face global InlayDiagnosticError rgb:be5046
+        # face global LineFlagWarnings DiagnosticWarning
+
+        set window lsp_auto_highlight_references true
 
         # Enable inlay diagnostics in normal mode, but disable in insert mode
         lsp-inlay-diagnostics-enable window
@@ -59,69 +80,37 @@ plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
         hook -once -always window WinSetOption filetype=.* %{
             remove-hooks window semantic-tokens
         }
-     }
-
-    hook global WinSetOption filetype=rust %{
-        # Format on save
-        set-option window formatcmd rustfmt
-        hook window BufWritePre .* format
-        # Clippy
-        set-option window lsp_server_configuration rust.clippy_preference="on"
-
-        # Inlay hints
-        hook window -group rust-inlay-hints BufReload .* rust-analyzer-inlay-hints
-        hook window -group rust-inlay-hints NormalIdle .* rust-analyzer-inlay-hints
-        hook window -group rust-inlay-hints InsertIdle .* rust-analyzer-inlay-hints
-        hook -once -always window WinSetOption filetype=.* %{
-            remove-hooks window rust-inlay-hints
-        }
     }
 
     hook global KakEnd .* lsp-exit
 }
+plug "lePerdu/kakboard"
 plug "occivink/kakoune-phantom-selection"
 plug "occivink/kakoune-vertical-selection"
 plug "raiguard/one.kak" theme
 
 # ========================================
-# EDITOR SETTINGS
-# TODO: Separate into separate sections / scripts
+# GENERAL SETTINGS
 
 # Highlighters
-add-highlighter global/ number-lines -relative -hlcursor -separator " | " -min-digits 4
-add-highlighter global/ show-matching
-
-# RIP clippy
-set-option global ui_options ncurses_assistant=off
+addhl global/ number-lines -relative -hlcursor -separator " | " -min-digits 4
+addhl global/ show-matching
 
 # Color scheme
 colorscheme one-darker
 
-# Remove trailing whitespace on save
-hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
+# RIP clippy
+set global ui_options ncurses_assistant=off
 
 # Keep cursor away from the edges
-set-option global scrolloff 5,5
-
-# Rainbow brackets
-hook global WinSetOption filetype=(rust|python|go|javascript|typescript|c|cpp|kak|toml|lua) %{
-    rainbow-enable-window
-}
-set-option global rainbow_mode 0
-set-option global rainbow_colors "rgb:ffd700" "rgb:da70d6" "rgb:87cefa"
-
-# ========================================
-# SYSTEM CLIPBOARD HANDLING
-
-map global user y '<a-|>xclip -i -selection clipboard<ret>' -docstring "yank to system clipboard"
-map global user p '!xclip -selection clipboard -o<ret>' -docstring "paste from system clipboard"
+set global scrolloff 5,5
 
 # ========================================
 # KEYBINDINGS
 
 # Misc
 map global normal "#" ":comment-line<ret>"
-map global normal "=" ":prompt math: %{exec 'a%val{text}<lt>esc>|bc<lt>ret>'}<ret>"
+map global normal "=" ':prompt math: %{exec "a%val{text}<lt>esc>|bc<lt>ret>"}<ret>'
 
 # Jumps centered please
 map global normal "<c-i>" "<c-i>vv"
@@ -146,13 +135,18 @@ map global normal , <space>
 # Less awkward keybind for outer object
 map global normal <a-o> <a-a>
 
+# Move lines up/down
+# This is a hack combined with kitty (see .config/kitty/kitty.conf) to allow use of reserved key
+# combos that I don't care about
+map global normal "ⓙ" ":move-line-below<ret>"
+map global normal "<c-k>" ":move-line-above<ret>"
+
 # User mode keybinds
 map global normal "'" ":enter-user-mode -lock mirror<ret>"
 map global user "b" ":enter-user-mode buffers<ret>" -docstring "buffers..."
 map global user "c" ":enter-user-mode comment<ret>" -docstring "comment..."
 map global user "g" ":enter-user-mode git<ret>" -docstring "git..."
 map global user "l" ":enter-user-mode lsp<ret>" -docstring "lsp..."
-# TODO: this conflicts with paste to system clipboard
 map global user "p" ":enter-user-mode phantom-selection<ret>" -docstring "phantom selection..."
 map global user "v" ":enter-user-mode vertical-selection<ret>" -docstring "vertical selection..."
 
@@ -164,20 +158,73 @@ declare-user-mode phantom-selection
 map global phantom-selection "a" ":phantom-selection-add-selection<ret>" -docstring "add selection"
 map global phantom-selection "s" ":phantom-selection-select-all<ret>" -docstring "select all"
 map global phantom-selection "c" ":phantom-selection-clear<ret>" -docstring "clear"
-map global phantom-selection "n" ":phantom-selection-iterate-next<ret>" -docstring "next"
-map global phantom-selection "p" ":phantom-selection-iterate-previous<ret>" -docstring "previous"
+map global phantom-selection "n" ":phantom-selection-iterate-next<ret>vv" -docstring "next"
+map global phantom-selection "p" ":phantom-selection-iterate-prev<ret>vv" -docstring "previous"
 
 # Vertical selection mode
-# TODO: Do I really use this?
 declare-user-mode vertical-selection
 map global vertical-selection "j" ":vertical-selection-down<ret>" -docstring "down"
 map global vertical-selection "k" ":vertical-selection-up<ret>" -docstring "up"
 map global vertical-selection "l" ":vertical-selection-up-and-down" -docstring "both"
 
 # ========================================
+# FILETYPE HOOKS
+
+# default
+hook global WinCreate .* %{
+    expandtab
+    set window tabstop 4
+    set window softtabstop 4
+    set window indentwidth 4
+
+    # enable plugins
+    rainbow-enable-window
+    kakboard-enable
+
+    # Show and automatically update git diff
+    git show-diff
+    hook window NormalIdle .* %{
+        git update-diff
+    }
+}
+
+# lua
+hook global WinSetOption filetype=lua %{
+    lsp-init
+
+    set window tabstop 2
+    set window softtabstop 2
+    set window indentwidth 2
+}
+
+# rust
+hook global WinSetOption filetype=rust %{
+    lsp-init
+
+    # Format on save
+    hook window BufWritePre .* lsp-formatting-sync
+    # Clippy
+    set window lsp_server_configuration rust.clippy_preference="on"
+
+    # Inlay hints
+    hook window -group rust-inlay-hints BufReload .* rust-analyzer-inlay-hints
+    hook window -group rust-inlay-hints NormalIdle .* rust-analyzer-inlay-hints
+    hook window -group rust-inlay-hints InsertIdle .* rust-analyzer-inlay-hints
+    hook -once -always window WinSetOption filetype=.* %{
+        remove-hooks window rust-inlay-hints
+    }
+}
+
+# ========================================
+# OTHER HOOKS
+
+# Remove trailing whitespace on save
+hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
+
+# ========================================
 # SCRIPTS
 
-declare-option str scripts "%val{config}/scripts"
+declare-option -hidden str scripts "%val{config}/scripts"
 
 source "%opt{scripts}/fandt.kak"
 require-module "fandt"
