@@ -54,7 +54,7 @@ plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
 
     define-command -hidden lsp-init -docstring "enable lsp and set up generic hooks" %{
         echo -debug "Enabling LSP for filetype %opt{filetype}"
-        # lsp-enable-window
+        lsp-enable-window
 
         # TEMPORARY: enabling LSP will reset the faces?
         # face global LineFlagErrors rgb:be5046
