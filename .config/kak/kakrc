@@ -20,19 +20,17 @@ plug "andreyorst/plug.kak" noload
 plug "alexherbo2/move-line.kak" %{ require-module move-line }
 plug "alexherbo2/replace-mode.kak" %{
     require-module replace-mode
-    map global normal "r" ":enter-replace-mode<ret>"
+    map global normal "r" ": enter-replace-mode<ret>"
 }
 plug "alexherbo2/search-highlighter.kak" %{
     require-module search-highlighter
     search-highlighter-enable
 }
 plug "andreyorst/fzf.kak" # TODO: Doesn't appear to work with kitty
-plug "andreyorst/powerline.kak" defer powerline %{
-    powerline-separator none
-    # powerline-theme one-darker
-} config %{
-    powerline-start
-}
+# plug "andreyorst/powerline.kak" config %{
+#     powerline-start
+#     powerline-separator none
+# }
 plug "andreyorst/smarttab.kak"
 plug "crizan/kak-rainbower" config %{
     set global rainbow_mode 0
@@ -105,12 +103,19 @@ set global ui_options ncurses_assistant=off
 # Keep cursor away from the edges
 set global scrolloff 5,5
 
+set global autoreload yes
+
 # ========================================
 # KEYBINDINGS
 
-# Misc
-map global normal "#" ":comment-line<ret>"
-map global normal "=" ':prompt math: %{exec "a%val{text}<lt>esc>|bc<lt>ret>"}<ret>'
+# Comment
+map global normal "#" ": comment-line<ret>"
+
+# Math prompt
+map global normal "=" ': prompt math: %{exec "a%val{text}<lt>esc>|bc<lt>ret>"}<ret>'
+
+# Go to file (sort of fuzzy)
+map global goto "f" '<esc>: prompt -shell-script-candidates %{ git ls-files } file: %{ edit %val{text} }<ret>' -docstring "file"
 
 # Jumps centered please
 map global normal "<c-i>" "<c-i>vv"
@@ -135,37 +140,47 @@ map global normal , <space>
 # Less awkward keybind for outer object
 map global normal <a-o> <a-a>
 
+# Search case-insensitive by default
+map global normal "/" "/(?i)"
+map global normal "?" "?(?i)"
+map global normal "<a-/>" "<a-/>(?i)"
+map global normal "<a-?>" "<a-?>(?i)"
+
 # Move lines up/down
 # This is a hack combined with kitty (see .config/kitty/kitty.conf) to allow use of reserved key
 # combos that I don't care about
-map global normal "ⓙ" ":move-line-below<ret>"
-map global normal "<c-k>" ":move-line-above<ret>"
+map global normal "ⓙ" ": move-line-below<ret>"
+map global normal "<c-k>" ": move-line-above<ret>"
 
 # User mode keybinds
-map global normal "'" ":enter-user-mode -lock mirror<ret>"
-map global user "b" ":enter-user-mode buffers<ret>" -docstring "buffers..."
-map global user "c" ":enter-user-mode comment<ret>" -docstring "comment..."
-map global user "g" ":enter-user-mode git<ret>" -docstring "git..."
-map global user "l" ":enter-user-mode lsp<ret>" -docstring "lsp..."
-map global user "p" ":enter-user-mode phantom-selection<ret>" -docstring "phantom selection..."
-map global user "v" ":enter-user-mode vertical-selection<ret>" -docstring "vertical selection..."
+map global normal "'" ": enter-user-mode -lock mirror<ret>"
+map global user "b" ": enter-user-mode buffers<ret>" -docstring "buffers..."
+map global user "c" ": enter-user-mode comment<ret>" -docstring "comment..."
+map global user "g" ": enter-user-mode git<ret>" -docstring "git..."
+map global user "l" ": enter-user-mode lsp<ret>" -docstring "lsp..."
+map global user "p" ": enter-user-mode phantom-selection<ret>" -docstring "phantom selection..."
+map global user "v" ": enter-user-mode vertical-selection<ret>" -docstring "vertical selection..."
+map global user "/" ": reg / ''<ret>" -docstring "clear search register"
 
 # ========================================
 # CUSTOM MODES
 
+# TODO: use proper command
+map global git "o" ": terminal lazygit<ret>" -docstring "open..."
+
 # Phantom selection mode
 declare-user-mode phantom-selection
-map global phantom-selection "a" ":phantom-selection-add-selection<ret>" -docstring "add selection"
-map global phantom-selection "s" ":phantom-selection-select-all<ret>" -docstring "select all"
-map global phantom-selection "c" ":phantom-selection-clear<ret>" -docstring "clear"
-map global phantom-selection "n" ":phantom-selection-iterate-next<ret>vv" -docstring "next"
-map global phantom-selection "p" ":phantom-selection-iterate-prev<ret>vv" -docstring "previous"
+map global phantom-selection "a" ": phantom-selection-add-selection<ret>" -docstring "add selection"
+map global phantom-selection "s" ": phantom-selection-select-all<ret>" -docstring "select all"
+map global phantom-selection "c" ": phantom-selection-clear<ret>" -docstring "clear"
+map global phantom-selection "n" ": phantom-selection-iterate-next<ret>vv" -docstring "next"
+map global phantom-selection "p" ": phantom-selection-iterate-prev<ret>vv" -docstring "previous"
 
 # Vertical selection mode
 declare-user-mode vertical-selection
-map global vertical-selection "j" ":vertical-selection-down<ret>" -docstring "down"
-map global vertical-selection "k" ":vertical-selection-up<ret>" -docstring "up"
-map global vertical-selection "l" ":vertical-selection-up-and-down" -docstring "both"
+map global vertical-selection "j" ": vertical-selection-down<ret>" -docstring "down"
+map global vertical-selection "k" ": vertical-selection-up<ret>" -docstring "up"
+map global vertical-selection "l" ": vertical-selection-up-and-down" -docstring "both"
 
 # ========================================
 # FILETYPE HOOKS
@@ -181,9 +196,9 @@ hook global WinCreate .* %{
     rainbow-enable-window
     kakboard-enable
 
-    # Show and automatically update git diff
+    # Show and automatically update git diff on write
     git show-diff
-    hook window NormalIdle .* %{
+    hook window BufWritePost .* %{
         git update-diff
     }
 }
@@ -195,6 +210,8 @@ hook global WinSetOption filetype=lua %{
     set window tabstop 2
     set window softtabstop 2
     set window indentwidth 2
+
+    addhl window/ column 120 Ruler
 }
 
 # rust

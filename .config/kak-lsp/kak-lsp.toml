@@ -52,7 +52,7 @@ command = "clangd"
 [language.lua]
 filetypes = ["lua"]
 roots = [".git/"]
-command = "/home/rai/dev/langservers/sumneko-lua/bin/lua-language-server"
+command = "/home/rai/dev/langservers/sumneko-lua/bin/Linux/lua-language-server"
 args = ["-E", "/home/rai/dev/langservers/sumneko-lua/main.lua"]
 
 [language.rust]
