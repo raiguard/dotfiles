@@ -35,7 +35,6 @@ lifetime = "operator"
 
 [semantic_token_modifiers]
 documentation = "documentation"
-readonly = "default+d"
 
 # [language.c_cpp]
 # filetypes = ["c", "cpp"]
@@ -58,4 +57,4 @@ args = ["-E", "/home/rai/dev/langservers/sumneko-lua/main.lua"]
 [language.rust]
 filetypes = ["rust"]
 roots = ["Cargo.toml"]
-command = "rust-analyzer"
+command = "/home/rai/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rust-analyzer"
