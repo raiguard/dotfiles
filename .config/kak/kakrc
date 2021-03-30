@@ -18,7 +18,6 @@ plug "andreyorst/plug.kak" noload
 # PLUGINS
 
 plug "alexherbo2/move-line.kak" %{ require-module move-line }
-plug "alexherbo2/replace-mode.kak" %{ require-module replace-mode }
 plug "alexherbo2/search-highlighter.kak" %{
     require-module search-highlighter
     face global Search default+i
@@ -145,9 +144,6 @@ map global normal "K" "K<a-x>"
 # TODO: use proper command
 map global git "o" ": kitty-terminal-tab lazygit<ret>" -docstring "open..."
 
-# Replace mode
-map global normal "r" ": enter-replace-mode<ret>"
-
 # User mode keybinds
 map global normal "'" ": enter-user-mode -lock mirror<ret>"
 map global user "b" ": enter-user-mode buffers<ret>" -docstring "buffers..."
@@ -164,6 +160,8 @@ map global normal "x" ": echo 'ENTER SNEAK MODE'<ret>"
 map global normal "<s-x>" ": echo 'ENTER SNEAK MODE (EXTEND)'<ret>"
 map global normal "<a-x>" ": echo 'ENTER SNEAK MODE (REVERSE)'<ret>"
 map global normal "<a-s-x>" ": echo 'ENTER SNEAK MODE (REVERSE) (EXTEND)'<ret>"
+# Remap expand-to-full-lines key
+map global normal "<c-x>" "<a-x>"
 
 # Phantom selection mode
 declare-user-mode phantom-selection
