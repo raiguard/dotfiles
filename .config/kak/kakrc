@@ -20,7 +20,7 @@ plug "andreyorst/plug.kak" noload
 plug "alexherbo2/move-line.kak" %{ require-module move-line }
 plug "alexherbo2/search-highlighter.kak" %{
     require-module search-highlighter
-    face global Search default+i
+    face global Search default,rgba:e5c07b40
     search-highlighter-enable
 }
 plug "andreyorst/smarttab.kak"
@@ -119,7 +119,8 @@ map global normal "<a-)>" "<a-)>vv"
 
 # Swap user mode and clear selection keys
 map global normal "<space>" ","
-map global normal "," "<space>: reg / ''<ret>" # Also clear search register
+map global normal "," "<space>"
+map global normal "<a-,>" "<a-space>"
 
 # Less awkward keybind for outer object
 map global normal "<a-o>" "<a-a>"
@@ -131,8 +132,7 @@ map global normal "<a-/>" "<a-/>(?i)"
 map global normal "<a-?>" "<a-?>(?i)"
 
 # Move lines up/down
-# This is a hack combined with kitty (see .config/kitty/kitty.conf) to allow use of reserved key
-# combos that I don't care about
+# This is a hack combined with kitty (see .config/kitty/kitty.conf) to allow use of reserved key combos that I don't care about
 map global normal "ⓙ" ": move-line-below<ret>"
 map global normal "<c-k>" ": move-line-above<ret>"
 
@@ -242,5 +242,3 @@ source "%opt{scripts}/git-branch.kak"
 # Set this last for compatibility reasons
 
 colorscheme one-darker
-
-# source "/home/rai/dev/projects/personal/one.kak/one-darker.kak"

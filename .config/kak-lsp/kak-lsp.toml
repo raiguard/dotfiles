@@ -27,11 +27,12 @@ string = "string"
 keyword = "keyword"
 operator = "operator"
 comment = "comment"
-parameter = "parameter"
+parameter = "default+i"
 enum = "module"
 enumMember = "enum"
 macro = "function"
 lifetime = "operator"
+formatSpecifier = "operator"
 
 [semantic_token_modifiers]
 documentation = "documentation"

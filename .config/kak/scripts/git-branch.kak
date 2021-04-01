@@ -3,8 +3,7 @@
 ## Store the current git branch that contains the buffer
 ##
 
-declare-option -docstring "name of the git branch holding the current buffer" \
-    str modeline_git_branch
+declare-option -docstring "name of the git branch holding the current buffer" str modeline_git_branch
 
 hook global WinCreate .* %{
     hook window NormalIdle .* %{ evaluate-commands %sh{
