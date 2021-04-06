@@ -27,11 +27,12 @@ plug "andreyorst/smarttab.kak"
 plug "crizan/kak-rainbower" config %{
     set global rainbow_mode 0
     set global rainbow_colors "rgb:ffd700" "rgb:da70d6" "rgb:87cefa"
+    set global rainbow_check_templates Y
 }
-plug "delapouite/kakoune-buffers"
 plug "delapouite/kakoune-mirror"
 plug "delapouite/kakoune-palette"
 plug "delapouite/kakoune-text-objects" %{ text-object-map }
+plug "dgmulf/local-kakrc" config %{ set global source_local_kakrc true }
 plug "jordan-yee/kakoune-git-mode"
 plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
     set global lsp_diagnostic_line_error_sign 'E'
@@ -45,17 +46,26 @@ plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
     define-command -hidden lsp-init -docstring "enable lsp and set up generic hooks" %{
         echo -debug "Enabling LSP for filetype %opt{filetype}"
         lsp-enable-window
+        set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
         set window lsp_auto_highlight_references true
 
-        # Enable inlay diagnostics in normal mode, but disable in insert mode
+        # Enable inlay and inline diagnostics in normal mode, but disable in insert mode
         lsp-inlay-diagnostics-enable window
         hook window ModeChange push:.*:insert %{
             lsp-inlay-diagnostics-disable window
+            lsp-inline-diagnostics-disable window
         }
         hook window ModeChange pop:insert:.* %{
             lsp-inlay-diagnostics-enable window
+            lsp-inline-diagnostics-enable window
         }
+
+        # Enable auto-hover in insert mode
+        lsp-auto-hover-insert-mode-enable
+
+        # Function signature help in status bar
+        lsp-auto-signature-help-enable
 
         # Semantic tokens
         hook window -group semantic-tokens BufReload .* lsp-semantic-tokens
@@ -77,29 +87,37 @@ plug "raiguard/one.kak" theme
 # GENERAL SETTINGS
 
 # Highlighters
-addhl global/ number-lines -relative -hlcursor -separator " | " -min-digits 4
+addhl global/ number-lines -relative -hlcursor -separator " ▏ " -min-digits 4
 addhl global/ show-matching
 # addhl global/ show-whitespaces -tab "▏" -lf " " -nbsp "⋅" -spc " "
 
-# RIP clippy
-set global ui_options ncurses_assistant=off
+# RIP clippy and titles
+set global ui_options ncurses_assistant=off ncurses_set_title=false
 
 # Keep cursor away from the edges
 set global scrolloff 5,5
 
+# Auto-reload please!
 set global autoreload yes
+
+# Custom status bar format
+set-option global modelinefmt "{StatusLineValue}%%val{bufname}{StatusLineValue}:%%val{cursor_line}:%%val{cursor_char_column}{StatusLine} %%sh{expr $kak_cursor_line \* 100 / $kak_buf_line_count}%%%%{{context_info}} {{mode_info}} {keyword}%%val{client}{StatusLineValue} {enum}%%val{session}{StatusLine}"
 
 # ========================================
 # KEYBINDINGS
 
 # Comment
 map global normal "#" ": comment-line<ret>"
+map global normal "<a-#>" ": comment-block<ret>"
 
 # Math prompt
 map global normal "=" ': prompt math: %{exec "a%val{text}<lt>esc>|bc<lt>ret>"}<ret>'
 
 # Go to file (basic fuzzy finder)
-map global goto "f" '<esc>: prompt -shell-script-candidates %{ git ls-files } file: %{ edit %val{text} }<ret>' -docstring "file"
+map global goto "f" '<esc>: prompt -shell-script-candidates %{ rg --files --hidden } file: %{ edit %val{text} }<ret>' -docstring "file"
+
+# Go to buffer
+map global goto "b" '<esc> : prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
 
 # Jumps centered please
 map global normal "<c-i>" "<c-i>vv"
@@ -110,12 +128,6 @@ map global normal "n" "nvv"
 map global normal "N" "Nvv"
 map global normal "<a-n>" "<a-n>vv"
 map global normal "<a-N>" "<a-N>vv"
-
-# Rotations centered please
-map global normal "(" "(vv"
-map global normal "<a-(>" "<a-(>vv"
-map global normal ")" ")vv"
-map global normal "<a-)>" "<a-)>vv"
 
 # Swap user mode and clear selection keys
 map global normal "<space>" ","
@@ -146,11 +158,13 @@ map global git "o" ": kitty-terminal-tab lazygit<ret>" -docstring "open..."
 
 # User mode keybinds
 map global normal "'" ": enter-user-mode -lock mirror<ret>"
-map global user "b" ": enter-user-mode buffers<ret>" -docstring "buffers..."
 map global user "c" ": enter-user-mode comment<ret>" -docstring "comment..."
 map global user "g" ": enter-user-mode git<ret>" -docstring "git..."
 map global user "l" ": enter-user-mode lsp<ret>" -docstring "lsp..."
 map global user "p" ": enter-user-mode phantom-selection<ret>" -docstring "phantom selection..."
+
+# kak-lsp shortcuts
+map global normal "<c-h>" ": lsp-hover<ret>"
 
 # ========================================
 # CUSTOM MODES
@@ -172,6 +186,11 @@ map global phantom-selection "n" ": phantom-selection-iterate-next<ret>vv" -docs
 map global phantom-selection "p" ": phantom-selection-iterate-prev<ret>vv" -docstring "previous"
 
 # ========================================
+# CUSTOM COMMANDS
+
+def edit-kakrc %{ e ~/.config/kak/kakrc }
+
+# ========================================
 # FILETYPE HOOKS
 
 # default
@@ -188,9 +207,8 @@ hook global WinCreate .* %{
 
     # Show and automatically update git diff on write
     git show-diff
-    hook window BufWritePost .* %{
-        git update-diff
-    }
+    hook window BufWritePost .* %{ git update-diff }
+    hook window BufReload .* %{ git update-diff }
 }
 
 # lua
@@ -201,7 +219,7 @@ hook global WinSetOption filetype=lua %{
     set window softtabstop 2
     set window indentwidth 2
 
-    addhl window/ column 120 Ruler
+    addhl window/ column 121 Ruler
 }
 
 # rust
@@ -228,6 +246,16 @@ hook global WinSetOption filetype=rust %{
 # Remove trailing whitespace on save
 hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
 
+# Auto complete with tab
+hook global InsertCompletionShow .* %{
+    map window insert <tab> <c-n>
+    map window insert <s-tab> <c-p>
+}
+hook global InsertCompletionHide .* %{
+    map window insert <tab> <tab>
+    map window insert <s-tab> <s-tab>
+}
+
 # ========================================
 # SCRIPTS
 
@@ -236,9 +264,13 @@ declare-option -hidden str scripts "%val{config}/scripts"
 source "%opt{scripts}/fandt.kak"
 require-module "fandt"
 source "%opt{scripts}/git-branch.kak"
+source "%opt{scripts}/lua.kak"
+
+# source "%opt{scripts}/highlighter-demos.kak"
 
 # ========================================
 # COLOR SCHEME
 # Set this last for compatibility reasons
 
 colorscheme one-darker
+# source "~/dev/projects/personal/one.kak/one-darker.kak"
