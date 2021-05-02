@@ -2,8 +2,8 @@
 # PLUG.KAK
 
 declare-option -docstring "plug.kak's directory" str plugkakdir "%val{config}/plugins/plug.kak"
-declare-option -docstring "plug.kak's main script" str plugkak "%opt{plugkakdir}/rc/plug.kak"
 
+declare-option -docstring "plug.kak's main script" str plugkak "%opt{plugkakdir}/rc/plug.kak"
 try %{
     source "%opt{plugkak}"
 } catch %sh{
@@ -18,12 +18,17 @@ plug "andreyorst/plug.kak" noload
 # PLUGINS
 
 plug "alexherbo2/move-line.kak" %{ require-module move-line }
-plug "alexherbo2/search-highlighter.kak" %{
-    require-module search-highlighter
-    face global Search default,rgba:e5c07b40
-    search-highlighter-enable
-}
+# plug "alexherbo2/search-highlighter.kak" %{
+#     require-module search-highlighter
+#     face global Search default,rgba:e5c07b40
+#     search-highlighter-enable
+# }
 plug "andreyorst/smarttab.kak"
+plug "alexherbo2/phantom.kak" %{
+    require-module phantom
+    phantom-enable
+    phantom-add-mappings
+}
 plug "crizan/kak-rainbower" config %{
     set global rainbow_mode 0
     set global rainbow_colors "rgb:ffd700" "rgb:da70d6" "rgb:87cefa"
@@ -80,7 +85,7 @@ plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
 }
 plug "lePerdu/kakboard"
 plug "occivink/kakoune-find"
-plug "occivink/kakoune-phantom-selection"
+# plug "occivink/kakoune-phantom-selection"
 plug "occivink/kakoune-sort-selections"
 plug "occivink/kakoune-vertical-selection"
 plug "raiguard/one.kak" theme
@@ -122,13 +127,16 @@ map global normal "=" ': prompt math: %{exec "a%val{text}<lt>esc>|bc<lt>ret>"}<r
 map global goto "f" '<esc>: prompt -shell-script-candidates %{ rg --files } file: %{ edit %val{text} }<ret>' -docstring "file"
 
 # Go to buffer
-map global goto "b" '<esc> : prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
+map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
 
 # View files
-map global view "f" "<esc> : terminal-tab ranger<ret>" -docstring "files..."
+map global view "f" "<esc>: terminal-tab ranger<ret>" -docstring "files..."
 
 # View lazygit
 map global view "g" "<esc>: terminal-tab lazygit<ret>" -docstring "lazygit..."
+
+# Grep for current selection
+map global user "/" ': grep %reg{dot}<ret>'
 
 # Jumps centered please
 map global normal "<c-i>" "<c-i>vv"
@@ -182,23 +190,11 @@ map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in 
 # User mode keybinds
 map global normal "'" ": enter-user-mode -lock mirror<ret>"
 map global user "l" ": enter-user-mode lsp<ret>" -docstring "lsp..."
-map global user "p" ": enter-user-mode phantom-selection<ret>" -docstring "phantom selection..."
 map global user "s" "<a-:><a-;>L: enter-user-mode mirror<ret><a-S><esc>i<ret><esc><space>;" -docstring "split to new line"
 
 # Disable escape to end macro
 # FIXME: This can break other things as well
 map global normal "<esc>" ""
-
-# ========================================
-# CUSTOM MODES
-
-# Phantom selection mode
-declare-user-mode phantom-selection
-map global phantom-selection "a" ": phantom-selection-add-selection<ret>" -docstring "add selection"
-map global phantom-selection "s" ": phantom-selection-select-all<ret>" -docstring "select all"
-map global phantom-selection "c" ": phantom-selection-clear<ret>" -docstring "clear"
-map global phantom-selection "n" ": phantom-selection-iterate-next<ret>vv" -docstring "next"
-map global phantom-selection "p" ": phantom-selection-iterate-prev<ret>vv" -docstring "previous"
 
 # ========================================
 # CUSTOM COMMANDS
@@ -244,7 +240,8 @@ hook global WinSetOption filetype=kak %{
 
 # lua
 hook global WinSetOption filetype=lua %{
-    lsp-init
+    # TODO: this doesn't work
+    # lsp-init
     rainbow-enable-window
 
     set window tabstop 2
@@ -292,7 +289,7 @@ hook global InsertCompletionHide .* %{
 # Highlight special comments
 hook global WinSetOption comment_line=(.*) %{
     add-highlighter -override window/todo regex "\Q%val{hook_param_capture_1}\E\h*(TODO:)[^\n]*" 1:green
-    add-highlighter -override window/fixme regex "\Q%val{hook_param_capture_1}\E\h*(BUG:|FIXME:|HACK:)[^\n]*" 1:red
+    add-highlighter -override window/fixme regex "\Q%val{hook_param_capture_1}\E\h*(BUG:|FIXME:|HACK:|SLOW:)[^\n]*" 1:red
     add-highlighter -override window/note regex "\Q%val{hook_param_capture_1}\E\h*(NOTE:|SAFETY:|PANIC:)[^\n]*" 1:blue
 }
 
