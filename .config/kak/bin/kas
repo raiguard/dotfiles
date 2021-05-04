@@ -1,0 +1,14 @@
+#!/bin/sh
+
+repo=$(basename `git rev-parse --show-toplevel` || echo "default")
+args=
+
+if [ -n "$repo" ]; then
+    if kak -l | grep -q "$repo"; then
+        args="-c $repo" # join session
+    else
+        args="-s $repo" # make session
+    fi
+fi
+
+exec kak $args $@ # launch editor
