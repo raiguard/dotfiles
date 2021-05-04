@@ -289,7 +289,7 @@ hook global InsertCompletionHide .* %{
 # Highlight special comments
 hook global WinSetOption comment_line=(.*) %{
     add-highlighter -override window/todo regex "\Q%val{hook_param_capture_1}\E\h*(TODO:)[^\n]*" 1:green
-    add-highlighter -override window/fixme regex "\Q%val{hook_param_capture_1}\E\h*(BUG:|FIXME:|HACK:|SLOW:)[^\n]*" 1:red
+    add-highlighter -override window/fixme regex "\Q%val{hook_param_capture_1}\E\h*(BUG:|FIXME:|HACK:|SLOW:|TEMPORARY:)[^\n]*" 1:red
     add-highlighter -override window/note regex "\Q%val{hook_param_capture_1}\E\h*(NOTE:|SAFETY:|PANIC:)[^\n]*" 1:blue
 }
 
