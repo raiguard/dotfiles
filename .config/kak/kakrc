@@ -17,25 +17,38 @@ plug "andreyorst/plug.kak" noload
 # ========================================
 # PLUGINS
 
+# kakoune.cr (coderunner)
+evaluate-commands %sh{
+    kcr init kakoune
+}
+
+plug "alexherbo2/auto-pairs.kak" %{
+    require-module auto-pairs
+    auto-pairs-enable
+}
 plug "alexherbo2/move-line.kak" %{ require-module move-line }
-# plug "alexherbo2/search-highlighter.kak" %{
-#     require-module search-highlighter
-#     face global Search default,rgba:e5c07b40
-#     search-highlighter-enable
-# }
-plug "andreyorst/smarttab.kak"
 plug "alexherbo2/phantom.kak" %{
     require-module phantom
     phantom-enable
     phantom-add-mappings
+    map global normal "<c-n>" ": phantom-iterate-next-selection<ret>"
+    map global normal "<c-p>" ": phantom-iterate-previous-selection<ret>"
 }
-plug "crizan/kak-rainbower" config %{
+plug "alexherbo2/search.kak" %{
+    map global normal "/" ": search<ret>(?i)"
+}
+plug "andreyorst/smarttab.kak"
+plug "crizan/kak-rainbower" %{
     set global rainbow_mode 0
-    set global rainbow_colors "rgb:ffd700" "rgb:da70d6" "rgb:87cefa"
-    # set global rainbow_colors "rgb:daa520" "rgb:9932cc" "rgb:00bfff"
     set global rainbow_check_templates Y
+    # Dark theme:
+    set global rainbow_colors "rgb:ffd700" "rgb:da70d6" "rgb:87cefa"
+    # Light theme:
+    # set global rainbow_colors "rgb:daa520" "rgb:9932cc" "rgb:00bfff"
 }
-plug "delapouite/kakoune-mirror"
+plug "delapouite/kakoune-mirror" %{
+    map global mirror d '"pZ<a-S><a-d>"pz<a-:>H' -docstring 'delete'
+}
 plug "delapouite/kakoune-palette"
 plug "delapouite/kakoune-text-objects"
 plug "dgmulf/local-kakrc" config %{ set global source_local_kakrc true }
@@ -85,7 +98,6 @@ plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
 }
 plug "lePerdu/kakboard"
 plug "occivink/kakoune-find"
-# plug "occivink/kakoune-phantom-selection"
 plug "occivink/kakoune-sort-selections"
 plug "occivink/kakoune-vertical-selection"
 plug "raiguard/one.kak" theme
@@ -96,7 +108,7 @@ plug "raiguard/one.kak" theme
 # Highlighters
 addhl global/ number-lines -relative -hlcursor -separator " ▏ " -min-digits 4
 addhl global/ show-matching
-# addhl global/ show-whitespaces -tab "▏" -lf " " -nbsp "⋅" -spc " "
+addhl global/ show-whitespaces -tab "▏" -lf " " -nbsp "⋅" -spc " "
 
 # RIP clippy and titles
 set global ui_options ncurses_assistant=off ncurses_set_title=false
@@ -136,7 +148,7 @@ map global view "f" "<esc>: terminal-tab ranger<ret>" -docstring "files..."
 map global view "g" "<esc>: terminal-tab lazygit<ret>" -docstring "lazygit..."
 
 # Grep for current selection
-map global user "/" ': grep %reg{dot}<ret>'
+map global user "/" ': grep %reg{dot}<ret>' -docstring "grep for selection"
 
 # Jumps centered please
 map global normal "<c-i>" "<c-i>vv"
@@ -157,10 +169,10 @@ map global normal "<a-,>" "<a-space>"
 map global normal "<a-o>" "<a-a>"
 
 # Search case-insensitive by default
-map global normal "/" "/(?i)"
-map global normal "?" "?(?i)"
-map global normal "<a-/>" "<a-/>(?i)"
-map global normal "<a-?>" "<a-?>(?i)"
+# map global normal "/" "/(?i)"
+# map global normal "?" "?(?i)"
+# map global normal "<a-/>" "<a-/>(?i)"
+# map global normal "<a-?>" "<a-?>(?i)"
 
 # Move lines up/down
 # This is a hack combined with kitty (see .config/kitty/kitty.conf) to allow use of reserved key combos that I don't care about
@@ -187,14 +199,28 @@ map global normal "X" "<a-i><esc>: text-object-line<ret>"
 # Select all occurances of current selection in file
 map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
 
+# # Remap marks key (phantom.kak overrides the regular marks key)
+# map global normal "<ret>" "z"
+# map global normal "<s-<ret>>" "Z"
+# map global normal "<a-<ret>>" "<a-z>"
+# map global normal "<a-s-<ret>>" "<a-Z>"
+
 # User mode keybinds
 map global normal "'" ": enter-user-mode -lock mirror<ret>"
 map global user "l" ": enter-user-mode lsp<ret>" -docstring "lsp..."
-map global user "s" "<a-:><a-;>L: enter-user-mode mirror<ret><a-S><esc>i<ret><esc><space>;" -docstring "split to new line"
+map global user "b" "<a-:><a-;>L: enter-user-mode mirror<ret><a-S><esc>i<ret><esc><space>;" -docstring "break to new line"
 
 # Disable escape to end macro
 # FIXME: This can break other things as well
 map global normal "<esc>" ""
+
+# ========================================
+# CUSTOM MODES
+
+declare-user-mode sort
+map global user "s" ": enter-user-mode sort<ret>" -docstring "sort..."
+map global sort "e" "<esc>|sort<ret>" -docstring "external"
+map global sort "s" "<esc>: sort-selections<ret>" -docstring "selections"
 
 # ========================================
 # CUSTOM COMMANDS
@@ -224,7 +250,7 @@ hook global WinCreate .* %{
     set window softtabstop 4
     set window indentwidth 4
 
-    # enable plugins
+    # Enable plugins
     kakboard-enable
 
     # Show and automatically update git diff on write
@@ -233,15 +259,17 @@ hook global WinCreate .* %{
     hook window BufReload .* %{ git update-diff }
 }
 
-# kak
 hook global WinSetOption filetype=kak %{
     rainbow-enable-window
 }
 
-# lua
+hook global WinSetOption filetype=json %{
+    rainbow-enable-window
+}
+
 hook global WinSetOption filetype=lua %{
     # TODO: this doesn't work
-    # lsp-init
+    lsp-init
     rainbow-enable-window
 
     set window tabstop 2
@@ -251,7 +279,6 @@ hook global WinSetOption filetype=lua %{
     addhl window/ column 121 Ruler
 }
 
-# rust
 hook global WinSetOption filetype=rust %{
     lsp-init
     rainbow-enable-window
@@ -268,6 +295,10 @@ hook global WinSetOption filetype=rust %{
     hook -once -always window WinSetOption filetype=.* %{
         remove-hooks window rust-inlay-hints
     }
+}
+
+hook global WinSetOption filetype=yaml %{
+    rainbow-enable-window
 }
 
 # ========================================
