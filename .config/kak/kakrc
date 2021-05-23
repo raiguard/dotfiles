@@ -48,6 +48,7 @@ plug "crizan/kak-rainbower" %{
     # set global rainbow_colors "rgb:daa520" "rgb:9932cc" "rgb:00bfff"
 }
 plug "delapouite/kakoune-mirror" %{
+    map global normal "'" ": enter-user-mode -lock mirror<ret>"
     # Use a non-default register to avoid conflicting with phantom.kak
     map global mirror d '"pZ<a-S><a-d>"pz<a-:>H' -docstring 'delete'
 }
@@ -55,6 +56,7 @@ plug "delapouite/kakoune-palette"
 plug "delapouite/kakoune-text-objects"
 plug "dgmulf/local-kakrc" config %{ set global source_local_kakrc true }
 plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
+    map global user "l" ": enter-user-mode lsp<ret>" -docstring "lsp..."
     set global lsp_diagnostic_line_error_sign 'E'
     # Workaround for the lack of a proper LineFlagWarnings face
     set global lsp_diagnostic_line_warning_sign '{LineFlagWarnings}W'
@@ -119,14 +121,21 @@ plug "https://gitlab.com/Screwtapello/kakoune-state-save" %{
 
 # ========================================
 # SCRIPTS
+# Sourced from autoload directory, gated behind modules
 
-require-module fandt
+def plug-autoload -params 1..2 -docstring "req <name> <commands>" %{
+    require-module "%arg{1}"
+    try %{ evaluate-commands "%arg{2}" } catch %{}
+}
 
-require-module "git-branch"
+plug-autoload fandt
 
-require-module todo
-todo-enable
-todo-add-mapping
+plug-autoload "git-branch"
+
+plug-autoload todo %{
+    todo-enable
+    todo-add-mapping
+}
 
 # ========================================
 # GENERAL SETTINGS
@@ -157,197 +166,13 @@ set global modelinefmt "{StatusLineValue}%%val{bufname}{StatusLineValue}:%%val{c
 set global grepcmd 'rg -Hn --no-heading'
 
 # ========================================
-# KEYBINDINGS
+# EXTERNAL SETTINGS
 
-# Comment
-map global normal "#" ": comment-line<ret>"
-map global normal "<a-#>" ": comment-block<ret>"
-
-# Math prompt
-map global normal "=" ': prompt math: %{exec "a%val{text}<lt>esc>|bc<lt>ret>"}<ret>'
-
-# Go to file (basic fuzzy finder)
-map global goto "f" '<esc>: prompt -shell-script-candidates %{ rg --files } file: %{ edit %val{text} }<ret>' -docstring "file"
-
-# Go to buffer
-map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
-
-# View files
-map global view "f" "<esc>: terminal-tab nnn<ret>" -docstring "files..."
-
-# View lazygit
-map global view "g" "<esc>: terminal-tab lazygit<ret>" -docstring "lazygit..."
-
-# Grep for current selection
-map global user "/" ': grep %reg{dot}<ret>' -docstring "grep for selection"
-
-# Jumps centered please
-map global normal "<c-i>" "<c-i>vv"
-map global normal "<c-o>" "<c-o>vv"
-
-# Search results centered please
-map global normal "n" "nvv"
-map global normal "N" "Nvv"
-map global normal "<a-n>" "<a-n>vv"
-map global normal "<a-N>" "<a-N>vv"
-
-# Swap user mode and clear selection keys
-map global normal "<space>" ","
-map global normal "," "<space>"
-map global normal "<a-,>" "<a-space>"
-
-# Less awkward keybind for outer object
-map global normal "<a-o>" "<a-a>"
-
-# Search case-insensitive by default
-map global normal "/" "/(?i)"
-map global normal "?" "?(?i)"
-map global normal "<a-/>" "<a-/>(?i)"
-map global normal "<a-?>" "<a-?>(?i)"
-
-# Move lines up/down
-# This is a hack combined with kitty (see .config/kitty/kitty.conf) to allow use of reserved key combos that I don't care about
-map global normal "ⓙ" ": move-line-below<ret>"
-map global normal "<c-k>" ": move-line-above<ret>"
-
-# Free alt-movement keys
-map global normal "<a-a>" "<a-j>"
-map global normal "<a-A>" "<a-J>"
-map global normal "<a-m>" "<a-k>"
-map global normal "<a-M>" "<a-K>"
-
-# Always select entire lines
-map global normal "J" "J<a-x>"
-map global normal "K" "K<a-x>"
-
-# Except when I don't want to
-map global normal "<a-j>" "J"
-map global normal "<a-k>" "K"
-
-# Remap extend-line to inner line
-map global normal "X" "<a-i><esc>: text-object-line<ret>"
-
-# Select all occurances of current selection in file
-map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
-
-# User mode keybinds
-map global normal "'" ": enter-user-mode -lock mirror<ret>"
-map global user "l" ": enter-user-mode lsp<ret>" -docstring "lsp..."
-map global user "b" "<a-:><a-;>L: enter-user-mode mirror<ret><a-S><esc>i<ret><esc><space>;" -docstring "break to new line"
-
-# Disable escape to end macro
-hook global NormalKey Q %{
-    map global normal "<esc>" ""
-    hook -always -once global NormalKey Q %{ unmap global normal "<esc>" "" }
+def load-settings -params 1 %{
+    source "%val{config}/%arg{1}.kak"
 }
 
-# ========================================
-# CUSTOM MODES
-
-declare-user-mode sort
-map global user "s" ": enter-user-mode sort<ret>" -docstring "sort..."
-map global sort "e" "<esc>|sort<ret>" -docstring "external"
-map global sort "s" "<esc>: sort-selections<ret>" -docstring "selections"
-
-# ========================================
-# CUSTOM COMMANDS
-
-def edit-kakrc %{ e ~/.config/kak/kakrc }
-
-def ide -params 0..1 %{
-    try %{ rename-session %arg{1} }
-
-    rename-client main
-    set global jumpclient main
-
-    new rename-client tools
-    set global toolsclient tools
-
-    new rename-client docs
-    set global docsclient docs
-}
-
-# ========================================
-# FILETYPE
-
-# default
-hook global WinCreate .* %{
-    expandtab
-    set window tabstop 4
-    set window softtabstop 4
-    set window indentwidth 4
-
-    # Enable plugins
-    kakboard-enable
-
-    # Show and automatically update git diff on write
-    git show-diff
-    hook window BufWritePost .* %{ git update-diff }
-    hook window BufReload .* %{ git update-diff }
-}
-
-hook global WinSetOption filetype=(json|kak|toml) %{
-    rainbow-enable-window
-}
-
-hook global WinSetOption filetype=lua %{
-    # Configure lua language server
-    set global lsp_server_configuration 'Lua.diagnostics.disable=["lowercase-global"]'
-    set -add global lsp_server_configuration 'Lua.diagnostics.globals=["__DebugAdapter","__Profiler","bit32","commands","data","defines","game","global","localised_print","log","mods","on_error","rcon","remote","rendering","script","serpent","settings","table_size"]'
-
-    lsp-init
-    rainbow-enable-window
-
-    set window tabstop 2
-    set window softtabstop 2
-    set window indentwidth 2
-
-    addhl window/ column 121 Ruler
-
-    set window formatcmd stylua
-    hook window BufWritePre .* format
-}
-
-hook global WinSetOption filetype=rust %{
-    set global lsp_server_configuration 'rust.clippy_reference="off"'
-    lsp-init
-    rainbow-enable-window
-
-    # Format on save
-    hook window BufWritePre .* lsp-formatting-sync
-    # Clippy
-    # TODO: Doesn't do anything?
-    # set window lsp_server_configuration rust.clippy_preference="on"
-
-    # Inlay hints
-    hook window -group rust-inlay-hints BufReload .* rust-analyzer-inlay-hints
-    hook window -group rust-inlay-hints NormalIdle .* rust-analyzer-inlay-hints
-    hook window -group rust-inlay-hints InsertIdle .* rust-analyzer-inlay-hints
-    hook -once -always window WinSetOption filetype=.* %{
-        rmhooks window rust-inlay-hints
-    }
-}
-
-hook global WinSetOption filetype=yaml %{
-    rainbow-enable-window
-
-    set window tabstop 2
-    set window softtabstop 2
-    set window indentwidth 2
-}
-
-# ========================================
-# OTHER HOOKS
-
-# Remove trailing whitespace on save
-hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
-
-# Auto complete with tab
-hook global InsertCompletionShow .* %{
-    map window insert "<tab>" "<c-n>"
-    map window insert "<s-tab>" "<c-p>"
-}
-hook global InsertCompletionHide .* %{
-    map window insert <tab> <tab>
-    map window insert <s-tab> <s-tab>
-}
+load-settings "commands"
+load-settings "modes"
+load-settings "hooks"
+load-settings "keybindings"

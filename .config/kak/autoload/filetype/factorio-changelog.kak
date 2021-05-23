@@ -1,8 +1,6 @@
-# Syntax highlighting for Factorio changelog.txt files
-
-hook global WinCreate (.*/|^)changelog\.txt %{
+hook global BufCreate (.*/|^)changelog\.txt %{
     # TODO: Validate this is a Factorio changelog by checking for info.json in the same directory
-    set global filetype factorio-changelog
+    set buffer filetype factorio-changelog
 }
 
 hook global WinSetOption filetype=factorio-changelog %{
