@@ -33,6 +33,11 @@ plug "alexherbo2/phantom.kak" %{
     map global normal "<c-n>" ": phantom-iterate-next-selection<ret>"
     map global normal "<c-p>" ": phantom-iterate-previous-selection<ret>"
 }
+plug "alexherbo2/search-highlighter.kak" %{
+    require-module search-highlighter
+    search-highlighter-enable
+    face global Search default+du
+}
 plug "andreyorst/smarttab.kak"
 plug "crizan/kak-rainbower" %{
     set global rainbow_mode 0
@@ -98,13 +103,37 @@ plug "occivink/kakoune-find"
 plug "occivink/kakoune-sort-selections"
 plug "occivink/kakoune-vertical-selection"
 plug "raiguard/one.kak" theme
+plug "https://gitlab.com/Screwtapello/kakoune-state-save" %{
+    hook global KakBegin .* %{
+        state-save-reg-load colon
+        state-save-reg-load pipe
+        state-save-reg-load slash
+    }
+
+    hook global KakEnd .* %{
+        state-save-reg-save colon
+        state-save-reg-save pipe
+        state-save-reg-save slash
+    }
+}
+
+# ========================================
+# SCRIPTS
+
+require-module fandt
+
+require-module "git-branch"
+
+require-module todo
+todo-enable
+todo-add-mapping
 
 # ========================================
 # GENERAL SETTINGS
 
 # Color scheme
 colorscheme one-darker
-# source "~/dev/projects/personal/one.kak/one-darker.kak"
+# source "~/dev/projects/personal/one.kak/one-light.kak"
 
 # Highlighters
 addhl global/ number-lines -relative -hlcursor -separator " ▏ " -min-digits 4
@@ -144,7 +173,7 @@ map global goto "f" '<esc>: prompt -shell-script-candidates %{ rg --files } file
 map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
 
 # View files
-map global view "f" "<esc>: terminal-tab ranger<ret>" -docstring "files..."
+map global view "f" "<esc>: terminal-tab nnn<ret>" -docstring "files..."
 
 # View lazygit
 map global view "g" "<esc>: terminal-tab lazygit<ret>" -docstring "lazygit..."
@@ -263,8 +292,8 @@ hook global WinSetOption filetype=(json|kak|toml) %{
 
 hook global WinSetOption filetype=lua %{
     # Configure lua language server
-    set global lsp_server_configuration 'lua.diagnostics.disable=["lowercase-global"]'
-    set -add global lsp_server_configuration 'lua.diagnostics.globals=["__DebugAdapter","__Profiler","bit32","commands","data","defines","game","global","localised_print","log","mods","on_error","rcon","remote","rendering","script","serpent","settings","table_size"]'
+    set global lsp_server_configuration 'Lua.diagnostics.disable=["lowercase-global"]'
+    set -add global lsp_server_configuration 'Lua.diagnostics.globals=["__DebugAdapter","__Profiler","bit32","commands","data","defines","game","global","localised_print","log","mods","on_error","rcon","remote","rendering","script","serpent","settings","table_size"]'
 
     lsp-init
     rainbow-enable-window
@@ -321,32 +350,4 @@ hook global InsertCompletionShow .* %{
 hook global InsertCompletionHide .* %{
     map window insert <tab> <tab>
     map window insert <s-tab> <s-tab>
-}
-
-# Highlight special comments
-hook global WinSetOption comment_line=(.*) %{
-    addhl -override window/todo regex "\Q%val{hook_param_capture_1}\E\h*(TODO:)[^\n]*" 1:green
-    addhl -override window/fixme regex "\Q%val{hook_param_capture_1}\E\h*(BUG:|FIXME:|HACK:|SLOW:|TEMPORARY:)[^\n]*" 1:red
-    addhl -override window/note regex "\Q%val{hook_param_capture_1}\E\h*(NOTE:|SAFETY:|PANIC:)[^\n]*" 1:blue
-}
-
-# ========================================
-# SCRIPTS
-
-decl -hidden str scripts "%val{config}/scripts"
-
-source "%opt{scripts}/fandt.kak"
-require-module "fandt"
-source "%opt{scripts}/git-branch.kak"
-# source "%opt{scripts}/lua.kak"
-
-# source "%opt{scripts}/highlighter-demos.kak"
-
-# Testing changelog.txt highlighting
-hook global WinCreate (.*/|^)changelog\.txt %{
-    addhl window/changelog_date regex ^(Date):\s(.*?)$ 1:type 2:function
-    addhl window/changelog_entry regex ^(\s\s)*(-)\s(.*?)$ 2:value 3:string
-    addhl window/changelog_keyword regex ^\s*(Balancing|Bugfixes|Changes|Features|Gui|Info|Optimizations): 1:type
-    addhl window/changelog_separator regex ^-+$ 0:keyword
-    addhl window/changelog_version regex ^(Version):\s(\d+\.\d+\.\d+)$ 1:type 2:value
 }
