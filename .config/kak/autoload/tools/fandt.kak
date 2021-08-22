@@ -1,6 +1,6 @@
 # source: https://gitlab.com/listentolist/kakoune-fandt
 
-provide-module fandt %§
+provide-module fandt %@
 
 declare-option str fandt_jump ""
 declare-option bool fandt_show_autoinfo false
@@ -108,5 +108,5 @@ map global normal T ": fandt-T<ret>"
 map global normal <a-t> ": fandt-a-t<ret>"
 map global normal <a-T> ": fandt-a-T<ret>"
 
-§
+@
 

@@ -1,13 +1,15 @@
 hook global WinSetOption filetype=rust %{
-    set global lsp_server_configuration 'rust.clippy_reference="off"'
+    # Enable language server
     lsp-init
     rainbow-enable-window
+
+    # Disable Rust regex highlighting
+    rmhl window/rust
 
     # Format on save
     hook window BufWritePre .* lsp-formatting-sync
     # Clippy
-    # TODO: Doesn't do anything?
-    # set window lsp_server_configuration rust.clippy_preference="on"
+    set window lsp_server_configuration rust.clippy_preference="on"
 
     # Inlay hints
     hook window -group rust-inlay-hints BufReload .* rust-analyzer-inlay-hints

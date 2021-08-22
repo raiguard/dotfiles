@@ -1,49 +1,15 @@
-# snippet_support = true
+# GENERAL
+
 verbosity = 2
 
-[semantic_scopes]
-# Map textmate scopes to kakoune faces for semantic highlighting
-# the underscores are translated to dots, and indicate nesting.
-# That is, if variable_other_field is omitted, it will try the face for
-# variable_other and then variable
-#
-# To see a list of available scopes in the debug buffer, run lsp-semantic-available-scopes
-variable = "variable"
-entity_name_function = "function"
-entity_name_type = "type"
-variable_other_enummember = "variable"
-entity_name_namespace = "module"
-
-# Semantic tokens support
-# See https://github.com/microsoft/vscode-languageserver-node/blob/8c8981eb4fb6adec27bf1bb5390a0f8f7df2899e/client/src/semanticTokens.proposed.ts#L288
-# for token/modifier types.
-
-[semantic_tokens]
-type = "type"
-variable = "variable"
-namespace = "module"
-function = "function"
-string = "string"
-keyword = "keyword"
-operator = "operator"
-comment = "comment"
-parameter = "parameter"
-enum = "module"
-enumMember = "enum"
-macro = "function"
-lifetime = "enum"
-formatSpecifier = "operator"
-punctuation = "operator"
-typeParameter = "operator"
-regexp = "value"
-
-[semantic_token_modifiers]
-documentation = "documentation"
+# LANGUAGES
 
 [language.c_cpp]
 filetypes = ["c", "cpp"]
-roots = ["compile_commands.json"]
-command = "clangd"
+roots = [".ccls-root", "compile_commands.json"]
+command = "ccls"
+# kak-lsp does not support newText https://github.com/ul/kak-lsp/issues/40
+args = ["--init={\"completion\":{\"detailedLabel\":false}}"]
 
 [language.lua]
 filetypes = ["lua"]
@@ -55,3 +21,147 @@ args = ["-E", "/usr/share/lua-language-server/main.lua"]
 filetypes = ["rust"]
 roots = ["Cargo.toml"]
 command = "rust-analyzer"
+
+[language.typescript]
+filetypes = ["typescript"]
+roots = ["package.json"]
+command = "typescript-language-server"
+args = ["--stdio"]
+
+# SEMANTIC TOKENS
+
+[[semantic_tokens]]
+token = "arithmetic"
+face = "operator"
+
+[[semantic_tokens]]
+token = "attribute"
+face = "module"
+
+[[semantic_tokens]]
+token = "boolean"
+face = "value"
+
+[[semantic_tokens]]
+token = "builtinType"
+face = "type"
+
+[[semantic_tokens]]
+token = "character"
+face = "string"
+
+[[semantic_tokens]]
+token = "colon"
+face = "operator"
+
+[[semantic_tokens]]
+token = "comma"
+face = "operator"
+
+[[semantic_tokens]]
+token = "comment"
+face = "comment"
+
+[[semantic_tokens]]
+token = "comparison"
+face = "operator"
+
+[[semantic_tokens]]
+token = "enum"
+face = "module"
+
+[[semantic_tokens]]
+token = "enumMember"
+face = "enum"
+
+[[semantic_tokens]]
+token = "formatSpecifier"
+face = "operator"
+
+[[semantic_tokens]]
+token = "function"
+face = "function"
+
+[[semantic_tokens]]
+token = "interface"
+face = "module"
+
+[[semantic_tokens]]
+token = "keyword"
+face = "keyword"
+
+[[semantic_tokens]]
+token = "lifetime"
+face = "enum"
+
+[[semantic_tokens]]
+token = "logical"
+face = "operator"
+
+[[semantic_tokens]]
+token = "macro"
+face = "function"
+
+[[semantic_tokens]]
+token = "method"
+face = "function"
+
+[[semantic_tokens]]
+token = "namespace"
+face = "module"
+
+[[semantic_tokens]]
+token = "number"
+face = "value"
+
+[[semantic_tokens]]
+token = "operator"
+face = "operator"
+
+[[semantic_tokens]]
+token = "parameter"
+face = "parameter"
+
+[[semantic_tokens]]
+token = "punctuation"
+face = "operator"
+
+[[semantic_tokens]]
+token = "regexp"
+face = "value"
+
+[[semantic_tokens]]
+token = "selfKeyword"
+face = "value"
+
+[[semantic_tokens]]
+token = "semicolon"
+face = "operator"
+
+[[semantic_tokens]]
+token = "string"
+face = "string"
+
+[[semantic_tokens]]
+token = "struct"
+face = "module"
+
+[[semantic_tokens]]
+token = "type"
+face = "type"
+
+[[semantic_tokens]]
+token = "typeAlias"
+face = "type"
+
+[[semantic_tokens]]
+token = "typeParameter"
+face = "operator"
+
+[[semantic_tokens]]
+token = "unresolvedReference"
+face = "module"
+
+[[semantic_tokens]]
+token = "variable"
+face = "variable"

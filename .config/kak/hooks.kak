@@ -17,12 +17,13 @@ hook global WinCreate .* %{
 # Remove trailing whitespace on save
 hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
 
-# Auto complete with tab
-hook global InsertCompletionShow .* %{
-    map window insert "<tab>" "<c-n>"
-    map window insert "<s-tab>" "<c-p>"
-}
-hook global InsertCompletionHide .* %{
-    map window insert <tab> <tab>
-    map window insert <s-tab> <s-tab>
-}
+# FIXME: This causes issues at the beginning of a line for some reason
+# # Auto complete with tab
+# hook global InsertCompletionShow .* %{
+#     map window insert "<tab>" "<c-n>"
+#     map window insert "<s-tab>" "<c-p>"
+# }
+# hook global InsertCompletionHide .* %{
+#     map window insert <tab> <tab>
+#     map window insert <s-tab> <s-tab>
+# }

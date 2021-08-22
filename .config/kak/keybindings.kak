@@ -46,8 +46,8 @@ map global normal "<a-?>" "<a-?>(?i)"
 
 # Move lines up/down
 # This is a hack combined with kitty (see .config/kitty/kitty.conf) to allow use of reserved key combos that I don't care about
-map global normal "ⓙ" ": move-line-below<ret>"
-map global normal "<c-k>" ": move-line-above<ret>"
+map global normal "ⓙ" ": move-lines-down<ret>"
+map global normal "<c-k>" ": move-lines-up<ret>"
 
 # Free alt-movement keys
 map global normal "<a-a>" "<a-j>"
@@ -75,5 +75,12 @@ hook global NormalKey Q %{
     hook -always -once global NormalKey Q %{ unmap global normal "<esc>" "" }
 }
 
-# Break onto a new line
-map global user "b" "<a-:><a-;>L: enter-user-mode mirror<ret><a-S><esc>i<ret><esc><space>;" -docstring "break to new line"
+# Move while in insert mode
+map global insert "ⓗ" "<left>"
+map global insert "ⓙ" "<down>"
+map global insert "<c-k>" "<up>"
+map global insert "<c-l>" "<right>"
+
+# Split selectios to indented block
+# TODO: Make u a sub-mode of the user mode for utils
+map global user "u" "<a-:><a-;>i<ret><esc><gt><space>;gli<ret><esc><lt>" -docstring "break to indent"
