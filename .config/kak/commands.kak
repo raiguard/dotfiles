@@ -1,22 +1,17 @@
-def edit-kakrc %{ e ~/.config/kak/kakrc }
+# def edit-kakrc %{ e ~/.config/kak/kakrc }
 
-def ide -params 0..1 %{
-    try %{ rename-session %arg{1} }
-
+def ide %{
     rename-client main
     set global jumpclient main
 
-    new rename-client tools
+    new eval %{ rename-client tools; edit -scratch *tools-scratch* }
     set global toolsclient tools
 
-    new rename-client docs
+    new eval %{ rename-client docs; edit -scratch *docs-scratch* }
     set global docsclient docs
-}
 
-alias global qa quit
-alias global qa! quit!
-alias global q delete-buffer
-alias global q! delete-buffer!
+    focus main
+}
 
 def -hidden rust-analyzer-inlay-hints-toggle %{
     try %{

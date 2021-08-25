@@ -21,10 +21,13 @@ try %sh{
     kcr init kakoune
 }
 
-# plug "alexherbo2/auto-pairs.kak" %{
-#     require-module auto-pairs
-#     auto-pairs-enable
-# }
+plug "alexherbo2/auto-pairs.kak" %{
+    enable-auto-pairs
+}
+plug "alexherbo2/move-line.kak" %{
+    require-module move-line
+}
+plug "alexherbo2/select.kak"
 # plug "alexherbo2/search-highlighter.kak" %{
 #     require-module search-highlighter
 #     search-highlighter-enable
@@ -40,6 +43,9 @@ plug "crizan/kak-rainbower" %{
     # set global rainbow_colors "rgb:daa520" "rgb:9932cc" "rgb:00bfff"
 }
 plug "Crote/kakoune-ranger"
+plug "delapouite/kakoune-buffers" %{
+    alias global bo buffer-only
+}
 plug "delapouite/kakoune-mirror" %{
     map global normal "'" ": enter-user-mode -lock mirror<ret>"
     # Use a non-default register to avoid conflicting with phantom.kak
@@ -104,7 +110,7 @@ plug "raiguard/one.kak" theme
 plug "raiguard/phantom.kak" %{
     require-module phantom
     phantom-enable
-    phantom-add-alternate-mappings
+phantom-add-alternate-mappings
 }
 
 plug "https://gitlab.com/Screwtapello/kakoune-state-save" %{
@@ -208,7 +214,7 @@ set global scrolloff 5,5
 set global autoreload yes
 
 # Custom status bar format
-set global modelinefmt "{StatusLineValue}%%val{bufname}{StatusLineValue}:%%val{cursor_line}:%%val{cursor_char_column}{StatusLine} %%sh{expr $kak_cursor_line \* 100 / $kak_buf_line_count}%%%%{{context_info}} {{mode_info}} {keyword}%%val{client}{StatusLineValue} {enum}%%val{session}{StatusLine}"
+set global modelinefmt "{string}%%opt{modeline_git_branch} {StatusLineValue}%%val{bufname}{StatusLineValue}:%%val{cursor_line}:%%val{cursor_char_column}{StatusLine} %%sh{expr $kak_cursor_line \* 100 / $kak_buf_line_count}%%%%{{context_info}} {{mode_info}} {keyword}%%val{client}{StatusLineValue} {enum}%%val{session}{StatusLine}"
 
 # Use ripgrep instead of grep
 set global grepcmd 'rg -Hn --no-heading --trim'

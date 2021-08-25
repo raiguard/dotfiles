@@ -15,7 +15,7 @@ map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{tex
 map global view "f" "<esc>: terminal-tab nnn<ret>" -docstring "files..."
 
 # View lazygit
-map global view "g" "<esc>: terminal-tab lazygit<ret>" -docstring "lazygit..."
+map global view "g" "<esc>: terminal lazygit<ret>" -docstring "lazygit..."
 
 # Grep for current selection
 map global user "/" ': grep %reg{dot}<ret>' -docstring "grep for selection"
@@ -46,8 +46,8 @@ map global normal "<a-?>" "<a-?>(?i)"
 
 # Move lines up/down
 # This is a hack combined with kitty (see .config/kitty/kitty.conf) to allow use of reserved key combos that I don't care about
-map global normal "ⓙ" ": move-lines-down<ret>"
-map global normal "<c-k>" ": move-lines-up<ret>"
+map global normal "ⓙ" ": move-line-below<ret>"
+map global normal "<c-k>" ": move-line-above<ret>"
 
 # Free alt-movement keys
 map global normal "<a-a>" "<a-j>"
@@ -84,3 +84,6 @@ map global insert "<c-l>" "<right>"
 # Split selectios to indented block
 # TODO: Make u a sub-mode of the user mode for utils
 map global user "u" "<a-:><a-;>i<ret><esc><gt><space>;gli<ret><esc><lt>" -docstring "break to indent"
+
+# Enter object selection mode
+map global user "o" ": select-objects<ret>" -docstring "select objects"
