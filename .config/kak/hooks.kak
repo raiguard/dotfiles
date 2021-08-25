@@ -12,6 +12,15 @@ hook global WinCreate .* %{
     git show-diff
     hook window BufWritePost .* %{ git update-diff }
     hook window BufReload .* %{ git update-diff }
+
+    # Set modelinefmt depending on client name
+    eval %sh{
+        if [[ %val{client} == "tools" || %val{client} == "docs" ]] then
+            echo "set window modelinefmt \"{{mode_info}} {keyword}%%val{client}{StatusLineValue} {enum}%%val{session}{StatusLine}\""
+        else
+            echo "set window modelinefmt \"{string}%%opt{modeline_git_branch} {StatusLineValue}%%val{bufname}{StatusLineValue}:%%val{cursor_line}:%%val{cursor_char_column}{StatusLine} %%sh{expr $kak_cursor_line \* 100 / $kak_buf_line_count}%%%%{{context_info}} {{mode_info}} {keyword}%%val{client}{StatusLineValue} {enum}%%val{session}{StatusLine}\""
+        fi
+    }
 }
 
 # Remove trailing whitespace on save
