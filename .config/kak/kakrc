@@ -77,7 +77,6 @@ plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
     def -hidden lsp-init -docstring "enable lsp and set up generic hooks" %{
         echo -debug "Enabling LSP for filetype %opt{filetype}"
         lsp-enable-window
-        set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
         set window lsp_auto_highlight_references true
 
@@ -104,9 +103,12 @@ plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
 }
 plug "lePerdu/kakboard"
 plug "occivink/kakoune-find"
+plug "occivink/kakoune-buffer-switcher"
 plug "occivink/kakoune-sort-selections"
 plug "occivink/kakoune-vertical-selection"
-plug "raiguard/one.kak" theme
+plug "raiguard/one.kak" theme %{
+    face global BufferSwitcherCurrent green
+}
 plug "raiguard/phantom.kak" %{
     require-module phantom
     phantom-enable
@@ -191,12 +193,15 @@ plug-autoload todo %{
     todo-add-mapping
 }
 
+source "~/dev/projects/personal/vinegar.kak/vinegar.kak"
+require-module vinegar
+
 # ========================================
 # GENERAL SETTINGS
 
 # Color scheme
 colorscheme one-darker
-# source "~/dev/projects/personal/one.kak/one-light.kak"
+# source "~/dev/projects/personal/one.kak/one-darker.kak"
 
 # Highlighters
 addhl global/ number-lines -relative -hlcursor -separator " ▏ " -min-digits 4
@@ -213,11 +218,11 @@ set global scrolloff 5,5
 # Auto-reload please!
 set global autoreload yes
 
-# Custom status bar format
-set global modelinefmt "{string}%%opt{modeline_git_branch} {StatusLineValue}%%val{bufname}{StatusLineValue}:%%val{cursor_line}:%%val{cursor_char_column}{StatusLine} %%sh{expr $kak_cursor_line \* 100 / $kak_buf_line_count}%%%%{{context_info}} {{mode_info}} {keyword}%%val{client}{StatusLineValue} {enum}%%val{session}{StatusLine}"
-
 # Use ripgrep instead of grep
 set global grepcmd 'rg -Hn --no-heading --trim'
+
+# Don't show info boxes by default
+# set global autoinfo ""
 
 # ========================================
 # EXTERNAL SETTINGS
@@ -240,3 +245,5 @@ map global normal <c-i> <tab>
 hook global WinSetOption filetype=rust %{
     rmhl window/rust
 }
+
+# source "~/dev/projects/personal/one.kak/one-darker.kak"

@@ -17,15 +17,15 @@ roots = [".git/"]
 command = "lua-language-server"
 args = ["-E", "/usr/share/lua-language-server/main.lua"]
 
-[language.lua.initialization_options]
-Lua.diagnostics.severity = { unused-local = "Warning", undefined-global = "Error", redefined-local = "Hint" }
+[language.lua.settings]
+Lua.diagnostics.severity = { unused-local = "Warning", undefined-global = "Error" }
 Lua.workspace.ignoreSubmodules = false
-Lua.diagnostics.disable = ["lowercase-global"]
+Lua.diagnostics.disable = ["lowercase-global", "redefined-local"]
 Lua.diagnostics.globals = ["__DebugAdapter", "__Profiler", "global", "data", "mods"]
 Lua.runtime.plugin = "/home/rai/dev/factorio/lua-plugin/plugin.lua"
 Lua.runtime.version = "Lua 5.2"
 Lua.telemetry.enable = false
-Lua.workspace.ignoreDir = [".vscode", "src/archive"]
+Lua.workspace.ignoreDir = [".vscode", "src/archive", "prototypes"]
 Lua.workspace.library = [
     "/home/rai/dev/projects/personal/flib",
     "/home/rai/dev/factorio/1/data/core/lualib",
@@ -39,11 +39,12 @@ filetypes = ["rust"]
 roots = ["Cargo.toml"]
 command = "rust-analyzer"
 
-[language.typescript]
+[language.tsx]
 filetypes = ["typescript"]
 roots = ["package.json"]
+offset_encoding = "utf-8"
 command = "typescript-language-server"
-args = ["--stdio"]
+args = ['--stdio']
 
 # SEMANTIC TOKENS
 

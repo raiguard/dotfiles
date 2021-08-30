@@ -12,7 +12,7 @@ map global goto "f" '<esc>: prompt -shell-script-candidates %{ rg --files } file
 map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
 
 # View files
-map global view "f" "<esc>: terminal-tab nnn<ret>" -docstring "files..."
+map global view "f" "<esc>: terminal ranger<ret>" -docstring "files..."
 
 # View lazygit
 map global view "g" "<esc>: terminal lazygit<ret>" -docstring "lazygit..."
@@ -64,7 +64,7 @@ map global normal "<a-j>" "J"
 map global normal "<a-k>" "K"
 
 # Remap extend-line to inner line
-map global normal "X" "<a-i><esc>: text-object-line<ret>"
+map global normal "X" "gh<a-i><esc>: text-object-line<ret>"
 
 # Select all occurances of current selection in file
 map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
@@ -87,3 +87,6 @@ map global user "u" "<a-:><a-;>i<ret><esc><gt><space>;gli<ret><esc><lt>" -docstr
 
 # Enter object selection mode
 map global user "o" ": select-objects<ret>" -docstring "select objects"
+
+# Pick buffers
+map global normal <backspace> ": buffer-switcher<ret>"
