@@ -63,9 +63,9 @@ plug "eburghar/kakpipe" do %{
 plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
     map global user "l" ": enter-user-mode lsp<ret>" -docstring "lsp..."
 
-    set global lsp_diagnostic_line_error_sign 'E'
+    set global lsp_diagnostic_line_error_sign '✕'
     # Workaround for the lack of a proper LineFlagWarnings face
-    set global lsp_diagnostic_line_warning_sign '{LineFlagWarnings}W'
+    set global lsp_diagnostic_line_warning_sign '{LineFlagWarnings}!'
 
     set global lsp_hover_anchor true
     set global lsp_hover_max_lines 10
@@ -112,7 +112,7 @@ plug "raiguard/one.kak" theme %{
 plug "raiguard/phantom.kak" %{
     require-module phantom
     phantom-enable
-phantom-add-alternate-mappings
+    phantom-add-alternate-mappings
 }
 
 plug "https://gitlab.com/Screwtapello/kakoune-state-save" %{
@@ -222,7 +222,7 @@ set global autoreload yes
 set global grepcmd 'rg -Hn --no-heading --trim'
 
 # Don't show info boxes by default
-# set global autoinfo ""
+set global autoinfo ""
 
 # ========================================
 # EXTERNAL SETTINGS
