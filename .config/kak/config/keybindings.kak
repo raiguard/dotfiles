@@ -90,3 +90,6 @@ map global user "o" ": select-objects<ret>" -docstring "select objects"
 
 # Pick buffers
 map global normal <backspace> ": buffer-switcher<ret>"
+
+# <c-i> is the sane way to jump forward
+map global normal <c-i> <tab>

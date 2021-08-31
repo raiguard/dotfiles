@@ -3,9 +3,6 @@ hook global WinSetOption filetype=rust %{
     lsp-init
     rainbow-enable-window
 
-    # Disable Rust regex highlighting
-    rmhl window/rust
-
     # Format on save
     hook window BufWritePre .* lsp-formatting-sync
     # Clippy

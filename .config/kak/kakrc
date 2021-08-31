@@ -1,39 +1,24 @@
-# ========================================
-# PLUG.KAK
-
-decl -hidden str plugkakdir "%val{config}/plugins/plug.kak"
-decl -hidden str plugkak "%opt{plugkakdir}/rc/plug.kak"
-try %{
-    source "%opt{plugkak}"
-} catch %sh{
-    if [ ! -d "$kak_opt_plugkakdir" ]; then
-        git clone https://github.com/robertmeta/plug.kak.git "$kak_opt_plugkakdir"
-        echo "source '%opt{plugkak}"
-    fi
-}
+source "%val{config}/plugins/plug.kak/rc/plug.kak"
 plug "andreyorst/plug.kak" noload
 
 # ========================================
 # PLUGINS
 
 # kakoune.cr (coderunner)
-try %sh{
+evaluate-commands %sh{
     kcr init kakoune
 }
 
 plug "alexherbo2/auto-pairs.kak" %{
     enable-auto-pairs
 }
+
 plug "alexherbo2/move-line.kak" %{
     require-module move-line
 }
-plug "alexherbo2/select.kak"
-# plug "alexherbo2/search-highlighter.kak" %{
-#     require-module search-highlighter
-#     search-highlighter-enable
-#     face global Search "default,rgb:%opt{subbg}"
-# }
+
 plug "andreyorst/smarttab.kak"
+
 plug "crizan/kak-rainbower" %{
     set global rainbow_mode 0
     set global rainbow_check_templates Y
@@ -42,24 +27,19 @@ plug "crizan/kak-rainbower" %{
     # Light theme:
     # set global rainbow_colors "rgb:daa520" "rgb:9932cc" "rgb:00bfff"
 }
-plug "Crote/kakoune-ranger"
+
 plug "delapouite/kakoune-buffers" %{
     alias global bo buffer-only
 }
+
 plug "delapouite/kakoune-mirror" %{
     map global normal "'" ": enter-user-mode -lock mirror<ret>"
-    # Use a non-default register to avoid conflicting with phantom.kak
-    # map global mirror d '"pZ<a-S><a-d>"pz<a-:>H' -docstring 'delete'
 }
-plug "delapouite/kakoune-npm"
-plug "delapouite/kakoune-palette"
+
 plug "delapouite/kakoune-text-objects"
+
 plug "dgmulf/local-kakrc" config %{ set global source_local_kakrc true }
-plug "eburghar/kakpipe" do %{
-    cargo install --force --path . --root ~/.local
-} config %{
-    require-module kakpipe
-}
+
 plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
     map global user "l" ": enter-user-mode lsp<ret>" -docstring "lsp..."
 
@@ -68,7 +48,6 @@ plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
     set global lsp_diagnostic_line_warning_sign '{LineFlagWarnings}!'
 
     set global lsp_hover_anchor true
-    set global lsp_hover_max_lines 10
 
     lsp-auto-hover-insert-mode-enable
 
@@ -101,14 +80,17 @@ plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
 
     hook global KakEnd .* lsp-exit
 }
+
 plug "lePerdu/kakboard"
-plug "occivink/kakoune-find"
-plug "occivink/kakoune-buffer-switcher"
-plug "occivink/kakoune-sort-selections"
-plug "occivink/kakoune-vertical-selection"
-plug "raiguard/one.kak" theme %{
+
+plug "occivink/kakoune-buffer-switcher" %{
     face global BufferSwitcherCurrent green
 }
+
+plug "occivink/kakoune-sort-selections"
+
+plug "raiguard/one.kak" theme
+
 plug "raiguard/phantom.kak" %{
     require-module phantom
     phantom-enable
@@ -176,28 +158,7 @@ plug "https://gitlab.com/Screwtapello/kakoune-state-save" %{
 }
 
 # ========================================
-# SCRIPTS
-# Sourced from autoload directory, gated behind modules
-
-def plug-autoload -params 1..2 -docstring "req <name> <commands>" %{
-    require-module "%arg{1}"
-    try %{ evaluate-commands "%arg{2}" } catch %{}
-}
-
-plug-autoload fandt
-
-plug-autoload "git-branch"
-
-plug-autoload todo %{
-    todo-enable
-    todo-add-mapping
-}
-
-source "~/dev/projects/personal/vinegar.kak/vinegar.kak"
-require-module vinegar
-
-# ========================================
-# GENERAL SETTINGS
+# GENERAL
 
 # Color scheme
 colorscheme one-darker
@@ -206,7 +167,6 @@ colorscheme one-darker
 # Highlighters
 addhl global/ number-lines -relative -hlcursor -separator " ▏ " -min-digits 4
 addhl global/ show-matching
-# addhl global/ show-whitespaces -tab "▏" -lf " " -nbsp "⋅" -spc " "
 addhl global/trailing-whitespaces regex "(\h+)$" "1:default,rgba:%opt{darkred}%opt{selectionalpha}"
 
 # RIP clippy and titles
@@ -221,29 +181,39 @@ set global autoreload yes
 # Use ripgrep instead of grep
 set global grepcmd 'rg -Hn --no-heading --trim'
 
-# Don't show info boxes by default
-set global autoinfo ""
-
 # ========================================
-# EXTERNAL SETTINGS
+# EXTERNAL CONFIGURATION
 
-def load -params 1 %{
-    source "%val{config}/%arg{1}.kak"
+def load -params 2 -hidden %{
+    source "%val{config}/%arg{1}/%arg{2}.kak"
 }
 
-load "commands"
-load "modes"
-load "hooks"
-load "keybindings"
+# TOOLS
 
-# ========================================
-# TEMPORARY
+load tool fandt
+load tool git-branch
+load tool todo
 
-map global normal <c-i> <tab>
+# GENERAL CONFIGURATION
 
-# FIXME: This can't go in the autoload file because that file loads before the included kak file
-hook global WinSetOption filetype=rust %{
-    rmhl window/rust
-}
+load config commands
+load config modes
+load config hooks
+load config keybindings
 
-# source "~/dev/projects/personal/one.kak/one-darker.kak"
+# FILETYPES
+
+load filetype cpp
+load filetype factorio-changelog
+load filetype json
+load filetype kak
+load filetype lua
+load filetype rust
+load filetype toml
+load filetype ts
+load filetype yaml
+
+# IN-DEVELOPMENT PLUGINS
+
+source "~/dev/projects/personal/vinegar.kak/vinegar.kak"
+require-module vinegar
