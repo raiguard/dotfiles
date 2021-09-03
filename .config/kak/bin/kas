@@ -11,5 +11,4 @@ if [ -n "$repo" ]; then
     fi
 fi
 
-# exec kak -clear # clear dead sessions automatically
 exec kak $args $@ # launch editor

@@ -208,6 +208,7 @@ load filetype factorio-changelog
 load filetype json
 load filetype kak
 load filetype lua
+load filetype python
 load filetype rust
 load filetype toml
 load filetype ts
