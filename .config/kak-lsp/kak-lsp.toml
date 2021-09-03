@@ -21,11 +21,11 @@ args = ["-E", "/usr/share/lua-language-server/main.lua"]
 Lua.diagnostics.severity = { unused-local = "Warning", undefined-global = "Error" }
 Lua.workspace.ignoreSubmodules = false
 Lua.diagnostics.disable = ["lowercase-global", "redefined-local"]
-Lua.diagnostics.globals = ["__DebugAdapter", "__Profiler", "global", "data", "mods"]
+Lua.diagnostics.globals = ["__DebugAdapter", "__Profiler", "global", "data", "mods", "log"]
 Lua.runtime.plugin = "/home/rai/dev/factorio/lua-plugin/plugin.lua"
 Lua.runtime.version = "Lua 5.2"
 Lua.telemetry.enable = false
-Lua.workspace.ignoreDir = [".vscode", "src/archive", "prototypes"]
+Lua.workspace.ignoreDir = [".vscode", "src/archive"]
 Lua.workspace.library = [
     "/home/rai/dev/projects/personal/flib",
     "/home/rai/dev/factorio/1/data/core/lualib",
