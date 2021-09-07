@@ -119,7 +119,7 @@ colors = {
 }
 
 layouts = [
-    layout.Columns(
+    layout.MonadTall(
         border_focus=colors["cyan"],
         margin=6
     ),
