@@ -17,22 +17,22 @@ roots = [".git/"]
 command = "lua-language-server"
 args = ["-E", "/usr/share/lua-language-server/main.lua"]
 
-[language.lua.settings]
-Lua.diagnostics.severity = { unused-local = "Warning", undefined-global = "Error" }
-Lua.workspace.ignoreSubmodules = false
-Lua.diagnostics.disable = ["lowercase-global", "redefined-local"]
-Lua.diagnostics.globals = ["__DebugAdapter", "__Profiler", "global", "data", "mods", "log"]
-Lua.runtime.plugin = "/home/rai/dev/factorio/lua-plugin/plugin.lua"
-Lua.runtime.version = "Lua 5.2"
-Lua.telemetry.enable = false
-Lua.workspace.ignoreDir = [".vscode", "src/archive"]
-Lua.workspace.library = [
+[language.lua.settings.Lua]
+diagnostics.severity = { unused-local = "Warning", undefined-global = "Error" }
+workspace.ignoreSubmodules = false
+diagnostics.disable = ["lowercase-global", "redefined-local"]
+diagnostics.globals = ["__DebugAdapter", "__Profiler", "global", "data", "mods", "log", "serpent", "table_size", "localised_print"]
+runtime.plugin = "/home/rai/dev/factorio/lua-plugin/plugin.lua"
+runtime.version = "Lua 5.2"
+telemetry.enable = false
+workspace.ignoreDir = [".vscode", "src/archive"]
+workspace.library = [
     "/home/rai/dev/projects/personal/flib",
     "/home/rai/dev/factorio/1/data/core/lualib",
     "/home/rai/dev/factorio/1/data/core/prototypes",
     "/home/rai/dev/factorio/runtime-api.lua"
 ]
-Lua.workspace.preloadFileSize = 10000
+workspace.preloadFileSize = 10000
 
 [language.rust]
 filetypes = ["rust"]
