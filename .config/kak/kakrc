@@ -163,6 +163,7 @@ plug "https://gitlab.com/Screwtapello/kakoune-state-save" %{
 # Color scheme
 colorscheme one-darker
 # source "~/dev/projects/personal/one.kak/one-darker.kak"
+one-enable-curly-underlines
 
 # Highlighters
 addhl global/ number-lines -relative -hlcursor -separator " ▏ " -min-digits 4
