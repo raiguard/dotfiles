@@ -122,13 +122,14 @@ plug "https://gitlab.com/Screwtapello/kakoune-state-save" %{
 
 # Color scheme
 # colorscheme one-darker
-source "~/dev/projects/personal/one.kak/one-darker.kak"
-one-enable-fancy-underlines
+# source "~/dev/projects/personal/one.kak/one-darker.kak"
+# one-enable-fancy-underlines
+colorscheme tomorrow-night
 
 # Highlighters
 addhl global/ number-lines -relative -hlcursor -separator " ▏ " -min-digits 4
 addhl global/ show-matching
-addhl global/trailing-whitespaces regex "(\h+)$" "1:default,rgba:%opt{darkred}%opt{selectionalpha}"
+try %{ addhl global/trailing-whitespaces regex "(\h+)$" "1:default,rgba:%opt{darkred}%opt{selectionalpha}" }
 
 # RIP clippy and titles
 set global ui_options terminal_assistant=off terminal_set_title=false
