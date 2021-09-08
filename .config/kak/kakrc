@@ -7,6 +7,7 @@ plug "andreyorst/plug.kak" noload
 # kakoune.cr (coderunner)
 evaluate-commands %sh{
     kcr init kakoune
+    kak-lsp --kakoune -s $kak_session
 }
 
 plug "alexherbo2/auto-pairs.kak" %{
@@ -39,42 +40,6 @@ plug "delapouite/kakoune-mirror" %{
 plug "delapouite/kakoune-text-objects"
 
 plug "dgmulf/local-kakrc" config %{ set global source_local_kakrc true }
-
-plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
-    map global user "l" ": enter-user-mode lsp<ret>" -docstring "lsp..."
-
-    set global lsp_diagnostic_line_error_sign '✕'
-    # Workaround for the lack of a proper LineFlagWarnings face
-    set global lsp_diagnostic_line_warning_sign '{LineFlagWarnings}!'
-
-    set global lsp_hover_anchor true
-
-    lsp-auto-hover-insert-mode-enable
-
-    def lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
-
-    def -hidden lsp-init -docstring "enable lsp and set up generic hooks" %{
-        echo -debug "Enabling LSP for filetype %opt{filetype}"
-        lsp-enable-window
-
-        set window lsp_auto_highlight_references true
-
-        inlay-diagnostics-enable
-
-        # Function signature help in status bar
-        lsp-auto-signature-help-enable
-
-        # Semantic tokens
-        hook window -group semantic-tokens BufReload .* lsp-semantic-tokens
-        hook window -group semantic-tokens NormalIdle .* lsp-semantic-tokens
-        hook window -group semantic-tokens InsertIdle .* lsp-semantic-tokens
-        hook -once -always window WinSetOption filetype=.* %{
-            rmhooks window semantic-tokens
-        }
-    }
-
-    hook global KakEnd .* lsp-exit
-}
 
 plug "lePerdu/kakboard"
 
@@ -156,9 +121,9 @@ plug "https://gitlab.com/Screwtapello/kakoune-state-save" %{
 # GENERAL
 
 # Color scheme
-colorscheme one-darker
-# source "~/dev/projects/personal/one.kak/one-darker.kak"
-one-enable-curly-underlines
+# colorscheme one-darker
+source "~/dev/projects/personal/one.kak/one-darker.kak"
+one-enable-fancy-underlines
 
 # Highlighters
 addhl global/ number-lines -relative -hlcursor -separator " ▏ " -min-digits 4
@@ -196,6 +161,7 @@ load config commands
 load config modes
 load config hooks
 load config keybindings
+load config lsp
 
 # FILETYPES
 

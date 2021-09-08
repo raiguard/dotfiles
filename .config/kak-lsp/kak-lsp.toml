@@ -20,7 +20,7 @@ args = ["-E", "/usr/share/lua-language-server/main.lua"]
 [language.lua.settings.Lua]
 diagnostics.severity = { unused-local = "Warning", undefined-global = "Error" }
 workspace.ignoreSubmodules = false
-diagnostics.disable = ["lowercase-global", "redefined-local"]
+# diagnostics.disable = ["lowercase-global", "redefined-local"]
 diagnostics.globals = ["__DebugAdapter", "__Profiler", "global", "data", "mods", "log", "serpent", "table_size", "localised_print"]
 runtime.plugin = "/home/rai/dev/factorio/lua-plugin/plugin.lua"
 runtime.version = "Lua 5.2"
