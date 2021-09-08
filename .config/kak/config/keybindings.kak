@@ -69,12 +69,6 @@ map global normal "X" "gh<a-i><esc>: text-object-line<ret>"
 # Select all occurances of current selection in file
 map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
 
-# Disable escape to end macro
-hook global NormalKey Q %{
-    map global normal "<esc>" ""
-    hook -always -once global NormalKey Q %{ unmap global normal "<esc>" "" }
-}
-
 # Move while in insert mode
 map global insert "ⓗ" "<left>"
 map global insert "ⓙ" "<down>"

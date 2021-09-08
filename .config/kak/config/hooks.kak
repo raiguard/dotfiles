@@ -29,14 +29,10 @@ hook global InsertCompletionHide .* %{
     map window insert <s-tab> <s-tab>
 }
 
-hook global WinDisplay .* %{
-    echo -debug "SET FOR %val{client}"
-    # Set status bar format depending on client name
-    evaluate-commands %sh{
-        if [[ $kak_client == "tools" || $kak_client == "docs" ]]; then
-            echo "set window modelinefmt \"{{mode_info}} {keyword}%%val{client}{StatusLineValue} {enum}%%val{session}{StatusLine}\""
-        else
-            echo "set window modelinefmt \"{string}%%opt{modeline_git_branch} {StatusLineValue}%%val{bufname}{StatusLineValue}:%%val{cursor_line}:%%val{cursor_char_column}{StatusLine} %%sh{expr $kak_cursor_line \* 100 / $kak_buf_line_count}%%%%{{context_info}} {{mode_info}} {keyword}%%val{client}{StatusLineValue} {enum}%%val{session}{StatusLine}\""
-        fi
-    }
+hook global WinDisplay .* %{ status-bar-update }
+
+# Disable escape to end macro
+hook global NormalKey Q %{
+    map global normal "<esc>" ""
+    hook -always -once global NormalKey Q %{ unmap global normal "<esc>" "" }
 }

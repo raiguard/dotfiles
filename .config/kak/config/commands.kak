@@ -37,7 +37,6 @@ def inlay-diagnostics-disable %{
 }
 
 def status-bar-update %{
-    echo -debug "SET FOR %val{client}"
     # Set status bar format depending on client name
     evaluate-commands %sh{
         if [[ $kak_client == "tools" || $kak_client == "docs" ]]; then
