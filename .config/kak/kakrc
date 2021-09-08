@@ -59,12 +59,7 @@ plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . } config %{
 
         set window lsp_auto_highlight_references true
 
-        hook window ModeChange (push|pop):.*:insert %{
-            lsp-inline-diagnostics-disable window
-        }
-        hook window ModeChange (push|pop):insert:.* %{
-            lsp-inline-diagnostics-enable window
-        }
+        inlay-diagnostics-enable
 
         # Function signature help in status bar
         lsp-auto-signature-help-enable
