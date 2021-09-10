@@ -14,7 +14,7 @@ define-command buffer-only -docstring 'delete all saved buffers except current o
 }
 alias global bo buffer-only
 
-define-command buffer-only! -docstring 'delete all buffers except current one' %{
+define-command buffer-only-force -docstring 'delete all buffers except current one' %{
   evaluate-commands %sh{
     deleted=0
     eval "set -- $kak_quoted_buflist"
@@ -28,4 +28,4 @@ define-command buffer-only! -docstring 'delete all buffers except current one' %
     done
   }
 }
-alias global bo! buffer-only!
+alias global bo! buffer-only-force
