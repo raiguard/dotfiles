@@ -1,26 +1,19 @@
-source "%val{config}/plugins/plug.kak/rc/plug.kak"
-plug "andreyorst/plug.kak" noload
+evaluate-commands %sh{
+    kcr init kakoune
+    cork init
+    kak-lsp --kakoune -s $kak_session
+}
 
 # ========================================
 # PLUGINS
 
-# kakoune.cr (coderunner)
-evaluate-commands %sh{
-    kcr init kakoune
-    kak-lsp --kakoune -s $kak_session
-}
-
-plug "alexherbo2/auto-pairs.kak" %{
+cork auto-pairs "https://github.com/alexherbo2/auto-pairs.kak" %{
     enable-auto-pairs
 }
 
-plug "alexherbo2/move-line.kak" %{
-    require-module move-line
-}
+cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
 
-plug "andreyorst/smarttab.kak"
-
-plug "crizan/kak-rainbower" %{
+cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
     set global rainbow_mode 0
     set global rainbow_check_templates Y
     # Dark theme:
@@ -29,35 +22,31 @@ plug "crizan/kak-rainbower" %{
     # set global rainbow_colors "rgb:daa520" "rgb:9932cc" "rgb:00bfff"
 }
 
-plug "delapouite/kakoune-buffers" %{
-    alias global bo buffer-only
-}
-
-plug "delapouite/kakoune-mirror" %{
+cork kakoune-mirror "https://github.com/delapouite/kakoune-mirror" %{
     map global normal "'" ": enter-user-mode -lock mirror<ret>"
 }
 
-plug "delapouite/kakoune-text-objects"
+cork kakoune-text-objects "https://github.com/delapouite/kakoune-text-objects"
 
-plug "dgmulf/local-kakrc" config %{ set global source_local_kakrc true }
+cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
+    set global source_local_kakrc true
+}
 
-plug "lePerdu/kakboard"
+cork kakboard "https://github.com/lePerdu/kakboard"
 
-plug "occivink/kakoune-buffer-switcher" %{
+cork kakoune-buffer-switcher "https://github.com/occivink/kakoune-buffer-switcher" %{
     face global BufferSwitcherCurrent green
 }
 
-plug "occivink/kakoune-sort-selections"
+cork kakoune-sort-selections "https://github.com/occivink/kakoune-sort-selections"
 
-plug "raiguard/one.kak" theme
-
-plug "raiguard/phantom.kak" %{
+cork phantom.kak "https://github.com/raiguard/phantom.kak" %{
     require-module phantom
     phantom-enable
     phantom-add-alternate-mappings
 }
 
-plug "https://gitlab.com/Screwtapello/kakoune-state-save" %{
+cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save" %{
     hook global KakBegin .* %{
         # Defaults
         state-save-reg-load colon
@@ -151,6 +140,7 @@ def load -params 2 -hidden %{
 
 # TOOLS
 
+# load tool buffer
 load tool fandt
 load tool git-branch
 load tool todo
