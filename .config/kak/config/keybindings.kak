@@ -12,7 +12,7 @@ map global goto "f" '<esc>: prompt -shell-script-candidates %{ rg --files } file
 map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
 
 # View files
-map global view "f" "<esc>: terminal ranger<ret>" -docstring "files..."
+map global view "f" "<esc>: terminal nnn<ret>" -docstring "files..."
 
 # View lazygit
 map global view "g" "<esc>: terminal lazygit<ret>" -docstring "lazygit..."
