@@ -34,7 +34,7 @@ hook global WinSetOption filetype=lua %@
     set window softtabstop 2
     set window indentwidth 2
 
-    addhl window/ column 121 Ruler
+    addhl window/ column 121 "default,rgb:%opt{subbg}"
 
     # set window formatcmd stylua
     # hook window BufWritePre .* format

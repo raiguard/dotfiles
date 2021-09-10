@@ -121,10 +121,9 @@ plug "https://gitlab.com/Screwtapello/kakoune-state-save" %{
 # GENERAL
 
 # Color scheme
-# colorscheme one-darker
-# source "~/dev/projects/personal/one.kak/one-darker.kak"
-# one-enable-fancy-underlines
-colorscheme tomorrow-night
+colorscheme one-darker
+# source "~/dev/projects/personal/one.kak/one-light.kak"
+one-enable-fancy-underlines
 
 # Highlighters
 addhl global/ number-lines -relative -hlcursor -separator " ▏ " -min-digits 4

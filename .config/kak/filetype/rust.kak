@@ -5,8 +5,6 @@ hook global WinSetOption filetype=rust %{
 
     # Format on save
     hook window BufWritePre .* lsp-formatting-sync
-    # Clippy
-    set window lsp_server_configuration rust.clippy_preference="on"
 
     # Inlay hints
     hook window -group rust-inlay-hints BufReload .* rust-analyzer-inlay-hints
