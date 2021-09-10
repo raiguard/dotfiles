@@ -46,8 +46,8 @@ map global normal "<a-?>" "<a-?>(?i)"
 
 # Move lines up/down
 # This is a hack combined with kitty (see .config/kitty/kitty.conf) to allow use of reserved key combos that I don't care about
-map global normal "ⓙ" ": move-line-below<ret>"
-map global normal "<c-k>" ": move-line-above<ret>"
+map global normal "<c-a-j>" ": move-line-below<ret>"
+map global normal "<c-a-k>" ": move-line-above<ret>"
 
 # Free alt-movement keys
 map global normal "<a-a>" "<a-j>"
