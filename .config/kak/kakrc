@@ -16,10 +16,6 @@ cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
 cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
     set global rainbow_mode 0
     set global rainbow_check_templates Y
-    # Dark theme:
-    set global rainbow_colors "rgb:ffd700" "rgb:da70d6" "rgb:87cefa"
-    # Light theme:
-    # set global rainbow_colors "rgb:daa520" "rgb:9932cc" "rgb:00bfff"
 }
 
 cork kakoune-mirror "https://github.com/delapouite/kakoune-mirror" %{
@@ -39,6 +35,9 @@ cork kakoune-buffer-switcher "https://github.com/occivink/kakoune-buffer-switche
 }
 
 cork kakoune-sort-selections "https://github.com/occivink/kakoune-sort-selections"
+
+# TODO: Cork doesn't support color schemes yet
+# cork one.kak "https://github.com/raiguard/one.kak"
 
 cork phantom.kak "https://github.com/raiguard/phantom.kak" %{
     require-module phantom
@@ -110,8 +109,8 @@ cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save" %{
 # GENERAL
 
 # Color scheme
-colorscheme one-darker
-# source "~/dev/projects/personal/one.kak/one-light.kak"
+# colorscheme one-darker
+source "~/dev/projects/personal/one.kak/colors/one-darker.kak"
 one-enable-fancy-underlines
 
 # Highlighters
