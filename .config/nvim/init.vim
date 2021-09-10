@@ -102,7 +102,42 @@ let g:sneak#label = 1
 --     qflist_previewer = require'telescope.previewers'.qflist.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_qflist.new`
 --   }
 -- }
-require("lspconfig").sumneko_lua.setup {
+local nvim_lsp = require('lspconfig')
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  -- Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+end
+nvim_lsp.sumneko_lua.setup {
+    on_attach = on_attach,
     cmd = {"lua-language-server", "-E", "/usr/share/lua-language-server/main.lua"},
     settings = {
         Lua = {
@@ -131,6 +166,9 @@ require("lspconfig").sumneko_lua.setup {
             }
         }
     }
+}
+nvim_lsp.rust_analyzer.setup{
+    on_attach = on_attach,
 }
 EOF
 
@@ -318,42 +356,6 @@ nnoremap k gk
 nmap <silent> <leader>cp <Plug>(coc-diagnostic-prev)
 nmap <silent> <leader>cn <Plug>(coc-diagnostic-next)
 
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Find symbol of current document.
-nnoremap <silent> \o  :<C-u>CocList outline<cr>
-
-" Search workspace symbols.
-nnoremap <silent> \s  :<C-u>CocList -I symbols<cr>
-
-" Implement methods for trait
-nnoremap <silent> \i  :call CocActionAsync('codeAction', '', 'Implement missing members')<cr>
-
-" Show actions available at this location
-nnoremap <silent> \a  :CocAction<cr>
-
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-" Project wide search
-nnoremap <leader>sw :CocSearch <c-r>=expand("<cword>")<cr><cr>
-nnoremap <leader>sl :CocSearch <c-r>0<cr>
-nnoremap <leader>ss :CocSearch<space>
-
 " FZF shortcuts
 " nnoremap <leader>fb :Buffers<cr>
 " nnoremap <leader>ff :Files<cr>
@@ -430,9 +432,9 @@ nnoremap <leader>do :call GotoWindow(g:vimspector_session_windows.output)<cr>
 nnoremap <leader>de :call vimspector#Reset()<cr>
 
 nmap <leader>dl <Plug>VimspectorStepInto
+nmap <leader>d_ <Plug>VimspectorRestart
 nmap <leader>dj <Plug>VimspectorStepOver
 nmap <leader>dk <Plug>VimspectorStepOut
-nmap <leader>d_ <Plug>VimspectorRestart
 nnoremap <leader>d<space> :call vimspector#Continue()<cr>
 
 nmap <leader>drc <Plug>VimspectorRunToCursor
