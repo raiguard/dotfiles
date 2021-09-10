@@ -178,5 +178,8 @@ load filetype yaml
 
 # IN-DEVELOPMENT PLUGINS
 
-source "~/dev/projects/personal/vinegar.kak/vinegar.kak"
-require-module vinegar
+load wip highlighters
+
+source "~/dev/projects/personal/location-list.kak/rc/location-list.kak"
+map global user q ": enter-user-mode location-list-alt<ret>"
+map global user Q ": enter-user-mode -lock location-list-alt<ret>"
