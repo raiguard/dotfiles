@@ -1,3 +1,7 @@
+evaluate-commands %sh{
+    kak-lsp --kakoune -s $kak_session
+}
+
 map global user "l" ": enter-user-mode lsp<ret>" -docstring "lsp..."
 
 set global lsp_diagnostic_line_error_sign '✕'

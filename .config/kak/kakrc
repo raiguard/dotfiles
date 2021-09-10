@@ -1,7 +1,6 @@
 evaluate-commands %sh{
     kcr init kakoune
     cork init
-    kak-lsp --kakoune -s $kak_session
 }
 
 # ========================================
