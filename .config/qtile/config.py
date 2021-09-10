@@ -26,7 +26,7 @@
 
 from typing import List  # noqa: F401
 
-from libqtile import bar, layout, widget
+from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
@@ -72,15 +72,34 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
 
     # Launch applications
-    Key([mod], "r", lazy.spawn("rofi -show run")),
+    Key([mod], "r", lazy.spawn("ulauncher")),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
 
     # Focus screen
     Key([mod], "comma", lazy.to_screen(1)),
     Key([mod], "period", lazy.to_screen(0)),
+
+    # Media keys
+    Key([], "XF86AudioNext", lazy.spawn("mpc next")),
+    Key([], "XF86AudioPrev", lazy.spawn("mpc prev")),
+    Key([], "XF86AudioPlay", lazy.spawn("mpc toggle")),
+
+    # general volume
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -c 0 -q set Master 2dB+")),
+    Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -c 0 -q set Master 2dB-")),
+
+    # music volume
+    Key(["mod4"], "XF86AudioRaiseVolume", lazy.spawn("mpc volume +5")),
+    Key(["mod4"], "XF86AudioLowerVolume", lazy.spawn("mpc volume -5")),
 ]
 
 groups = [Group(i) for i in "uiop"]
+# wallpapers = ["~/pictures/wallpapers/flying girl 1.jpg", "~/pictures/wallpapers/flying girl 5.jpg", "~/pictures/wallpapers/flying girl 6.jpg", "~/pictures/wallpapers/flying girl 7.jpg"]
+
+# @hook.subscribe.setgroup
+# def set_wallpaper():
+#     wallpaper = wallpapers[qtile.groups.index(qtile.current_group)]
+#     qtile.paint_screen(qtile.current_screen, wallpaper, mode="fill")
 
 for i in groups:
     keys.extend([
@@ -165,6 +184,10 @@ screens = [
                     cityid='5781087',
                     metric=False,
                     foreground=colors["lightorange"]
+                ),
+                widget.Sep(padding=15, linewidth=1, foreground=colors["comment"]),
+                widget.Volume(
+                    foreground=colors["cyan"]
                 ),
                 widget.Sep(padding=15, linewidth=1, foreground=colors["comment"]),
                 widget.Clock(format='%a, %b %d %H:%M'),
