@@ -35,8 +35,7 @@ cork kakoune-buffer-switcher "https://github.com/occivink/kakoune-buffer-switche
 
 cork kakoune-sort-selections "https://github.com/occivink/kakoune-sort-selections"
 
-# TODO: Cork doesn't support color schemes yet
-# cork one.kak "https://github.com/raiguard/one.kak"
+cork one.kak "https://github.com/raiguard/one.kak"
 
 cork phantom.kak "https://github.com/raiguard/phantom.kak" %{
     require-module phantom
@@ -108,8 +107,7 @@ cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save" %{
 # GENERAL
 
 # Color scheme
-# colorscheme one-darker
-source "~/dev/projects/personal/one.kak/colors/one-darker.kak"
+colorscheme one-darker
 one-enable-fancy-underlines
 
 # Highlighters
