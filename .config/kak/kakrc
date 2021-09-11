@@ -10,21 +10,9 @@ cork auto-pairs "https://github.com/alexherbo2/auto-pairs.kak" %{
     enable-auto-pairs
 }
 
-cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
-
 cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
     set global rainbow_mode 0
     set global rainbow_check_templates Y
-}
-
-cork kakoune-mirror "https://github.com/delapouite/kakoune-mirror" %{
-    map global normal "'" ": enter-user-mode -lock mirror<ret>"
-}
-
-cork kakoune-text-objects "https://github.com/delapouite/kakoune-text-objects"
-
-cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
-    set global source_local_kakrc true
 }
 
 cork kakboard "https://github.com/lePerdu/kakboard"
@@ -33,15 +21,11 @@ cork kakoune-buffer-switcher "https://github.com/occivink/kakoune-buffer-switche
     face global BufferSwitcherCurrent green
 }
 
-cork kakoune-sort-selections "https://github.com/occivink/kakoune-sort-selections"
-
-cork one.kak "https://github.com/raiguard/one.kak"
-
-cork phantom.kak "https://github.com/raiguard/phantom.kak" %{
-    require-module phantom
-    phantom-enable
-    phantom-add-alternate-mappings
+cork kakoune-mirror "https://github.com/delapouite/kakoune-mirror" %{
+    map global normal "'" ": enter-user-mode -lock mirror<ret>"
 }
+
+cork kakoune-sort-selections "https://github.com/occivink/kakoune-sort-selections"
 
 cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save" %{
     hook global KakBegin .* %{
@@ -102,6 +86,22 @@ cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save" %{
         state-save-reg-save p
     }
 }
+
+cork kakoune-text-objects "https://github.com/delapouite/kakoune-text-objects"
+
+cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
+    set global source_local_kakrc true
+}
+
+cork one.kak "https://github.com/raiguard/one.kak"
+
+cork phantom.kak "https://github.com/raiguard/phantom.kak" %{
+    require-module phantom
+    phantom-enable
+    phantom-add-alternate-mappings
+}
+
+cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
 
 # ========================================
 # GENERAL
@@ -166,6 +166,7 @@ load filetype yaml
 # IN-DEVELOPMENT PLUGINS
 
 load wip highlighters
+load wip shell-loop
 
 source "~/dev/projects/personal/location-list.kak/rc/location-list.kak"
 map global user q ": enter-user-mode location-list-alt<ret>"
