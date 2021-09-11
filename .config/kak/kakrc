@@ -3,6 +3,10 @@ evaluate-commands %sh{
     cork init
 }
 
+# This panics if called in the same eval block
+evaluate-commands %sh{
+    kak-lsp --kakoune -s $kak_session
+}
 # ========================================
 # PLUGINS
 
