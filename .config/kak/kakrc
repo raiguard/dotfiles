@@ -7,6 +7,10 @@ evaluate-commands %sh{
 evaluate-commands %sh{
     kak-lsp --kakoune -s $kak_session
 }
+
+# TEMPORARY
+source "%val{config}/wip/colorscheme.kak"
+
 # ========================================
 # PLUGINS
 
@@ -144,6 +148,7 @@ load tool buffer
 load tool fandt
 load tool git-branch
 load tool move-lines
+load tool replace-mode
 load tool todo
 
 # GENERAL CONFIGURATION
@@ -163,12 +168,14 @@ load filetype kak
 load filetype lua
 load filetype python
 load filetype rust
+load filetype sh
 load filetype toml
 load filetype ts
 load filetype yaml
 
-# IN-DEVELOPMENT PLUGINS
+# WIP
 
+# load wip colorscheme
 load wip highlighters
 load wip shell-loop
 
