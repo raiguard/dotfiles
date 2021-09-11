@@ -12,8 +12,6 @@ hook global WinCreate .* %{
     git show-diff
     hook window BufWritePost .* %{ git update-diff }
     hook window BufReload .* %{ git update-diff }
-
-    # status-bar-update
 }
 
 # Remove trailing whitespace on save
@@ -29,6 +27,7 @@ hook global InsertCompletionHide .* %{
     map window insert <s-tab> <s-tab>
 }
 
+# Configure status bar when a window is shown
 hook global WinDisplay .* %{ status-bar-update }
 
 # Disable escape to end macro

@@ -2,9 +2,6 @@
 map global normal "#" ": comment-line<ret>"
 map global normal "<a-#>" ": comment-block<ret>"
 
-# Math prompt
-map global normal "=" ': prompt math: %{exec "a%val{text}<lt>esc>|bc<lt>ret>"}<ret>'
-
 # Go to file (basic fuzzy finder)
 map global goto "f" '<esc>: prompt -shell-script-candidates %{ rg --files } file: %{ edit %val{text} }<ret>' -docstring "file"
 
@@ -44,11 +41,6 @@ map global normal "?" "?(?i)"
 map global normal "<a-/>" "<a-/>(?i)"
 map global normal "<a-?>" "<a-?>(?i)"
 
-# Move lines up/down
-# This is a hack combined with kitty (see .config/kitty/kitty.conf) to allow use of reserved key combos that I don't care about
-map global normal "<a-j>" ": move-lines-down<ret>"
-map global normal "<a-k>" ": move-lines-up<ret>"
-
 # Free alt-movement keys
 map global normal "<a-a>" "<a-j>"
 map global normal "<a-A>" "<a-J>"
@@ -78,12 +70,6 @@ map global insert "<c-l>" "<right>"
 # Split selectios to indented block
 # TODO: Make u a sub-mode of the user mode for utils
 map global user "u" "<a-:><a-;>i<ret><esc><gt><space>;gli<ret><esc><lt>" -docstring "break to indent"
-
-# Enter object selection mode
-map global user "o" ": select-objects<ret>" -docstring "select objects"
-
-# Pick buffers
-map global normal <backspace> ": buffer-switcher<ret>"
 
 # <c-i> is the sane way to jump forward
 map global normal <c-i> <tab>

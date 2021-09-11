@@ -27,6 +27,7 @@ cork kakboard "https://github.com/lePerdu/kakboard"
 
 cork kakoune-buffer-switcher "https://github.com/occivink/kakoune-buffer-switcher" %{
     face global BufferSwitcherCurrent green
+    map global normal <backspace> ": buffer-switcher<ret>"
 }
 
 cork kakoune-mirror "https://github.com/delapouite/kakoune-mirror" %{
@@ -95,7 +96,9 @@ cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save" %{
     }
 }
 
-cork kakoune-text-objects "https://github.com/delapouite/kakoune-text-objects"
+cork kakoune-text-objects "https://github.com/delapouite/kakoune-text-objects" %{
+    map global user "o" ": select-objects<ret>" -docstring "select objects"
+}
 
 cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
     set global source_local_kakrc true
@@ -121,7 +124,7 @@ one-enable-fancy-underlines
 # Highlighters
 addhl global/ number-lines -relative -hlcursor -separator " ▏ " -min-digits 4
 addhl global/ show-matching
-try %{ addhl global/trailing-whitespaces regex "(\h+)$" "1:default,rgba:%opt{darkred}%opt{selectionalpha}" }
+addhl global/trailing-whitespaces regex "(\h+)$" "1:default,rgba:%opt{darkred}%opt{selectionalpha}"
 
 # RIP clippy and titles
 set global ui_options terminal_assistant=off terminal_set_title=false
@@ -139,7 +142,7 @@ set global grepcmd 'rg -Hn --no-heading --trim'
 # EXTERNAL CONFIGURATION
 
 def load -params 2 -hidden %{
-    source "%val{config}/%arg{1}/%arg{2}.kak"
+    try %{ source "%val{config}/%arg{1}/%arg{2}.kak" }
 }
 
 # TOOLS
