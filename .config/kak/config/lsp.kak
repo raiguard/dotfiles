@@ -1,4 +1,5 @@
 map global user "l" ": enter-user-mode lsp<ret>" -docstring "lsp..."
+map global normal "ⓗ" ": lsp-hover<ret>"
 
 set global lsp_diagnostic_line_error_sign '✕'
 
@@ -25,23 +26,23 @@ def -hidden lsp-init -docstring "enable lsp and set up generic hooks" %{
         rmhooks window semantic-tokens
     }
 
-    # Auto-hide inlay diagnostics in insert mode, if they're enabled at all
-    def inlay-diagnostics-enable %{
-        lsp-inlay-diagnostics-enable window
-        hook window -group inlay-diagnostics ModeChange (push|pop):.*:insert %{
-            lsp-inlay-diagnostics-disable window
-        }
-        hook window -group inlay-diagnostics ModeChange (push|pop):insert:.* %{
-            lsp-inlay-diagnostics-enable window
-        }
-    }
-    def inlay-diagnostics-disable %{
-        lsp-inlay-diagnostics-disable window
-        remove-hooks window inlay-diagnostics
-    }
-
     # Enable inlay diagnostics
     inlay-diagnostics-enable
+}
+
+# Auto-hide inlay diagnostics in insert mode, if they're enabled at all
+def inlay-diagnostics-enable %{
+    lsp-inlay-diagnostics-enable window
+    hook window -group inlay-diagnostics ModeChange (push|pop):.*:insert %{
+        lsp-inlay-diagnostics-disable window
+    }
+    hook window -group inlay-diagnostics ModeChange (push|pop):insert:.* %{
+        lsp-inlay-diagnostics-enable window
+    }
+}
+def inlay-diagnostics-disable %{
+    lsp-inlay-diagnostics-disable window
+    remove-hooks window inlay-diagnostics
 }
 
 hook global KakEnd .* lsp-exit
