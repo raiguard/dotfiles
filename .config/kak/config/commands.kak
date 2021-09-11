@@ -1,4 +1,4 @@
-# def edit-kakrc %{ e ~/.config/kak/kakrc }
+def edit-kakrc %{ e ~/.config/kak/kakrc }
 
 def ide %{
     rename-client main
