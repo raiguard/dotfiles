@@ -148,7 +148,7 @@ def load -params 2 -hidden %{
 # TOOLS
 
 load tool buffer
-load tool fandt
+# load tool fandt
 load tool git-branch
 load tool move-lines
 load tool replace-mode
