@@ -150,6 +150,7 @@ load tool buffer
 # load tool fandt
 load tool git-branch
 load tool move-lines
+load tool nnn
 load tool replace-mode
 load tool todo
 
