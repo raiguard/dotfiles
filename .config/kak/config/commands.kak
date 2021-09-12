@@ -7,9 +7,6 @@ def ide %{
     new eval %{ rename-client tools; edit -scratch *tools-scratch*; status-bar-update }
     set global toolsclient tools
 
-    new eval %{ rename-client docs; edit -scratch *docs-scratch*; status-bar-update; }
-    set global docsclient docs
-
     focus main
 }
 
