@@ -20,3 +20,6 @@ def status-bar-update %{
         fi
     }
 }
+
+alias global qa kill
+alias global qa! kill!
