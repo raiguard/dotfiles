@@ -9,7 +9,15 @@ map global goto "f" '<esc>: prompt -shell-script-candidates %{ rg --files } file
 map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
 
 # View files
-map global normal "<minus>" "<esc>: kitty-terminal-overlay nnn<ret>" -docstring "files..."
+map global normal "<minus>" "<esc>: connect kitty-terminal-overlay nnn<ret>" -docstring "files..."
+decl pick-nnn %{
+    edit %sh{
+        echo "echo -debug foo"
+        BLK="04" CHR="04" DIR="04" EXE="00" REG="00" HARDLINK="00" SYMLINK="06" MISSING="00" ORPHAN="01" FIFO="0F" SOCK="0F" OTHER="02"
+        export NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER"
+        nnn -p -
+    }
+}
 
 # View lazygit
 map global view "g" "<esc>: kitty-terminal-overlay lazygit<ret>" -docstring "lazygit..."
