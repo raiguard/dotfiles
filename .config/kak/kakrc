@@ -107,7 +107,6 @@ cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
 cork one.kak "https://github.com/raiguard/one.kak"
 
 cork phantom.kak "https://github.com/raiguard/phantom.kak" %{
-    require-module phantom
     phantom-enable
     phantom-add-alternate-mappings
 }
