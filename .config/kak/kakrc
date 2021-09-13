@@ -172,6 +172,7 @@ load filetype json
 load filetype kak
 load filetype lua
 load filetype python
+load filetype rainmeter
 load filetype rust
 load filetype sh
 load filetype toml
@@ -189,3 +190,6 @@ map global user Q ": enter-user-mode -lock location-list-alt<ret>"
 
 # kitty.kak
 source "~/dev/projects/personal/kitty.kak/rc/kitty.kak"
+
+# rainmeter.kak
+source "~/dev/projects/personal/rainmeter.kak/rc/rainmeter.kak"
