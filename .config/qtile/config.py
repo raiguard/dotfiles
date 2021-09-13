@@ -154,6 +154,8 @@ screens = [
                     highlight_method='line',
                     this_current_screen_border=colors["cyan"]
                 ),
+                widget.Sep(padding=15, linewidth=1, foreground=colors["comment"]),
+                widget.CurrentLayout(),
                 widget.Spacer(length=bar.STRETCH),
                 widget.Systray(),
                 widget.Sep(padding=15, linewidth=1, foreground=colors["comment"]),
