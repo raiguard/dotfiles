@@ -1,4 +1,4 @@
-# Open NNN in an overlay window
+# Pick a file then open it in kak
 # Depends on raiguard/kitty.kak for the overlay window
 define-command nnn-current -params 0..1 -file-completion -docstring 'Open file with nnn (volatile)' %{
     kitty-terminal-overlay sh -c %{
@@ -16,5 +16,7 @@ define-command nnn-current -params 0..1 -file-completion -docstring 'Open file w
         echo $kak_cmd | kak -p $kak_session
     } -- %val{buffile} %val{session} %val{client} %arg{@}
 }
-
 map global normal "<minus>" ": nnn-current<ret>"
+
+# Manage files
+map global view f "<esc>: connect kitty-terminal-overlay nnn<ret>" -docstring "files"
