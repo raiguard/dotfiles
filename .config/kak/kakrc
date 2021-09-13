@@ -43,6 +43,7 @@ cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save" %{
         state-save-reg-load pipe
         state-save-reg-load slash
         state-save-reg-load caret
+        state-save-reg-load arobase
 
         # Macros
         state-save-reg-load q
@@ -72,6 +73,7 @@ cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save" %{
         state-save-reg-save pipe
         state-save-reg-save slash
         state-save-reg-save caret
+        state-save-reg-save arobase
 
         # Macros
         state-save-reg-save q
