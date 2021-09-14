@@ -185,6 +185,7 @@ load filetype yaml
 
 # location-list.kak
 source "~/dev/projects/personal/location-list.kak/rc/location-list.kak"
+source "~/dev/projects/personal/location-list.kak/rc/test.kak"
 map global user q ": enter-user-mode location-list-alt<ret>"
 map global user Q ": enter-user-mode -lock location-list-alt<ret>"
 
