@@ -1,4 +1,4 @@
 source "$HOME/.cargo/env"
 source "$HOME/.screenlayout/layout.sh"
-export EDITOR="kas"
+export EDITOR="kks edit"
 setxkbmap -option caps:escape

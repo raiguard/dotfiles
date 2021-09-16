@@ -1,6 +1,7 @@
 evaluate-commands %sh{
     kcr init kakoune
     cork init
+    kks init
 }
 
 # This panics if called in the same eval block
