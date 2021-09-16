@@ -10,4 +10,4 @@ export EDITOR="kks edit"
 setxkbmap -option ctrl:nocaps
 
 # Make short-pressed Ctrl behave like Escape:
-xcape -e 'Control_L=Escape'scape
+xcape -e 'Control_L=Escape'
