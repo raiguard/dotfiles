@@ -10,7 +10,7 @@ map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{tex
 
 # View lazygit
 # TODO: Make this fullscreen instead of an overlay
-map global view "g" "<esc>: kitty-terminal-overlay lazygit<ret>" -docstring "lazygit..."
+map global view "g" "<esc>: kitty-overlay lazygit<ret>" -docstring "lazygit..."
 
 # Grep for current selection
 map global user "/" ': grep %reg{dot}<ret>' -docstring "grep for selection"
