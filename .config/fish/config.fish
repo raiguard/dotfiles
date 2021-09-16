@@ -17,3 +17,7 @@ set -x "NNN_FCOLORS" "$blk$chr$dir$exe$reg$hardlink$symlink$missing$orphan$fifo$
 set -x "KKS_USE_GITDIR_SESSIONS" 1
 
 set -x "EDITOR" "kks edit"
+
+alias k "kks edit"
+
+alias yadmlg "lazygit --git-dir=/home/rai/.local/share/yadm/repo.git --work-tree=/home/rai"
