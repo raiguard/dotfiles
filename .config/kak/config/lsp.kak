@@ -2,6 +2,7 @@ map global user "l" ": enter-user-mode lsp<ret>" -docstring "lsp..."
 map global normal "ⓗ" ": lsp-hover<ret>"
 map global normal "<c-a>" ": lsp-code-actions<ret>"
 map global normal "<c-r>" ": lsp-rename-prompt<ret>"
+map global normal "<c-e>" ": lsp-diagnostics<ret>"
 
 set global lsp_diagnostic_line_error_sign '✕'
 
