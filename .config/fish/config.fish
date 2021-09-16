@@ -22,5 +22,6 @@ alias k "kks edit"
 alias ylg "lazygit --git-dir=/home/rai/.local/share/yadm/repo.git --work-tree=/home/rai"
 alias lg lazygit
 alias fac1 /home/rai/dev/factorio/1/bin/x64/factorio
+alias kbconfig "sh /home/rai/.config/keyboard.sh"
 
 source /usr/share/autojump/autojump.fish
