@@ -24,6 +24,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import re
+
 from typing import List  # noqa: F401
 
 from libqtile import bar, layout, widget, hook
@@ -260,3 +262,38 @@ auto_minimize = True
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
+
+def window_match_re(window, wmname=None, wmclass=None, role=None):
+    """
+    match windows by name/title, class or role, by regular expressions
+    Multiple conditions will be OR'ed together
+    """
+
+    if not (wmname or wmclass or role):
+        raise TypeError(
+            "at least one of name, wmclass or role must be specified"
+        )
+    ret = False
+    if wmname:
+        ret = ret or re.match(wmname, window.name)
+    try:
+        if wmclass:
+            cls = window.window.get_wm_class()
+            if cls:
+                for v in cls:
+                    ret = ret or re.match(wmclass, v)
+        if role:
+            rol = window.window.get_wm_window_role()
+            if rol:
+                ret = ret or re.match(role, rol)
+    except (xcffib.xproto.WindowError, xcffib.xproto.AccessError):
+        return False
+    return ret
+
+@hook.subscribe.client_new
+def on_new(c):
+    if c.name == "Calculator":
+        c.cmd_enable_floating()
+    elif window_match_re(c, wmname="Factorio"):
+        c.cmd_togroup("o")
+
