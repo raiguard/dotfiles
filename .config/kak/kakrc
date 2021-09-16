@@ -2,6 +2,7 @@ evaluate-commands %sh{
     kcr init kakoune
     cork init
     kks init
+    kak-location-list init
 }
 
 # This panics if called in the same eval block
@@ -184,12 +185,6 @@ load filetype yaml
 # WIP
 
 # load wip colorscheme
-
-# location-list.kak
-source "~/dev/projects/personal/location-list.kak/rc/location-list.kak"
-source "~/dev/projects/personal/location-list.kak/rc/test.kak"
-map global user q ": enter-user-mode location-list-alt<ret>"
-map global user Q ": enter-user-mode -lock location-list-alt<ret>"
 
 # rainmeter.kak
 source "~/dev/projects/personal/rainmeter.kak/rc/rainmeter.kak"
