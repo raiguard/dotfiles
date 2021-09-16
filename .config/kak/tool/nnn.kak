@@ -1,7 +1,7 @@
 # Pick a file then open it in kak
 # Depends on raiguard/kitty.kak for the overlay window
 define-command nnn-current -params 0..1 -file-completion -docstring 'Open file with nnn (volatile)' %{
-    kitty-terminal-overlay sh -c %{
+    kitty-overlay sh -c %{
         kak_buffile=$1 kak_session=$2 kak_client=$3
         shift 3
         kak_pwd="${@:-$(dirname "${kak_buffile}")}"

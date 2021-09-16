@@ -152,6 +152,7 @@ def load -params 2 -hidden %{
 load tool buffer
 # load tool fandt
 load tool git-branch
+load tool kitty
 load tool move-lines
 load tool nnn
 load tool replace-mode
@@ -189,9 +190,6 @@ source "~/dev/projects/personal/location-list.kak/rc/location-list.kak"
 source "~/dev/projects/personal/location-list.kak/rc/test.kak"
 map global user q ": enter-user-mode location-list-alt<ret>"
 map global user Q ": enter-user-mode -lock location-list-alt<ret>"
-
-# kitty.kak
-source "~/dev/projects/personal/kitty.kak/rc/kitty.kak"
 
 # rainmeter.kak
 source "~/dev/projects/personal/rainmeter.kak/rc/rainmeter.kak"
