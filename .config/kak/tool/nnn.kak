@@ -19,4 +19,4 @@ define-command nnn-current -params 0..1 -file-completion -docstring 'Open file w
 map global normal "<minus>" ": nnn-current<ret>"
 
 # Manage files
-map global view f "<esc>: connect kitty-terminal-overlay nnn<ret>" -docstring "files"
+map global view f "<esc>: connect kitty-overlay nnn<ret>" -docstring "files"
