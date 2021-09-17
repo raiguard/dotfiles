@@ -93,6 +93,9 @@ keys = [
     # music volume
     Key(["mod4"], "XF86AudioRaiseVolume", lazy.spawn("mpc volume +5")),
     Key(["mod4"], "XF86AudioLowerVolume", lazy.spawn("mpc volume -5")),
+
+    # Take a screenshot
+    Key([], "Print", lazy.spawn("flameshot gui"))
 ]
 
 groups = [Group(i) for i in "uiop"]
