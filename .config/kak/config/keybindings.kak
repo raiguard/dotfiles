@@ -71,3 +71,6 @@ map global user "u" "<a-:><a-;>i<ret><esc><gt><space>;gli<ret><esc><lt>" -docstr
 
 # <c-i> is the sane way to jump forward
 map global normal <c-i> <tab>
+
+# <c-w> to write
+map global normal <c-w> ":w<ret>"
