@@ -16,9 +16,9 @@ source "%val{config}/wip/colorscheme.kak"
 # ========================================
 # PLUGINS
 
-cork auto-pairs "https://github.com/alexherbo2/auto-pairs.kak" %{
-    enable-auto-pairs
-}
+# cork auto-pairs "https://github.com/alexherbo2/auto-pairs.kak" %{
+#     enable-auto-pairs
+# }
 
 cork kak-focus "https://github.com/caksoylar/kakoune-focus" %{
     map global user <space> ': focus-toggle<ret>' -docstring "toggle selections focus"
@@ -189,9 +189,6 @@ load filetype yaml
 # WIP
 
 # load wip colorscheme
-
-# kak-loli
-source "~/dev/projects/personal/kak-loli/rc/test.kak"
 
 # rainmeter.kak
 source "~/dev/projects/personal/rainmeter.kak/rc/rainmeter.kak"
