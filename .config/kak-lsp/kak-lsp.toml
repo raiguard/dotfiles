@@ -37,6 +37,9 @@ filetypes = ["rust"]
 roots = ["Cargo.toml"]
 command = "rust-analyzer"
 
+[language.rust.settings.rust-analyzer]
+checkOnSave.command = "clippy"
+
 [language.tsx]
 filetypes = ["typescript"]
 roots = ["package.json"]
