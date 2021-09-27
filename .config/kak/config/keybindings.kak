@@ -46,24 +46,18 @@ map global normal "<a-m>" "<a-k>"
 map global normal "<a-M>" "<a-K>"
 
 # Always select entire lines
-map global normal "J" "J<a-x>"
-map global normal "K" "K<a-x>"
+map global normal J "J<a-x>"
+map global normal K "K<a-x>"
 
 # Except when I don't want to
 map global normal "<c-a-j>" "J"
 map global normal "<c-a-k>" "K"
 
 # Remap extend-line to inner line
-map global normal "X" "gh<a-i><esc>: text-object-line<ret>"
+map global normal X "giGl"
 
 # Select all occurances of current selection in file
 map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
-
-# Move while in insert mode
-map global insert "ⓗ" "<left>"
-map global insert "ⓙ" "<down>"
-map global insert "<c-k>" "<up>"
-map global insert "<c-l>" "<right>"
 
 # Split selectios to indented block
 # TODO: Make u a sub-mode of the user mode for utils
