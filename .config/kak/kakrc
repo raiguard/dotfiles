@@ -16,10 +16,6 @@ source "%val{config}/wip/colorscheme.kak"
 # ========================================
 # PLUGINS
 
-# cork auto-pairs "https://github.com/alexherbo2/auto-pairs.kak" %{
-#     enable-auto-pairs
-# }
-
 cork kak-focus "https://github.com/caksoylar/kakoune-focus" %{
     map global user <space> ': focus-toggle<ret>' -docstring "toggle selections focus"
 }
@@ -119,6 +115,8 @@ cork phantom.kak "https://github.com/raiguard/phantom.kak" %{
     phantom-add-alternate-mappings
 }
 
+cork rainmeter.kak "https://github.com/raiguard/rainmeter.kak"
+
 cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
 
 # ========================================
@@ -158,6 +156,7 @@ load tool buffer
 # load tool fandt
 load tool git-branch
 load tool kitty
+load tool log-scroll
 load tool move-lines
 load tool nnn
 load tool replace-mode
@@ -186,9 +185,4 @@ load filetype toml
 load filetype ts
 load filetype yaml
 
-# WIP
-
-# load wip colorscheme
-
-# rainmeter.kak
-source "~/dev/projects/personal/rainmeter.kak/rc/rainmeter.kak"
+load wip hang-test
