@@ -1,17 +1,19 @@
 # Default window settings
 hook global WinCreate .* %{
-    expandtab
-    set window tabstop 4
-    set window softtabstop 4
-    set window indentwidth 4
+    try %{
+        expandtab
+        set window tabstop 4
+        set window softtabstop 4
+        set window indentwidth 4
 
-    # Enable plugins
-    kakboard-enable
+        # Enable plugins
+        kakboard-enable
 
-    # Show and automatically update git diff on write
-    git show-diff
-    hook window BufWritePost .* %{ git update-diff }
-    hook window BufReload .* %{ git update-diff }
+        # Show and automatically update git diff on write
+        git show-diff
+        hook window BufWritePost .* %{ git update-diff }
+        hook window BufReload .* %{ git update-diff }
+    }
 }
 
 # Remove trailing whitespace on save

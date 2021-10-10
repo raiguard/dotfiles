@@ -110,11 +110,6 @@ cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
 
 cork one.kak "https://github.com/raiguard/one.kak"
 
-cork phantom.kak "https://github.com/raiguard/phantom.kak" %{
-    phantom-enable
-    phantom-add-alternate-mappings
-}
-
 cork rainmeter.kak "https://github.com/raiguard/rainmeter.kak"
 
 cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
@@ -152,11 +147,13 @@ def load -params 2 -hidden %{
 
 # TOOLS
 
+load tool add-register
 load tool buffer
 # load tool fandt
 load tool git-branch
 load tool kitty
 load tool log-scroll
+load tool loli
 load tool move-lines
 load tool nnn
 load tool replace-mode
