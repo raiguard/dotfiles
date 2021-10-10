@@ -224,6 +224,24 @@ screens = [
         wallpaper='~/pictures/wallpapers/flying girl 5.jpg',
         wallpaper_mode='fill',
     ),
+    Screen(
+        top=bar.Bar(
+            [
+                widget.GroupBox(
+                    active=colors["fg"],
+                    inactive=colors["comment"],
+                    highlight_method='line',
+                    this_current_screen_border=colors["cyan"]
+                ),
+                widget.Sep(padding=15, linewidth=1, foreground=colors["comment"]),
+                widget.CurrentLayout(),
+            ],
+            30,
+            background=colors["bg"]
+        ),
+        wallpaper='~/pictures/wallpapers/flying girls/flying girl 4.jpg',
+        wallpaper_mode='fill',
+    ),
 ]
 
 # Drag floating layouts.
