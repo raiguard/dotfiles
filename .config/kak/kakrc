@@ -1,5 +1,4 @@
 evaluate-commands %sh{
-    kcr init kakoune
     cork init
     kks init
     kak-loli -s $kak_session init
@@ -106,6 +105,10 @@ cork kakoune-text-objects "https://github.com/delapouite/kakoune-text-objects" %
 
 cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
     set global source_local_kakrc true
+}
+
+cork luar "https://github.com/gustavo-hms/luar" %{
+    require-module luar
 }
 
 cork one.kak "https://github.com/raiguard/one.kak"
