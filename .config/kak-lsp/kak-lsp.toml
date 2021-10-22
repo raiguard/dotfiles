@@ -28,7 +28,7 @@ telemetry.enable = false
 workspace.ignoreDir = [".vscode", "src/archive"]
 workspace.library = [
     "/home/rai/dev/factorio/runtime-api.lua",
-    "/home/rai/dev/factorio/1/data/core/lualib/util.lua",
+    "/home/rai/dev/factorio/1/data",
     "/home/rai/dev/projects/personal/flib",
 ]
 workspace.preloadFileSize = 10000
