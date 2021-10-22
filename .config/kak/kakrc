@@ -9,9 +9,6 @@ evaluate-commands %sh{
     kak-lsp --kakoune -s $kak_session
 }
 
-# TEMPORARY
-source "%val{config}/wip/colorscheme.kak"
-
 # ========================================
 # PLUGINS
 
@@ -111,8 +108,6 @@ cork luar "https://github.com/gustavo-hms/luar" %{
     require-module luar
 }
 
-cork one.kak "https://github.com/raiguard/one.kak"
-
 cork rainmeter.kak "https://github.com/raiguard/rainmeter.kak"
 
 cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
@@ -147,6 +142,8 @@ set global grepcmd 'rg -Hn --no-heading --trim'
 def load -params 2 -hidden %{
     try %{ source "%val{config}/%arg{1}/%arg{2}.kak" }
 }
+
+alias global connect kks-connect
 
 # TOOLS
 
