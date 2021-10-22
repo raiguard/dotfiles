@@ -24,19 +24,42 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import json
+import os
 import re
+import subprocess
+import xcffib
 
 from typing import List  # noqa: F401
 
-from libqtile import bar, layout, widget, hook
+from libqtile import bar, layout, widget, hook, qtile
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
-from libqtile.utils import guess_terminal
 
 mod = "mod4"
 terminal = "kitty"
 
 cursor_warp = True
+
+ip_address = subprocess.run(
+    ['curl', 'https://ipinfo.io/ip'],
+    stdout=subprocess.PIPE
+).stdout.decode('utf-8')
+
+location_src = subprocess.run(
+    ['curl', 'https://ipwhois.app/json/' + ip_address],
+    stdout=subprocess.PIPE
+).stdout.decode('utf-8')
+
+location_info = json.loads(location_src)
+
+
+@hook.subscribe.startup_once
+def autostart():
+    home = os.path.expanduser('~/.config/qtile/autostart.sh')
+    subprocess.call([home])
+    subprocess.Popen(['redshift', '-l', str(location_info['latitude']) + ':' + str(location_info['longitude'])])
+
 
 keys = [
     # Switch between windows
@@ -62,8 +85,12 @@ keys = [
         desc="Shrink window"),
     Key([mod, "control"], "k", lazy.layout.grow(), desc="Grow window"),
     Key([mod, "control"], "m", lazy.layout.maximize(), desc="Grow window"),
-    Key([mod, "control"], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
-
+    Key(
+        [mod, "control"],
+        "n",
+        lazy.layout.normalize(),
+        desc="Reset all window sizes"
+    ),
 
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
@@ -87,8 +114,16 @@ keys = [
     Key([], "XF86AudioPlay", lazy.spawn("mpc toggle")),
 
     # general volume
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -c 0 -q set Master 2dB+")),
-    Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -c 0 -q set Master 2dB-")),
+    Key(
+        [],
+        "XF86AudioRaiseVolume",
+        lazy.spawn("amixer -c 0 -q set Master 2dB+")
+    ),
+    Key(
+        [],
+        "XF86AudioLowerVolume",
+        lazy.spawn("amixer -c 0 -q set Master 2dB-")
+    ),
 
     # music volume
     Key(["mod4"], "XF86AudioRaiseVolume", lazy.spawn("mpc volume +5")),
@@ -99,12 +134,20 @@ keys = [
 ]
 
 groups = [Group(i) for i in "uiop"]
-# wallpapers = ["~/pictures/wallpapers/flying girl 1.jpg", "~/pictures/wallpapers/flying girl 5.jpg", "~/pictures/wallpapers/flying girl 6.jpg", "~/pictures/wallpapers/flying girl 7.jpg"]
 
-# @hook.subscribe.setgroup
-# def set_wallpaper():
-#     wallpaper = wallpapers[qtile.groups.index(qtile.current_group)]
-#     qtile.paint_screen(qtile.current_screen, wallpaper, mode="fill")
+wallpapers = [
+    os.path.expanduser("~/pictures/wallpapers/flying girls/flying girl 1.jpg"),
+    os.path.expanduser("~/pictures/wallpapers/flying girls/flying girl 5.jpg"),
+    os.path.expanduser("~/pictures/wallpapers/flying girls/flying girl 6.jpg"),
+    os.path.expanduser("~/pictures/wallpapers/flying girls/flying girl 7.jpg"),
+]
+
+
+@hook.subscribe.setgroup
+def set_wallpaper():
+    wallpaper = wallpapers[qtile.groups.index(qtile.current_group)]
+    qtile.paint_screen(qtile.current_screen, wallpaper, mode="fill")
+
 
 for i in groups:
     keys.extend([
@@ -159,44 +202,71 @@ screens = [
                     highlight_method='line',
                     this_current_screen_border=colors["cyan"]
                 ),
-                widget.Sep(padding=15, linewidth=1, foreground=colors["comment"]),
+                widget.Sep(
+                    padding=15,
+                    linewidth=1,
+                    foreground=colors["comment"]
+                ),
                 widget.CurrentLayout(),
                 widget.Spacer(length=bar.STRETCH),
                 widget.Systray(),
-                widget.Sep(padding=15, linewidth=1, foreground=colors["comment"]),
+                widget.Sep(
+                    padding=15,
+                    linewidth=1,
+                    foreground=colors["comment"]
+                ),
                 widget.CPU(
                     format='{load_percent}% /',
                     foreground=colors["magenta"]
                 ),
                 widget.ThermalSensor(
                     foreground=colors["magenta"],
-
                 ),
-                widget.Sep(padding=15, linewidth=1, foreground=colors["comment"]),
+                widget.Sep(
+                    padding=15,
+                    linewidth=1,
+                    foreground=colors["comment"]
+                ),
                 widget.Memory(
                     format='{MemUsed: .0f} MB',
                     foreground=colors["blue"]
                 ),
-                widget.Sep(padding=15, linewidth=1, foreground=colors["comment"]),
+                widget.Sep(
+                    padding=15,
+                    linewidth=1,
+                    foreground=colors["comment"]
+                ),
                 widget.NvidiaSensors(
                     # For some reason, {perf} doesn't work for me
                     # format='{perf}  / {fan_speed} / {temp}°C',
                     format='{fan_speed} / {temp}°C',
                     foreground=colors["green"]
                 ),
-                widget.Sep(padding=15, linewidth=1, foreground=colors["comment"]),
+                widget.Sep(
+                    padding=15,
+                    linewidth=1,
+                    foreground=colors["comment"]
+                ),
                 widget.OpenWeather(
                     format='{weather_details}, {main_temp:.0f}°{units_temperature}',
                     app_key='997472523499bebd3652f39c26317658',
-                    cityid='5781087',
+                    coordinates=location_info,
                     metric=False,
                     foreground=colors["lightorange"]
                 ),
-                widget.Sep(padding=15, linewidth=1, foreground=colors["comment"]),
+                widget.Sep(
+                    padding=15,
+                    linewidth=1,
+                    foreground=colors["comment"]
+                ),
                 widget.Volume(
                     foreground=colors["cyan"]
                 ),
-                widget.Sep(padding=15, linewidth=1, foreground=colors["comment"]),
+                widget.Sep(
+                    padding=15,
+                    linewidth=1,
+                    foreground=colors["comment"]
+                ),
                 widget.Clock(format='%a, %b %d %H:%M'),
                 widget.Spacer(length=5),
             ],
@@ -215,7 +285,11 @@ screens = [
                     highlight_method='line',
                     this_current_screen_border=colors["cyan"]
                 ),
-                widget.Sep(padding=15, linewidth=1, foreground=colors["comment"]),
+                widget.Sep(
+                    padding=15,
+                    linewidth=1,
+                    foreground=colors["comment"]
+                ),
                 widget.CurrentLayout(),
             ],
             30,
@@ -233,7 +307,11 @@ screens = [
                     highlight_method='line',
                     this_current_screen_border=colors["cyan"]
                 ),
-                widget.Sep(padding=15, linewidth=1, foreground=colors["comment"]),
+                widget.Sep(
+                    padding=15,
+                    linewidth=1,
+                    foreground=colors["comment"]
+                ),
                 widget.CurrentLayout(),
             ],
             30,
@@ -286,6 +364,7 @@ auto_minimize = True
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
 
+
 def window_match_re(window, wmname=None, wmclass=None, role=None):
     """
     match windows by name/title, class or role, by regular expressions
@@ -313,10 +392,10 @@ def window_match_re(window, wmname=None, wmclass=None, role=None):
         return False
     return ret
 
+
 @hook.subscribe.client_new
 def on_new(c):
     if c.name == "Calculator":
         c.cmd_enable_floating()
     elif window_match_re(c, wmname="Factorio"):
         c.cmd_togroup("o")
-
