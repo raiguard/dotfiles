@@ -108,6 +108,8 @@ cork luar "https://github.com/gustavo-hms/luar" %{
     require-module luar
 }
 
+cork mark.kak "https://github.com/alexherbo2/mark.kak"
+
 cork rainmeter.kak "https://github.com/raiguard/rainmeter.kak"
 
 cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
@@ -136,6 +138,12 @@ set global autoreload yes
 # Use ripgrep instead of grep
 set global grepcmd 'rg -Hn --no-heading --trim'
 
+# mark.kak faces - have to be defined after the colorscheme invokation
+face global MarkedPrimaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}"
+face global MarkedPrimarySelection "default,rgba:%opt{magenta}%opt{selectionalpha}"
+face global MarkedSecondaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}"
+face global MarkedSecondarySelection "default,rgba:%opt{magenta}%opt{selectionalpha}"
+
 # ========================================
 # EXTERNAL CONFIGURATION
 
@@ -147,9 +155,7 @@ alias global connect kks-connect
 
 # TOOLS
 
-load tool add-register
 load tool buffer
-# load tool fandt
 load tool git-branch
 load tool kitty
 load tool log-scroll
