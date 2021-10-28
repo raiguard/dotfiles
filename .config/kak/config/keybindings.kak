@@ -68,3 +68,6 @@ map global normal <c-i> <tab>
 
 # <c-w> to write
 map global normal <c-w> ":w<ret>"
+
+# Delete words in insert mode
+map global insert <c-backspace> "<esc>hBdi"
