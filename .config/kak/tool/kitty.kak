@@ -58,6 +58,16 @@ Any extra arguments will be passed to "kitty @ launch"' \
   kitty-split overlay %arg{@}
 }
 
+define-command new-vertical-split %{
+    kitty-split-vertical kak -c "%val{session}"
+}
+define-command new-horizontal-split %{
+    kitty-split-horizontal kak -c "%val{session}"
+}
+
+alias vsplit new-vertical-split
+alias hsplit new-horizontal-split
+
 require-module kitty
 
 unalias global terminal kitty
