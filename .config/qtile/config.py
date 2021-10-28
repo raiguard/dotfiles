@@ -58,7 +58,7 @@ location_info = json.loads(location_src)
 def autostart():
     home = os.path.expanduser('~/.config/qtile/autostart.sh')
     subprocess.call([home])
-    subprocess.Popen(['redshift', '-l', str(location_info['latitude']) + ':' + str(location_info['longitude'])])
+    # subprocess.Popen(['redshift', '-l', str(location_info['latitude']) + ':' + str(location_info['longitude'])])
 
 
 keys = [
@@ -133,31 +133,43 @@ keys = [
     Key([], "Print", lazy.spawn("flameshot gui"))
 ]
 
-groups = [Group(i) for i in "uiop"]
-
-wallpapers = [
-    os.path.expanduser("~/pictures/wallpapers/flying girls/flying girl 1.jpg"),
-    os.path.expanduser("~/pictures/wallpapers/flying girls/flying girl 5.jpg"),
-    os.path.expanduser("~/pictures/wallpapers/flying girls/flying girl 6.jpg"),
-    os.path.expanduser("~/pictures/wallpapers/flying girls/flying girl 7.jpg"),
-]
+# wallpapers = [
+#     os.path.expanduser("~/pictures/wallpapers/active/1.jpg"),
+#     os.path.expanduser("~/pictures/wallpapers/active/5.jpg"),
+#     os.path.expanduser("~/pictures/wallpapers/active/6.jpg"),
+#     os.path.expanduser("~/pictures/wallpapers/active/7.jpg"),
+# ]
 
 
-@hook.subscribe.setgroup
-def set_wallpaper():
-    wallpaper = wallpapers[qtile.groups.index(qtile.current_group)]
-    qtile.paint_screen(qtile.current_screen, wallpaper, mode="fill")
+# @hook.subscribe.setgroup
+# def set_wallpaper():
+#     wallpaper = wallpapers[qtile.groups.index(qtile.current_group)]
+#     qtile.paint_screen(qtile.current_screen, wallpaper, mode="fill")
 
+groups = []
 
-for i in groups:
+# FOR QWERTY KEYBOARDS
+group_keys = ["u", "i", "o", "p", "7", "8", "9"]
+
+group_names = ["code", "web", "game", "meta", "vb", "file", "edit"]
+
+group_layouts = ["monadtall", "monadtall", "max", "monadtall", "max", "monadtall", "max"]
+
+for i in range(len(group_names)):
+    groups.append(
+        Group(
+            name=group_names[i],
+            layout=group_layouts[i].lower(),
+            label=group_names[i],
+        )
+    )
+
     keys.extend([
-        # mod1 + letter of group = switch to group
-        Key([mod], i.name, lazy.group[i.name].toscreen(),
-            desc="Switch to group {}".format(i.name)),
+        # Change workspaces
+        Key([mod], group_keys[i], lazy.group[group_names[i]].toscreen()),
 
-        # mod1 + shift + letter of group = move focused window to group
-        Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-            desc="move focused window to group {}".format(i.name)),
+        # Move window to selected workspace and stay on current workspace
+        Key([mod, "shift"], group_keys[i], lazy.window.togroup(group_names[i])),
     ])
 
 colors = {
@@ -191,16 +203,19 @@ widget_defaults = dict(
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
+focus_on_window_activation = 'focus'
 
 screens = [
     Screen(
         top=bar.Bar(
             [
                 widget.GroupBox(
+                    fontsize=11,
                     active=colors["fg"],
                     inactive=colors["comment"],
                     highlight_method='line',
-                    this_current_screen_border=colors["cyan"]
+                    this_current_screen_border=colors["cyan"],
+                    disable_drag=True
                 ),
                 widget.Sep(
                     padding=15,
@@ -273,7 +288,7 @@ screens = [
             30,
             background=colors["bg"]
         ),
-        wallpaper='~/pictures/wallpapers/flying girl 1.jpg',
+        wallpaper='~/pictures/wallpapers/active/1.jpg',
         wallpaper_mode='fill'
     ),
     Screen(
@@ -295,7 +310,7 @@ screens = [
             30,
             background=colors["bg"]
         ),
-        wallpaper='~/pictures/wallpapers/flying girl 5.jpg',
+        wallpaper='~/pictures/wallpapers/active/5.jpg',
         wallpaper_mode='fill',
     ),
     Screen(
@@ -398,4 +413,4 @@ def on_new(c):
     if c.name == "Calculator":
         c.cmd_enable_floating()
     elif window_match_re(c, wmname="Factorio"):
-        c.cmd_togroup("o")
+        c.cmd_togroup("game")
