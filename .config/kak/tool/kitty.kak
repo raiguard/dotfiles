@@ -40,7 +40,7 @@ kitty-split-horizontal [<arguments>]: create a new terminal window above or belo
 the current window.
 Any extra arguments will be passed to "kitty @ launch"' \
 %{
-	kitty-split hsplit %arg{@}
+    kitty-split hsplit %arg{@}
 }
 
 define-command kitty-split-vertical -params .. -shell-completion -docstring '
@@ -48,14 +48,14 @@ kitty-split-vertical [<arguments>]: create a new terminal window to the left or 
 the current window.
 Any extra arguments will be passed to "kitty @ launch"' \
 %{
-  kitty-split vsplit %arg{@}
+    kitty-split vsplit %arg{@}
 }
 
 define-command kitty-overlay -params .. -shell-completion -docstring '
 kitty-overlay [<arguments>]: create a new terminal window on top of the current window.
 Any extra arguments will be passed to "kitty @ launch"' \
 %{
-  kitty-split overlay %arg{@}
+    kitty-split overlay %arg{@}
 }
 
 define-command new-vertical-split %{
@@ -65,8 +65,8 @@ define-command new-horizontal-split %{
     kitty-split-horizontal kak -c "%val{session}"
 }
 
-alias vsplit new-vertical-split
-alias hsplit new-horizontal-split
+alias global vsplit new-vertical-split
+alias global hsplit new-horizontal-split
 
 require-module kitty
 
