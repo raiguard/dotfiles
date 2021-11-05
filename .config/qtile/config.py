@@ -58,7 +58,7 @@ location_info = json.loads(location_src)
 def autostart():
     home = os.path.expanduser('~/.config/qtile/autostart.sh')
     subprocess.call([home])
-    # subprocess.Popen(['redshift', '-l', str(location_info['latitude']) + ':' + str(location_info['longitude'])])
+    subprocess.Popen(['redshift', '-l', str(location_info['latitude']) + ':' + str(location_info['longitude'])])
 
 
 keys = [
