@@ -1,0 +1,7 @@
+gui:
+  showCommandLog: false
+
+keybinding:
+  universal:
+    nextPage: '<c-f>'
+    prevPage: '<c-b>'
