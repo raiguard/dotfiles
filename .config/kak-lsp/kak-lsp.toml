@@ -192,3 +192,8 @@ face = "module"
 [[semantic_tokens]]
 token = "variable"
 face = "variable"
+
+[[semantic_tokens]]
+token = "variable"
+face = "+s@variable"
+modifiers = ["consuming"]
