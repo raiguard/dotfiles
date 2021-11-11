@@ -134,10 +134,10 @@ keys = [
 ]
 
 # wallpapers = [
-#     os.path.expanduser("~/pictures/wallpapers/active/1.jpg"),
-#     os.path.expanduser("~/pictures/wallpapers/active/5.jpg"),
-#     os.path.expanduser("~/pictures/wallpapers/active/6.jpg"),
-#     os.path.expanduser("~/pictures/wallpapers/active/7.jpg"),
+#     os.path.expanduser("~/pictures/wallpapers/1.jpg"),
+#     os.path.expanduser("~/pictures/wallpapers/5.jpg"),
+#     os.path.expanduser("~/pictures/wallpapers/6.jpg"),
+#     os.path.expanduser("~/pictures/wallpapers/7.jpg"),
 # ]
 
 
@@ -288,17 +288,19 @@ screens = [
             30,
             background=colors["bg"]
         ),
-        wallpaper='~/pictures/wallpapers/active/1.jpg',
+        wallpaper='~/pictures/wallpapers/1.jpg',
         wallpaper_mode='fill'
     ),
     Screen(
         top=bar.Bar(
             [
                 widget.GroupBox(
+                    fontsize=11,
                     active=colors["fg"],
                     inactive=colors["comment"],
                     highlight_method='line',
-                    this_current_screen_border=colors["cyan"]
+                    this_current_screen_border=colors["cyan"],
+                    disable_drag=True
                 ),
                 widget.Sep(
                     padding=15,
@@ -310,7 +312,7 @@ screens = [
             30,
             background=colors["bg"]
         ),
-        wallpaper='~/pictures/wallpapers/active/5.jpg',
+        wallpaper='~/pictures/wallpapers/5.jpg',
         wallpaper_mode='fill',
     ),
     Screen(
