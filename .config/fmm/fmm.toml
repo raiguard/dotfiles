@@ -1,0 +1,9 @@
+directory = "/home/rai/dev/factorio/linked/mods"
+
+[sets]
+EditorExtensions = ["EditorExtensions", "Sandbox"]
+Krastorio2 = ["Krastorio2", "EditorExtensions", "Sandbox"]
+LtnManager = ["LtnManager", "EditorExtensions", "Sandbox"]
+RateCalculator = ["RateCalculator", "EditorExtensions", "Sandbox"]
+RecipeBook = ["RecipeBook", "EditorExtensions", "Sandbox"]
+TaskList = ["TaskList", "Todo-List", "EditorExtensions", "Sandbox"]
