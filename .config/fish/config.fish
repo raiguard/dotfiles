@@ -19,7 +19,7 @@ set -x "KKS_USE_GITDIR_SESSIONS" 1
 set -x "EDITOR" "kks edit"
 
 alias k "kks edit"
-alias ylg "lazygit --git-dir=/home/rai/.local/share/yadm/repo.git --work-tree=/home/rai"
+alias dlg "lazygit --git-dir ~/.dotfiles/.git"
 alias lg lazygit
 alias fac1 /home/rai/dev/factorio/1/bin/x64/factorio
 alias fac2 /home/rai/dev/factorio/2/bin/x64/factorio
