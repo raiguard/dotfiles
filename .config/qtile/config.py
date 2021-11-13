@@ -41,17 +41,17 @@ terminal = "kitty"
 
 cursor_warp = True
 
-ip_address = subprocess.run(
-    ['curl', 'https://ipinfo.io/ip'],
-    stdout=subprocess.PIPE
-).stdout.decode('utf-8')
+# ip_address = subprocess.run(
+#     ['curl', 'https://ipinfo.io/ip'],
+#     stdout=subprocess.PIPE
+# ).stdout.decode('utf-8')
 
-location_src = subprocess.run(
-    ['curl', 'https://ipwhois.app/json/' + ip_address],
-    stdout=subprocess.PIPE
-).stdout.decode('utf-8')
+# location_src = subprocess.run(
+#     ['curl', 'https://ipwhois.app/json/' + ip_address],
+#     stdout=subprocess.PIPE
+# ).stdout.decode('utf-8')
 
-location_info = json.loads(location_src)
+# location_info = json.loads(location_src)
 
 
 @hook.subscribe.startup_once
@@ -264,7 +264,7 @@ screens = [
                 widget.OpenWeather(
                     format='{weather_details}, {main_temp:.0f}°{units_temperature}',
                     app_key='997472523499bebd3652f39c26317658',
-                    coordinates=location_info,
+                    cityid=5781087,
                     metric=False,
                     foreground=colors["lightorange"]
                 ),
