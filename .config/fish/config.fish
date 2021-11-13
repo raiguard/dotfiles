@@ -1,28 +1,17 @@
 fish_add_path /home/rai/.config/kak/bin
 
-set -x "blk" "04"
-set -x "chr" "04"
-set -x "dir" "04"
-set -x "exe" "00"
-set -x "reg" "00"
-set -x "hardlink" "00"
-set -x "symlink" "06"
-set -x "missing" "00"
-set -x "orphan" "01"
-set -x "fifo" "0F"
-set -x "sock" "0F"
-set -x "other" "02"
-set -x "NNN_FCOLORS" "$blk$chr$dir$exe$reg$hardlink$symlink$missing$orphan$fifo$sock$other"
+set -x NNN_FCOLORS "0404040000000600010F0F02"
 
-set -x "KKS_USE_GITDIR_SESSIONS" 1
+set -x KKS_USE_GITDIR_SESSIONS 1
 
-set -x "EDITOR" "kks edit"
+set -x EDITOR "kks edit"
 
 alias k "kks edit"
-alias dlg "lazygit --git-dir ~/.dotfiles/.git"
+alias dlg "lazygit --work-tree ~/.dotfiles"
 alias lg lazygit
 alias fac1 /home/rai/dev/factorio/1/bin/x64/factorio
 alias fac2 /home/rai/dev/factorio/2/bin/x64/factorio
 alias kbconfig "sh /home/rai/.config/keyboard.sh"
+alias stw "stow --dir ~/.dotfiles --target ~/"
 
 source /usr/share/autojump/autojump.fish

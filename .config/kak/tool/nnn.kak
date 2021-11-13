@@ -7,8 +7,7 @@ define-command nnn-current -params 0..1 -file-completion -docstring 'Open file w
         kak_pwd="${@:-$(dirname "${kak_buffile}")}"
         filename=$(
             # Set colors
-            BLK="04" CHR="04" DIR="04" EXE="00" REG="00" HARDLINK="00" SYMLINK="06" MISSING="00" ORPHAN="01" FIFO="0F" SOCK="0F" OTHER="02"
-            export NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER"
+            export NNN_FCOLORS="0404040000000600010F0F02"
             # Launch NNN
             nnn -H -p - "${kak_pwd}"
         )
@@ -19,4 +18,13 @@ define-command nnn-current -params 0..1 -file-completion -docstring 'Open file w
 map global normal "<minus>" ": nnn-current<ret>"
 
 # Manage files
-map global view f "<esc>: connect kitty-overlay nnn<ret>" -docstring "files"
+map global view f "<esc>: nnn<ret>" -docstring "files"
+
+define-command nnn -docstring "Open nnn in the project directory" %{
+    kitty-overlay sh -c %{
+        # Set colors
+        export NNN_FCOLORS="0404040000000600010F0F02"
+        # Launch NNN
+        nnn -H "$(pwd)"
+    }
+}
