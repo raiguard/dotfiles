@@ -14,8 +14,8 @@ args = ["--init={\"completion\":{\"detailedLabel\":false}}"]
 [language.lua]
 filetypes = ["lua"]
 roots = [".git/"]
-command = "/home/rai/.vscode/extensions/sumneko.lua-2.4.7/server/bin/Linux/lua-language-server"
-args = ["-E", "/home/rai/.vscode/extensions/sumneko.lua-2.4.7/server/main.lua"]
+command = "/home/rai/.vscode/extensions/sumneko.lua-2.4.8/server/bin/Linux/lua-language-server"
+args = ["-E", "/home/rai/.vscode/extensions/sumneko.lua-2.4.8/server/main.lua"]
 
 [language.lua.settings.Lua]
 diagnostics.severity = { unused-local = "Warning", undefined-global = "Error" }
