@@ -14,15 +14,15 @@ args = ["--init={\"completion\":{\"detailedLabel\":false}}"]
 [language.lua]
 filetypes = ["lua"]
 roots = [".git/"]
-command = "/home/rai/.vscode/extensions/sumneko.lua-2.4.8/server/bin/Linux/lua-language-server"
-args = ["-E", "/home/rai/.vscode/extensions/sumneko.lua-2.4.8/server/main.lua"]
+command = "lua-language-server"
+args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
 
 [language.lua.settings.Lua]
 diagnostics.severity = { unused-local = "Warning", undefined-global = "Error" }
 workspace.ignoreSubmodules = false
 diagnostics.disable = ["lowercase-global", "redefined-local"]
 diagnostics.globals = ["__DebugAdapter", "__Profiler", "global", "data", "mods", "log", "serpent", "table_size", "localised_print"]
-runtime.plugin = "/home/rai/dev/factorio/lua-plugin/plugin.lua"
+runtime.plugin = "/home/rai/dev/factorio/plugin/plugin.lua"
 runtime.version = "Lua 5.2"
 telemetry.enable = false
 workspace.ignoreDir = [".vscode", "src/archive"]
@@ -43,7 +43,7 @@ workaround_server_sends_plaintext_labeled_as_markdown = true
 [language.rust]
 filetypes = ["rust"]
 roots = ["Cargo.toml"]
-command = "rust-analyzer"
+command = "/home/rai/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rust-analyzer"
 
 [language.rust.settings.rust-analyzer]
 checkOnSave.command = "clippy"
