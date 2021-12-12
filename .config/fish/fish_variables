@@ -1,6 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR --export EDITOR:kak
+SETUVAR --export EDITOR:kks\x20edit
 SETUVAR __fish_initialized:3100
 SETUVAR fish_color_autosuggestion:70798a
 SETUVAR fish_color_cancel:\x2dr
@@ -31,4 +31,4 @@ SETUVAR fish_pager_color_completion:normal
 SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
-SETUVAR fish_user_paths:/home/rai/\x2econfig/kak/bin\x1e/home/rai/\x2econfig/kak/bin\x20/home/rai/\x2ecargo/bin\x20/home/rai/\x2elocal/bin\x20/usr/local/bin\x20/usr/bin\x20/usr/local/sbin\x20/usr/bin/site_perl\x20/usr/bin/vendor_perl\x20/usr/bin/core_perl
+SETUVAR fish_user_paths:/home/rai/\x2ecargo/bin\x1e/home/rai/\x2elocal/bin
