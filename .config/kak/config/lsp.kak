@@ -4,7 +4,7 @@ map global normal "<c-a>" ": lsp-code-actions<ret>"
 map global normal "<c-r>" ": lsp-rename-prompt<ret>"
 map global normal "<c-e>" ": lsp-diagnostics<ret>"
 
-set global lsp_diagnostic_line_error_sign '✕'
+set global lsp_diagnostic_line_error_sign '⨯'
 
 set global lsp_hover_anchor true
 
@@ -50,9 +50,11 @@ def inlay-diagnostics-disable %{
 
 hook global KakEnd .* lsp-exit
 
-declare-option -hidden str modeline_progress ""
-define-command -hidden -params 4 -override lsp-handle-progress %{
-  set global modeline_progress %sh{
-    echo $1${2:+": $2"}${3:+" $3%"}${4:+" ✓"}
-  }
+declare-option -hidden str lsp_modeline_progress ""
+define-command -hidden -params 6 -override lsp-handle-progress %{
+    set-option global lsp_modeline_progress %sh{
+        if ! "$6"; then
+            echo "$2${5:+" ($5%)"}${4:+": $4"}"
+        fi
+    }
 }
