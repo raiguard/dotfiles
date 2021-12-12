@@ -30,6 +30,16 @@ cork kakoune-buffer-switcher "https://github.com/occivink/kakoune-buffer-switche
     map global normal <backspace> ": buffer-switcher<ret>"
 }
 
+cork kakoune-fandt "https://github.com/listentolist/kakoune-fandt" %{
+    require-module fandt
+}
+
+cork kakoune-grep-write "https://github.com/JacobTravers/kakoune-grep-write" %{
+    hook global BufCreate \*grep\* %{
+        alias buffer w grep-write
+    }
+}
+
 cork kakoune-mirror "https://github.com/delapouite/kakoune-mirror" %{
     map global normal "'" ": enter-user-mode -lock mirror<ret>"
 }
@@ -98,6 +108,8 @@ cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save" %{
     }
 }
 
+cork kakoune-sudo-write "https://github.com/occivink/kakoune-sudo-write"
+
 cork kakoune-text-objects "https://github.com/delapouite/kakoune-text-objects" %{
     map global user "o" ": select-objects<ret>" -docstring "select objects"
 }
@@ -138,7 +150,7 @@ set global scrolloff 5,5
 set global autoreload yes
 
 # Use ripgrep instead of grep
-set global grepcmd 'rg -Hn --no-heading --trim'
+set global grepcmd 'rg -Hn --no-heading --sort path'
 
 # mark.kak faces - have to be defined after the colorscheme invokation
 face global MarkedPrimaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}"
