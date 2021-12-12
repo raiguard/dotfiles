@@ -1,5 +1,6 @@
 gui:
   showCommandLog: false
+  showFileTree: false
 
 keybinding:
   universal:
