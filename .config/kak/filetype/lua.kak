@@ -7,7 +7,8 @@ hook global WinSetOption filetype=lua %{
     set window softtabstop 2
     set window indentwidth 2
 
-    addhl window/ column 121 "default,rgb:%opt{subbg}"
+    # Don't need this any longer since we use a formatter
+    # addhl window/ column 121 "default,rgb:%opt{subbg}"
 
     set window formatcmd "stylua -"
 }
