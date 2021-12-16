@@ -120,6 +120,10 @@ cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
 
 cork luar "https://github.com/gustavo-hms/luar" %{
     require-module luar
+
+    cork harpoon.kak "https://github.com/raiguard/harpoon.kak" %{
+        harpoon-add-bindings
+    }
 }
 
 cork mark.kak "https://github.com/alexherbo2/mark.kak"
@@ -158,14 +162,15 @@ face global MarkedPrimarySelection "default,rgba:%opt{magenta}%opt{selectionalph
 face global MarkedSecondaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}"
 face global MarkedSecondarySelection "default,rgba:%opt{magenta}%opt{selectionalpha}"
 
+# Make kks work as a stand-in for kcr
+alias global connect kks-connect
+
 # ========================================
 # EXTERNAL CONFIGURATION
 
 def load -params 2 -hidden %{
     try %{ source "%val{config}/%arg{1}/%arg{2}.kak" }
 }
-
-alias global connect kks-connect
 
 # TOOLS
 
