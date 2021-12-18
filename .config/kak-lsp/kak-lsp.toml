@@ -11,6 +11,11 @@ command = "ccls"
 # kak-lsp does not support newText https://github.com/ul/kak-lsp/issues/40
 args = ["--init={\"completion\":{\"detailedLabel\":false}}"]
 
+[language.latex]
+filetypes = ["tex", "latex"]
+roots = [".git/"]
+command = "texlab"
+
 [language.lua]
 filetypes = ["lua"]
 roots = [".git/"]

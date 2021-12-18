@@ -1,7 +1,7 @@
 evaluate-commands %sh{
     cork init
     kks init
-    kak-loli -s $kak_session init
+    # kak-loli -s $kak_session init
 }
 
 # This panics if called in the same eval block
@@ -198,6 +198,7 @@ load filetype cpp
 load filetype factorio-changelog
 load filetype json
 load filetype kak
+load filetype latex
 load filetype lua
 load filetype python
 load filetype rainmeter
