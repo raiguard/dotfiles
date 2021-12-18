@@ -100,7 +100,7 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
 
     # Launch applications
-    Key([mod], "r", lazy.spawn("ulauncher")),
+    Key([mod], "r", lazy.spawn("krunner")),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
 
     # Focus screen
@@ -132,18 +132,6 @@ keys = [
     Key([], "Print", lazy.spawn("flameshot gui"))
 ]
 
-# wallpapers = [
-#     os.path.expanduser("~/pictures/wallpapers/1.jpg"),
-#     os.path.expanduser("~/pictures/wallpapers/5.jpg"),
-#     os.path.expanduser("~/pictures/wallpapers/6.jpg"),
-#     os.path.expanduser("~/pictures/wallpapers/7.jpg"),
-# ]
-
-
-# @hook.subscribe.setgroup
-# def set_wallpaper():
-#     wallpaper = wallpapers[qtile.groups.index(qtile.current_group)]
-#     qtile.paint_screen(qtile.current_screen, wallpaper, mode="fill")
 
 groups = []
 
@@ -287,7 +275,7 @@ screens = [
             30,
             background=colors["bg"]
         ),
-        wallpaper='~/pictures/wallpapers/1.jpg',
+        wallpaper='~/Pictures/wallpapers/1.jpeg',
         wallpaper_mode='fill'
     ),
     Screen(
@@ -311,7 +299,7 @@ screens = [
             30,
             background=colors["bg"]
         ),
-        wallpaper='~/pictures/wallpapers/5.jpg',
+        wallpaper='~/Pictures/wallpapers/2.jpeg',
         wallpaper_mode='fill',
     ),
     Screen(
@@ -333,7 +321,7 @@ screens = [
             30,
             background=colors["bg"]
         ),
-        wallpaper='~/pictures/wallpapers/flying girls/flying girl 4.jpg',
+        wallpaper='~/Pictures/wallpapers/3.jpeg',
         wallpaper_mode='fill',
     ),
 ]
