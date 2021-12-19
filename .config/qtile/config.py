@@ -100,7 +100,7 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
 
     # Launch applications
-    Key([mod], "r", lazy.spawn("krunner")),
+    Key([mod], "r", lazy.spawn("rofi -show drun")),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
 
     # Focus screen
@@ -275,7 +275,7 @@ screens = [
             30,
             background=colors["bg"]
         ),
-        wallpaper='~/Pictures/wallpapers/1.jpeg',
+        wallpaper='~/pictures/wallpapers/1.jpeg',
         wallpaper_mode='fill'
     ),
     Screen(
@@ -299,7 +299,7 @@ screens = [
             30,
             background=colors["bg"]
         ),
-        wallpaper='~/Pictures/wallpapers/2.jpeg',
+        wallpaper='~/pictures/wallpapers/2.jpeg',
         wallpaper_mode='fill',
     ),
     Screen(
@@ -321,7 +321,7 @@ screens = [
             30,
             background=colors["bg"]
         ),
-        wallpaper='~/Pictures/wallpapers/3.jpeg',
+        wallpaper='~/pictures/wallpapers/3.jpeg',
         wallpaper_mode='fill',
     ),
 ]
