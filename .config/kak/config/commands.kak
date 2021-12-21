@@ -16,7 +16,7 @@ def status-bar-update %{
         if [[ $kak_client == "tools" || $kak_client == "docs" ]]; then
             echo "set window modelinefmt \"%%val{bufname} {{mode_info}} {keyword}%%val{client}{StatusLineValue} {enum}%%val{session}{StatusLine}\""
         else
-            echo "set window modelinefmt \"%%opt{lsp_modeline_progress} {InlayDiagnosticError}%%opt{lsp_diagnostic_line_error_sign}%%opt{lsp_diagnostic_error_count} {InlayDiagnosticWarning}%%opt{lsp_diagnostic_line_warning_sign}%%opt{lsp_diagnostic_warning_count} {string}%%opt{modeline_git_branch} {StatusLineValue}%%val{bufname}{StatusLineValue}:%%val{cursor_line}:%%val{cursor_char_column}{StatusLine}{{context_info}} {InlayDiagnosticWarning}%%opt{filetype} {{mode_info}} {keyword}%%val{client}{StatusLineValue} {enum}%%val{session}{StatusLine}\""
+            echo "set window modelinefmt \"{comment}%%opt{lsp_modeline_progress}    {InlayDiagnosticError}%%opt{lsp_diagnostic_line_error_sign}%%opt{lsp_diagnostic_error_count} {InlayDiagnosticWarning}%%opt{lsp_diagnostic_line_warning_sign}%%opt{lsp_diagnostic_warning_count}    {string}%%opt{modeline_git_branch} {StatusLineValue}%%val{bufname}{StatusLineValue}:%%val{cursor_line}:%%val{cursor_char_column}{StatusLine}{{context_info}} {InlayDiagnosticWarning}%%opt{filetype} {{mode_info}} {keyword}%%val{client}{StatusLineValue} {enum}%%val{session}{StatusLine}\""
         fi
     }
 }
