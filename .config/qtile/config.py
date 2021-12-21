@@ -41,19 +41,6 @@ terminal = "kitty"
 
 cursor_warp = True
 
-# ip_address = subprocess.run(
-#     ['curl', 'https://ipinfo.io/ip'],
-#     stdout=subprocess.PIPE
-# ).stdout.decode('utf-8')
-
-# location_src = subprocess.run(
-#     ['curl', 'https://ipwhois.app/json/' + ip_address],
-#     stdout=subprocess.PIPE
-# ).stdout.decode('utf-8')
-
-# location_info = json.loads(location_src)
-
-
 @hook.subscribe.startup_once
 def autostart():
     home = os.path.expanduser('~/.config/qtile/autostart.sh')
@@ -94,6 +81,7 @@ keys = [
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "BackSpace", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
 
     # QTile control
     Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
@@ -107,29 +95,11 @@ keys = [
     Key([mod], "comma", lazy.to_screen(1)),
     Key([mod], "period", lazy.to_screen(0)),
 
-    # Media keys
-    Key([], "XF86AudioNext", lazy.spawn("mpc next")),
-    Key([], "XF86AudioPrev", lazy.spawn("mpc prev")),
-    Key([], "XF86AudioPlay", lazy.spawn("mpc toggle")),
-
-    # general volume
-    Key(
-        [],
-        "XF86AudioRaiseVolume",
-        lazy.spawn("amixer -c 0 -q set Master 2dB+")
-    ),
-    Key(
-        [],
-        "XF86AudioLowerVolume",
-        lazy.spawn("amixer -c 0 -q set Master 2dB-")
-    ),
-
-    # music volume
-    Key(["mod4"], "XF86AudioRaiseVolume", lazy.spawn("mpc volume +5")),
-    Key(["mod4"], "XF86AudioLowerVolume", lazy.spawn("mpc volume -5")),
-
     # Take a screenshot
-    Key([], "Print", lazy.spawn("flameshot gui"))
+    Key([], "Print", lazy.spawn("flameshot gui")),
+
+    # Lock the screen
+    Key(["control", "mod1"], "l", lazy.spawn("betterlockscreen -l"))
 ]
 
 
@@ -179,6 +149,7 @@ colors = {
 layouts = [
     layout.MonadTall(
         border_focus=colors["cyan"],
+        border_normal=colors["comment"],
         margin=6
     ),
     layout.Max(),
@@ -191,31 +162,27 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 focus_on_window_activation = 'focus'
 
+def separator():
+    return widget.Sep(
+        padding=15,
+        linewidth=1,
+        foreground=colors["comment"]
+    )
+
 screens = [
     Screen(
         top=bar.Bar(
             [
                 widget.GroupBox(
-                    fontsize=11,
                     active=colors["fg"],
                     inactive=colors["comment"],
                     highlight_method='line',
+                    padding=4,
+                    borderwidth=2,
                     this_current_screen_border=colors["cyan"],
-                    disable_drag=True
                 ),
-                widget.Sep(
-                    padding=15,
-                    linewidth=1,
-                    foreground=colors["comment"]
-                ),
-                widget.CurrentLayout(),
                 widget.Spacer(length=bar.STRETCH),
                 widget.Systray(),
-                widget.Sep(
-                    padding=15,
-                    linewidth=1,
-                    foreground=colors["comment"]
-                ),
                 widget.CPU(
                     format='{load_percent}% /',
                     foreground=colors["magenta"]
@@ -223,31 +190,19 @@ screens = [
                 widget.ThermalSensor(
                     foreground=colors["magenta"],
                 ),
-                widget.Sep(
-                    padding=15,
-                    linewidth=1,
-                    foreground=colors["comment"]
-                ),
+                separator(),
                 widget.Memory(
                     format='{MemUsed: .0f} MB',
                     foreground=colors["blue"]
                 ),
-                widget.Sep(
-                    padding=15,
-                    linewidth=1,
-                    foreground=colors["comment"]
-                ),
+                separator(),
                 widget.NvidiaSensors(
                     # For some reason, {perf} doesn't work for me
                     # format='{perf}  / {fan_speed} / {temp}°C',
                     format='{fan_speed} / {temp}°C',
                     foreground=colors["green"]
                 ),
-                widget.Sep(
-                    padding=15,
-                    linewidth=1,
-                    foreground=colors["comment"]
-                ),
+                separator(),
                 widget.OpenWeather(
                     format='{weather_details}, {main_temp:.0f}°{units_temperature}',
                     app_key='997472523499bebd3652f39c26317658',
@@ -255,19 +210,7 @@ screens = [
                     metric=False,
                     foreground=colors["lightorange"]
                 ),
-                widget.Sep(
-                    padding=15,
-                    linewidth=1,
-                    foreground=colors["comment"]
-                ),
-                widget.Volume(
-                    foreground=colors["cyan"]
-                ),
-                widget.Sep(
-                    padding=15,
-                    linewidth=1,
-                    foreground=colors["comment"]
-                ),
+                separator(),
                 widget.Clock(format='%a, %b %d %H:%M'),
                 widget.Spacer(length=5),
             ],
@@ -281,19 +224,13 @@ screens = [
         top=bar.Bar(
             [
                 widget.GroupBox(
-                    fontsize=11,
                     active=colors["fg"],
                     inactive=colors["comment"],
                     highlight_method='line',
+                    padding=4,
+                    borderwidth=2,
                     this_current_screen_border=colors["cyan"],
-                    disable_drag=True
                 ),
-                widget.Sep(
-                    padding=15,
-                    linewidth=1,
-                    foreground=colors["comment"]
-                ),
-                widget.CurrentLayout(),
             ],
             30,
             background=colors["bg"]
@@ -308,14 +245,10 @@ screens = [
                     active=colors["fg"],
                     inactive=colors["comment"],
                     highlight_method='line',
-                    this_current_screen_border=colors["cyan"]
+                    padding=4,
+                    borderwidth=2,
+                    this_current_screen_border=colors["cyan"],
                 ),
-                widget.Sep(
-                    padding=15,
-                    linewidth=1,
-                    foreground=colors["comment"]
-                ),
-                widget.CurrentLayout(),
             ],
             30,
             background=colors["bg"]
@@ -341,6 +274,7 @@ bring_front_click = False
 cursor_warp = False
 floating_layout = layout.Floating(
     border_focus=colors["blue"],
+    border_normal=colors["comment"],
     border_width=2,
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
@@ -370,7 +304,6 @@ auto_minimize = True
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
-
 
 def window_match_re(window, wmname=None, wmclass=None, role=None):
     """
