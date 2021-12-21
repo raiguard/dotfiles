@@ -12,7 +12,7 @@ evaluate-commands %sh{
 # ========================================
 # PLUGINS
 
-cork files.kak "https://github.com/TuM0xA-S/files.kak"
+cork kak-ansi "https://github.com/eraserhd/kak-ansi"
 
 cork kak-focus "https://github.com/caksoylar/kakoune-focus" %{
     map global user <space> ': focus-toggle<ret>' -docstring "toggle selections focus"
@@ -207,5 +207,3 @@ load filetype sh
 load filetype toml
 load filetype ts
 load filetype yaml
-
-load wip hang-test
