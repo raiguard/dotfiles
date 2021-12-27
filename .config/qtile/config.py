@@ -183,6 +183,7 @@ screens = [
                 ),
                 widget.Spacer(length=bar.STRETCH),
                 widget.Systray(),
+                separator(),
                 widget.CPU(
                     format='{load_percent}% /',
                     foreground=colors["magenta"]
@@ -236,24 +237,6 @@ screens = [
             background=colors["bg"]
         ),
         wallpaper='~/pictures/wallpapers/2.jpeg',
-        wallpaper_mode='fill',
-    ),
-    Screen(
-        top=bar.Bar(
-            [
-                widget.GroupBox(
-                    active=colors["fg"],
-                    inactive=colors["comment"],
-                    highlight_method='line',
-                    padding=4,
-                    borderwidth=2,
-                    this_current_screen_border=colors["cyan"],
-                ),
-            ],
-            30,
-            background=colors["bg"]
-        ),
-        wallpaper='~/pictures/wallpapers/3.jpeg',
         wallpaper_mode='fill',
     ),
 ]
