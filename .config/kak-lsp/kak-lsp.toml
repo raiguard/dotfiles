@@ -68,11 +68,19 @@ face = "operator"
 
 [[semantic_tokens]]
 token = "attribute"
-face = "module"
+face = "function"
+
+[[semantic_tokens]]
+token = "attributeBracket"
+face = "operator"
 
 [[semantic_tokens]]
 token = "boolean"
 face = "value"
+
+[[semantic_tokens]]
+token = "builtinAttribute"
+face = "function"
 
 [[semantic_tokens]]
 token = "builtinType"
@@ -132,7 +140,7 @@ face = "operator"
 
 [[semantic_tokens]]
 token = "macro"
-face = "function"
+face = "value"
 
 [[semantic_tokens]]
 token = "method"
@@ -202,3 +210,8 @@ face = "variable"
 token = "variable"
 face = "+s@variable"
 modifiers = ["consuming"]
+
+[[semantic_tokens]]
+token = "variable"
+face = "value"
+modifiers = ["static", "constant"]
