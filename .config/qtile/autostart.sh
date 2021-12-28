@@ -4,3 +4,5 @@ xrandr --output DP-0 --off --output DP-1 --off --output HDMI-0 --off --output DP
 redshift & # Screen dimming and night shift
 ~/.nfancurve/temp.sh & # NVIDIA fan curves
 udiskie --tray & # Disk auto-mounting
+nm-applet & # Network status in system tray
+blueman-applet & # Bluetooth status in system tray
