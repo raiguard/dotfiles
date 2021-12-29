@@ -146,5 +146,4 @@ export NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SO
 
 export KKS_USE_GITDIR_SESSIONS=1
 
-export PATH="/home/rai/.local/bin:$PATH"
-. "$HOME/.cargo/env"
+export PATH="/home/rai/bin:$PATH"

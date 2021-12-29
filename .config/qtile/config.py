@@ -322,3 +322,7 @@ def on_new(c):
         c.cmd_enable_floating()
     elif window_match_re(c, wmname="Factorio"):
         c.cmd_togroup("game")
+
+@hook.subscribe.screen_change
+def restart_on_randr(_):
+	qtile.cmd_reload_config()

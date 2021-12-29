@@ -1,5 +1,6 @@
 fish_add_path "/home/rai/.local/bin"
 fish_add_path "/home/rai/.cargo/bin"
+fish_add_path "/home/rai/bin"
 
 set -x NNN_FCOLORS "0404040000000600010F0F02"
 
