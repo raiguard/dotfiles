@@ -7,6 +7,8 @@ set -x NNN_FCOLORS "0404040000000600010F0F02"
 set -x KKS_USE_GITDIR_SESSIONS 1
 
 set -x EDITOR "kks edit"
+set -x PAGER "kks edit"
+set -x SHELL "fish"
 
 alias k "kks edit"
 alias dlg "lazygit --work-tree ~/.dotfiles"
