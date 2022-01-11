@@ -108,7 +108,7 @@ groups = []
 # FOR QWERTY KEYBOARDS
 group_keys = ["u", "i", "o", "p", "7", "8", "9"]
 
-group_names = ["code", "web", "game", "meta", "vm", "file", "edit"]
+group_names = ["dev", "web", "game", "chat", "vm", "file", "gfx"]
 
 group_layouts = ["monadtall", "monadtall", "max", "monadtall", "max", "monadtall", "monadtall"]
 
