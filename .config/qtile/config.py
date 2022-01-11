@@ -81,7 +81,7 @@ keys = [
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "BackSpace", lazy.window.kill(), desc="Kill focused window"),
-    Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod], "q", lazy.spawn("rofi -show power-menu -modi 'power-menu:~/.local/bin/rofi-power-menu --choices=logout/reboot/shutdown'"), desc="Power options"),
 
     # QTile control
     Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
@@ -108,9 +108,9 @@ groups = []
 # FOR QWERTY KEYBOARDS
 group_keys = ["u", "i", "o", "p", "7", "8", "9"]
 
-group_names = ["code", "web", "game", "meta", "vb", "file", "edit"]
+group_names = ["code", "web", "game", "meta", "vm", "file", "edit"]
 
-group_layouts = ["monadtall", "monadtall", "max", "monadtall", "max", "monadtall", "max"]
+group_layouts = ["monadtall", "monadtall", "max", "monadtall", "max", "monadtall", "monadtall"]
 
 for i in range(len(group_names)):
     groups.append(
