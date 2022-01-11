@@ -34,7 +34,7 @@ workspace.ignoreDir = [".vscode", "src/archive"]
 workspace.library = [
     "/home/rai/dev/factorio/runtime-api.lua",
     "/home/rai/dev/factorio/1/data",
-    "/home/rai/dev/projects/personal/flib",
+    "/home/rai/dev/factorio/libs",
 ]
 workspace.preloadFileSize = 10000
 

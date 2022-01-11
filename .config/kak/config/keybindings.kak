@@ -73,4 +73,3 @@ map global normal <c-w> ":w<ret>"
 map global insert <c-backspace> "<esc>hBdi"
 # Also delete words when holding shift
 map global insert <s-backspace> "<backspace>"
-

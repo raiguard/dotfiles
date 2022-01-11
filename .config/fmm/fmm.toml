@@ -2,12 +2,14 @@ auto_download = true
 game_dir = "/home/rai/dev/factorio/1"
 mods_dir = "/home/rai/dev/factorio/linked/mods"
 sync_latest_versions = true
+sync_startup_settings = true
 
 [sets]
 AdvancedEntityPaste = ["AdvancedEntityPaste", "EditorExtensions", "Sandbox"]
 Autopilot = ["Autopilot", "EditorExtensions", "Sandbox"]
 CursorEnhancements = ["CursorEnhancements", "EditorExtensions", "Sandbox"]
 EditorExtensions = ["EditorExtensions", "Sandbox"]
+FluidMustFlow = ["FluidMustFlow", "EditorExtensions", "Sandbox"]
 Krastorio2 = ["Krastorio2", "EditorExtensions", "Sandbox"]
 LtnManager = ["LtnManager", "EditorExtensions", "Sandbox"]
 RateCalculator = ["RateCalculator", "EditorExtensions", "Sandbox"]
