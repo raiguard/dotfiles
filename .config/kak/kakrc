@@ -1,7 +1,7 @@
 evaluate-commands %sh{
     cork init
     kks init
-    # kak-loli -s $kak_session init
+    kak-loli -s $kak_session init
 }
 
 # This panics if called in the same eval block
