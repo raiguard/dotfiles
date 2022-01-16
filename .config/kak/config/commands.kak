@@ -4,7 +4,7 @@ def ide %{
     rename-client main
     set global jumpclient main
 
-    new eval %{ rename-client tools; edit -scratch *tools-scratch*; status-bar-update }
+    new-horizontal-split eval %{ rename-client tools; edit -scratch *tools-scratch*; status-bar-update }
     set global toolsclient tools
 
     focus main
