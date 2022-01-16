@@ -1,11 +1,6 @@
 evaluate-commands %sh{
     cork init
     kks init
-    kak-loli -s $kak_session init
-}
-
-# This panics if called in the same eval block
-evaluate-commands %sh{
     kak-lsp --kakoune -s $kak_session
 }
 
@@ -154,7 +149,7 @@ set global scrolloff 5,5
 set global autoreload yes
 
 # Use ripgrep instead of grep
-set global grepcmd 'rg -Hn --no-heading --sort path'
+set global grepcmd 'rg -Hn --no-heading --sort path --vimgrep'
 
 # mark.kak faces - have to be defined after the colorscheme invokation
 face global MarkedPrimaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}"
@@ -207,3 +202,7 @@ load filetype sh
 load filetype toml
 load filetype ts
 load filetype yaml
+
+source "~/dev/projects/personal/loli.kak/rc/loli.kak"
+source "~/dev/projects/personal/loli.kak/rc/debug.kak"
+loli-add-aliases
