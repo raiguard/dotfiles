@@ -113,6 +113,7 @@ load tool buffer
 load tool kitty
 load tool log-scroll
 load tool loli
+load tool lsp
 load tool modeline
 load tool move-lines
 load tool nnn
@@ -125,7 +126,6 @@ load config commands
 load config modes
 load config hooks
 load config keybindings
-load config lsp
 
 # FILETYPES
 
