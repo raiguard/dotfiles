@@ -41,67 +41,7 @@ cork kakoune-mirror "https://github.com/delapouite/kakoune-mirror" %{
 
 cork kakoune-sort-selections "https://github.com/occivink/kakoune-sort-selections"
 
-cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save" %{
-    hook global KakBegin .* %{
-        # Defaults
-        state-save-reg-load colon
-        state-save-reg-load pipe
-        state-save-reg-load slash
-        state-save-reg-load caret
-        state-save-reg-load arobase
-
-        # Macros
-        state-save-reg-load q
-        state-save-reg-load w
-        state-save-reg-load e
-        state-save-reg-load r
-        # Generic
-        state-save-reg-load a
-        state-save-reg-load s
-        state-save-reg-load d
-        state-save-reg-load f
-        # Marks
-        state-save-reg-load z
-        state-save-reg-load x
-        state-save-reg-load c
-        state-save-reg-load v
-        # Plugins
-        state-save-reg-load u
-        state-save-reg-load i
-        state-save-reg-load o
-        state-save-reg-load p
-    }
-
-    hook global KakEnd .* %{
-        # Defaults
-        state-save-reg-save colon
-        state-save-reg-save pipe
-        state-save-reg-save slash
-        state-save-reg-save caret
-        state-save-reg-save arobase
-
-        # Macros
-        state-save-reg-save q
-        state-save-reg-save w
-        state-save-reg-save e
-        state-save-reg-save r
-        # Generic
-        state-save-reg-save a
-        state-save-reg-save s
-        state-save-reg-save d
-        state-save-reg-save f
-        # Marks
-        state-save-reg-save z
-        state-save-reg-save x
-        state-save-reg-save c
-        state-save-reg-save v
-        # Plugins
-        state-save-reg-save u
-        state-save-reg-save i
-        state-save-reg-save o
-        state-save-reg-save p
-    }
-}
+cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save"
 
 cork kakoune-sudo-write "https://github.com/occivink/kakoune-sudo-write"
 
