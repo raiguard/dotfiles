@@ -29,9 +29,6 @@ hook global InsertCompletionHide .* %{
     map window insert <s-tab> <s-tab>
 }
 
-# Configure status bar when a window is shown
-hook global WinDisplay .* %{ status-bar-update }
-
 # Disable escape to end macro
 hook global NormalKey Q %{
     map global normal "<esc>" ""

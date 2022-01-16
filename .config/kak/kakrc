@@ -170,10 +170,10 @@ def load -params 2 -hidden %{
 # TOOLS
 
 load tool buffer
-load tool git-branch
 load tool kitty
 load tool log-scroll
 load tool loli
+load tool modeline
 load tool move-lines
 load tool nnn
 load tool replace-mode

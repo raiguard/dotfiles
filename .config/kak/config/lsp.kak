@@ -11,11 +11,14 @@ set global lsp_hover_anchor true
 
 lsp-auto-hover-insert-mode-enable
 
+declare-option bool lsp_enabled false
+
 def lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
 
-def -hidden lsp-init -docstring "enable lsp and set up generic hooks" %{
+def lsp-init -docstring "enable lsp and set up generic hooks" %{
     echo -debug "Enabling LSP for filetype %opt{filetype}"
     lsp-enable-window
+    set-option window lsp_enabled true
 
     set window lsp_auto_highlight_references true
 
@@ -32,6 +35,11 @@ def -hidden lsp-init -docstring "enable lsp and set up generic hooks" %{
 
     # Enable inlay diagnostics
     inlay-diagnostics-enable
+}
+
+define-command lsp-deinit -docstring "disable lsp" %{
+    lsp-disable-window
+    set-option window lsp_enabled false
 }
 
 # Auto-hide inlay diagnostics in insert mode, if they're enabled at all
