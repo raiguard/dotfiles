@@ -2,9 +2,9 @@
 hook global WinCreate .* %{
     try %{
         expandtab
-        set window tabstop 4
-        set window softtabstop 4
-        set window indentwidth 4
+        set-option window tabstop 4
+        set-option window softtabstop 4
+        set-option window indentwidth 4
 
         # Enable plugins
         kakboard-enable

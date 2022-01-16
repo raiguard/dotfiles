@@ -7,5 +7,5 @@ hook global WinSetOption filetype=rainmeter %{
 }
 
 hook global BufSetOption filetype=rainmeter %{
-    set buffer comment_line ';'
+    set-option buffer comment_line ';'
 }

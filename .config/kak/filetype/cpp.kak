@@ -16,7 +16,7 @@ hook global WinSetOption filetype=(c|cpp) %{
 # Better syntax highlighting
 hook global ModuleLoaded c-family %{
     try %{ evaluate-commands %sh{
-        join() { sep=$2; eval set -- $1; IFS="$sep"; echo "$*"; }
+        join() { sep=$2; eval set-option -- $1; IFS="$sep"; echo "$*"; }
 
         # taken from rc/filetype/c-family.kak
         c_keywords='asm break case continue default do else for goto if return

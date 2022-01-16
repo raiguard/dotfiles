@@ -1,11 +1,11 @@
-def edit-kakrc %{ e ~/.config/kak/kakrc }
+define-command edit-kakrc %{ e ~/.config/kak/kakrc }
 
-def ide %{
+define-command ide %{
     rename-client main
-    set global jumpclient main
+    set-option global jumpclient main
 
     new-horizontal-split eval %{ rename-client tools; edit -scratch *tools-scratch*; status-bar-update }
-    set global toolsclient tools
+    set-option global toolsclient tools
 
     focus main
 }

@@ -5,22 +5,22 @@ map global normal "<c-a>" ": lsp-code-actions<ret>"
 map global normal "<c-r>" ": lsp-rename-prompt<ret>"
 map global normal "<c-e>" ": lsp-diagnostics<ret>"
 
-set global lsp_diagnostic_line_error_sign '×'
+set-option global lsp_diagnostic_line_error_sign '×'
 
-set global lsp_hover_anchor true
+set-option global lsp_hover_anchor true
 
 lsp-auto-hover-insert-mode-enable
 
 declare-option bool lsp_enabled false
 
-def lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
+define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
 
-def lsp-init -docstring "enable lsp and set up generic hooks" %{
+define-command lsp-init -docstring "enable lsp and set-option up generic hooks" %{
     echo -debug "Enabling LSP for filetype %opt{filetype}"
     lsp-enable-window
     set-option window lsp_enabled true
 
-    set window lsp_auto_highlight_references true
+    set-option window lsp_auto_highlight_references true
 
     # Function signature help in status bar
     lsp-auto-signature-help-enable
@@ -43,7 +43,7 @@ define-command lsp-deinit -docstring "disable lsp" %{
 }
 
 # Auto-hide inlay diagnostics in insert mode, if they're enabled at all
-def inlay-diagnostics-enable %{
+define-command inlay-diagnostics-enable %{
     lsp-inlay-diagnostics-enable window
     hook window -group inlay-diagnostics ModeChange (push|pop):.*:insert %{
         lsp-inlay-diagnostics-disable window
@@ -52,7 +52,7 @@ def inlay-diagnostics-enable %{
         lsp-inlay-diagnostics-enable window
     }
 }
-def inlay-diagnostics-disable %{
+define-command inlay-diagnostics-disable %{
     lsp-inlay-diagnostics-disable window
     remove-hooks window inlay-diagnostics
 }
