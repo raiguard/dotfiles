@@ -5,4 +5,3 @@ hook global WinSetOption comment_line=(.*) %{
 }
 
 map global user t ": grep (BUG:|FIXME:|TODO:)<ret>" -docstring "view TODOs"
-
