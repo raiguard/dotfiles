@@ -7,7 +7,7 @@ xrandr --output DP-0 --off --output DP-1 --off --output HDMI-0 --off --output DP
 picom & # Compositor
 /usr/bin/polkit-dumb-agent & # Graphical authentication agent
 redshift-gtk & # Screen dimming and night shift
-~/.nfancurve/temp.sh & # NVIDIA fan curves
+nfancurve -c ~/.config/nfancurve.conf & # NVIDIA fan curves
 udiskie --tray & # Disk auto-mounting and tray icon
 nm-applet & # Network status in system tray
 blueman-applet & # Bluetooth status in system tray
