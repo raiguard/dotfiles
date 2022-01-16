@@ -23,3 +23,5 @@ def status-bar-update %{
 
 alias global qa kill
 alias global qa! kill!
+alias global c delete-buffer
+alias global c! delete-buffer!
