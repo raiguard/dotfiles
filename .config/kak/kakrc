@@ -91,6 +91,9 @@ set-option global autoreload yes
 # Use ripgrep instead of grep
 set-option global grepcmd 'rg -Hn --no-heading --sort path --vimgrep'
 
+# Don't show changelog
+set-option global startup_info_version 10000000000000
+
 # mark.kak faces - have to be defined after the colorscheme invokation
 face global MarkedPrimaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}"
 face global MarkedPrimarySelection "default,rgba:%opt{magenta}%opt{selectionalpha}"
