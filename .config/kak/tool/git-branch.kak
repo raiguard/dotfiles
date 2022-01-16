@@ -6,15 +6,14 @@
 declare-option -docstring "name of the git branch holding the current buffer" str modeline_git_branch
 
 hook global WinCreate .* %{
-    hook window NormalIdle .* %{
+    hook -once window WinDisplay .* %{
         try %{
             evaluate-commands %sh{
                 branch=$(cd "$(dirname "${kak_buffile}")" && git rev-parse --abbrev-ref HEAD 2>/dev/null)
                 if [ -n "${branch}" ]; then
-                    printf 'set window modeline_git_branch %%{%s}' " ${branch}"
+                    printf 'set window modeline_git_branch %%{%s}' " ${branch} "
                 fi
             }
         }
     }
 }
-
