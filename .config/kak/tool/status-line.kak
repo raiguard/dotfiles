@@ -47,7 +47,9 @@ define-command modeline-update \
         )
         git_branch_section=$([ -n "$kak_opt_modeline_git_branch" ] && echo "{comment}[{string}$kak_opt_modeline_git_branch{comment}]")
 
-        echo "$lsp_section$git_branch_section{comment}[{function}麗%val{selection_count} %val{selection_index}{comment}]$filetype_section[{StatusLineValue}%val{bufname}{comment}][{enum}%val{cursor_line}:%val{cursor_char_column}{comment}][{keyword}%val{client}/%val{session}{comment}]"
+        echo "$lsp_section$git_branch_section{comment}[{function}麗%val{selection_count} %val{selection_index}{comment}]$filetype_section[{StatusLineValue}%val{bufname}{comment}][{enum}%val{cursor_line}:%val{cursor_char_column}{comment}]"
+        # Client / session
+        # [{keyword}%val{client}/%val{session}{comment}]
     }
 }
 
@@ -72,4 +74,3 @@ hook global WinCreate .* %{
     hook -once window WinDisplay .* update-git-branch
     hook window FocusIn .* update-git-branch
 }
-
