@@ -117,11 +117,10 @@ load tool kitty
 load tool log-scroll
 load tool loli
 load tool lsp
-load tool modeline
-# load tool status-bar
 load tool move-lines
 load tool nnn
 load tool replace-mode
+load tool status-line
 load tool todo
 
 # GENERAL CONFIGURATION
