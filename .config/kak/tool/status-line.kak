@@ -1,7 +1,9 @@
+# --------------------------------------------------
 # PROMPT
 
-declare-option -hidden str prompt_mode ""
+# Options
 
+declare-option -hidden str prompt_mode ""
 define-command -hidden update-prompt-mode %{
     set-option window prompt_mode %sh{
         markup=""
@@ -23,14 +25,19 @@ define-command -hidden update-prompt-mode %{
     }
 }
 
+set-option global promptfmt '{comment}[{value}%opt{prompt_mode}{comment}] '
+
+# Hooks
+
 hook global WinCreate .* %{
     hook window ModeChange .* update-prompt-mode
     hook -once window WinDisplay .* update-prompt-mode
 }
 
-set-option global promptfmt '{comment}[{value}%opt{prompt_mode}{comment}]'
-
+# --------------------------------------------------
 # MODELINE
+
+# Options
 
 declare-option -hidden str modeline_lsp_progress_section
 declare-option -hidden str modeline_lsp_section
@@ -76,7 +83,9 @@ define-command -hidden modeline-update-filetype %{
     }
 }
 
-set global modelinefmt '%opt{modeline_lsp_progress_section}%opt{modeline_misc_section}%opt{modeline_lsp_section}%opt{modeline_git_branch}{comment}[{function}麗%val{selection_count} %val{selection_index}{comment}]%opt{modeline_filetype}[{StatusLineValue}%val{bufname}{comment}][{enum}%val{cursor_line}:%val{cursor_char_column}{comment}]'
+set-option global modelinefmt '%opt{modeline_lsp_progress_section}%opt{modeline_misc_section}%opt{modeline_lsp_section}%opt{modeline_git_branch}{comment}[{function}麗%val{selection_count} %sh{ echo $(($kak_selection_index + 1))}{comment}]%opt{modeline_filetype}[{StatusLineValue}%val{bufname}{comment}][{enum}%val{cursor_line}:%val{cursor_char_column}{comment}]'
+
+# Hooks
 
 hook global WinSetOption lsp_enabled=.* modeline-update-lsp
 hook global WinSetOption filetype=.* modeline-update-filetype
@@ -100,5 +109,5 @@ hook global WinCreate .* %{
         modeline-update-filetype
         modeline-update-git-branch
     }
-    hook window FocusIn .* update-git-branch
+    hook window FocusIn .* modeline-update-git-branch
 }
