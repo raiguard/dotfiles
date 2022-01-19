@@ -144,3 +144,5 @@ export VISUAL="kks edit"
 export KKS_USE_GITDIR_SESSIONS=1
 
 export PATH="/home/rai/bin:$PATH"
+
+export KAKOUNE_POSIX_SHELL=/bin/dash

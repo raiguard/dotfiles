@@ -7,6 +7,7 @@ set -x KKS_USE_GITDIR_SESSIONS 1
 set -x EDITOR "kks edit"
 set -x PAGER "less"
 set -x SHELL "fish"
+set -x KAKOUNE_POSIX_SHELL "/bin/dash"
 
 alias k "kks edit"
 alias dlg "lazygit --work-tree ~/.dotfiles"
