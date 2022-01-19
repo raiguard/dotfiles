@@ -25,7 +25,7 @@ define-command -hidden update-prompt-mode %{
     }
 }
 
-set-option global promptfmt '{comment}[{value}%opt{prompt_mode}{comment}] '
+set-option global promptfmt '{comment}[%opt{prompt_mode}{comment}] '
 
 # Hooks
 
