@@ -36,11 +36,9 @@ hook global NormalKey Q %{
 }
 
 hook global FocusIn .* %{
-    set-face window StatusLine "default,rgb:%opt{subbg}"
     set-face window LineNumbers "rgb:%opt{comment}"
 }
 
 hook global FocusOut .* %{
-    set-face window StatusLine "default,rgb:%opt{bg}"
     set-face window LineNumbers "rgb:%opt{comment}+d"
 }
