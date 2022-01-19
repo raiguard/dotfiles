@@ -10,28 +10,31 @@ Accepts --horizontal or --vertical for the location of the split
 Any extra arguments will be passed to "kitty @ launch"' \
 %{
   nop %sh{
-    # echo "arg: <<${1}>>" 1>&2
-    kitty_locations=(vsplit before hsplit after last neighbor first)
-    kitty_split_types=(window tab primary clipboard os-window background overlay)
-
-    case "${kitty_locations[@]}" in
-      *"${1}"*)
+    if [ "$1" = "vsplit" ] \
+        || [ "$1" = "before" ] \
+        || [ "$1" = "hsplit" ] \
+        || [ "$1" = "after" ] \
+        || [ "$1" = "last" ] \
+        || [ "$1" = "neighbor" ] \
+        || [ "$1" = "first" ]; \
+    then
         split_arg=$1
         shift
-        ;;
-    esac
+    fi
 
-    case "${kitty_split_types[@]}" in
-      *"${1}"*)
+    if [ "$1" = "window" ] \
+        || [ "$1" = "tab" ] \
+        || [ "$1" = "primary" ] \
+        || [ "$1" = "clipboard" ] \
+        || [ "$1" = "os-window" ] \
+        || [ "$1" = "background" ] \
+        || [ "$1" = "overlay" ]; \
+    then
         type_arg=$1
         shift
-        ;;
-    esac
+    fi
 
-    # echo "split_arg: <<${split_arg:-$kak_opt_kitty_split_default_location}>>" 1>&2
-    # echo "type_arg: <<${type_arg:-$kak_opt_kitty_split_default_type}>>" 1>&2
-    # echo "shifted: <<${1}>>" 1>&2
-    kitty @ launch --no-response --type="${type_arg:-$kak_opt_kitty_split_default_type}" --cwd="$PWD" --location="${split_arg:-$kak_opt_kitty_split_default_location}" "${@}"
+    kitty @ --to=$KITTY_LISTEN_ON launch --no-response --type="${type_arg:-$kak_opt_kitty_split_default_type}" --cwd="$PWD" --location="${split_arg:-$kak_opt_kitty_split_default_location}" "${@}"
   }
 }
 

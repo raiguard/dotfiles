@@ -56,7 +56,6 @@ define-command -hidden modeline-update-misc %{
             echo "{comment}[{value}$misc_section{comment}]"
         fi
     }
-
 }
 
 declare-option -hidden str modeline_git_branch
@@ -73,7 +72,7 @@ declare-option -hidden str modeline_filetype
 define-command -hidden modeline-update-filetype %{
     set-option window modeline_filetype %sh{
         filetype=$kak_opt_filetype
-        if [ "$filetype" == "" -a "$kak_buftype" != "file" ]; then
+        if [ "$filetype" = "" -a "$kak_buftype" != "file" ]; then
             filetype=$kak_buftype
         fi
         if [ -n "$filetype" ]; then
