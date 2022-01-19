@@ -13,7 +13,7 @@ define-command ide %{
 define-command buffer-only -docstring 'delete all saved buffers except current one' %{
   evaluate-commands %sh{
     deleted=0
-    eval "set-option -- $kak_quoted_buflist"
+    eval "set -- $kak_quoted_buflist"
     while [ "$1" ]; do
       if [ "$1" != "$kak_bufname" ]; then
         echo "try %{delete-buffer '$1'}"
@@ -28,7 +28,7 @@ define-command buffer-only -docstring 'delete all saved buffers except current o
 define-command buffer-only-force -docstring 'delete all buffers except current one' %{
   evaluate-commands %sh{
     deleted=0
-    eval "set-option -- $kak_quoted_buflist"
+    eval "set -- $kak_quoted_buflist"
     while [ "$1" ]; do
       if [ "$1" != "$kak_bufname" ]; then
         echo "delete-buffer! '$1'"
