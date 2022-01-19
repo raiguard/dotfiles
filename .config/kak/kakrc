@@ -27,6 +27,16 @@ cork kakoune-buffer-switcher "https://github.com/occivink/kakoune-buffer-switche
 
 cork kakoune-fandt "https://github.com/listentolist/kakoune-fandt" %{
     require-module fandt
+
+    hook global ModeChange push:.*:user.fandt %{
+        set-face window PrimarySelection ",rgba:%opt{lightorange}%opt{selectionalpha}"
+        set-face window PrimaryCursor ",rgba:%opt{lightorange}%opt{cursoralpha}"
+    }
+
+    hook global ModeChange pop:user.fandt:.* %{
+        set-face window PrimarySelection ",rgba:%opt{blue}%opt{selectionalpha}"
+        set-face window PrimaryCursor ",rgba:%opt{blue}%opt{cursoralpha}"
+    }
 }
 
 cork kakoune-grep-write "https://github.com/JacobTravers/kakoune-grep-write" %{
