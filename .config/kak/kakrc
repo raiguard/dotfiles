@@ -121,7 +121,6 @@ define-command load -params 2 -hidden %{
 load tool buffer
 load tool kitty
 load tool log-scroll
-load tool loli
 load tool lsp
 load tool move-lines
 load tool nnn
@@ -152,6 +151,6 @@ load filetype toml
 load filetype ts
 load filetype yaml
 
-source "~/dev/projects/personal/loli.kak/rc/loli.kak"
+# source "~/dev/projects/personal/loli.kak/rc/loli.kak"
 source "~/dev/projects/personal/loli.kak/rc/debug.kak"
-loli-add-aliases
+# loli-add-aliases
