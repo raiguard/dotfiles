@@ -3,10 +3,10 @@
 
 # Options
 
-declare-option -hidden str prompt_mode ""
-define-command -hidden update-prompt-mode %{
-    set-option window prompt_mode %sh{
+define-command -hidden update-prompt %{
+    set-option window promptfmt %sh{
         markup=""
+        space=" "
         if [ $kak_mode = "normal" ]; then
             markup="{string}"
         elif [ $kak_mode = "insert" ]; then
@@ -17,27 +17,35 @@ define-command -hidden update-prompt-mode %{
             markup="{keyword}"
         elif [ $kak_mode = "prompt" ]; then
             markup="{function}"
+            space=""
         else
             markup="{value}"
         fi
         mode=$(echo "$kak_mode" | tr a-z A-Z)
-        echo "$markup$mode"
+        echo "{comment}[$markup$mode{comment}]$space"
     }
 }
-
-set-option global promptfmt '{comment}[%opt{prompt_mode}{comment}] '
 
 # Hooks
 
 hook global WinCreate .* %{
-    hook window ModeChange .* update-prompt-mode
-    hook -once window WinDisplay .* update-prompt-mode
+    hook window ModeChange .* update-prompt
+    hook -once window WinDisplay .* update-prompt
 }
 
 # --------------------------------------------------
 # MODELINE
 
 # Options
+
+declare-option -hidden str modeline_lsp_progress_section
+define-command -hidden modeline-update-lsp-progress %{
+    set-option global modeline_lsp_progress_section %sh{
+        if [ -n "$kak_opt_lsp_modeline_progress" ]; then
+            echo "{comment}[{default}$kak_opt_lsp_modeline_progress{comment}]"
+        fi
+    }
+}
 
 declare-option -hidden str modeline_lsp_section
 define-command -hidden modeline-update-lsp %{
@@ -94,11 +102,12 @@ define-command -hidden modeline-update-bufstatus %{
     }
 }
 
-set-option global modelinefmt '%opt{lsp_modeline_progress} %opt{modeline_misc_section}%opt{modeline_lsp_section}%opt{modeline_git_branch}{comment}[{function}麗%val{selection_count} %sh{echo $(($kak_selection_index + 1))}{comment}]%opt{modeline_filetype}[%opt{modeline_bufstatus}{StatusLineValue}%val{bufname}{comment}][{enum}%val{cursor_line}:%val{cursor_char_column}{comment}]'
+set-option global modelinefmt '%opt{modeline_lsp_progress_section}%opt{modeline_misc_section}%opt{modeline_lsp_section}%opt{modeline_git_branch}{comment}[{function}麗%val{selection_count} %sh{echo $(($kak_selection_index + 1))}{comment}]%opt{modeline_filetype}[%opt{modeline_bufstatus}{StatusLineValue}%val{bufname}{comment}][{enum}%val{cursor_line}:%val{cursor_char_column}{comment}]'
 
 # Hooks
 
 hook global WinSetOption (lsp_diagnostic_error_count|lsp_diagnostic_warning_count|lsp_enabled)=.* modeline-update-lsp
+hook global GlobalSetOption lsp_modeline_progress=.* modeline-update-lsp-progress
 hook global WinSetOption filetype=.* modeline-update-filetype
 hook global WinSetOption modeline_git_branch=.* modeline-update-git-branch
 
