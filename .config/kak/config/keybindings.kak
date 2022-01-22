@@ -1,3 +1,5 @@
+# NORMAL
+
 # Comment
 map global normal "#" ": comment-line<ret>"
 map global normal "<a-#>" ": comment-block<ret>"
@@ -59,17 +61,23 @@ map global normal X "giGl"
 # Select all occurances of current selection in file
 map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
 
-# Split selectios to indented block
-# TODO: Make u a sub-mode of the user mode for utils
-map global user "u" "<a-:><a-;>i<ret><esc><gt><space>;gli<ret><esc><lt>" -docstring "break to indent"
-
-# <c-i> is the sane way to jump forward
-map global normal <c-i> <tab>
-
 # <c-w> to write
 map global normal <c-w> ":w<ret>"
+
+# INSERT
 
 # Delete words in insert mode
 map global insert <c-backspace> "<esc>hBdi"
 # Also delete words when holding shift
 map global insert <s-backspace> "<backspace>"
+
+# PROMPT
+
+map global prompt <c-f> <c-p>
+map global prompt <c-backspace> <c-w>
+
+# USER
+
+# Split selectios to indented block
+# TODO: Make u a sub-mode of the user mode for utils
+map global user "u" "<a-:><a-;>i<ret><esc><gt><space>;gli<ret><esc><lt>" -docstring "break to indent"
