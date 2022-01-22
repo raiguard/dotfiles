@@ -63,12 +63,8 @@ cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
     set-option global source_local_kakrc true
 }
 
-cork luar "https://github.com/gustavo-hms/luar" %{
-    require-module luar
-
-    cork harpoon.kak "https://github.com/raiguard/harpoon.kak" %{
-        harpoon-add-bindings
-    }
+cork harpoon.kak "https://github.com/raiguard/harpoon.kak" %{
+    harpoon-add-bindings
 }
 
 cork mark.kak "https://github.com/alexherbo2/mark.kak"
