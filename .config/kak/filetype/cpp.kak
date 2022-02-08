@@ -2,6 +2,10 @@ hook global WinSetOption filetype=(c|cpp) %{
     lsp-init
     rainbow-enable-window
 
+    set-option window tabstop 2
+    set-option window softtabstop 2
+    set-option window indentwidth 2
+
     # Highlight operators
     try %{
         remove-highlighter buffer/operators

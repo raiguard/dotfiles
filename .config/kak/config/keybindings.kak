@@ -14,9 +14,6 @@ map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{tex
 # TODO: Make this fullscreen instead of an overlay
 map global view "g" "<esc>: kitty-overlay lazygit<ret>" -docstring "lazygit..."
 
-# Grep for current selection
-map global user "/" ': grep %reg{dot}<ret>' -docstring "grep for selection"
-
 # Jumps centered please
 map global normal "<c-i>" "<c-i>vv"
 map global normal "<c-o>" "<c-o>vv"
@@ -75,9 +72,3 @@ map global insert <s-backspace> "<backspace>"
 
 map global prompt <c-f> <c-p>
 map global prompt <c-backspace> <c-w>
-
-# USER
-
-# Split selectios to indented block
-# TODO: Make u a sub-mode of the user mode for utils
-map global user "u" "<a-:><a-;>i<ret><esc><gt><space>;gli<ret><esc><lt>" -docstring "break to indent"

@@ -9,7 +9,7 @@ set-option global lsp_diagnostic_line_error_sign '×'
 
 set-option global lsp_hover_anchor true
 
-lsp-auto-hover-insert-mode-enable
+# lsp-auto-hover-insert-mode-enable
 
 declare-option bool lsp_enabled false
 

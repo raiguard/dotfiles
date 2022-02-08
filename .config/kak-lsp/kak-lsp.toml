@@ -4,12 +4,17 @@ verbosity = 2
 
 # LANGUAGES
 
+# [language.c_cpp]
+# filetypes = ["c", "cpp"]
+# roots = [".ccls-root", "compile_commands.json"]
+# command = "ccls"
+# # kak-lsp does not support newText https://github.com/ul/kak-lsp/issues/40
+# args = ["--init={\"completion\":{\"detailedLabel\":false}}"]
+
 [language.c_cpp]
 filetypes = ["c", "cpp"]
-roots = [".ccls-root", "compile_commands.json"]
-command = "ccls"
-# kak-lsp does not support newText https://github.com/ul/kak-lsp/issues/40
-args = ["--init={\"completion\":{\"detailedLabel\":false}}"]
+roots = ["compile_commands.json", ".clangd", ".git", ".hg"]
+command = "clangd"
 
 [language.latex]
 filetypes = ["tex", "latex"]
@@ -19,7 +24,8 @@ command = "texlab"
 [language.lua]
 filetypes = ["lua"]
 roots = [".git/"]
-command = "lua-language-server"
+# command = "lua-language-server"
+command = "/home/rai/.vscode-oss/extensions/sumneko.lua-2.5.3/server/bin/Linux/lua-language-server"
 args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
 
 [language.lua.settings.Lua]
@@ -30,10 +36,11 @@ diagnostics.globals = ["__DebugAdapter", "__Profiler", "global", "data", "mods",
 runtime.plugin = "/home/rai/dev/factorio/plugin/plugin.lua"
 runtime.version = "Lua 5.2"
 telemetry.enable = false
+# semantic.enable = false
 workspace.ignoreDir = [".vscode", "src/archive"]
 workspace.library = [
     "/home/rai/dev/factorio/runtime-api.lua",
-    "/home/rai/dev/factorio/1/data",
+    # "/home/rai/dev/factorio/1/data",
     "/home/rai/dev/factorio/libs",
 ]
 workspace.preloadFileSize = 10000

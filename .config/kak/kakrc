@@ -31,11 +31,15 @@ cork kakoune-fandt "https://github.com/listentolist/kakoune-fandt" %{
     hook global ModeChange push:.*:user.fandt %{
         set-face window PrimarySelection ",rgba:%opt{lightorange}%opt{selectionalpha}"
         set-face window PrimaryCursor ",rgba:%opt{lightorange}%opt{cursoralpha}"
+        set-face window SecondarySelection ",rgba:%opt{darkorange}%opt{selectionalpha}"
+        set-face window SecondaryCursor ",rgba:%opt{darkorange}%opt{cursoralpha}"
     }
 
     hook global ModeChange pop:user.fandt:.* %{
         set-face window PrimarySelection ",rgba:%opt{blue}%opt{selectionalpha}"
         set-face window PrimaryCursor ",rgba:%opt{blue}%opt{cursoralpha}"
+        set-face window SecondarySelection ",rgba:%opt{green}%opt{selectionalpha}"
+        set-face window SecondaryCursor ",rgba:%opt{green}%opt{cursoralpha}"
     }
 }
 
@@ -116,7 +120,7 @@ define-command load -params 2 -hidden %{
     try %{ source "%val{config}/%arg{1}/%arg{2}.kak" }
 }
 
-# TOOLS
+load config modes
 
 load tool buffer
 load tool kitty
@@ -128,14 +132,9 @@ load tool replace-mode
 load tool status-line
 load tool todo
 
-# GENERAL CONFIGURATION
-
 load config commands
-load config modes
 load config hooks
 load config keybindings
-
-# FILETYPES
 
 load filetype cpp
 load filetype factorio-changelog
@@ -151,6 +150,21 @@ load filetype toml
 load filetype ts
 load filetype yaml
 
-# source "~/dev/projects/personal/loli.kak/rc/loli.kak"
+source "~/dev/projects/personal/loli.kak/rc/loli.kak"
 source "~/dev/projects/personal/loli.kak/rc/debug.kak"
-# loli-add-aliases
+loli-add-aliases
+
+# define-command test-hooks %{
+#     hook window NormalKey .* %{
+#         evaluate-commands %sh{
+#             eval "set -- $kak_quoted_client_list"
+#             while [ $# -gt 0 ]; do
+#                 if [ "$1" != "$kak_client" ]; then
+#                     echo "echo '$kak_hook_param_capture_0'"
+#                     echo "execute-keys -client $1 '$kak_hook_param_capture_0'"
+#                 fi
+#                 shift
+#             done
+#         }
+#     }
+# }
