@@ -1,2 +1,3 @@
-xrandr --output DP-0 --off --output DP-1 --off --output DP-2 --off --output HDMI-0 --mode 3840x2160 --rate 60 --pos 0x0 --output DP-2 --off --output DP-3 --off --output DP-4 --off --output DP-5 --off --output USB-C-0 --off
+xrandr --output DisplayPort-0 --off --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 3840x2160 --rate 60 --pos 0x0
 pactl set-default-sink alsa_output.pci-0000_08_00.1.hdmi-stereo-extra2
+nitrogen --restore

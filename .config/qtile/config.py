@@ -39,7 +39,7 @@ from libqtile.lazy import lazy
 mod = "mod4"
 terminal = "kitty"
 
-cursor_warp = True
+cursor_warp = False
 
 @hook.subscribe.startup_once
 def autostart():
@@ -108,9 +108,9 @@ groups = []
 # FOR QWERTY KEYBOARDS
 group_keys = ["u", "i", "o", "p", "7", "8", "9"]
 
-group_names = ["dev", "web", "game", "chat", "vm", "file", "gfx"]
+group_names = ["kak", "web", "game", "chat", "vm", "file", "gfx"]
 
-group_layouts = ["monadtall", "monadtall", "max", "monadtall", "max", "monadtall", "monadtall"]
+group_layouts = ["monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall"]
 
 for i in range(len(group_names)):
     groups.append(
@@ -196,13 +196,7 @@ screens = [
                     format='{MemUsed: .0f} MB',
                     foreground=colors["blue"]
                 ),
-                separator(),
-                widget.NvidiaSensors(
-                    # For some reason, {perf} doesn't work for me
-                    # format='{perf}  / {fan_speed} / {temp}°C',
-                    format='{fan_speed} / {temp}°C',
-                    foreground=colors["green"]
-                ),
+                # TODO: AMD GPU stuff
                 separator(),
                 widget.OpenWeather(
                     format='{weather_details}, {main_temp:.0f}°{units_temperature}',
@@ -218,8 +212,6 @@ screens = [
             30,
             background=colors["bg"]
         ),
-        wallpaper='~/pictures/wallpapers/1.jpeg',
-        wallpaper_mode='fill'
     ),
     Screen(
         top=bar.Bar(
@@ -236,8 +228,6 @@ screens = [
             30,
             background=colors["bg"]
         ),
-        wallpaper='~/pictures/wallpapers/2.jpeg',
-        wallpaper_mode='fill',
     ),
 ]
 
@@ -254,7 +244,6 @@ dgroups_key_binder = None
 dgroups_app_rules = []  # type: List
 follow_mouse_focus = True
 bring_front_click = False
-cursor_warp = False
 floating_layout = layout.Floating(
     border_focus=colors["blue"],
     border_normal=colors["comment"],
@@ -324,8 +313,7 @@ def on_new(c):
         c.cmd_togroup("game")
     elif window_match_re(c, wmclass="discord"):
         c.cmd_togroup("chat")
+    elif window_match_re(c, wmclass="krita"):
+        c.cmd_togroup("gfx")
 
 
-@hook.subscribe.screen_change
-def restart_on_randr(_):
-    qtile.cmd_reload_config()
