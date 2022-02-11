@@ -78,17 +78,18 @@ keys = [
         desc="Reset all window sizes"
     ),
 
-    # Toggle between different layouts as defined below
+    # Toggle between different layouts
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "BackSpace", lazy.window.kill(), desc="Kill focused window"),
-    Key([mod], "q", lazy.spawn("rofi -show power-menu -modi 'power-menu:~/.local/bin/rofi-power-menu --choices=logout/reboot/shutdown'"), desc="Power options"),
 
     # QTile control
     Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
 
-    # Launch applications
-    Key([mod], "r", lazy.spawn("rofi -show drun")),
+    # Rofi
+    Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Launch application"),
+    Key([mod], "w", lazy.spawn("rofi -show window"), desc="Switch windows"),
+    Key([mod], "q", lazy.spawn("rofi -show power-menu -modi 'power-menu:~/.local/bin/rofi-power-menu --choices=logout/reboot/shutdown'"), desc="Power options"),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
 
     # Focus screen
@@ -105,12 +106,11 @@ keys = [
 
 groups = []
 
-# FOR QWERTY KEYBOARDS
-group_keys = ["u", "i", "o", "p", "7", "8", "9"]
+group_keys = ["u", "i", "o", "p", "7", "8", "9", "0"]
 
-group_names = ["kak", "web", "game", "chat", "vm", "file", "gfx"]
+group_names = ["kak", "web", "game", "chat", "vm", "file", "gfx", "dbg"]
 
-group_layouts = ["monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall"]
+group_layouts = ["monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall"]
 
 for i in range(len(group_names)):
     groups.append(
@@ -181,6 +181,7 @@ screens = [
                     borderwidth=2,
                     this_current_screen_border=colors["cyan"],
                 ),
+                # widget.TaskList(),
                 widget.Spacer(length=bar.STRETCH),
                 widget.Systray(),
                 separator(),
