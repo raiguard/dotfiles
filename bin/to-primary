@@ -1,0 +1,2 @@
+xrandr --output DisplayPort-0 --mode 2560x1440 --rate 60 --pos 2560x0 --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --off
+nitrogen --restore
