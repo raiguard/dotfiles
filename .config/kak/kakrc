@@ -277,7 +277,11 @@ map global toggle s ': info "%val{client}/%val{session}"<ret>' -docstring "sessi
 # OTHER
 
 define-command load -params 2 -hidden %{
-    try %{ source "%val{config}/%arg{1}/%arg{2}.kak" } catch %{ echo -debug "Unable to load config %arg{1}/%arg{2}" }
+    try %{
+        source "%val{config}/%arg{1}/%arg{2}.kak"
+    } catch %{
+        echo -debug "Unable to load config %arg{1}/%arg{2}"
+    }
 }
 
 load filetype cpp
