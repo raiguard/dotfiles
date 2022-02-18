@@ -36,7 +36,7 @@ diagnostics.globals = ["__DebugAdapter", "__Profiler", "global", "data", "mods",
 runtime.plugin = "/home/rai/dev/factorio/plugin/plugin.lua"
 runtime.version = "Lua 5.2"
 telemetry.enable = false
-# semantic.enable = false
+semantic.enable = false
 workspace.ignoreDir = [".vscode", "src/archive"]
 workspace.library = [
     "/home/rai/dev/factorio/runtime-api.lua",
