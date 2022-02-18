@@ -169,6 +169,9 @@ def separator():
         foreground=colors["comment"]
     )
 
+def no_text(text):
+    return ""
+
 screens = [
     Screen(
         top=bar.Bar(
@@ -181,7 +184,13 @@ screens = [
                     borderwidth=2,
                     this_current_screen_border=colors["cyan"],
                 ),
-                # widget.TaskList(),
+                separator(),
+                widget.TaskList(
+                    icon_size=20,
+                    parse_text=no_text,
+                    border=None,
+                    padding_y=4,
+                ),
                 widget.Spacer(length=bar.STRETCH),
                 widget.Systray(),
                 separator(),
@@ -224,6 +233,13 @@ screens = [
                     padding=4,
                     borderwidth=2,
                     this_current_screen_border=colors["cyan"],
+                ),
+                separator(),
+                widget.TaskList(
+                    icon_size=20,
+                    parse_text=no_text,
+                    border=None,
+                    padding_y=4,
                 ),
             ],
             30,
