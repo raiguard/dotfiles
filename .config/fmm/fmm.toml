@@ -5,6 +5,7 @@ sync_latest_versions = true
 sync_startup_settings = true
 
 [sets]
+AdjustableInserters = ["AdjustableInserters", "bobinserters", "EditorExtensions", "Sandbox"]
 AdvancedEntityPaste = ["AdvancedEntityPaste", "EditorExtensions", "Sandbox"]
 Autopilot = ["Autopilot", "EditorExtensions", "Sandbox"]
 CursorEnhancements = ["CursorEnhancements", "EditorExtensions", "Sandbox"]
@@ -15,4 +16,5 @@ LtnManager = ["LtnManager", "EditorExtensions", "Sandbox"]
 PipeVisualizer = ["PipeVisualizer", "EditorExtensions", "Sandbox"]
 RateCalculator = ["RateCalculator", "EditorExtensions", "Sandbox"]
 RecipeBook = ["RecipeBook", "EditorExtensions", "Sandbox"]
+Tapeline = ["Tapeline", "EditorExtensions", "Sandbox"]
 TaskList = ["TaskList", "Todo-List", "EditorExtensions", "Sandbox"]
