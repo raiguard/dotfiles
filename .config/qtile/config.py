@@ -324,7 +324,7 @@ def window_match_re(window, wmname=None, wmclass=None, role=None):
 
 @hook.subscribe.client_new
 def on_new(c):
-    if c.name == "Calculator":
+    if c.name == "galculator":
         c.cmd_enable_floating()
     elif window_match_re(c, wmname="Factorio"):
         c.cmd_togroup("game")
