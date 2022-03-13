@@ -40,7 +40,6 @@ semantic.enable = false
 workspace.ignoreDir = [".vscode", "src/archive"]
 workspace.library = [
     "/home/rai/dev/factorio/runtime-api.lua",
-    # "/home/rai/dev/factorio/1/data",
     "/home/rai/dev/factorio/libs",
 ]
 workspace.preloadFileSize = 10000
@@ -147,6 +146,10 @@ face = "operator"
 
 [[semantic_tokens]]
 token = "macro"
+face = "value"
+
+[[semantic_tokens]]
+token = "macroBang"
 face = "value"
 
 [[semantic_tokens]]

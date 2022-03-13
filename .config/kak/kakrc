@@ -8,11 +8,13 @@ evaluate-commands %sh{
 # --------------------------------------------------
 # PLUGINS
 
+cork harpoon.kak "https://github.com/raiguard/harpoon.kak" %{
+    harpoon-add-bindings
+}
+
 cork kak-ansi "https://github.com/eraserhd/kak-ansi"
 
-cork kak-focus "https://github.com/caksoylar/kakoune-focus" %{
-    map global user <space> ': focus-toggle<ret>' -docstring "toggle selections focus"
-}
+source "~/dev/projects/personal/kak-dap/rc/kak-dap.kak"
 
 cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
     set-option global rainbow_mode 0
@@ -42,6 +44,12 @@ cork kakoune-fandt "https://github.com/listentolist/kakoune-fandt" %{
     }
 }
 
+cork kakoune-focus "https://github.com/caksoylar/kakoune-focus" %{
+    map global user <space> ': focus-toggle<ret>' -docstring "toggle selections focus"
+}
+
+cork kakoune-gdb "https://github.com/occivink/kakoune-gdb"
+
 cork kakoune-grep-write "https://github.com/JacobTravers/kakoune-grep-write" %{
     hook global BufCreate \*grep\* %{
         alias buffer w grep-write
@@ -56,7 +64,7 @@ cork kakoune-multi-file "https://github.com/natasky/kakoune-multi-file" %{}
 
 cork kakoune-sort-selections "https://github.com/occivink/kakoune-sort-selections"
 
-cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save"
+cork kakoune-state-save "https://github.com/https://gitlab.com/Screwtapello/kakoune-state-save"
 
 cork kakoune-sudo-write "https://github.com/occivink/kakoune-sudo-write"
 
@@ -64,10 +72,6 @@ cork kakoune-text-objects "https://github.com/delapouite/kakoune-text-objects"
 
 cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
     set-option global source_local_kakrc true
-}
-
-cork harpoon.kak "https://github.com/raiguard/harpoon.kak" %{
-    harpoon-add-bindings
 }
 
 cork mark.kak "https://github.com/alexherbo2/mark.kak"
@@ -184,7 +188,7 @@ map global normal "#" ": comment-line<ret>"
 map global normal "<a-#>" ": comment-block<ret>"
 
 # Go to file (basic fuzzy finder)
-map global goto "f" '<esc>: prompt -shell-script-candidates %{ rg --files } file: %{ edit %val{text} }<ret>' -docstring "file"
+map global goto "f" '<esc>: prompt -shell-script-candidates %{ fd --type f } file: %{ edit %val{text} }<ret>' -docstring "file"
 
 # Go to buffer
 map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
@@ -228,6 +232,7 @@ map global normal J "J<a-x>"
 map global normal K "K<a-x>"
 
 # Except when I don't want to
+# TODO: Put this in a user mode?
 map global normal "<c-a-j>" "J"
 map global normal "<c-a-k>" "K"
 
@@ -236,9 +241,6 @@ map global normal X "giGl"
 
 # Select all occurances of current selection in file
 map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
-
-# <c-w> to write
-map global normal <c-w> ":w<ret>"
 
 # INSERT
 
@@ -270,8 +272,8 @@ map global sort "s" "<esc>: sort-selections<ret>" -docstring "selections"
 
 # Toggle
 declare-user-mode toggle
-map global user t ": enter-user-mode toggle<ret>" -docstring "toggle..."
 map global toggle s ': info "%val{client}/%val{session}"<ret>' -docstring "session info"
+map global user t ": enter-user-mode toggle<ret>" -docstring "toggle..."
 
 # --------------------------------------------------
 # OTHER
