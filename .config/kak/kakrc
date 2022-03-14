@@ -15,6 +15,7 @@ cork harpoon.kak "https://github.com/raiguard/harpoon.kak" %{
 cork kak-ansi "https://github.com/eraserhd/kak-ansi"
 
 source "~/dev/projects/personal/kak-dap/rc/kak-dap.kak"
+set-option global dap_cmd "kak-dap -s %val{session} --log /tmp/kak-dap.log"
 
 cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
     set-option global rainbow_mode 0
