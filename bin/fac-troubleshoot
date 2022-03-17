@@ -6,7 +6,7 @@ else
     repo=$(basename $PWD)
     new_location="$HOME/dev/factorio/linked/saves/${repo#Factorio-}/Bugs/$2.zip"
 fi
-mv $1 $new_location
+mv "$1" "$new_location"
 echo "Relocated save file to $new_location"
 fmm -Sof $new_location
 $HOME/dev/factorio/1/bin/x64/factorio --load-game $new_location
