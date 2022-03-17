@@ -2,4 +2,4 @@
 
 pamixer -$1 5
 vol=$(pamixer --get-volume)
-notify-send -u low -h int:value:$vol Volume
+dunstify -u low -h int:value:$vol -h string:x-dunst-stack-tag:volume -t 1500 "Volume - $vol%"

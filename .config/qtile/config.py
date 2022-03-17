@@ -46,7 +46,6 @@ def autostart():
     home = os.path.expanduser('~/.config/qtile/autostart.sh')
     subprocess.call([home])
 
-
 keys = [
     # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
@@ -328,7 +327,6 @@ def window_match_re(window, wmname=None, wmclass=None, role=None):
         return False
     return ret
 
-
 @hook.subscribe.client_new
 def on_new(c):
     if c.name == "galculator":
@@ -339,5 +337,3 @@ def on_new(c):
         c.cmd_togroup("chat")
     elif window_match_re(c, wmclass="krita"):
         c.cmd_togroup("gfx")
-
-
