@@ -292,7 +292,7 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#181a1f"
+    background = "#272b33"
     foreground = "#98c379"
     highlight = "#98c379"
     frame_color = "#98c379"
@@ -301,7 +301,7 @@
     #default_icon = /path/to/icon
 
 [urgency_normal]
-    background = "#181a1f"
+    background = "#272b33"
     foreground = "#61afef"
     highlight = "#61afef"
     frame_color = "#61afef"
@@ -310,7 +310,7 @@
     #default_icon = /path/to/icon
 
 [urgency_critical]
-    background = "#181a1f"
+    background = "#272b33"
     foreground = "#e06c75"
     highlight = "#e06c75"
     frame_color = "#e06c75"
