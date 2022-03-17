@@ -177,7 +177,7 @@
     stack_duplicates = true
 
     # Hide the count of stacked notifications with the same content
-    hide_duplicate_count = false
+    hide_duplicate_count = true
 
     # Display indicators for URLs (U) and actions (A).
     show_indicators = yes
@@ -296,7 +296,7 @@
     foreground = "#98c379"
     highlight = "#98c379"
     frame_color = "#98c379"
-    timeout = 4
+    timeout = 10
     # Icon for notifications with low urgency, uncomment to enable
     #default_icon = /path/to/icon
 
@@ -305,7 +305,7 @@
     foreground = "#61afef"
     highlight = "#61afef"
     frame_color = "#61afef"
-    timeout = 4
+    timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
     #default_icon = /path/to/icon
 

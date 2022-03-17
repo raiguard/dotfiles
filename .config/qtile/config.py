@@ -100,7 +100,14 @@ keys = [
     Key([], "Print", lazy.spawn("flameshot gui")),
 
     # Lock the screen
-    Key(["control", "mod1"], "l", lazy.spawn("betterlockscreen -l"))
+    Key(["control", "mod1"], "l", lazy.spawn("betterlockscreen -l")),
+
+    # Media control
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("sh /home/rai/.config/qtile/volume.sh i")),
+    Key([], "XF86AudioLowerVolume", lazy.spawn("sh /home/rai/.config/qtile/volume.sh d")),
+    Key([], "XF86AudioPlay", lazy.spawn("sh /home/rai/.config/qtile/media.sh play-pause")),
+    Key([], "XF86AudioNext", lazy.spawn("sh /home/rai/.config/qtile/media.sh next")),
+    Key([], "XF86AudioPrev", lazy.spawn("sh /home/rai/.config/qtile/media.sh previous")),
 ]
 
 
