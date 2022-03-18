@@ -107,6 +107,9 @@ keys = [
     Key([], "XF86AudioPlay", lazy.spawn("sh /home/rai/.config/qtile/media.sh play-pause")),
     Key([], "XF86AudioNext", lazy.spawn("sh /home/rai/.config/qtile/media.sh next")),
     Key([], "XF86AudioPrev", lazy.spawn("sh /home/rai/.config/qtile/media.sh previous")),
+
+    # Floating
+    Key([mod], "f", lazy.window.toggle_floating()),
 ]
 
 

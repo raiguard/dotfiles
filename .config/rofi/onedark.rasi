@@ -29,7 +29,7 @@
 * {
     /* Theme settings */
     highlight: bold;
-    scrollbar: true;
+    scrollbar: false;
 
     /* One dark colors */
     one-dark-fg:          #abb2bf;
@@ -62,14 +62,14 @@
     active-foreground:           @foreground;
     alternate-active-background: @active-background;
     alternate-active-foreground: @active-foreground;
-    selected-active-background:  @active-background;
-    selected-active-foreground:  @active-foreground;
+    selected-active-background:  @one-dark-lightorange;
+    selected-active-foreground:  @background;
 
     urgent-background:           @background;
     urgent-foreground:           @foreground;
     alternate-urgent-background: @urgent-background;
     alternate-urgent-foreground: @urgent-foreground;
-    selected-urgent-background:  @urgent-background;
+    selected-urgent-background:  @one-dark-lightred;
     selected-urgent-foreground:  @urgent-foreground;
 }
 
@@ -99,7 +99,7 @@ listview {
     border:       2px solid 0 0;
     padding:      2px 0 0;
     border-color: @separatorcolor;
-    spacing:      2px;
+    spacing:      0px;
     scrollbar:    @scrollbar;
 }
 
@@ -196,4 +196,5 @@ textbox-prompt-sep {
 element-text, element-icon {
     background-color: inherit;
     text-color:       inherit;
+    padding: 0 2 0 2;
 }
