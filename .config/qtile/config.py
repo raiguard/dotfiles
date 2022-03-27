@@ -161,6 +161,16 @@ layouts = [
         border_normal=colors["comment"],
         margin=6
     ),
+    # layout.Tile(
+    #     add_after_last=True,
+    #     border_focus=colors["cyan"],
+    #     border_normal=colors["comment"],
+    #     border_width=2,
+    #     margin=6,
+    #     master_length=2,
+    #     ratio=0.5,
+    #     shift_windows=True,
+    # ),
     layout.Max(),
 ]
 
@@ -209,13 +219,23 @@ screens = [
                 ),
                 widget.ThermalSensor(
                     foreground=colors["magenta"],
+                    tag_sensor="Tctl"
                 ),
                 separator(),
                 widget.Memory(
                     format='{MemUsed: .0f} MB',
                     foreground=colors["blue"]
                 ),
-                # TODO: AMD GPU stuff
+                separator(),
+                widget.GenPollText(
+                    foreground=colors["lightred"],
+                    update_interval=1,
+                    func=lambda: subprocess.check_output("/home/rai/.config/qtile/amdgpu.sh").decode("utf-8")
+                ),
+                widget.ThermalSensor(
+                    foreground=colors["lightred"],
+                    tag_sensor="junction"
+                ),
                 separator(),
                 widget.OpenWeather(
                     format='{weather_details}, {main_temp:.0f}°{units_temperature}',
