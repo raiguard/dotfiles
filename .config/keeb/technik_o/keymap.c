@@ -15,6 +15,7 @@
  */
 
 #include QMK_KEYBOARD_H
+#include "features/caps_word.h"
 
 enum layers {
   MAIN,
@@ -41,7 +42,6 @@ enum layers {
 #define RGUI_QUOT RGUI_T(KC_QUOT)
 
 // Homerow mods - NUM
-
 #define LGUI_F5 LGUI_T(KC_F5)
 #define LALT_F6 LALT_T(KC_F6)
 #define LCTL_F7 LCTL_T(KC_F7)
@@ -63,11 +63,21 @@ enum layers {
 // Combos
 const uint16_t PROGMEM toggle_game[] = {KC_TAB, KC_BSPC, COMBO_END};
 const uint16_t PROGMEM toggle_mouse[] = {KC_SPC, KC_RETN, COMBO_END};
+const uint16_t PROGMEM toggle_mouse_off[] = {KC_BTN1, KC_RETN, COMBO_END};
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(toggle_game, TG(GAME)),
     COMBO(toggle_mouse, TG(MOUSE)),
+    COMBO(toggle_mouse_off, TG(MOUSE)),
 };
 
+// Caps word
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+  if (!process_caps_word(keycode, record)) { return false; }
+
+  return true;
+}
+
+// Keymap
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [MAIN] = LAYOUT_ortho_4x12(
@@ -112,4 +122,3 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, KC_TRNS, KC_TRNS, _______, _______, KC_BTN1, KC_BTN2, _______, _______, _______
   ),
 };
-

@@ -11,4 +11,4 @@
 #define TAPPING_FORCE_HOLD
 
 // Combos
-#define COMBO_COUNT 2
+#define COMBO_COUNT 3
