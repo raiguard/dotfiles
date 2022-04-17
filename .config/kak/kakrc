@@ -296,6 +296,7 @@ define-command load -params 2 -hidden %{
 
 load filetype cpp
 load filetype factorio-changelog
+load filetype go
 load filetype json
 load filetype kak
 load filetype latex
