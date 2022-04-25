@@ -8,3 +8,4 @@ udiskie --tray & # Disk auto-mounting and tray icon
 nm-applet & # Network status in system tray
 blueman-applet & # Bluetooth status in system tray
 pasystray & # Volume control in system tray
+redshift -o & # Only run once - letting it run continually causes stuttering
