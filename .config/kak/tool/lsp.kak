@@ -35,6 +35,8 @@ define-command lsp-init -docstring "enable lsp and set-option up generic hooks" 
 
     # Enable inlay diagnostics
     inlay-diagnostics-enable
+
+    lsp-inlay-hints-enable window
 }
 
 define-command lsp-deinit -docstring "disable lsp" %{
