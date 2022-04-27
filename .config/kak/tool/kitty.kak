@@ -18,4 +18,6 @@ Any extra arguments will be passed to "kitty @ launch"' \
     set global kitty_window_type window
 }
 
-
+define-command new-os %{
+    kitty-os kak -c %val{session}
+}

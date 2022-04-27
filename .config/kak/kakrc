@@ -178,14 +178,6 @@ hook global InsertCompletionHide .* %{
     map window insert <s-tab> <s-tab>
 }
 
-# Focused window hinting
-hook global FocusIn .* %{
-    set-face window LineNumbers "rgb:%opt{comment}"
-}
-hook global FocusOut .* %{
-    set-face window LineNumbers "rgb:%opt{comment}+d"
-}
-
 # --------------------------------------------------
 # KEYBINDINGS
 
@@ -215,11 +207,6 @@ map global normal "N" "Nvv"
 map global normal "<a-n>" "<a-n>vv"
 map global normal "<a-N>" "<a-N>vv"
 
-# Swap user mode and clear selection keys
-map global normal "<space>" ","
-map global normal "," "<space>"
-map global normal "<a-,>" "<a-space>"
-
 # Less awkward keybind for outer object
 map global normal "<a-o>" "<a-a>"
 
@@ -236,8 +223,8 @@ map global normal "<a-m>" "<a-k>"
 map global normal "<a-M>" "<a-K>"
 
 # Always select entire lines
-map global normal J "J<a-x>"
-map global normal K "K<a-x>"
+map global normal J "J<x>"
+map global normal K "K<x>"
 
 # Except when I don't want to
 # TODO: Put this in a user mode?

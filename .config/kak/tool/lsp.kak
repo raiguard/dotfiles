@@ -10,6 +10,8 @@ set-option global lsp_diagnostic_line_error_sign '×'
 set-option global lsp_hover_anchor true
 
 # lsp-auto-hover-insert-mode-enable
+lsp-inlay-diagnostics-enable global
+lsp-inlay-hints-enable global
 
 declare-option bool lsp_enabled false
 
@@ -32,31 +34,11 @@ define-command lsp-init -docstring "enable lsp and set-option up generic hooks" 
     hook -once -always window WinSetOption filetype=.* %{
         rmhooks window semantic-tokens
     }
-
-    # Enable inlay diagnostics
-    inlay-diagnostics-enable
-
-    lsp-inlay-hints-enable window
 }
 
 define-command lsp-deinit -docstring "disable lsp" %{
     lsp-disable-window
     set-option window lsp_enabled false
-}
-
-# Auto-hide inlay diagnostics in insert mode, if they're enabled at all
-define-command inlay-diagnostics-enable %{
-    lsp-inlay-diagnostics-enable window
-    hook window -group inlay-diagnostics ModeChange (push|pop):.*:insert %{
-        lsp-inlay-diagnostics-disable window
-    }
-    hook window -group inlay-diagnostics ModeChange (push|pop):insert:.* %{
-        lsp-inlay-diagnostics-enable window
-    }
-}
-define-command inlay-diagnostics-disable %{
-    lsp-inlay-diagnostics-disable window
-    remove-hooks window inlay-diagnostics
 }
 
 hook global KakEnd .* lsp-exit

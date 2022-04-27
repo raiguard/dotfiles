@@ -7,4 +7,4 @@ hook global WinSetOption comment_line=(.*) %{
     add-highlighter -override window/issue regex "\Q%val{hook_param_capture_1}\E\h*(#\d*?:)[^\n]*" 1:blue
 }
 
-map global toggle t ": grep (BUG:|FIXME:|TODO:)<ret>" -docstring "TODOs"
+map global toggle t ": grep (BUG:|FIXME:|TODO:|TEMPORARY:)<ret>" -docstring "TODOs"
