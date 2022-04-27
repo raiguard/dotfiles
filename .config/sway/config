@@ -23,140 +23,130 @@ output DP-2 resolution 2560x1140 position 0,0
 output DP-1 resolution 2560x1140 position 2560,0
 output HDMI-A-1 disable
 # Wallpapers
-output DP-1 bg ~/pictures/wallpapers/1182498.png fill
-output DP-2 bg ~/pictures/wallpapers/1140276.jpg fill
+output DP-1 bg ~/pictures/wallpapers/602577.png fill
+output DP-2 bg ~/pictures/wallpapers/1108901.png fill
+output HDMI-A-1 bg ~/pictures/wallpapers/1140456.jpg fill
 
 ### Idle configuration
-#
-# Example configuration:
-#
+
 exec swayidle -w \
          timeout 300 'swaylock -f -c 000000' \
          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
          before-sleep 'swaylock -f -c 000000'
 
-### TODO: For laptop
-### Input configuration
-#
-# Example configuration:
-#
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-#
-# You can get the names of your inputs by running: swaymsg -t get_inputs
-# Read `man 5 sway-input` for more information about this section.
-
 ### Key bindings
-#
-# Basics:
-#
-    # Start a terminal
-    bindsym $mod+Return exec $term
 
-    # Kill focused window
-    bindsym $mod+backspace kill
-    bindsym $mod+q kill
+# Start a terminal
+bindsym $mod+Return exec $term
 
-    # Start your launcher
-    bindsym $mod+d exec $menu
+# Kill focused window
+bindsym $mod+backspace kill
+bindsym $mod+q kill
 
-    # Drag floating windows by holding down $mod and left mouse button.
-    # Resize them with right mouse button + $mod.
-    # Despite the name, also works for non-floating windows.
-    # Change normal to inverse to use left mouse button for resizing and right
-    # mouse button for dragging.
-    floating_modifier $mod normal
+# Start your launcher
+bindsym $mod+d exec $menu
 
-    # Reload the configuration file
-    bindsym $mod+Shift+c reload
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
 
-    # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+# Reload the configuration file
+bindsym $mod+Shift+c reload
 
-    # Wofi
-    bindsym $mod+r exec wofi --show drun
-    # FIXME: These two don't work
-    # bindsym $mod+w exec wofi --show window
-    # bindsym $mod+q exec wofi --show power-menu --modi 'power-menu:~/.local/bin/rofi-power-menu --choices=logout/reboot/shutdown
+# Exit sway (logs you out of your Wayland session)
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+
+# Wofi
+bindsym $mod+r exec wofi --show drun
+
 #
 # Moving around:
 #
-    # Move your focus around
-    bindsym $mod+$left focus left
-    bindsym $mod+$down focus down
-    bindsym $mod+$up focus up
-    bindsym $mod+$right focus right
 
-    # Move the focused window with the same, but add Shift
-    bindsym $mod+Shift+$left move left
-    bindsym $mod+Shift+$down move down
-    bindsym $mod+Shift+$up move up
-    bindsym $mod+Shift+$right move right
+# Move your focus around
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# Move the focused window with the same, but add Shift
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
 #
 # Workspaces:
 #
-    # Switch to workspace
-    bindsym $mod+u workspace number 1
-    bindsym $mod+i workspace number 2
-    bindsym $mod+o workspace number 3
-    bindsym $mod+p workspace number 4
-    bindsym $mod+7 workspace number 5
-    bindsym $mod+8 workspace number 6
-    bindsym $mod+9 workspace number 7
-    bindsym $mod+0 workspace number 8
-    # Move focused container to workspace
-    bindsym $mod+Shift+u move container to workspace number 1
-    bindsym $mod+Shift+i move container to workspace number 2
-    bindsym $mod+Shift+o move container to workspace number 3
-    bindsym $mod+Shift+p move container to workspace number 4
-    bindsym $mod+Shift+7 move container to workspace number 5
-    bindsym $mod+Shift+8 move container to workspace number 6
-    bindsym $mod+Shift+9 move container to workspace number 7
-    bindsym $mod+Shift+0 move container to workspace number 8
-    # Note: workspaces can have any name you want, not just numbers.
-    # We just use 1-10 as the default.
+
+# Switch to workspace
+bindsym $mod+u workspace number 1
+bindsym $mod+i workspace number 2
+bindsym $mod+o workspace number 3
+bindsym $mod+p workspace number 4
+bindsym $mod+7 workspace number 5
+bindsym $mod+8 workspace number 6
+bindsym $mod+9 workspace number 7
+bindsym $mod+0 workspace number 8
+# Move focused container to workspace
+bindsym $mod+Shift+u move container to workspace number 1
+bindsym $mod+Shift+i move container to workspace number 2
+bindsym $mod+Shift+o move container to workspace number 3
+bindsym $mod+Shift+p move container to workspace number 4
+bindsym $mod+Shift+7 move container to workspace number 5
+bindsym $mod+Shift+8 move container to workspace number 6
+bindsym $mod+Shift+9 move container to workspace number 7
+bindsym $mod+Shift+0 move container to workspace number 8
+# Move workspaces between monitors
+bindsym $mod+period move workspace to output DP-1
+bindsym $mod+comma move workspace to output DP-2
+# Move windows between monitors
+bindsym $mod+Shift+period move window to output DP-1
+bindsym $mod+Shift+comma move window to output DP-2
+
 #
 # Layout stuff:
 #
-    # You can "split" the current object of your focus with
-    # $mod+b or $mod+v, for horizontal and vertical splits
-    # respectively.
-    bindsym $mod+b splith
-    bindsym $mod+v splitv
 
-    # Switch the current container between different layout styles
-    bindsym $mod+e layout toggle split tabbed
+# You can "split" the current object of your focus with
+# $mod+b or $mod+v, for horizontal and vertical splits
+# respectively.
+bindsym $mod+b splith
+bindsym $mod+v splitv
 
-    # Make the current focus fullscreen
-    bindsym $mod+f fullscreen
+# Make the current focus fullscreen
+bindsym $mod+f fullscreen
 
-    # Toggle the current focus between tiling and floating mode
-    bindsym $mod+Shift+space floating toggle
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+Shift+space floating toggle
 
-    # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
+# Swap focus between the tiling area and the floating area
+bindsym $mod+space focus mode_toggle
 
-    # Move focus to the parent container
-    bindsym $mod+a focus parent
+# Move focus to the parent container
+bindsym $mod+a focus parent
+
 #
 # Scratchpad:
 #
-    # Sway has a "scratchpad", which is a bag of holding for windows.
-    # You can send windows there and get them back later.
+#
+# Sway has a "scratchpad", which is a bag of holding for windows.
+# You can send windows there and get them back later.
 
-    # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus move scratchpad
+# Move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
 
-    # Show the next scratchpad window or hide the focused scratchpad window.
-    # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
 #
 # Resizing containers:
 #
+
 mode "resize" {
     # left will shrink the containers width
     # right will grow the containers width
@@ -174,6 +164,17 @@ mode "resize" {
 bindsym $mod+s mode "resize"
 
 #
+# Looks
+#
+
+default_border pixel 2
+
+gaps inner 6
+
+client.focused #56b6c2 #56b6c2 #abb2bf
+client.unfocused #70798a #70798a #abb2bf
+
+#
 # Media
 #
 
@@ -183,32 +184,8 @@ bindsym --locked XF86AudioPlay exec sh /home/rai/.config/qtile/media.sh play-pau
 bindsym --locked XF86AudioNext exec sh /home/rai/.config/qtile/media.sh next
 bindsym --locked XF86AudioPrev exec sh /home/rai/.config/qtile/media.sh previous
 
-### Other:
+### Other
 
-exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
-exec hash dbus-update-activation-environment 2>/dev/null && \
-     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
-
-default_border pixel 2
-
-gaps outer 3
-gaps inner 6
-
-### Status Bar:
-
-# Read `man 5 sway-bar` for more information about this section.
-bar {
-    position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
-}
+bar swaybar_command waybar
 
 include /etc/sway/config.d/*
