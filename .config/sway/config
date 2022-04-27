@@ -11,10 +11,11 @@ set $up k
 set $right l
 # Your preferred terminal emulator
 set $term kitty
-# Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
-set $menu wofi
+
+### Autostart
+
+exec autotiling
+exec gammastep
 
 ### Output configuration
 
@@ -30,9 +31,9 @@ output HDMI-A-1 bg ~/pictures/wallpapers/1140456.jpg fill
 ### Idle configuration
 
 exec swayidle -w \
-         timeout 300 'swaylock -f -c 000000' \
+         timeout 300 'swaylock -f' \
          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -c 000000'
+         before-sleep 'swaylock -f'
 
 ### Key bindings
 
@@ -41,7 +42,6 @@ bindsym $mod+Return exec $term
 
 # Kill focused window
 bindsym $mod+backspace kill
-bindsym $mod+q kill
 
 # Start your launcher
 bindsym $mod+d exec $menu
@@ -59,8 +59,10 @@ bindsym $mod+Shift+c reload
 # Exit sway (logs you out of your Wayland session)
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
-# Wofi
-bindsym $mod+r exec wofi --show drun
+# Rofi
+bindsym $mod+r exec rofi -show drun
+bindsym $mod+w exec rofi -show window
+bindsym $mod+q exec rofi -show power-menu -modi 'power-menu:~/.local/bin/rofi-power-menu --choices=logout/reboot/shutdown'
 
 #
 # Moving around:
@@ -72,11 +74,17 @@ bindsym $mod+$down focus down
 bindsym $mod+$up focus up
 bindsym $mod+$right focus right
 
-# Move the focused window with the same, but add Shift
+# Move the focused window
 bindsym $mod+Shift+$left move left
 bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+$right move right
+
+# Resize the focused window
+bindsym $mod+Control+$left resize shrink width 30px
+bindsym $mod+Control+$down resize grow height 30px
+bindsym $mod+Control+$up resize shrink height 30px
+bindsym $mod+Control+$right resize grow width 30px
 
 #
 # Workspaces:
@@ -100,12 +108,12 @@ bindsym $mod+Shift+7 move container to workspace number 5
 bindsym $mod+Shift+8 move container to workspace number 6
 bindsym $mod+Shift+9 move container to workspace number 7
 bindsym $mod+Shift+0 move container to workspace number 8
-# Move workspaces between monitors
-bindsym $mod+period move workspace to output DP-1
-bindsym $mod+comma move workspace to output DP-2
 # Move windows between monitors
 bindsym $mod+Shift+period move window to output DP-1
 bindsym $mod+Shift+comma move window to output DP-2
+# Move workspaces between monitors
+bindsym $mod+Control+period move workspace to output DP-1
+bindsym $mod+Control+comma move workspace to output DP-2
 
 #
 # Layout stuff:
@@ -144,28 +152,12 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 #
-# Resizing containers:
+# Lock
 #
 
-mode "resize" {
-    # left will shrink the containers width
-    # right will grow the containers width
-    # up will shrink the containers height
-    # down will grow the containers height
-    bindsym $left resize shrink width 30px
-    bindsym $down resize grow height 30px
-    bindsym $up resize shrink height 30px
-    bindsym $right resize grow width 30px
+bindsym $mod+Alt+l exec swaylock
 
-    # Return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+s mode "resize"
-
-#
-# Looks
-#
+### Looks
 
 default_border pixel 2
 
