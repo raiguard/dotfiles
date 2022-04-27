@@ -195,6 +195,10 @@ token = "selfKeyword"
 face = "value"
 
 [[semantic_tokens]]
+token = "selfTypeKeyword"
+face = "value"
+
+[[semantic_tokens]]
 token = "semicolon"
 face = "operator"
 
@@ -224,10 +228,6 @@ face = "module"
 
 [[semantic_tokens]]
 token = "variable"
-face = "variable"
-
-[[semantic_tokens]]
-token = "variable"
 face = "+s@variable"
 modifiers = ["consuming"]
 
@@ -235,3 +235,7 @@ modifiers = ["consuming"]
 token = "variable"
 face = "value"
 modifiers = ["static", "constant"]
+
+[[semantic_tokens]]
+token = "variable"
+face = "variable"
