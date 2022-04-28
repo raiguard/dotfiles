@@ -1,0 +1,20 @@
+font=Source Code Pro Medium 10
+background-color=#272b33
+border-size=2
+padding=5,8,15
+progress-color=#373c47
+
+[urgency=low]
+text-color=#98c379
+border-color=#98c379
+default-timeout=10000
+
+[urgency=normal]
+text-color=#61afef
+border-color=#61afef
+default-timeout=10000
+
+[urgency=critical]
+text-color=#e06c75
+border-color=#e06c75
+default-timeout=0
