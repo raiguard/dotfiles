@@ -16,6 +16,12 @@ filetypes = ["c", "cpp"]
 roots = ["compile_commands.json", ".clangd", ".git", ".hg"]
 command = "clangd"
 
+[language.css]
+filetypes = ["css"]
+roots = ["package.json", ".git", ".hg"]
+command = "vscode-css-languageserver"
+args = ["--stdio"]
+
 [language.go]
 filetypes = ["go"]
 roots = ["Gopkg.toml", "go.mod", ".git", ".hg"]
