@@ -1,32 +1,40 @@
 # Read `man 5 sway` for a complete reference.
 
 ### Variables
-#
-# Logo key. Use Mod1 for Alt.
+
+set $alt Mod1
 set $mod Mod4
-# Home row direction keys, like vim
+
 set $left h
 set $down j
 set $up k
 set $right l
-# Your preferred terminal emulator
-set $term kitty
 
 ### Autostart
 
 exec autotiling
-exec gammastep
+exec blueman-applet
+exec mako
+exec nm-applet --indicator
+exec udiskie --tray
+exec /usr/bin/polkit-dumb-agent
+exec wlsunset -l 40.3 -L -111.8 -t 2500
+
+### GTK3 workaround
+
+exec_always import-gsettings
+
+### Make flameshot happy
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
 ### Output configuration
 
 # Screens
-output DP-2 resolution 2560x1140 position 0,0
-output DP-1 resolution 2560x1140 position 2560,0
-output HDMI-A-1 disable
-# Wallpapers
-output DP-1 bg ~/pictures/wallpapers/602577.png fill
-output DP-2 bg ~/pictures/wallpapers/1108901.png fill
-output HDMI-A-1 bg ~/pictures/wallpapers/1140456.jpg fill
+output DP-1 position 2560,0 bg ~/pictures/wallpapers/1004356.png fill
+output DP-2 position 0,0 bg ~/pictures/wallpapers/1141314.png fill
+output HDMI-A-1 disable bg ~/pictures/wallpapers/685120.png fill
 
 ### Idle configuration
 
@@ -38,7 +46,7 @@ exec swayidle -w \
 ### Key bindings
 
 # Start a terminal
-bindsym $mod+Return exec $term
+bindsym $mod+Return exec kitty
 
 # Kill focused window
 bindsym $mod+backspace kill
@@ -111,9 +119,11 @@ bindsym $mod+Shift+0 move container to workspace number 8
 # Move windows between monitors
 bindsym $mod+Shift+period move window to output DP-1
 bindsym $mod+Shift+comma move window to output DP-2
+bindsym $mod+Shift+slash move window to output HDMI-A-1
 # Move workspaces between monitors
 bindsym $mod+Control+period move workspace to output DP-1
 bindsym $mod+Control+comma move workspace to output DP-2
+bindsym $mod+Control+slash move workspace to output HDMI-A-1
 
 #
 # Layout stuff:
@@ -160,21 +170,23 @@ bindsym $mod+Alt+l exec swaylock
 ### Looks
 
 default_border pixel 2
+default_floating_border pixel 2
 
 gaps inner 6
 
 client.focused #56b6c2 #56b6c2 #abb2bf
 client.unfocused #70798a #70798a #abb2bf
+client.urgent #e06c75 #70798a #abb2bf
 
 #
 # Media
 #
 
-bindsym --locked XF86AudioRaiseVolume exec sh /home/rai/.config/qtile/volume.sh i
-bindsym --locked XF86AudioLowerVolume exec sh /home/rai/.config/qtile/volume.sh d
-bindsym --locked XF86AudioPlay exec sh /home/rai/.config/qtile/media.sh play-pause
-bindsym --locked XF86AudioNext exec sh /home/rai/.config/qtile/media.sh next
-bindsym --locked XF86AudioPrev exec sh /home/rai/.config/qtile/media.sh previous
+bindsym --locked XF86AudioRaiseVolume exec sh /home/rai/.config/sway/volume i
+bindsym --locked XF86AudioLowerVolume exec sh /home/rai/.config/sway/volume d
+bindsym --locked XF86AudioPlay exec sh /home/rai/.config/sway/media play-pause
+bindsym --locked XF86AudioNext exec sh /home/rai/.config/sway/media next
+bindsym --locked XF86AudioPrev exec sh /home/rai/.config/sway/media previous
 
 ### Other
 
