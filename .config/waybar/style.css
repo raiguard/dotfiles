@@ -1,0 +1,41 @@
+* {
+    font-family: Source Code Pro;
+    font-weight: 800;
+    font-size: 12;
+}
+
+window#waybar {
+    background-color: #181a1f;
+    color: #abb2bf;
+}
+
+#workspaces button {
+    color: #abb2bf;
+    padding: 0;
+    border: 0;
+    padding-bottom: 2px;
+}
+
+#workspaces button.focused {
+    color: #56b6c2;
+}
+
+#taskbar button {
+    padding: 0 2px;
+}
+
+#cpu {
+    color: #c678dd;
+}
+
+#memory {
+    color: #61afef;
+}
+
+.amdgpu {
+    color: #e06c75;
+}
+
+.weather {
+    color: #e5c07b;
+}
