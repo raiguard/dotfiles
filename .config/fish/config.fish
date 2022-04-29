@@ -8,6 +8,7 @@ set -x EDITOR "kks edit"
 set -x PAGER "less"
 set -x SHELL "fish"
 set -x KAKOUNE_POSIX_SHELL "/bin/dash"
+set fish_greeting
 
 alias k "kks edit"
 alias dlg "lazygit --work-tree ~/.dotfiles"
