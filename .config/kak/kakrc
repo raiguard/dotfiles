@@ -252,8 +252,8 @@ map global prompt <c-backspace> <c-w>
 # USER
 
 # System clipboard integration
-declare-option -hidden str copy_cmd "xclip -in -selection clipboard"
-declare-option -hidden str paste_cmd "xclip -out -selection clipboard"
+declare-option -hidden str copy_cmd "wl-copy"
+declare-option -hidden str paste_cmd "wl-paste"
 map global user p "<a-!>%opt{paste_cmd}<ret>" -docstring 'clip-paste (after)'
 map global user P "!%opt{paste_cmd}<ret>" -docstring 'clip-paste (before)'
 map global user y "<a-|>%opt{copy_cmd}<ret>:echo -markup %%{{Information}Copied primary selection to system clipboard}<ret>" -docstring 'clip-yank'
