@@ -1,7 +1,6 @@
 {
     "layer": "top",
-    "modules-left": ["custom/blank", "custom/lb", "sway/workspaces", "custom/rb", "custom/lb", "wlr/taskbar", "custom/rb"],
-    "modules-center": ["sway/window"],
+    "modules-left": ["custom/blank", "custom/lb", "sway/workspaces", "custom/rb", "custom/lb", "wlr/taskbar", "custom/rb", "custom/blank", "sway/window"],
     "modules-right": ["custom/lb", "tray", "custom/rb", "custom/lb", "cpu", "custom/rb", "custom/lb", "memory", "custom/rb", "custom/lb", "custom/amdgpu", "custom/rb", "custom/lb", "custom/weather", "custom/rb", "custom/lb", "clock", "custom/rb", "custom/blank"],
     "spacing": 2,
     "height": 22,
@@ -29,7 +28,7 @@
         "interval": 1,
     },
     "custom/weather": {
-        "exec": "weather=$(curl 'https://wttr.in/?format=1' | sed 's/  //g' | sed 's/+//g'); echo \"$weather\n\nweather\"",
+        "exec": "weather=$(curl 'https://wttr.in/?format=1' | sed 's/  / /g' | sed 's/+//g'); echo \"$weather\n\nweather\"",
         "interval": 1800
     },
     "clock": {
