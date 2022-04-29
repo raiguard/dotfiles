@@ -14,7 +14,7 @@ set $right l
 
 exec autotiling
 exec blueman-applet
-exec mako
+exec dunst
 exec nm-applet --indicator
 exec pasystray
 exec udiskie --tray
