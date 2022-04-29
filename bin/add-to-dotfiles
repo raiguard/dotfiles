@@ -1,0 +1,9 @@
+#!/bin/sh
+
+path=$(realpath $1)
+path=${path#/home/rai/}
+
+mv $1 ~/.dotfiles/$path
+cd ~/.dotfiles
+stow -D .
+stow .
