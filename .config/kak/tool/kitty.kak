@@ -18,6 +18,16 @@ Any extra arguments will be passed to "kitty @ launch"' \
     set global kitty_window_type window
 }
 
+define-command kitty-os-floating -params .. -shell-completion -docstring '
+kitty-os-floating [<arguments>]: create a new terminal window using the window manager.
+The created window will be floated in the center of the screen.
+Any extra arguments will be passed to "kitty @ launch"' \
+%{
+    set global kitty_window_type os-window
+    terminal --os-window-title=kitty-floating %arg{@}
+    set global kitty_window_type window
+}
+
 define-command new-os %{
     kitty-os kak -c %val{session}
 }
