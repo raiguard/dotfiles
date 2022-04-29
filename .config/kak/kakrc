@@ -63,16 +63,9 @@ cork kakoune-mirror "https://github.com/delapouite/kakoune-mirror" %{
 
 cork kakoune-multi-file "https://github.com/natasky/kakoune-multi-file" %{}
 
-# cork kakoune-smooth-scroll "https://github.com/caksoylar/kakoune-smooth-scroll" %{
-#     set-option -add global scroll_options max_duration=80
-#     hook global WinDisplay .* %{
-#         smooth-scroll-enable
-#     }
-# }
-
 cork kakoune-sort-selections "https://github.com/occivink/kakoune-sort-selections"
 
-cork kakoune-state-save "https://github.com/https://gitlab.com/Screwtapello/kakoune-state-save"
+cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save"
 
 cork kakoune-sudo-write "https://github.com/occivink/kakoune-sudo-write"
 
@@ -195,7 +188,7 @@ map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{tex
 
 # View lazygit
 # TODO: Make this fullscreen instead of an overlay
-map global view "g" "<esc>: kitty-overlay lazygit<ret>" -docstring "lazygit..."
+map global view "g" "<esc>: kitty-os-floating lazygit<ret>" -docstring "lazygit..."
 
 # Jumps centered please
 map global normal "<c-i>" "<c-i>vv"
