@@ -156,12 +156,14 @@ bindsym --locked XF86AudioPrev exec ~/.config/sway/media previous
 
 # Screenshots
 
-# Select region to clipboard
+# Select region
 bindsym print exec ~/bin/screenshot --notify copy area
 # Focused  monitor
 bindsym Shift+print exec ~/bin/screenshot --notify copy output
 # Focused  window
 bindsym Control+print exec ~/bin/screenshot --notify copy active
+# Choose window
+bindsym Alt+print exec ~/bin/screenshot --notify copy window
 
 ### Looks
 
