@@ -59,7 +59,6 @@ bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. 
 
 # Rofi
 bindsym $mod+r exec rofi -show drun
-# bindsym $mod+w exec rofi -show window
 bindsym $mod+q exec rofi -show power-menu -modi 'power-menu:~/.local/bin/rofi-power-menu --choices=logout/reboot/shutdown'
 
 # Moving around:
@@ -149,20 +148,20 @@ bindsym $mod+escape exec swaylock
 
 # Media
 
-bindsym --locked XF86AudioRaiseVolume exec sh /home/rai/.config/sway/volume i
-bindsym --locked XF86AudioLowerVolume exec sh /home/rai/.config/sway/volume d
-bindsym --locked XF86AudioPlay exec sh /home/rai/.config/sway/media play-pause
-bindsym --locked XF86AudioNext exec sh /home/rai/.config/sway/media next
-bindsym --locked XF86AudioPrev exec sh /home/rai/.config/sway/media previous
+bindsym --locked XF86AudioRaiseVolume exec ~/.config/sway/volume i
+bindsym --locked XF86AudioLowerVolume exec ~/.config/sway/volume d
+bindsym --locked XF86AudioPlay exec ~/.config/sway/media play-pause
+bindsym --locked XF86AudioNext exec ~/.config/sway/media next
+bindsym --locked XF86AudioPrev exec ~/.config/sway/media previous
 
 # Screenshots
 
 # Select region to clipboard
-bindsym print exec grimshot copy area
+bindsym print exec ~/bin/screenshot --notify copy area
 # Focused  monitor
-bindsym Shift+print exec grimshot copy output && notify-send -u low -t 2000 "Active screen copied to clipboard"
+bindsym Shift+print exec ~/bin/screenshot --notify copy output
 # Focused  window
-bindsym Control+print exec grimshot copy active && notify-send -u low -t 2000 "Active window copied to clipboard"
+bindsym Control+print exec ~/bin/screenshot --notify copy active
 
 ### Looks
 
