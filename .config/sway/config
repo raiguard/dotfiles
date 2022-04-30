@@ -175,8 +175,8 @@ client.urgent #e06c75 #70798a #abb2bf #e5c07b
 
 ### Rules
 
-for_window [app_id="factorio" class="factorio"] move window to workspace number 3
-for_window [app_id = "discord" class="discord"] move window to workspace number 4
+for_window [class="factorio"] move window to workspace number 3
+for_window [class="discord"] move window to workspace number 4
 for_window [app_id="obs"] move window to workspace number 4
 for_window [title="kitty-floating"] floating enable; resize set width 1000px; resize set height 700px
 
