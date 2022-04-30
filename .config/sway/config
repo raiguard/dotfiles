@@ -2,7 +2,6 @@
 
 ### Variables
 
-set $alt Mod1
 set $mod Mod4
 
 set $left h
@@ -88,35 +87,28 @@ bindsym $mod+Control+$right resize grow width 30px
 # Workspaces:
 
 # Switch to workspace
-bindsym $mod+1 workspace number 1
-bindsym $mod+2 workspace number 2
-bindsym $mod+3 workspace number 3
-bindsym $mod+4 workspace number 4
-bindsym $mod+5 workspace number 5
-bindsym $mod+6 workspace number 6
-bindsym $mod+7 workspace number 7
-bindsym $mod+8 workspace number 8
-bindsym $mod+9 workspace number 9
-bindsym $mod+0 workspace number 0
+bindsym $mod+u workspace number 1
+bindsym $mod+i workspace number 2
+bindsym $mod+o workspace number 3
+bindsym $mod+p workspace number 4
+bindsym $mod+m workspace number 5
+bindsym $mod+comma workspace number 6
+bindsym $mod+period workspace number 7
+bindsym $mod+slash workspace number 8
 # Move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number 1
-bindsym $mod+Shift+2 move container to workspace number 2
-bindsym $mod+Shift+3 move container to workspace number 3
-bindsym $mod+Shift+4 move container to workspace number 4
-bindsym $mod+Shift+5 move container to workspace number 5
-bindsym $mod+Shift+6 move container to workspace number 6
-bindsym $mod+Shift+7 move container to workspace number 7
-bindsym $mod+Shift+8 move container to workspace number 8
-bindsym $mod+Shift+9 move container to workspace number 8
-bindsym $mod+Shift+0 move container to workspace number 0
-# Move windows between monitors
-bindsym $mod+Shift+period move window to output DP-1
-bindsym $mod+Shift+comma move window to output DP-2
-bindsym $mod+Shift+slash move window to output HDMI-A-1
-# Move workspaces between monitors
-bindsym $mod+Control+period move workspace to output DP-1
-bindsym $mod+Control+comma move workspace to output DP-2
-bindsym $mod+Control+slash move workspace to output HDMI-A-1
+bindsym $mod+Shift+u move container to workspace number 1
+bindsym $mod+Shift+i move container to workspace number 2
+bindsym $mod+Shift+o move container to workspace number 3
+bindsym $mod+Shift+p move container to workspace number 4
+bindsym $mod+Shift+m move container to workspace number 5
+bindsym $mod+Shift+comma move container to workspace number 6
+bindsym $mod+Shift+period move container to workspace number 7
+bindsym $mod+Shift+slash move container to workspace number 8
+# Move workspaces
+bindsym $mod+Alt+h move workspace to output left
+bindsym $mod+Alt+j move workspace to output down
+bindsym $mod+Alt+k move workspace to output up
+bindsym $mod+Alt+l move workspace to output right
 
 # Layout stuff:
 
@@ -130,10 +122,10 @@ bindsym $mod+v splitv
 bindsym $mod+f fullscreen
 
 # Toggle the current focus between tiling and floating mode
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+space floating toggle
 
 # Swap focus between the tiling area and the floating area
-bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+space focus mode_toggle
 
 bindsym $mod+w exec --no-startup-id ~/.config/sway/promote-window
 
@@ -149,12 +141,9 @@ bindsym $mod+Shift+minus move scratchpad
 # If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+minus scratchpad show
 
-# Toggle autotiling
-bindsym $mod+t exec ~/.config/sway/toggle-autotiling
-
 # Lock
 
-bindsym $mod+Alt+l exec swaylock
+bindsym $mod+escape exec swaylock
 
 # Media
 
