@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# This is an ugly hack to make grimshot use our modified version of slurp
-PATH=$HOME/bin:$PATH
-grimshot $@

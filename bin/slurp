@@ -1,1 +1,1 @@
-/usr/bin/slurp -b 00000066 -c e5c07b -B 00000066
+/usr/bin/slurp -b 00000066 -c e5c07b -B 00000066 $@
