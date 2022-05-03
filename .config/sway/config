@@ -13,7 +13,7 @@ exec blueman-applet
 exec dunst
 exec nm-applet --indicator
 exec pasystray
-exec twocolumn
+exec ~/.config/sway/twocolumn
 exec udiskie --tray
 exec /usr/bin/polkit-dumb-agent
 exec wlsunset -l 40.3 -L -111.8 -t 2500
@@ -27,7 +27,7 @@ exec_always import-gsettings
 # Screens
 output DP-1 position 2560,0 bg ~/pictures/wallpapers/1004356.png fill
 output DP-2 position 0,0 bg ~/pictures/wallpapers/1141314.png fill
-output HDMI-A-1 disable scale 2 bg ~/pictures/wallpapers/1225904.jpg fill
+output HDMI-A-1 disable scale 2 bg ~/pictures/wallpapers/685120.png fill
 
 ### Idle configuration
 
