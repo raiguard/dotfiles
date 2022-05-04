@@ -59,19 +59,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   // Numbers and symbols, optimized for the most common symbols across all programming languages
   [_NUM] = LAYOUT_ortho_4x12(
-    _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL,
-    _______, KC_DLR,  KC_PLUS, KC_LPRN, KC_RPRN, KC_AT,   KC_PIPE, KC_MINS, KC_EQL,  KC_UNDS, KC_ASTR, _______,
-    _______, KC_EXLM, KC_HASH, KC_LCBR, KC_RCBR, KC_TILD, KC_AMPR, KC_LBRC, KC_RBRC, KC_PERC, KC_CIRC, _______,
+    _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
+    _______, KC_DLR,  KC_PLUS, KC_LPRN, KC_RPRN, KC_AT,   KC_PIPE, KC_MINS, KC_EQL,  KC_UNDS, KC_ASTR, KC_BSLS,
+    _______, KC_EXLM, KC_HASH, KC_LCBR, KC_RCBR, KC_TILD, KC_AMPR, KC_LBRC, KC_RBRC, KC_PERC, KC_CIRC, KC_GRV,
     _______, _______, _______, _______, _______, _______, NAV,     _______, _______, _______, _______, _______
   ),
 
   // Function and arrow keys, plus media controls
   [_NAV] = LAYOUT_ortho_4x12(
-    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT,  KC_MPLY, KC_PSCR,
-    _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______, _______,
+    RGB_TOG, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT,  KC_MPLY, KC_PSCR,
+    _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______, KC_DEL,
     _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,   _______, RESET,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______
   ),
-  89999
 
 };
