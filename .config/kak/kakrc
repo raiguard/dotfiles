@@ -203,7 +203,7 @@ map global normal J "Jx"
 map global normal K "Kx"
 
 # Select inner line
-map global normal X "<a-:>Gl<a-;>Gi" -docstring "Select inner line"
+map global normal X "giGl" -docstring "Select inner line"
 
 # Select all occurances of current selection in file
 map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
