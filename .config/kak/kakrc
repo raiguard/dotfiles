@@ -2,7 +2,6 @@ evaluate-commands %sh{
     cork init
     kks init
     kak-lsp --kakoune -s $kak_session
-    skyspell-kak init
 }
 
 # --------------------------------------------------
@@ -188,7 +187,7 @@ map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{tex
 
 # View lazygit
 # TODO: Make this fullscreen instead of an overlay
-map global view "g" "<esc>: kitty-os-floating lazygit<ret>" -docstring "lazygit..."
+map global view "g" "<esc>: terminal-os-floating lazygit<ret>" -docstring "lazygit..."
 
 # Jumps centered please
 map global normal "<c-i>" "<c-i>vv"
@@ -290,13 +289,13 @@ load filetype toml
 load filetype ts
 load filetype yaml
 
-load tool kitty
 load tool lsp
 load tool move-lines
 load tool nnn
 load tool replace-mode
 load tool status-line
 load tool todo
+load tool windowing
 
 # --------------------------------------------------
 # WIP

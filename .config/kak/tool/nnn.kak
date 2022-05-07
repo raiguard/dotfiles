@@ -1,5 +1,4 @@
 # Pick a file then open it in kak
-# Depends on raiguard/kitty.kak for the overlay window
 # The NNN path is hardcoded to a special version with my configuration variables
 define-command nnn-current -params 0..1 -file-completion -docstring 'Open file with nnn (volatile)' %{
     kitty-overlay sh -c %{
