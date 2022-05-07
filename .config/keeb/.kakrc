@@ -8,4 +8,5 @@ define-command align-keymap %{
 hook global BufWritePre .*keymap\.c align-keymap
 hook global BufCreate .*keymap\.c %{
     add-highlighter buffer/ regex "_______" 0:comment
+    add-highlighter buffer/ regex "XXXXXXX" 0:Error
 }
