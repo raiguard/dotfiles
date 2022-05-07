@@ -1,6 +1,5 @@
 export EDITOR="kks edit"
-export PAGER="kks edit"
-export VISUAL="kks edit"
+export PAGER="less"
 export KKS_USE_GITDIR_SESSIONS=1
 export KAKOUNE_POSIX_SHELL=/bin/dash
 
