@@ -111,15 +111,7 @@ hook global GlobalSetOption lsp_modeline_progress=.* modeline-update-lsp-progres
 hook global WinSetOption filetype=.* modeline-update-filetype
 hook global WinSetOption modeline_git_branch=.* modeline-update-git-branch
 
-hook global ModeChange .* modeline-update-misc
-hook global NormalKey Q modeline-update-misc
-hook -always global NormalKey [0-9] %{
-    modeline-update-misc
-    hook -once window NormalKey [^0-9] %{
-        modeline-update-misc
-    }
-}
-hook global NormalKey <esc> modeline-update-misc
+hook -always global NormalIdle .* modeline-update-misc
 
 declare-option -hidden int prev_timestamp
 # Custom BufChanged hook
