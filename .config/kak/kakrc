@@ -11,8 +11,6 @@ cork harpoon.kak "https://github.com/raiguard/harpoon.kak" %{
     harpoon-add-bindings
 }
 
-cork kak-ansi "https://github.com/eraserhd/kak-ansi"
-
 cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
     set-option global rainbow_mode 0
     set-option global rainbow_check_templates Y
@@ -44,8 +42,6 @@ cork kakoune-fandt "https://github.com/listentolist/kakoune-fandt" %{
 cork kakoune-focus "https://github.com/caksoylar/kakoune-focus" %{
     map global user <space> ': focus-toggle<ret>' -docstring "toggle selections focus"
 }
-
-cork kakoune-gdb "https://github.com/occivink/kakoune-gdb"
 
 cork kakoune-grep-write "https://github.com/JacobTravers/kakoune-grep-write" %{
     hook global BufCreate \*grep\* %{
@@ -139,13 +135,11 @@ alias global ca delete-all-buffers
 # Default window settings
 hook global WinCreate .* %{
     try %{
+        # Tabs
         expandtab
         set-option window tabstop 4
         set-option window softtabstop 4
         set-option window indentwidth 4
-
-        # Enable plugins
-        kakboard-enable
 
         # Show and automatically update git diff on write
         git show-diff
@@ -183,7 +177,6 @@ map global goto "f" '<esc>: prompt -shell-script-candidates %{ fd --type f } fil
 map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
 
 # View lazygit
-# TODO: Make this fullscreen instead of an overlay
 map global view "g" "<esc>: terminal-os-floating lazygit<ret>" -docstring "lazygit..."
 
 # Jumps centered please
@@ -196,7 +189,7 @@ map global normal "N" "Nvv"
 map global normal "<a-n>" "<a-n>vv"
 map global normal "<a-N>" "<a-N>vv"
 
-# Less awkward keybind for outer object
+# Less awkward keybind for surrounding object
 map global normal "<a-o>" "<a-a>"
 
 # Search case-insensitive by default
@@ -205,23 +198,9 @@ map global normal "?" "?(?i)"
 map global normal "<a-/>" "<a-/>(?i)"
 map global normal "<a-?>" "<a-?>(?i)"
 
-# Free alt-movement keys
-map global normal "<a-a>" "<a-j>"
-map global normal "<a-A>" "<a-J>"
-map global normal "<a-m>" "<a-k>"
-map global normal "<a-M>" "<a-K>"
-
 # Always select entire lines
-map global normal J "J<x>"
-map global normal K "K<x>"
-
-# Except when I don't want to
-# TODO: Put this in a user mode?
-map global normal "<c-a-j>" "J"
-map global normal "<c-a-k>" "K"
-
-# Remap extend-line to inner line
-map global normal X "giGl"
+map global normal J "Jx"
+map global normal K "Kx"
 
 # Select all occurances of current selection in file
 map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
@@ -230,23 +209,18 @@ map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in 
 
 # Delete words in insert mode
 map global insert <c-backspace> "<esc>hBdi"
-# Also delete words when holding shift
+# Also delete when holding shift
 map global insert <s-backspace> "<backspace>"
-
-# PROMPT
-
-map global prompt <c-f> <c-p>
-map global prompt <c-backspace> <c-w>
 
 # USER
 
 # System clipboard integration
 declare-option -hidden str copy_cmd "wl-copy"
 declare-option -hidden str paste_cmd "wl-paste"
-map global user p "<a-!>%opt{paste_cmd}<ret>" -docstring 'clip-paste (after)'
-map global user P "!%opt{paste_cmd}<ret>" -docstring 'clip-paste (before)'
-map global user y "<a-|>%opt{copy_cmd}<ret>:echo -markup %%{{Information}Copied primary selection to system clipboard}<ret>" -docstring 'clip-yank'
-map global user R "|%opt{paste_cmd}<ret>" -docstring 'clip-replace'
+map global user p "<a-!>%opt{paste_cmd}<ret>" -docstring 'Paste system clipboard (after)'
+map global user P "!%opt{paste_cmd}<ret>" -docstring 'Paste system clipboard(before)'
+map global user y "<a-|>%opt{copy_cmd}<ret>:echo -markup %%{{Information}Copied primary selection to system clipboard}<ret>" -docstring 'Yank to system clipboard'
+map global user R "|%opt{paste_cmd}<ret>" -docstring 'Replace from system clipboard'
 
 # Sort
 declare-user-mode sort
