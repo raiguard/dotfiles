@@ -37,8 +37,6 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(toggle_game, GAME)
 };
 
-#define COMBO_ONLY_FROM_LAYER _BASE
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_BASE] = LAYOUT_ortho_4x12(

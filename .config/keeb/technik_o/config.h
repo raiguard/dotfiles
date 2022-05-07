@@ -1,1 +1,2 @@
 #define COMBO_COUNT 2
+#define COMBO_ONLY_FROM_LAYER 0
