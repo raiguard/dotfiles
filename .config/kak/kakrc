@@ -13,9 +13,6 @@ cork harpoon.kak "https://github.com/raiguard/harpoon.kak" %{
 
 cork kak-ansi "https://github.com/eraserhd/kak-ansi"
 
-source "~/dev/projects/personal/kak-dap/rc/kak-dap.kak"
-set-option global dap_cmd "kak-dap -s %val{session} --log /tmp/kak-dap.log"
-
 cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
     set-option global rainbow_mode 0
     set-option global rainbow_check_templates Y
@@ -94,7 +91,7 @@ face global MarkedSecondaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}"
 face global MarkedSecondarySelection "default,rgba:%opt{magenta}%opt{selectionalpha}"
 
 # Highlighters
-add-highlighter global/ number-lines -relative -hlcursor -separator " ▏ " -min-digits 4
+add-highlighter global/ number-lines -relative -hlcursor -separator " ▏" -min-digits 3
 add-highlighter global/ show-matching
 add-highlighter global/trailing-whitespaces regex "(\h+)$" "1:default,rgba:%opt{darkred}%opt{selectionalpha}"
 
@@ -303,3 +300,5 @@ load tool windowing
 source "~/dev/projects/personal/loli.kak/rc/loli.kak"
 source "~/dev/projects/personal/loli.kak/rc/debug.kak"
 loli-add-aliases
+source "~/dev/projects/personal/kak-dap/rc/kak-dap.kak"
+set-option global dap_cmd "kak-dap -s %val{session} --log /tmp/kak-dap.log"

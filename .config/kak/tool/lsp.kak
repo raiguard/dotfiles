@@ -1,11 +1,11 @@
-map global user "l" ": enter-user-mode lsp<ret>" -docstring "lsp..."
+map global user l ": enter-user-mode lsp<ret>" -docstring "lsp..."
 map global normal "ⓗ" ": lsp-hover<ret>"
-map global normal "<c-a-h>" ": lsp-hover-buffer<ret>"
-map global normal "<c-a>" ": lsp-code-actions<ret>"
-map global normal "<c-r>" ": lsp-rename-prompt<ret>"
-map global normal "<c-e>" ": lsp-diagnostics<ret>"
+map global normal <c-a-h> ": lsp-hover-buffer<ret>"
+map global normal <c-a> ": lsp-code-actions<ret>"
+map global normal <c-r> ": lsp-rename-prompt<ret>"
+map global normal <c-e> ": lsp-diagnostics<ret>"
 
-set-option global lsp_diagnostic_line_error_sign '×'
+set-option global lsp_diagnostic_line_error_sign "×"
 
 set-option global lsp_hover_anchor true
 
@@ -15,7 +15,7 @@ lsp-inlay-hints-enable global
 
 declare-option bool lsp_enabled false
 
-define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
+define-command lsp-restart -docstring "restart lsp server" %{ lsp-stop; lsp-start }
 
 define-command lsp-init -docstring "enable lsp and set-option up generic hooks" %{
     echo -debug "Enabling LSP for filetype %opt{filetype}"
@@ -34,11 +34,6 @@ define-command lsp-init -docstring "enable lsp and set-option up generic hooks" 
     hook -once -always window WinSetOption filetype=.* %{
         rmhooks window semantic-tokens
     }
-}
-
-define-command lsp-deinit -docstring "disable lsp" %{
-    lsp-disable-window
-    set-option window lsp_enabled false
 }
 
 hook global KakEnd .* lsp-exit
