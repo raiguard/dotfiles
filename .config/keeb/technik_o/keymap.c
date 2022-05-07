@@ -59,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_HMMODS] = LAYOUT_ortho_4x12(
-    _______, KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,   KC_Y, KC_U,   KC_I,    KC_O,    KC_P,      KC_BSPC,
+    XXXXXXX, KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,   KC_Y, KC_U,   KC_I,    KC_O,    KC_P,      KC_BSPC,
     KC_ESC,  LGUI_A,  LALT_S,  LCTL_D,  LSFT_F, KC_G,   KC_H, RSFT_J, RCTL_K,  RALT_L,  RGUI_SCLN, KC_QUOT,
     XXXXXXX, KC_Z,    KC_X,    KC_C,    KC_V,   KC_B,   KC_N, KC_M,   KC_COMM, KC_DOT,  KC_SLSH,   KC_ENT,
     _______, _______, _______, _______, KC_TAB, KC_SPC, NUM,  NAV,    _______, _______, _______,   _______
