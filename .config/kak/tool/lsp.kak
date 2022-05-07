@@ -6,28 +6,23 @@ map global normal <c-r> ": lsp-rename-prompt<ret>"
 map global normal <c-e> ": lsp-diagnostics<ret>"
 
 set-option global lsp_diagnostic_line_error_sign "×"
-
 set-option global lsp_hover_anchor true
+set-option global lsp_auto_highlight_references true
 
-# lsp-auto-hover-insert-mode-enable
 lsp-inlay-diagnostics-enable global
 lsp-inlay-hints-enable global
+lsp-auto-signature-help-enable
 
-declare-option bool lsp_enabled false
 
-define-command lsp-restart -docstring "restart lsp server" %{ lsp-stop; lsp-start }
+define-command lsp-restart -docstring "Restart kak-lsp session" %{ lsp-stop; lsp-start }
 
-define-command lsp-init -docstring "enable lsp and set-option up generic hooks" %{
+define-command lsp-init -docstring "Enable LSP with default setting" %{
     echo -debug "Enabling LSP for filetype %opt{filetype}"
     lsp-enable-window
     set-option window lsp_enabled true
 
-    set-option window lsp_auto_highlight_references true
-
-    # Function signature help in status bar
-    lsp-auto-signature-help-enable
-
     # Semantic tokens
+    # TODO: These hooks should be in kak-lsp
     hook window -group semantic-tokens BufReload .* lsp-semantic-tokens
     hook window -group semantic-tokens NormalIdle .* lsp-semantic-tokens
     hook window -group semantic-tokens InsertIdle .* lsp-semantic-tokens
@@ -38,6 +33,9 @@ define-command lsp-init -docstring "enable lsp and set-option up generic hooks" 
 
 hook global KakEnd .* lsp-exit
 
+# Custom status line
+
+declare-option bool lsp_enabled false
 declare-option -hidden str lsp_modeline_progress ""
 define-command -hidden -params 6 -override lsp-handle-progress %{
     set-option global lsp_modeline_progress %sh{
