@@ -177,7 +177,7 @@ map global goto "f" '<esc>: prompt -shell-script-candidates %{ fd --type f } fil
 map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
 
 # View lazygit
-map global view "g" "<esc>: terminal-os-floating lazygit<ret>" -docstring "lazygit..."
+map global view "g" "<esc>: terminal-popup lazygit<ret>" -docstring "lazygit..."
 
 # Jumps centered please
 map global normal "<c-i>" "<c-i>vv"

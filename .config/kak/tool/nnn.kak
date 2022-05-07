@@ -1,10 +1,10 @@
 define-command nnn -docstring "Open NNN" %{
-    kitty-overlay sh -c %{ nnn -H "$1" } -- %val{buffile}
+    terminal-overlay sh -c %{ nnn -H "$1" } -- %val{buffile}
 }
 map global view f "<esc>: nnn<ret>" -docstring "files"
 
 define-command nnn-pick -file-completion -docstring "Pick file with NNN" %{
-    kitty-overlay sh -c %{
+    terminal-overlay sh -c %{
         kak_buffile=$1 kak_session=$2 kak_client=$3
         filename=$(nnn -H -p - "$kak_buffile")
         if [ -n "$filename" ]; then
