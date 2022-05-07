@@ -1,11 +1,9 @@
 # Pick a file then open it in kak
-# The NNN path is hardcoded to a special version with my configuration variables
 define-command nnn-current -params 0..1 -file-completion -docstring 'Open file with nnn (volatile)' %{
     kitty-overlay sh -c %{
         kak_buffile=$1 kak_session=$2 kak_client=$3
         shift 3
-        kak_pwd="${@:-$(dirname "${kak_buffile}")}"
-        filename=$(~/bin/nn -H -p - "${kak_pwd}")
+        filename=$(nnn -H -p - "$kak_buffile")
         if [ -n "$filename" ]; then
             kak_cmd="evaluate-commands -client $kak_client edit $filename"
             echo $kak_cmd | kak -p $kak_session
@@ -18,5 +16,5 @@ map global normal "<minus>" ": nnn-current<ret>"
 map global view f "<esc>: nnn<ret>" -docstring "files"
 
 define-command nnn -docstring "Open nnn in the project directory" %{
-    kitty-overlay sh -c %{ ~/bin/n3 -H "$(pwd)" }
+    kitty-overlay sh -c %{ nnn -H "$1" } -- %val{buffile}
 }
