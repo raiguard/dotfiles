@@ -13,4 +13,4 @@ define-command nnn-pick -file-completion -docstring "Pick file with NNN" %{
         fi
     } -- %val{buffile} %val{session} %val{client}
 }
-map global normal "<minus>" ": nnn-pick<ret>"
+map global normal <minus> ": nnn-pick<ret>"
