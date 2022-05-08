@@ -133,6 +133,8 @@ bindsym $mod+w exec ~/.config/sway/promote-window
 
 # Focus the parent container
 bindsym $mod+a focus parent
+# Toggle stacking layout
+bindsym $mod+t layout toggle split stacking
 
 # Scratchpad:
 
