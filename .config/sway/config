@@ -25,9 +25,9 @@ exec_always import-gsettings
 ### Output configuration
 
 # Screens
-output DP-1 position 2560,0 bg ~/pictures/wallpapers/1004356.png fill
+output DP-1 position 2560,0  mode 2560x1440@75Hz adaptive_sync on bg ~/pictures/wallpapers/1004356.png fill
 output DP-2 position 0,0 bg ~/pictures/wallpapers/1141314.png fill
-output HDMI-A-1 disable scale 2 bg ~/pictures/wallpapers/685120.png fill
+output HDMI-A-1 disable scale 2 adaptive_sync on bg ~/pictures/wallpapers/685120.png fill
 
 ### Idle configuration
 
