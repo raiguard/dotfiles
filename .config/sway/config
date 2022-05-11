@@ -87,24 +87,28 @@ bindsym $mod+Control+$right resize grow width 30px
 
 # Workspaces:
 
+# Output assignments
+workspace 1 output DP-1
+workspace 4 output DP-2
+
 # Switch to workspace
-bindsym $mod+u workspace number 1
-bindsym $mod+i workspace number 2
-bindsym $mod+o workspace number 3
-bindsym $mod+p workspace number 4
-bindsym $mod+m workspace number 5
-bindsym $mod+comma workspace number 6
-bindsym $mod+period workspace number 7
-bindsym $mod+slash workspace number 8
+bindsym $mod+u workspace 1
+bindsym $mod+i workspace 2
+bindsym $mod+o workspace 3
+bindsym $mod+p workspace 4
+bindsym $mod+m workspace 5
+bindsym $mod+comma workspace 6
+bindsym $mod+period workspace 7
+bindsym $mod+slash workspace 8
 # Move focused container to workspace
-bindsym $mod+Shift+u move container to workspace number 1
-bindsym $mod+Shift+i move container to workspace number 2
-bindsym $mod+Shift+o move container to workspace number 3
-bindsym $mod+Shift+p move container to workspace number 4
-bindsym $mod+Shift+m move container to workspace number 5
-bindsym $mod+Shift+comma move container to workspace number 6
-bindsym $mod+Shift+period move container to workspace number 7
-bindsym $mod+Shift+slash move container to workspace number 8
+bindsym $mod+Shift+u move container to workspace 1
+bindsym $mod+Shift+i move container to workspace 2
+bindsym $mod+Shift+o move container to workspace 3
+bindsym $mod+Shift+p move container to workspace 4
+bindsym $mod+Shift+m move container to workspace 5
+bindsym $mod+Shift+comma move container to workspace 6
+bindsym $mod+Shift+period move container to workspace 7
+bindsym $mod+Shift+slash move container to workspace 8
 # Move workspaces
 bindsym $mod+Alt+h move workspace to output left
 bindsym $mod+Alt+j move workspace to output down
@@ -127,6 +131,9 @@ bindsym $mod+space floating toggle
 
 # Swap focus between the tiling area and the floating area
 bindsym $mod+Shift+space focus mode_toggle
+
+# Toggle sticky on the current window
+bindsym $mod+s sticky toggle
 
 # Promote window
 bindsym $mod+w exec ~/.config/sway/promote-window
@@ -168,10 +175,6 @@ bindsym Control+print exec grimshot --notify copy active
 # Choose window
 bindsym Alt+print exec grimshot --notify copy window
 
-# Other
-
-bindsym $mod+s exec echo $PATH > /home/rai/path.txt
-
 ### Looks
 
 default_border pixel 2
@@ -180,6 +183,7 @@ default_floating_border pixel 2
 gaps inner 6
 
 client.focused #56b6c2 #56b6c2 #181a1f #e5c07b
+client.focused_inactive #70798a #70798a #181a1f #e5c07b
 client.unfocused #70798a #70798a #181a1f #e5c07b
 client.urgent #e06c75 #70798a #abb2bf #e5c07b
 
@@ -188,9 +192,9 @@ title_align center
 
 ### Rules
 
-for_window [class="factorio"] move window to workspace number 3
-for_window [class="discord"] move window to workspace number 4
-for_window [app_id="obs"] move window to workspace number 4
+for_window [class="factorio"] move window to workspace 3
+for_window [class="discord"] move window to workspace 4
+for_window [app_id="obs"] move window to workspace 4
 for_window [title="floating"] floating enable; resize set width 50ppt; resize set height 60ppt
 
 ### Other
