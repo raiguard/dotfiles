@@ -84,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   // Arrow keys and media controls
   [_NAV] = LAYOUT_ortho_4x12(
-    RGB_TOG, _______, _______, _______, _______, _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT,  KC_MPLY, KC_PSCR,
+    RGB_TOG, KC_INS,  _______, _______, _______, _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT,  KC_MPLY, KC_PSCR,
     _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______, KC_DEL,
     _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,   _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, RESET
