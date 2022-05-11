@@ -8,6 +8,7 @@ map global normal <c-e> ": lsp-diagnostics<ret>"
 set-option global lsp_diagnostic_line_error_sign "×"
 set-option global lsp_hover_anchor true
 set-option global lsp_auto_highlight_references true
+set-option global lsp_hover_max_lines 50
 
 lsp-inlay-diagnostics-enable global
 lsp-inlay-hints-enable global
