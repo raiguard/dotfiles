@@ -1,8 +1,10 @@
 font=Source Code Pro Medium 10
 background-color=#272b33
 border-size=2
-padding=5,8,15
+margin=6
+padding=5,8
 progress-color=#373c47
+output=DP-1
 
 [urgency=low]
 text-color=#98c379

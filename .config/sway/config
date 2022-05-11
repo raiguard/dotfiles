@@ -10,7 +10,7 @@ set $right l
 ### Autostart
 
 exec blueman-applet
-exec dunst
+exec mako
 exec nm-applet --indicator
 exec pasystray
 exec ~/.config/sway/twocolumn
