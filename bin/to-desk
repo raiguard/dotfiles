@@ -1,3 +1,5 @@
-xrandr --output DisplayPort-0 --mode 2560x1440 --rate 60 --pos 2560x0 --output DisplayPort-1 --mode 2560x1440 --rate 60 --output DisplayPort-2 --off --output HDMI-A-0 --off
+swaymsg output DP-1 enable
+swaymsg output DP-2 enable
+swaymsg output HDMI-A-1 disable
+
 pactl set-default-sink alsa_output.usb-SteelSeries_SteelSeries_Arctis_9_000000000000-00.stereo-game
-nitrogen --restore

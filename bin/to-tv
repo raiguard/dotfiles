@@ -1,3 +1,5 @@
-xrandr --output DisplayPort-0 --off --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 3840x2160 --rate 60 --pos 0x0
+swaymsg output DP-1 disable
+swaymsg output DP-2 disable
+swaymsg output HDMI-A-1 enable
+
 pactl set-default-sink alsa_output.pci-0000_0a_00.1.hdmi-surround
-nitrogen --restore
