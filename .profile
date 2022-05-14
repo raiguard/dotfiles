@@ -4,6 +4,7 @@ export KKS_USE_GITDIR_SESSIONS=1
 export KAKOUNE_POSIX_SHELL=/bin/dash
 
 export PATH="$HOME/bin:$HOME/.cargo/bin:$PATH"
+export MOZ_ENABLE_WAYLAND=1
 
 alias k="kks edit"
 alias dlg="lazygit --work-tree ~/.dotfiles"
