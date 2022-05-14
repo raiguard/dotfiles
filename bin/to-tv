@@ -1,5 +1,9 @@
+#!/bin/sh
+
+# Displays
 swaymsg output DP-1 disable
 swaymsg output DP-2 disable
 swaymsg output HDMI-A-1 enable
 
-pactl set-default-sink alsa_output.pci-0000_0a_00.1.hdmi-surround
+# Sound
+to-avr

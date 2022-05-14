@@ -1,5 +1,9 @@
+#!/bin/sh
+
+# Displays
 swaymsg output DP-1 enable
 swaymsg output DP-2 enable
 swaymsg output HDMI-A-1 disable
 
-pactl set-default-sink alsa_output.usb-SteelSeries_SteelSeries_Arctis_9_000000000000-00.stereo-game
+# Audio
+to-speakers

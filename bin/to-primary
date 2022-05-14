@@ -1,3 +1,9 @@
+#!/bin/sh
+
+# Displays
 swaymsg output DP-1 enable
 swaymsg output DP-2 disable
 swaymsg output HDMI-A-1 disable
+
+# Audio
+to-speakers
