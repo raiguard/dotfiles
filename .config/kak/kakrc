@@ -107,7 +107,14 @@ hook global User TMUX=(.+?),(.+?),(.+?) %{
     set-face global value yellow
     set-face global variable white
 
+    set-face global PrimarySelection black,blue
+    set-face global SecondarySelection black,green
+    set-face global MarkedPrimarySelection black,magenta
+    set-face global MarkedSecondarySelection black,magenta
+
     set-option global rainbow_colors yellow magenta blue
+
+    alias global terminal-overlay tmux-terminal-horizontal
 }
 
 # Highlighters
@@ -117,8 +124,8 @@ add-highlighter global/ show-matching
 # RIP clippy and titles
 set-option global ui_options terminal_assistant=off terminal_set_title=false
 
-# Keep cursor away from the edges
-set-option global scrolloff 5,5
+# Always center cursor vertically
+set-option global scrolloff 100,5
 
 # Auto-reload please!
 set-option global autoreload yes
@@ -201,19 +208,6 @@ map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{tex
 
 # View lazygit
 map global view "g" "<esc>: terminal-overlay lazygit<ret>" -docstring "lazygit..."
-
-# Jumps centered please
-map global normal "<c-i>" "<c-i>vv"
-map global normal "<c-o>" "<c-o>vv"
-
-# Search results centered please
-map global normal "n" "nvv"
-map global normal "N" "Nvv"
-map global normal "<a-n>" "<a-n>vv"
-map global normal "<a-N>" "<a-N>vv"
-
-# Less awkward keybind for surrounding object
-map global normal "<a-o>" "<a-a>"
 
 # Search case-insensitive by default
 map global normal "/" "/(?i)"
