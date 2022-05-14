@@ -6,6 +6,11 @@ padding=5,8
 progress-color=#373c47
 output=DP-1
 
+# No urgency
+text-color=#98c379
+border-color=#98c379
+default-timeout=10000
+
 [urgency=low]
 text-color=#98c379
 border-color=#98c379
