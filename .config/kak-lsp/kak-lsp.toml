@@ -153,6 +153,10 @@ token = "keyword"
 face = "keyword"
 
 [[semantic_tokens]]
+token = "label"
+face = "value"
+
+[[semantic_tokens]]
 token = "lifetime"
 face = "enum"
 
