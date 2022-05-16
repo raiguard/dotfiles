@@ -25,6 +25,10 @@ window#waybar {
     padding: 0 2px;
 }
 
+#idle_inhibitor {
+    color: #56b6c2
+}
+
 #cpu {
     color: #c678dd;
 }
