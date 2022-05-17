@@ -268,6 +268,7 @@ load filetype cpp
 load filetype css
 load filetype factorio-changelog
 load filetype go
+load filetype i3
 load filetype json
 load filetype kak
 load filetype latex
