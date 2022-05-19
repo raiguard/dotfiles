@@ -115,6 +115,8 @@ bindsym $mod+Alt+j move workspace to output down
 bindsym $mod+Alt+k move workspace to output up
 bindsym $mod+Alt+l move workspace to output right
 
+focus_wrapping no
+
 # Layout stuff:
 
 # You can "split" the current object of your focus with
