@@ -278,6 +278,7 @@ load filetype json
 load filetype kak
 load filetype latex
 load filetype lua
+load filetype mail
 load filetype python
 load filetype rainmeter
 load filetype rust
