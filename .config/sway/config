@@ -10,10 +10,11 @@ set $right l
 ### Autostart
 
 exec blueman-applet
+exec ~/.config/sway/twocolumn
 exec mako
 exec nm-applet --indicator
 exec pasystray
-exec ~/.config/sway/twocolumn
+exec eval `ssh-agent -s`
 exec udiskie --tray
 exec /usr/bin/polkit-dumb-agent
 exec wlsunset -l 40.3 -L -111.8 -t 2500
@@ -25,17 +26,14 @@ exec_always import-gsettings
 ### Output configuration
 
 # Screens
-output DP-1 position 2560,0  mode 2560x1440@75Hz adaptive_sync on bg ~/pictures/wallpapers/1004356.png fill
-output DP-2 position 0,0 bg ~/pictures/wallpapers/1141314.png fill
-output HDMI-A-1 disable mode 3840x2160@120Hz adaptive_sync on bg ~/pictures/wallpapers/685120.png fill
+output DP-1 position 2560,0  mode 2560x1440@75Hz adaptive_sync on bg ~/pictures/wallpapers/1232683.jpg fill
+output DP-2 position 0,0 bg ~/pictures/wallpapers/1233055.png fill
+output HDMI-A-1 disable mode 3840x2160@120Hz adaptive_sync on bg ~/pictures/wallpapers/1229914.jpg fill
 
 ### Idle configuration
 
 # Lock after 5 minutes
-exec swayidle -w \
-         timeout 300 'swaylock -f' \
-         timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f'
+exec swayidle -w timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
 
 # Hide mouse cursor when starting to type
 seat * hide_cursor when-typing enable
@@ -194,13 +192,13 @@ title_align center
 
 ### Rules
 
-for_window [class="factorio"] move window to workspace 3
-for_window [class="discord"] move window to workspace 4
-for_window [app_id="obs"] move window to workspace 4
+assign [class="factorio"] 3
+assign [class="discord"] 4
+assign [app_id="obs"] 4
 for_window [title="floating"] {
     floating enable
-    resize set width 50ppt
-    resize set height 60ppt
+    resize set width 60ppt
+    resize set height 70ppt
 }
 for_window [title="Picture-in-Picture"] {
     floating enable
@@ -209,6 +207,10 @@ for_window [title="Picture-in-Picture"] {
         set height 562px
     }
     move absolute position 1554 872
+}
+for_window [title="qutebrowser"] {
+    focus child
+    layout tabbed
 }
 
 ### Other
