@@ -33,7 +33,7 @@ output HDMI-A-1 disable mode 3840x2160@120Hz adaptive_sync on bg ~/pictures/wall
 ### Idle configuration
 
 # Lock after 5 minutes
-exec swayidle -w timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+exec swayidle -w timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
 
 # Hide mouse cursor when starting to type
 seat * hide_cursor when-typing enable
@@ -187,7 +187,7 @@ client.focused_inactive #70798a #70798a #181a1f #e5c07b
 client.unfocused #70798a #70798a #181a1f #e5c07b
 client.urgent #e06c75 #70798a #abb2bf #e5c07b
 
-font Source Code Pro Medium 10
+font Source Code Pro Medium 8.5
 title_align center
 
 ### Rules
