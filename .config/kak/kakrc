@@ -80,8 +80,7 @@ cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
 # --------------------------------------------------
 # GENERAL
 
-# one.kak does not work over SSH
-# If we are using TMUX, we are on SSH
+# one.kak does not work in PuTTY
 hook global ModuleLoaded kitty %{
     # Color scheme
     colorscheme one-darker
@@ -97,6 +96,7 @@ hook global ModuleLoaded kitty %{
     # View lazygit
     map global view "g" "<esc>: terminal-popup lazygit<ret>" -docstring "lazygit..."
 }
+# If we are using TMUX, we are using PuTTY
 hook global User TMUX=(.+?),(.+?),(.+?) %{
     set-face global MenuForeground "black,blue"
     set-face global MenuBackground "black,white"
@@ -273,6 +273,7 @@ load filetype cpp
 load filetype css
 load filetype factorio-changelog
 load filetype go
+load filetype hare
 load filetype i3
 load filetype json
 load filetype kak
