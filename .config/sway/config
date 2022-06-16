@@ -33,7 +33,7 @@ output HDMI-A-1 disable mode 3840x2160@120Hz adaptive_sync on bg ~/pictures/wall
 ### Idle configuration
 
 # Lock after 5 minutes
-exec swayidle -w timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+# exec swayidle -w timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
 
 # Hide mouse cursor when starting to type
 seat * hide_cursor when-typing enable
