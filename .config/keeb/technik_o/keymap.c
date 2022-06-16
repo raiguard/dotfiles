@@ -18,6 +18,7 @@
 
 enum layers {
   _BASE,
+  _BASE_HMMODS,
   _GAME,
   _MSE,
   _NUM,
@@ -29,13 +30,29 @@ enum layers {
 #define NUM_SPC LT(_NUM, KC_SPC)
 #define NUM MO(_NUM)
 #define SYM MO(_SYM)
+#define SYM_ENT LT(_SYM, KC_ENT)
 #define MSE TG(_MSE)
 #define GAME TG(_GAME)
 #define NAV MO(_NAV)
+#define NAV_BSPC LT(_NAV, KC_BSPC)
 
+#define BASE_HMMODS TG(_BASE_HMMODS)
+
+#define LGUI_A MT(MOD_LGUI, KC_A)
+#define LALT_S MT(MOD_LALT, KC_S)
+#define LCTL_D MT(MOD_LCTL, KC_D)
+#define LSFT_F MT(MOD_LSFT, KC_F)
+
+#define RSFT_J MT(MOD_LSFT, KC_J)
+#define RCTL_K MT(MOD_LCTL, KC_K)
+#define RALT_L MT(MOD_LALT, KC_L)
+#define RGUI_QUOT MT(MOD_LGUI, KC_QUOT)
+
+const uint16_t PROGMEM tab[] = {KC_Q, KC_W, COMBO_END};
 const uint16_t PROGMEM toggle_mouse[] = {NUM_SPC, SYM, COMBO_END};
 const uint16_t PROGMEM toggle_game[] = {KC_LALT, NAV, COMBO_END};
 combo_t key_combos[COMBO_COUNT] = {
+    COMBO(tab, KC_TAB),
     COMBO(toggle_mouse, MSE),
     COMBO(toggle_game, GAME)
 };
@@ -43,10 +60,17 @@ combo_t key_combos[COMBO_COUNT] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_BASE] = LAYOUT_ortho_4x12(
-    KC_TAB,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y, KC_U, KC_I,    KC_O,    KC_P,    KC_BSPC,
-    LCTL_ESC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H, KC_J, KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N, KC_M, KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-    _______,  _______, _______, KC_LGUI, KC_LALT, NUM_SPC, SYM,  NAV,  _______, _______, _______, _______
+    KC_TAB,      KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y, KC_U, KC_I,    KC_O,    KC_P,    KC_BSPC,
+    LCTL_ESC,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H, KC_J, KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+    KC_LSFT,     KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N, KC_M, KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
+    BASE_HMMODS, _______, _______, KC_LGUI, KC_LALT, NUM_SPC, SYM,  NAV,  _______, _______, _______, _______
+  ),
+
+  [_BASE_HMMODS] = LAYOUT_ortho_4x12(
+    XXXXXXX,     KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,    KC_Y,    KC_U,     KC_I,    KC_O,    KC_P,      XXXXXXX,
+    XXXXXXX,     LGUI_A,  LALT_S,  LCTL_D,  LSFT_F, KC_G,    KC_H,    RSFT_J,   RCTL_K,  RALT_L,  RGUI_QUOT, XXXXXXX,
+    XXXXXXX,     KC_Z,    KC_X,    KC_C,    KC_V,   KC_B,    KC_N,    KC_M,     KC_COMM, KC_DOT,  KC_SLSH,   XXXXXXX,
+    BASE_HMMODS, XXXXXXX, XXXXXXX, XXXXXXX, KC_ESC, NUM_SPC, SYM_ENT, NAV_BSPC, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX
   ),
 
   // Shift thumb bar over by one for use with WASD, and free up spacebar
@@ -67,9 +91,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   // Numpad and F keys
   [_NUM] = LAYOUT_ortho_4x12(
-    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______, _______, KC_7, KC_8,    KC_9,    _______, _______,
-    _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______, _______, KC_4, KC_5,    KC_6,    _______, _______,
-    _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, _______, KC_1, KC_2,    KC_3,    KC_DOT,  _______,
+    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______, KC_MINS, KC_7, KC_8,    KC_9,    KC_ASTR, _______,
+    _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______, KC_PLUS, KC_4, KC_5,    KC_6,    KC_COMM, _______,
+    _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, KC_SLSH, KC_1, KC_2,    KC_3,    KC_DOT,  _______,
     _______, _______, _______, _______, _______, _______, _______, KC_0, _______, _______, _______, _______
   ),
 
