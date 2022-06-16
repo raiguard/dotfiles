@@ -36,7 +36,7 @@
         "interval": 1,
     },
     "custom/weather": {
-        "exec": "weather=$(curl 'https://wttr.in/?format=1' | sed 's/  / /g' | sed 's/+//g'); echo \"$weather\n\nweather\"",
+        "exec": "weather=$(curl 'https://wttr.in/?format=1' | awk '{ gsub(/+/, \"\"); print $1 \" \" $2 }'); echo \"$weather\n\nweather\"",
         "interval": 1800
     },
     "clock": {
