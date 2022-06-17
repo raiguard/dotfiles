@@ -36,7 +36,6 @@ enum layers {
 // COMBOS
 const uint16_t PROGMEM ui_coln[] = {KC_U, KC_I, COMBO_END};
 const uint16_t PROGMEM io_unds[] = {KC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM op_bspc[] = {KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM as_lcbr[] = {KC_A, KC_S, COMBO_END};
 const uint16_t PROGMEM sd_lbrc[] = {KC_S, KC_D, COMBO_END};
 const uint16_t PROGMEM df_lprn[] = {KC_D, KC_F, COMBO_END};
@@ -51,7 +50,6 @@ const uint16_t PROGMEM dotslsh_ent[] = {KC_DOT, KC_SLSH, COMBO_END};
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(ui_coln, KC_COLN),
     COMBO(io_unds, KC_UNDS),
-    COMBO(op_bspc, KC_BSPC),
     COMBO(as_lcbr, KC_LCBR),
     COMBO(sd_lbrc, KC_LBRC),
     COMBO(df_lprn, KC_LPRN),
@@ -68,9 +66,9 @@ combo_t key_combos[COMBO_COUNT] = {
 // Keymap
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_ortho_4x12(
-    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,   _______, _______, KC_Y,    KC_U,    KC_I,      KC_O,     KC_P,
-    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,   _______, _______, KC_H,    KC_J,    KC_K,      KC_L,     KC_QUOT,
-    LCTL_Z,  LALT_X,  LSFT_C,  LGUI_V,  KC_B,   _______, _______, KC_N,    RGUI_M,  RSFT_COMM, RALT_DOT, RCTL_SLSH,
-    _______, _______, _______, _______, KC_SPC, _______, _______, KC_LSFT, _______, _______,   _______,  RESET
+    KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,   _______, _______, KC_Y,    KC_U,    KC_I,      KC_O,     KC_BSPC,
+    KC_A,   KC_S,    KC_D,    KC_F,    KC_G,   _______, _______, KC_H,    KC_J,    KC_K,      KC_L,     KC_P,
+    LCTL_Z, LALT_X,  LSFT_C,  LGUI_V,  KC_B,   _______, _______, KC_N,    RGUI_M,  RSFT_COMM, RALT_DOT, RCTL_SLSH,
+    KC_ENT, _______, _______, _______, KC_SPC, _______, _______, KC_LSFT, _______, _______,   _______,  RESET
   ),
 };
