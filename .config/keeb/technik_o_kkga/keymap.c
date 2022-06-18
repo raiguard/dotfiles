@@ -25,8 +25,7 @@ enum layers {
 };
 
 // Layer toggles
-// #define MSE TG(_MSE)
-#define MSE KC_A
+#define MSE TG(_MSE)
 #define NAV MO(_NAV)
 #define SYM MO(_SYM)
 #define FUN MO(_FUN)
@@ -54,8 +53,6 @@ const uint16_t PROGMEM kl_rbrc[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM lp_ent[] = {KC_L, KC_P, COMBO_END};
 const uint16_t PROGMEM mcomm_quot[] = {RGUI_M, RSFT_COMM, COMBO_END};
 const uint16_t PROGMEM commdot_bsls[] = {RSFT_COMM, RALT_DOT, COMBO_END};
-const uint16_t PROGMEM toggle_mouse[] = {KC_SPC, KC_LSFT, KC_END};
-const uint16_t PROGMEM toggle_mouse_2[] = {KC_SPC, KC_BTN1, KC_END};
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(ui_dquo, KC_DQUO),
     COMBO(io_unds, KC_UNDS),
@@ -69,8 +66,6 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(lp_ent, KC_ENT),
     COMBO(mcomm_quot, KC_QUOT),
     COMBO(commdot_bsls, KC_BSLS),
-    COMBO(toggle_mouse, MSE),
-    COMBO(toggle_mouse_2, MSE),
 };
 
 // Keymap
@@ -90,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_NAV] = LAYOUT_ortho_4x12(
-    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    _______, _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT,  KC_MPLY,
+    _______, _______, _______, _______, _______, _______, _______, KC_6,    KC_7,    KC_8,    KC_9,     KC_0,
     KC_ESC,  _______, _______, _______, KC_TAB,  _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_DEL,
     KC_LCTL, KC_LALT, KC_LSFT, KC_LGUI, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,   _______,
     _______, _______, _______, FUN,     _______, _______, _______, _______, _______, _______, _______,  _______
@@ -100,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, _______, _______, KC_PLUS, KC_7, KC_8,    KC_9,    KC_EQL,
     KC_TILD, KC_GRV,  KC_SCLN, KC_COLN, KC_CIRC, _______, _______, KC_MINS, KC_4, KC_5,    KC_6,    KC_DOT,
     KC_LCTL, KC_LALT, KC_LSFT, KC_LGUI, KC_AMPR, _______, _______, KC_ASTR, KC_1, KC_2,    KC_3,    KC_SLSH,
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_0, _______, _______, _______
+    _______, _______, _______, _______, MSE,     _______, _______, _______, KC_0, _______, _______, _______
   ),
 
   [_FUN] = LAYOUT_ortho_4x12(
