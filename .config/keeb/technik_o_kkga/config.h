@@ -1,4 +1,4 @@
-#define COMBO_COUNT 12
+#define COMBO_COUNT 14
 #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
 
 // Configure the global tapping term
