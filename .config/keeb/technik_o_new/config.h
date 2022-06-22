@@ -1,11 +1,5 @@
-#define COMBO_COUNT 15
-
-// Caps word
-#define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
-
 // Configure the global tapping term
 #define TAPPING_TERM 200
-#define COMBO_TERM 40
 
 // Allow for quicker modifier usage
 #define PERMISSIVE_HOLD
