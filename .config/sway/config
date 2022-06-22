@@ -61,7 +61,7 @@ bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. 
 
 # Rofi
 bindsym $mod+r exec rofi -show drun
-bindsym $mod+q exec rofi -show power-menu -modi 'power-menu:~/.local/bin/rofi-power-menu --choices=logout/reboot/shutdown'
+bindsym $mod+q exec rofi -show power-menu -modi 'power-menu:~/.local/bin/rofi-power-menu --choices=logout/reboot/shutdown/suspend/hibernate'
 
 # Moving around:
 
