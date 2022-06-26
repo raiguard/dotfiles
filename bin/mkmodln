@@ -1,0 +1,26 @@
+#!/bin/sh
+
+dir="$PWD"
+if [ -d "src" ]; then
+    dir="$dir/src"
+fi
+
+if [ ! -f "$dir/info.json" ]; then
+    echo "Invalid mod folder structure"
+    exit
+fi
+
+modname=$(awk '/"name":/ { gsub(/("|,)/, ""); print $2 }' $dir/info.json)
+if [ -z "$modname" ]; then
+    echo "Could not extract mod name"
+    exit
+fi
+
+destination="$HOME/dev/factorio/linked/mods/$modname"
+if [ -e "$destination" ]; then
+    echo "Mod already exists in the mods folder"
+    exit
+fi
+
+ln -s $dir $destination
+echo "Created symbolic link at $destination"
