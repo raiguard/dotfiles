@@ -19,6 +19,7 @@
 enum layers {
   _BASE,
   _GAME,
+  _GAME_NUM,
   _NUM,
   _SYM,
   _NAV
@@ -59,6 +60,7 @@ enum layers {
 // Thumbs
 #define SYM_ENT LT(_SYM, KC_ENT)
 #define NUM_ESC LT(_NUM, KC_ESC)
+#define GAME_NUM_ESC LT(_GAME_NUM, KC_ESC)
 #define NAV_TAB LT(_NAV, KC_TAB)
 #define GAME TG(_GAME)
 
@@ -118,10 +120,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_GAME] = LAYOUT_ortho_4x12(
-    KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    _______, _______, KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,
-    KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    _______, _______, KC_G,    KC_H,    KC_J,    KC_K,    KC_L,
-    KC_LSFT, LALT_Z,  KC_X,    KC_C,    KC_V,    _______, _______, KC_B,    KC_N,    KC_M,    KC_P,    KC_SLSH,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    KC_TAB,  KC_Q,    KC_W,    KC_E,         KC_R,    _______, _______, KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,
+    KC_LCTL, KC_A,    KC_S,    KC_D,         KC_F,    _______, _______, KC_G,    KC_H,    KC_J,    KC_K,    KC_L,
+    KC_LSFT, LALT_Z,  KC_X,    KC_C,         KC_V,    _______, _______, KC_B,    KC_N,    KC_M,    KC_P,    KC_SLSH,
+    _______, _______, _______, GAME_NUM_ESC, _______, _______, _______, _______, _______, _______, _______, _______
+  ),
+
+  [_GAME_NUM] = LAYOUT_ortho_4x12(
+    _______, KC_1,     KC_2,    KC_3,    KC_4,    _______, _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,
+    _______, KC_5,     KC_6,    KC_7,    KC_8,    _______, _______, _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,
+    _______, MOD_LALT, XXXXXXX, KC_9,    KC_0,    _______, _______, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,
+    _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
   ),
 
   [_NUM] = LAYOUT_ortho_4x12(
