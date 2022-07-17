@@ -40,25 +40,26 @@ command = "texlab"
 [language.lua]
 filetypes = ["lua"]
 roots = [".git/"]
-# command = "lua-language-server"
-command = "/home/rai/.vscode-oss/extensions/sumneko.lua-2.5.3/server/bin/Linux/lua-language-server"
+command = "lua-language-server"
 args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
 
 [language.lua.settings.Lua]
-diagnostics.severity = { unused-local = "Warning", undefined-global = "Error" }
-workspace.ignoreSubmodules = false
 diagnostics.disable = ["lowercase-global", "redefined-local"]
 diagnostics.globals = ["__DebugAdapter", "__Profiler", "global", "data", "mods", "log", "serpent", "table_size", "localised_print"]
+diagnostics.severity = { unused-local = "Warning", undefined-global = "Error" }
+hint.enable = true
+hint.paramName = "Disable"
+hint.setType = true
+hover.expandAlias = false
 runtime.plugin = "/home/rai/dev/factorio/plugin/plugin.lua"
 runtime.version = "Lua 5.2"
+semantic.enable = true
 telemetry.enable = false
-semantic.enable = false
-workspace.ignoreDir = [".vscode", "src/archive"]
-workspace.library = [
-    "/home/rai/dev/factorio/runtime-api.lua",
-    "/home/rai/dev/factorio/libs",
-]
-workspace.preloadFileSize = 10000
+workspace.ignoreDir = [".vscode"]
+workspace.ignoreSubmodules = false
+workspace.library = ["/home/rai/dev/factorio/libs"]
+workspace.maxPreload = 1000000
+workspace.preloadFileSize = 1000000
 
 [language.python]
 filetypes = ["python"]
