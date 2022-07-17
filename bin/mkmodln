@@ -17,6 +17,7 @@ if [ -z "$modname" ]; then
 fi
 
 destination="$HOME/dev/factorio/linked/mods/$modname"
+
 if [ -e "$destination" ]; then
     echo "Mod already exists in the mods folder"
     exit

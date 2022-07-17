@@ -8,5 +8,5 @@ else
 fi
 mv "$1" "$new_location"
 echo "Relocated save file to $new_location"
-fmm sync $new_location
+fmm sync-file $new_location
 $HOME/dev/factorio/1/bin/x64/factorio --load-game $new_location
