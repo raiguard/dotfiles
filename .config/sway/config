@@ -26,14 +26,20 @@ exec_always import-gsettings
 ### Output configuration
 
 # Screens
-output DP-1 position 2560,0  mode 2560x1440@75Hz adaptive_sync on bg ~/pictures/wallpapers/1122673.jpg fill
+output DP-1 position 2560,0 mode 2560x1440@59.951Hz bg ~/pictures/wallpapers/1122673.jpg fill
 output DP-2 position 0,0 bg ~/pictures/wallpapers/1141314.png fill
-output HDMI-A-1 disable mode 3840x2160@120Hz adaptive_sync on bg ~/pictures/wallpapers/1229914.jpg fill
+output HDMI-A-1 disable mode 3840x2160@120Hz adaptive_sync on bg ~/pictures/wallpapers/1225904.jpg fill
 
 ### Idle configuration
 
 # Lock after 5 minutes
-# exec swayidle -w timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+# Turn off screens after 10 minutes
+exec swayidle -w \
+    timeout 300 'swaylock' \
+    timeout 600 'swaymsg "output * dpms off"' \
+    timeout 1200 'systemctl suspend' \
+    resume 'swaymsg "output * dpms on"' \
+    before-sleep 'swaylock'
 
 # Hide mouse cursor when starting to type
 # seat * hide_cursor when-typing enable
@@ -173,7 +179,7 @@ bindsym Shift+print exec grimshot --notify copy output
 # Focused  window
 bindsym Control+print exec grimshot --notify copy active
 # Choose window
-bindsym Alt+print exec grimshot --notify copy window
+bindsym Alt+print exec grimshot --notify save area
 
 ### Looks
 
