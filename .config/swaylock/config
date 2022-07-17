@@ -8,8 +8,8 @@ ignore-empty-password
 
 screenshot
 effect-blur=5x5
-effect-vignette=0.2:0.2
-fade-in=0.05
+effect-vignette=0.3:0.3
+fade-in=0.1
 
 indicator-idle-visible
 indicator-radius=85
