@@ -141,9 +141,6 @@ bindsym $mod+Shift+space focus mode_toggle
 # Toggle sticky on the current window
 bindsym $mod+s sticky toggle
 
-# Promote window
-bindsym $mod+w exec ~/.config/sway/promote-window
-
 # Focus the parent container
 bindsym $mod+a focus parent
 # Toggle stacking layout
