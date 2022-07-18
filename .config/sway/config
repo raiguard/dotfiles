@@ -69,8 +69,6 @@ bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. 
 bindsym $mod+r exec rofi -show drun
 bindsym $mod+q exec rofi -show power-menu -modi 'power-menu:~/.local/bin/rofi-power-menu --choices=logout/reboot/shutdown/suspend/hibernate'
 
-# Moving around:
-
 # Move your focus around
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
@@ -88,8 +86,6 @@ bindsym $mod+Control+$left resize shrink width 30px
 bindsym $mod+Control+$down resize grow height 30px
 bindsym $mod+Control+$up resize shrink height 30px
 bindsym $mod+Control+$right resize grow width 30px
-
-# Workspaces:
 
 # Output assignments
 workspace 1 output DP-1
@@ -119,9 +115,8 @@ bindsym $mod+Alt+j move workspace to output down
 bindsym $mod+Alt+k move workspace to output up
 bindsym $mod+Alt+l move workspace to output right
 
+# Don't wrap around when moving between windows
 focus_wrapping no
-
-# Layout stuff:
 
 # You can "split" the current object of your focus with
 # $mod+b or $mod+v, for horizontal and vertical splits
@@ -146,8 +141,6 @@ bindsym $mod+a focus parent
 # Toggle stacking layout
 bindsym $mod+t layout toggle split stacking
 
-# Scratchpad:
-
 # Move the currently focused window to the scratchpad
 bindsym $mod+Shift+minus move scratchpad
 
@@ -156,11 +149,9 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 # Lock
-
 bindsym $mod+escape exec swaylock
 
-# Media
-
+# Media controls
 bindsym --locked XF86AudioRaiseVolume exec ~/.config/sway/volume i
 bindsym --locked XF86AudioLowerVolume exec ~/.config/sway/volume d
 bindsym --locked XF86AudioPlay exec ~/.config/sway/media play-pause
@@ -168,7 +159,6 @@ bindsym --locked XF86AudioNext exec ~/.config/sway/media next
 bindsym --locked XF86AudioPrev exec ~/.config/sway/media previous
 
 # Screenshots
-
 # Select region
 bindsym print exec grimshot --notify copy area
 # Focused  monitor
