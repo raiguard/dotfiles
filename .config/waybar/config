@@ -1,7 +1,7 @@
 {
     "layer": "top",
     "modules-left": ["custom/blank", "custom/lb", "sway/workspaces", "custom/rb", "custom/lb", "wlr/taskbar", "custom/rb", "custom/blank", "sway/window"],
-    "modules-right": ["custom/lb", "tray", "custom/rb", "custom/lb", "idle_inhibitor", "custom/rb", "custom/lb", "cpu", "custom/rb", "custom/lb", "memory", "custom/rb", "custom/lb", "custom/amdgpu", "custom/rb", "custom/lb", "custom/weather", "custom/rb", "custom/lb", "clock", "custom/rb", "custom/blank"],
+    "modules-right": ["custom/lb", "tray", "custom/rb", "custom/lb", "idle_inhibitor", "custom/rb", "custom/lb", "cpu", "custom/pipe", "temperature", "custom/rb", "custom/lb", "memory", "custom/rb", "custom/lb", "custom/amdgpu", "custom/rb", "custom/lb", "custom/weather", "custom/rb", "custom/lb", "clock", "custom/rb", "custom/blank"],
     "spacing": 2,
     "height": 22,
     "sway/workspaces": {
@@ -27,6 +27,10 @@
         "format": "{usage} %",
         "interval": 1,
     },
+    "temperature": {
+        "hwmon-path": "/sys/class/hwmon/hwmon3/temp2_input",
+        "interval": 1
+    },
     "memory": {
         "format": "{used:0.2f} GB",
         "interval": 1,
@@ -47,6 +51,9 @@
     },
     "custom/rb": {
         "format": "<span color=\"#70798a\">]</span>"
+    },
+    "custom/pipe": {
+        "format": "<span color=\"#70798a\"> | </span>"
     },
     "custom/blank": {
         "format": " "

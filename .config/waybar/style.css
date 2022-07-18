@@ -29,7 +29,7 @@ window#waybar {
     color: #56b6c2
 }
 
-#cpu {
+#cpu, #temperature {
     color: #c678dd;
 }
 
