@@ -1,5 +1,6 @@
 set fish_greeting
 
+alias n nnn
 alias k "kks edit"
 alias dlg "lazygit --work-tree ~"
 alias lg lazygit
