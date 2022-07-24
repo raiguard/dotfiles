@@ -14,7 +14,6 @@ lsp-inlay-diagnostics-enable global
 lsp-inlay-hints-enable global
 lsp-auto-signature-help-enable
 
-
 define-command lsp-restart -docstring "Restart kak-lsp session" %{ lsp-stop; lsp-start }
 
 define-command lsp-init -docstring "Enable LSP with default setting" %{

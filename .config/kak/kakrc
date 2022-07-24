@@ -57,7 +57,7 @@ cork kakoune-mirror "https://github.com/delapouite/kakoune-mirror" %{
     map global normal "'" ": enter-user-mode -lock mirror<ret>"
 }
 
-cork kakoune-multi-file "https://github.com/natasky/kakoune-multi-file" %{}
+cork kakoune-multi-file "https://github.com/natasky/kakoune-multi-file"
 
 cork kakoune-sort-selections "https://github.com/occivink/kakoune-sort-selections"
 
@@ -73,234 +73,49 @@ cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
 
 cork mark.kak "https://github.com/alexherbo2/mark.kak"
 
-cork rainmeter.kak "https://github.com/raiguard/rainmeter.kak"
-
 cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
 
 # --------------------------------------------------
 # GENERAL
 
-# one.kak does not work in PuTTY
-hook global ModuleLoaded kitty %{
-    # Color scheme
-    colorscheme one-darker
-    one-enable-fancy-underlines
-
-    # mark.kak faces - have to be defined after the colorscheme invokation
-    set-face global MarkedPrimaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}"
-    set-face global MarkedPrimarySelection "default,rgba:%opt{magenta}%opt{selectionalpha}"
-    set-face global MarkedSecondaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}"
-    set-face global MarkedSecondarySelection "default,rgba:%opt{magenta}%opt{selectionalpha}"
-    add-highlighter global/trailing-whitespaces regex "(\h+)$" "1:default,rgba:%opt{darkred}%opt{selectionalpha}"
-
-    # View lazygit
-    map global view "g" "<esc>: terminal-popup lazygit<ret>" -docstring "lazygit..."
-}
-# If we are using TMUX, we are using PuTTY
-hook global User TMUX=(.+?),(.+?),(.+?) %{
-    set-face global MenuForeground "black,blue"
-    set-face global MenuBackground "black,white"
-
-    set-face global attribute magenta
-    set-face global builtin yellow
-    set-face global function blue
-    set-face global keyword magenta
-    set-face global module yellow
-    set-face global operator red
-    set-face global string green
-    set-face global type yellow
-    set-face global value yellow
-    set-face global variable white
-
-    set-face global PrimarySelection black,blue
-    set-face global SecondarySelection black,green
-    set-face global MarkedPrimarySelection black,magenta
-    set-face global MarkedSecondarySelection black,magenta
-
-    set-option global rainbow_colors yellow magenta blue
-
-    alias global terminal-overlay tmux-terminal-vertical
-
-    # View lazygit
-    map global view g "<esc>: tmux-terminal-vertical lazygit<ret>" -docstring "lazygit..."
-}
-
+# Color scheme
+colorscheme one-darker
+one-enable-fancy-underlines
+# Mark.kak faces
+set-face global MarkedPrimaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}"
+set-face global MarkedPrimarySelection "default,rgba:%opt{magenta}%opt{selectionalpha}"
+set-face global MarkedSecondaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}"
+set-face global MarkedSecondarySelection "default,rgba:%opt{magenta}%opt{selectionalpha}"
+add-highlighter global/trailing-whitespaces regex "(\h+)$" "1:default,rgba:%opt{darkred}%opt{selectionalpha}"
 # Highlighters
 add-highlighter global/ number-lines -relative -separator " " -hlcursor
 add-highlighter global/ show-matching
 
-# RIP clippy and titles
+# UI settings
 set-option global ui_options terminal_assistant=off terminal_set_title=false
+set-option global startup_info_version 10000000000000 # Don't show changelog
+set-option global scrolloff 100,5 # Always center cursor vertically
 
-# Always center cursor vertically
-set-option global scrolloff 100,5
-
-# Auto-reload please!
+# Auto-reload please
 set-option global autoreload yes
 
 # Use ripgrep instead of grep
 set-option global grepcmd 'rg -Hn --no-heading --sort path --vimgrep'
 
-# Don't show changelog
-set-option global startup_info_version 10000000000000
-
 # Make kks work as a stand-in for kcr
 alias global connect kks-connect
 
 # --------------------------------------------------
-# COMMANDS
+# OTHERS
 
-define-command edit-kakrc %{ e ~/.config/kak/kakrc }
+source "%val{config}/commands.kak"
+source "%val{config}/hooks.kak"
+source "%val{config}/keybindings.kak"
 
-define-command delete-all-buffers -docstring "delete all buffers" %{
-  evaluate-commands %sh{
-    eval "set -- $kak_quoted_buflist"
-    while [ $# -gt 0 ]; do
-        echo "try %{ delete-buffer '$1' } catch %{ echo -markup '{Error}Not all buffers were closed' }"
-        shift
-    done
-  }
-}
-
-alias global qa kill
-alias global qa! kill!
-alias global c delete-buffer
-alias global ca delete-all-buffers
-
-# --------------------------------------------------
-# HOOKS
-
-# Default window settings
-hook global WinCreate .* %{
-    try %{
-        # Tabs
-        expandtab
-        set-option window tabstop 4
-        set-option window softtabstop 4
-        set-option window indentwidth 4
-
-        # Show and automatically update git diff on write
-        git show-diff
-        hook window BufWritePost .* %{ git update-diff }
-        hook window BufReload .* %{ git update-diff }
-    }
-}
-
-# Remove trailing whitespace on save
-hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
-
-# Auto complete with tab
-hook global InsertCompletionShow .* %{
-    map window insert <tab> <c-n>
-    map window insert <s-tab> <c-p>
-}
-hook global InsertCompletionHide .* %{
-    map window insert <tab> <tab>
-    map window insert <s-tab> <s-tab>
-}
-
-# --------------------------------------------------
-# KEYBINDINGS
-
-# NORMAL
-
-# Comment
-map global normal "#" ": comment-line<ret>"
-map global normal "<a-#>" ": comment-block<ret>"
-
-# Go to file (basic fuzzy finder)
-map global goto "f" '<esc>: prompt -shell-script-candidates %{ fd --type f } file: %{ edit %val{text} }<ret>' -docstring "file"
-
-# Go to buffer
-map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
-
-# Search case-insensitive by default
-map global normal "/" "/(?i)"
-map global normal "?" "?(?i)"
-map global normal "<a-/>" "<a-/>(?i)"
-map global normal "<a-?>" "<a-?>(?i)"
-
-# Always select entire lines
-map global normal J "Jx"
-map global normal K "Kx"
-
-# Select inner line
-map global normal X "giGl" -docstring "Select inner line"
-
-# Select all occurances of current selection in file
-map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
-
-# INSERT
-
-# Delete words in insert mode
-map global insert <c-backspace> "<esc>hBdi"
-# Also delete when holding shift
-map global insert <s-backspace> "<backspace>"
-
-# USER
-
-# System clipboard integration
-declare-option -hidden str copy_cmd "wl-copy"
-declare-option -hidden str paste_cmd "wl-paste"
-map global user p "<a-!>%opt{paste_cmd}<ret>" -docstring 'Paste system clipboard (after)'
-map global user P "!%opt{paste_cmd}<ret>" -docstring 'Paste system clipboard(before)'
-map global user y "<a-|>%opt{copy_cmd}<ret>:echo -markup %%{{Information}Copied primary selection to system clipboard}<ret>" -docstring 'Yank to system clipboard'
-map global user R "|%opt{paste_cmd}<ret>" -docstring 'Replace from system clipboard'
-
-# Sort
-declare-user-mode sort
-map global user s ": enter-user-mode sort<ret>" -docstring "sort..."
-map global sort l "|sort<ret>" -docstring "lines"
-map global sort s "<esc>: sort-selections<ret>" -docstring "selections"
-
-# Toggle
-declare-user-mode toggle
-map global toggle s ': info "%val{client}/%val{session}"<ret>' -docstring "session info"
-map global user t ": enter-user-mode toggle<ret>" -docstring "toggle..."
-
-# --------------------------------------------------
-# OTHER
-
-define-command load -params 2 -hidden %{
-    try %{
-        source "%val{config}/%arg{1}/%arg{2}.kak"
-    } catch %{
-        echo -debug "Unable to load config %arg{1}/%arg{2}"
-    }
-}
-
-load filetype cpp
-load filetype css
-load filetype factorio-changelog
-load filetype go
-load filetype hare
-load filetype i3
-load filetype json
-load filetype kak
-load filetype latex
-load filetype lua
-load filetype mail
-load filetype python
-load filetype rainmeter
-load filetype rust
-load filetype sh
-load filetype toml
-load filetype ts
-load filetype yaml
-
-load tool lsp
-load tool move-lines
-load tool nnn
-load tool replace-mode
-load tool status-line
-load tool todo
-load tool windowing
-
-# --------------------------------------------------
-# WIP
-
-source "~/dev/projects/personal/loli.kak/rc/loli.kak"
-source "~/dev/projects/personal/loli.kak/rc/debug.kak"
-loli-add-aliases
-source "~/dev/projects/personal/kak-dap/rc/kak-dap.kak"
-set-option global dap_cmd "kak-dap -s %val{session} --log /tmp/kak-dap.log"
+source "%val{config}/tool/lsp.kak"
+source "%val{config}/tool/move-lines.kak"
+source "%val{config}/tool/nnn.kak"
+source "%val{config}/tool/replace-mode.kak"
+source "%val{config}/tool/status-line.kak"
+source "%val{config}/tool/todo.kak"
+source "%val{config}/tool/windowing.kak"
