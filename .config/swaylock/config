@@ -1,14 +1,13 @@
 # Requires swaylock-effects
 
 clock
-timestr=%T
-datestr=
 
 ignore-empty-password
+show-failed-attempts
 
 screenshot
 effect-blur=5x5
-effect-vignette=0.3:0.3
+effect-vignette=0.5:0
 fade-in=0.1
 
 indicator-idle-visible
@@ -34,7 +33,7 @@ ring-ver-color=00000000
 ring-wrong-color=00000000
 separator-color=00000000
 
-text-color=abb2bf
+text-color=ffffff
 text-clear-color=e5c07b
 text-caps-lock-color=e06c75
 text-ver-color=61afef
