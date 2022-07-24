@@ -35,14 +35,11 @@ output HDMI-A-1 disable mode 3840x2160@120Hz adaptive_sync on bg ~/pictures/wall
 # Lock after 5 minutes
 # Turn off screens after 10 minutes
 exec swayidle -w \
-    timeout 300 'swaylock' \
+    timeout 300 'swaylock -f' \
     timeout 600 'swaymsg "output * dpms off"' \
-    timeout 1200 'systemctl suspend' \
     resume 'swaymsg "output * dpms on"' \
-    before-sleep 'swaylock'
-
-# Hide mouse cursor when starting to type
-# seat * hide_cursor when-typing enable
+    timeout 1200 'systemctl suspend' \
+    before-sleep 'swaylock -f'
 
 ### Key bindings
 
