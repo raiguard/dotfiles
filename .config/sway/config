@@ -202,6 +202,7 @@ for_window [title="qutebrowser"] {
     focus child
     layout tabbed
 }
+for_window [title="File Operation Progress"] floating enable
 
 ### Other
 
