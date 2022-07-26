@@ -34,7 +34,7 @@ hook global WinSetOption filetype=(css|go|latex|python) %{
     lsp-init
     rainbow-enable-window
 }
-hook global WinSetOption filetype=(i3|json|kak|sh|toml|) %{
+hook global WinSetOption filetype=(fish|i3|json|kak|sh|toml) %{
     rainbow-enable-window
 }
 
