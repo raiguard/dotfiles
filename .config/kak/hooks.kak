@@ -27,6 +27,11 @@ hook global InsertCompletionHide .* %{
     map window insert <s-tab> <s-tab>
 }
 
+# Set first client as the jumpclient
+hook -once global ClientCreate .* %{
+    set global jumpclient "%val{client}"
+}
+
 # FILETYPES
 
 # Generic
