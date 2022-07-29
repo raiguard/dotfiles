@@ -30,11 +30,11 @@ hook global InsertCompletionHide .* %{
 # FILETYPES
 
 # Generic
-hook global WinSetOption filetype=(css|go|latex|python) %{
+hook global WinSetOption filetype=(css|go|latex) %{
     lsp-init
     rainbow-enable-window
 }
-hook global WinSetOption filetype=(fish|i3|json|kak|sh|toml) %{
+hook global WinSetOption filetype=(fish|i3|json|kak|python|sh|toml) %{
     rainbow-enable-window
 }
 
