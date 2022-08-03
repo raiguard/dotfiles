@@ -9,11 +9,9 @@ source "~/dev/projects/personal/pesticide/rc/pesticide.kak"
 # --------------------------------------------------
 # PLUGINS
 
-cork harpoon.kak "https://github.com/raiguard/harpoon.kak" %{
+cork harpoon.kak "https://git.sr.ht/~raiguard/harpoon.kak" %{
     harpoon-add-bindings
 }
-
-cork tmux.kak "https://github.com/alexherbo2/tmux.kak"
 
 cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
     set-option global rainbow_mode 0
@@ -21,7 +19,7 @@ cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
 }
 
 cork kakoune-buffer-switcher "https://github.com/occivink/kakoune-buffer-switcher" %{
-    face global BufferSwitcherCurrent green
+    set-face global BufferSwitcherCurrent green
     map global normal <backspace> ": buffer-switcher<ret>"
 }
 
@@ -57,8 +55,6 @@ cork kakoune-mirror "https://github.com/delapouite/kakoune-mirror" %{
     map global normal "'" ": enter-user-mode -lock mirror<ret>"
 }
 
-cork kakoune-multi-file "https://github.com/natasky/kakoune-multi-file"
-
 cork kakoune-sort-selections "https://github.com/occivink/kakoune-sort-selections"
 
 cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save"
@@ -86,6 +82,7 @@ set-face global MarkedPrimaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}
 set-face global MarkedPrimarySelection "default,rgba:%opt{magenta}%opt{selectionalpha}"
 set-face global MarkedSecondaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}"
 set-face global MarkedSecondarySelection "default,rgba:%opt{magenta}%opt{selectionalpha}"
+# Trailing whitespace
 add-highlighter global/trailing-whitespaces regex "(\h+)$" "1:default,rgba:%opt{darkred}%opt{selectionalpha}"
 # Highlighters
 add-highlighter global/ number-lines -relative -separator " " -hlcursor
