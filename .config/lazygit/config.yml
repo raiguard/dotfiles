@@ -1,6 +1,9 @@
 gui:
   showCommandLog: false
   showFileTree: false
+  theme:
+    selectedLineBgColor:
+      - '#2a3f53'
 
 keybinding:
   universal:
