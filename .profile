@@ -7,3 +7,5 @@ export PATH="$HOME/bin:$HOME/.cargo/bin:$PATH"
 export MOZ_ENABLE_WAYLAND=1
 export QT_PLATFORM_THEME=qt5ct
 export QT_QPA_PLATFORMTHEME=qt5ct
+
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
