@@ -2,6 +2,7 @@ set fish_greeting
 
 alias n nnn
 alias k "kks edit"
+alias sk "sudoedit"
 alias dlg "lazygit --work-tree ~"
 alias lg lazygit
 alias fac1 /home/rai/dev/factorio/1/bin/x64/factorio
