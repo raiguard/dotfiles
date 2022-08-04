@@ -199,5 +199,5 @@ for_window [title="File Operation Progress"] floating enable
 
 bar swaybar_command waybar
 
-include ~/.config/sway/`hostname`
+include "~/.config/sway/`uname -n`"
 include /etc/sway/config.d/*
