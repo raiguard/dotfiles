@@ -1,4 +1,0 @@
-#!/bin/sh
-
-cd ~
-git add -f $(realpath $1)
