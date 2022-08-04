@@ -22,13 +22,6 @@ exec wlsunset -l 40.3 -L -111.8 -t 2500 -g 0.9
 
 exec_always import-gsettings
 
-### Output configuration
-
-# Screens
-output DP-1 position 2560,0 mode 2560x1440@59.951Hz bg ~/pictures/wallpapers/1122673.jpg fill
-output DP-2 position 0,0 bg ~/pictures/wallpapers/1141314.png fill
-output HDMI-A-1 disable mode 3840x2160@120Hz adaptive_sync on bg ~/pictures/wallpapers/1225904.jpg fill
-
 ### Idle configuration
 
 # Lock after 5 minutes
@@ -65,7 +58,7 @@ bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. 
 
 # Rofi
 bindsym $mod+r exec rofi -show drun
-bindsym $mod+q exec rofi -show power-menu -modi 'power-menu:~/.local/bin/rofi-power-menu --choices=logout/reboot/shutdown/suspend/hibernate'
+bindsym $mod+q exec rofi -show power-menu -modi 'power-menu:/usr/bin/rofi-power-menu --choices=logout/reboot/shutdown/suspend/hibernate'
 
 # Move your focus around
 bindsym $mod+$left focus left
@@ -183,21 +176,10 @@ title_align center
 
 ### Rules
 
-assign [class="factorio"] 3
-assign [class="discord"] 4
-assign [app_id="obs"] 4
 for_window [title="floating"] {
     floating enable
     resize set width 60ppt
     resize set height 70ppt
-}
-for_window [title="Picture-in-Picture"] {
-    floating enable
-    resize {
-        set width 1000px
-        set height 562px
-    }
-    move absolute position 1554 872
 }
 for_window [title="qutebrowser"] {
     focus child
@@ -209,4 +191,5 @@ for_window [title="File Operation Progress"] floating enable
 
 bar swaybar_command waybar
 
+include ~/.config/sway/`hostname`
 include /etc/sway/config.d/*

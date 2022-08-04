@@ -4,7 +4,7 @@ border-size=2
 margin=6
 padding=5,8
 progress-color=#373c47
-output=DP-1
+# output=DP-1
 
 # No urgency
 text-color=#98c379

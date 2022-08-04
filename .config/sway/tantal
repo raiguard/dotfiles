@@ -1,0 +1,7 @@
+output DP-1 position 2560,0 mode 2560x1440@59.951Hz bg ~/pictures/wallpapers/1122673.jpg fill
+output DP-2 position 0,0 bg ~/pictures/wallpapers/1141314.png fill
+output HDMI-A-1 disable mode 3840x2160@120Hz adaptive_sync on bg ~/pictures/wallpapers/1225904.jpg fill
+
+assign [class="factorio"] 3
+assign [class="discord"] 4
+assign [app_id="obs"] 4
