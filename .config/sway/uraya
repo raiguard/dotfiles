@@ -11,4 +11,4 @@ input 1:1:AT_Translated_Set_2_keyboard {
 }
 
 # Output configuration
-output eDP-1 bg ~/Downloads/694920.jpg fill
+output eDP-1 bg ~/pictures/wallpapers/694920.jpg fill
