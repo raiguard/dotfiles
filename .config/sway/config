@@ -16,7 +16,6 @@ exec nm-applet --indicator
 exec pasystray
 exec udiskie --tray
 exec /usr/bin/polkit-dumb-agent
-exec wlsunset -l 40.3 -L -111.8 -t 2500 -g 0.9
 
 ### GTK3 workaround
 
@@ -29,11 +28,11 @@ exec_always import-gsettings
 # Suspend after 20 minutes
 exec swayidle -w \
     timeout 300 'swaylock -f' \
-    timeout 600 'swaymsg output * dpms off' \
-    resume 'swaymsg output * dpms on' \
+    timeout 600 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
     timeout 1200 'systemctl suspend' \
     before-sleep 'swaylock -f' \
-    after-resume 'swaymsg output * dpms on'
+    after-resume 'swaymsg "output * dpms on"'
 
 ### Key bindings
 
@@ -175,6 +174,10 @@ font Source Code Pro Medium 8.5
 title_align center
 
 ### Rules
+
+assign [class="factorio"] 3
+assign [class="discord"] 4
+assign [app_id="obs"] 4
 
 for_window [title="floating"] {
     floating enable
