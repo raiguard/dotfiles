@@ -29,6 +29,10 @@ window#waybar {
     color: #56b6c2
 }
 
+#battery {
+    color: #98c379
+}
+
 #cpu, #temperature {
     color: #c678dd;
 }
