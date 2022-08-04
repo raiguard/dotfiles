@@ -144,9 +144,14 @@ bindsym $mod+escape exec swaylock
 # Media controls
 bindsym --locked XF86AudioRaiseVolume exec ~/.config/sway/volume i
 bindsym --locked XF86AudioLowerVolume exec ~/.config/sway/volume d
+bindsym --locked XF86AudioMute exec ~/.config/sway/volume t
 bindsym --locked XF86AudioPlay exec ~/.config/sway/media play-pause
 bindsym --locked XF86AudioNext exec ~/.config/sway/media next
 bindsym --locked XF86AudioPrev exec ~/.config/sway/media previous
+
+# Brightness controls
+bindsym --locked XF86MonBrightnessUp exec ~/.config/sway/brightness +5%
+bindsym --locked XF86MonBrightnessDown exec ~/.config/sway/brightness 5%-
 
 # Screenshots
 # Select region
