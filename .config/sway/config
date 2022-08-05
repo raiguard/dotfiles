@@ -21,19 +21,6 @@ exec /usr/bin/polkit-dumb-agent
 
 exec_always import-gsettings
 
-### Idle configuration
-
-# Lock after 5 minutes
-# Turn off screens after 10 minutes
-# Suspend after 20 minutes
-exec swayidle -w \
-    timeout 300 'swaylock -f' \
-    timeout 600 'swaymsg "output * dpms off"' \
-    resume 'swaymsg "output * dpms on"' \
-    timeout 1200 'systemctl suspend' \
-    before-sleep 'swaylock -f' \
-    after-resume 'swaymsg "output * dpms on"'
-
 ### Key bindings
 
 # Start a terminal

@@ -12,3 +12,14 @@ input 1:1:AT_Translated_Set_2_keyboard {
 
 # Output configuration
 output eDP-1 bg ~/pictures/wallpapers/694920.jpg fill
+
+### Idle configuration
+
+# Lock and blank screen after 5 minutes
+# Suspend after 15 minutes
+exec swayidle -w \
+    timeout 300 'swaylock -f; swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    timeout 900 'systemctl suspend' \
+    before-sleep 'swaylock -f' \
+    after-resume 'swaymsg "output * dpms on"'
