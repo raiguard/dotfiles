@@ -1,18 +1,19 @@
 # Autostart
+exec pactl load-module module-switch-on-connect
 exec poweralertd
 exec wlsunset -l 40.3 -L -111.8 -t 2500
 
 # Input configuration
-input 1160:4122:DELL0A20:00_0488:101A_Touchpad {
+input type:touchpad {
     natural_scroll enabled
     tap enabled
 }
-input 1:1:AT_Translated_Set_2_keyboard {
+input type:keyboard {
     xkb_options caps:swapescape
 }
 
 # Output configuration
-output eDP-1 bg ~/pictures/wallpapers/694920.jpg fill
+output eDP-1 bg ~/pictures/wallpapers/1176214.png fill
 
 ### Idle configuration
 
