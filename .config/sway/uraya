@@ -17,13 +17,16 @@ output eDP-1 bg ~/pictures/wallpapers/1176214.png fill
 
 ### Idle configuration
 
-# Lock and blank screen after 5 minutes
+# Blank screen after 5 minutes
+# Lock after 10 minutes
 # Suspend after 15 minutes
+# Disconnect all bluetooth devices before sleeping (temporary fix for instant resume)
 exec swayidle -w \
-    timeout 300 'swaylock -f; swaymsg "output * dpms off"' \
+    timeout 300 'swaymsg "output * dpms off"' \
     resume 'swaymsg "output * dpms on"' \
+    timeout 600 'swaylock -f' \
     timeout 900 'systemctl suspend' \
-    before-sleep 'swaylock -f' \
+    before-sleep 'bluetoothctl disconnect; swaylock -f' \
     after-resume 'swaymsg "output * dpms on"'
 
 # Rules
