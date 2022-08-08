@@ -171,11 +171,6 @@ assign [class="factorio"] 3
 assign [class="discord"] 4
 assign [app_id="obs"] 4
 
-for_window [title="floating"] {
-    floating enable
-    resize set width 60ppt
-    resize set height 70ppt
-}
 for_window [title="qutebrowser"] {
     focus child
     layout tabbed

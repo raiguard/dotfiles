@@ -7,7 +7,6 @@ output DP-2 position 0,0 bg ~/pictures/wallpapers/1141314.png fill
 output HDMI-A-1 disable mode 3840x2160@120Hz adaptive_sync on bg ~/pictures/wallpapers/1225904.jpg fill
 
 # Idle configuration
-
 # Lock after 5 minutes
 # Turn off screens after 10 minutes
 # Suspend after 20 minutes
@@ -18,3 +17,12 @@ exec swayidle -w \
     timeout 1200 'systemctl suspend' \
     before-sleep 'swaylock -f' \
     after-resume 'swaymsg "output * dpms on"'
+
+# Rules
+
+for_window [title="floating"] {
+    floating enable
+    resize set width 60ppt
+    resize set height 70ppt
+}
+
