@@ -1,9 +1,12 @@
 gui:
   showCommandLog: false
   showFileTree: false
+  showIcons: true
   theme:
     selectedLineBgColor:
       - '#2a3f53'
+    selectedRangeBgColor:
+      - reverse
 
 keybinding:
   universal:

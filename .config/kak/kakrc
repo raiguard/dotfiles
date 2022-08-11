@@ -9,6 +9,8 @@ try %{ source "~/dev/projects/personal/pesticide/rc/pesticide.kak" }
 # --------------------------------------------------
 # PLUGINS
 
+cork fzf.kak "https://github.com/andreyorst/fzf.kak"
+
 cork harpoon.kak "https://git.sr.ht/~raiguard/harpoon.kak" %{
     harpoon-add-bindings
 }
