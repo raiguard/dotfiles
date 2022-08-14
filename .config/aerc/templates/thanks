@@ -1,0 +1,5 @@
+X-Sourcehut-Patchset-Update: APPLIED
+
+Thanks!
+
+{{exec "branchname=$(git rev-parse --abbrev-ref HEAD); { git remote get-url --push origin; git reflog -2 \"origin/$branchname\" --pretty=format:%h | xargs printf '%s\n' | tac; } | xargs printf \"To %s\n   %s..%s  $branchname -> $branchname\"" ""}}
