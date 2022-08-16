@@ -1,0 +1,5 @@
+#!/bin/sh
+
+notify-send -u low -t 0 -h string:x-dunst-stack-tag:rsync-stasis "Performing system backup..."
+sudo rsync -aAXHv --delete --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found"} --info=progress2 / "/run/media/rai/Stasis/backups/$(uname -n)/"
+notify-send -u low -t 0 -h string:x-dunst-stack-tag:rsync-stasis "Backup complete"
