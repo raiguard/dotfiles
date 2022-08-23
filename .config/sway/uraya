@@ -11,6 +11,9 @@ input type:touchpad {
 input type:keyboard {
     xkb_options caps:swapescape
 }
+input type:pointer {
+    pointer_accel 0
+}
 
 # Output configuration
 output eDP-1 bg ~/pictures/wallpapers/1176214.png fill
