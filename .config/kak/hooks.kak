@@ -32,6 +32,8 @@ hook -once global ClientCreate .* %{
     set global jumpclient "%val{client}"
 }
 
+hook global BufOpenFile .* modeline-parse
+
 # FILETYPES
 
 # Generic

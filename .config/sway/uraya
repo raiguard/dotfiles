@@ -1,3 +1,5 @@
+# kak: filetype=i3
+
 # Autostart
 exec pactl load-module module-switch-on-connect
 exec poweralertd
