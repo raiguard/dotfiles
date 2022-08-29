@@ -6,7 +6,7 @@
     "height": 22,
     "sway/workspaces": {
         "format": "{name}"
-    },
+   },
     "wlr/taskbar": {
         "icon-size": 13,
         "on-click": "activate",
@@ -28,7 +28,7 @@
         "interval": 1,
     },
     "temperature": {
-        "hwmon-path": "/sys/class/hwmon/hwmon4/temp1_input",
+        "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
         "interval": 1
     },
     "memory": {
@@ -44,7 +44,8 @@
         "interval": 1800
     },
     "clock": {
-        "format": "{:%a, %d. %b %H:%M}"
+        "format": "{:%a, %d. %b %H:%M}",
+        "on-click": "wofi-util-menu"
     },
     "custom/lb": {
         "format": "<span color=\"#70798a\">[</span>"
@@ -53,7 +54,7 @@
         "format": "<span color=\"#70798a\">]</span>"
     },
     "custom/pipe": {
-        "format": "<span color=\"#70798a\"> | </span>"
+        "format": "<span color=\"#70798a\">|</span>"
     },
     "custom/blank": {
         "format": " "

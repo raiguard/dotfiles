@@ -43,8 +43,8 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
 # Rofi
-bindsym $mod+r exec rofi -show drun
-bindsym $mod+q exec rofi -show power-menu -modi 'power-menu:/usr/bin/rofi-power-menu --choices=logout/reboot/shutdown/suspend/hibernate'
+bindsym $mod+r exec wofi --show drun
+bindsym $mod+q exec wofi-util-menu
 
 # Move your focus around
 bindsym $mod+$left focus left

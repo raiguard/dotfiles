@@ -1,0 +1,28 @@
+#!/bin/bash
+
+entries="Lock screen\nLog out\nSuspend\nReboot\nShut down"
+if makoctl mode | grep -q "do-not-disturb"; then
+    entries="Disable do-not-disturb\n$entries"
+else
+    entries="Enable do-not-disturb\n$entries"
+fi
+
+selected=$(echo -e $entries | wofi --location top_right --show dmenu --width 300 --yoffset 6 --xoffset -10 --cache-file /dev/null -Ddynamic_lines=true | awk '{print tolower($0)}')
+echo "$selected"
+
+case "$selected" in
+    "disable do-not-disturb")
+        makoctl mode -r do-not-disturb;;
+    "enable do-not-disturb")
+        makoctl mode -a do-not-disturb;;
+    "lock screen")
+        exec swaylock;;
+    "log out")
+        swaymsg exit;;
+    "suspend")
+        exec systemctl suspend;;
+    "reboot")
+        exec systemctl reboot;;
+    "shut down")
+        exec systemctl poweroff -i;;
+esac
