@@ -45,7 +45,7 @@
     },
     "clock": {
         "format": "{:%a, %d. %b %H:%M}",
-        "on-click": "~/.config/sway/wofi-util-menu"
+        "on-click": "wofi-util-menu"
     },
     "custom/lb": {
         "format": "<span color=\"#70798a\">[</span>"

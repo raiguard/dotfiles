@@ -42,9 +42,9 @@ bindsym $mod+Shift+c reload
 # Exit sway (logs you out of your Wayland session)
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
-# Rofi
+# Wofi
 bindsym $mod+r exec wofi --show drun
-bindsym $mod+q exec ~/.config/sway/wofi-util-menu
+bindsym $mod+q exec wofi-util-menu
 
 # Move your focus around
 bindsym $mod+$left focus left
