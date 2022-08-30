@@ -44,6 +44,7 @@ bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. 
 
 # Wofi
 bindsym $mod+r exec wofi --show drun
+bindsym $mod+w exec wofi-filesearch
 bindsym $mod+q exec wofi-util-menu
 
 # Move your focus around

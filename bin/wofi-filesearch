@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Source: https://github.com/smsegal/scripts/blob/master/wofi-filesearch
+
+set -euo pipefail
+IFS=$'\n\t'
+
+fd -t f -I ".*" "$HOME"/{documents,school,downloads} |
+	wofi --insensitive -d --prompt="Search" |
+	tr '\n' '\0' |
+	xargs -0 xdg-open
+
