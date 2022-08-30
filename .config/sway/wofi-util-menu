@@ -12,9 +12,13 @@ echo "$selected"
 
 case "$selected" in
     "disable do-not-disturb")
-        makoctl mode -r do-not-disturb;;
+        makoctl mode -r do-not-disturb
+        notify-send -c system -u low "Do-not-disturb is disabled"
+        ;;
     "enable do-not-disturb")
-        makoctl mode -a do-not-disturb;;
+        makoctl mode -a do-not-disturb
+        notify-send -c system -u low "Do-not-disturb is enabled"
+        ;;
     "lock screen")
         exec swaylock;;
     "log out")

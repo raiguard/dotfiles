@@ -44,7 +44,7 @@ bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. 
 
 # Rofi
 bindsym $mod+r exec wofi --show drun
-bindsym $mod+q exec wofi-util-menu
+bindsym $mod+q exec ~/.config/sway/wofi-util-menu
 
 # Move your focus around
 bindsym $mod+$left focus left

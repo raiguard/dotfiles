@@ -1,3 +1,5 @@
+# kak: filetype=ini
+
 font=Source Code Pro Medium 10
 background-color=#272b33
 border-size=2
@@ -26,8 +28,20 @@ text-color=#e06c75
 border-color=#e06c75
 default-timeout=0
 
+# Do-not-disturb
+# Hide most notifications, but continue to show system notifications
+
 [mode=do-not-disturb]
 invisible=1
 
 [mode=do-not-disturb urgency=critical]
+invisible=0
+
+[mode=do-not-disturb category=system]
+invisible=0
+
+[mode=do-not-disturb app-name=NetworkManager]
+invisible=0
+
+[mode=do-not-disturb app-name=blueman]
 invisible=0
