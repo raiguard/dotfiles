@@ -28,3 +28,6 @@ default-timeout=0
 
 [mode=do-not-disturb]
 invisible=1
+
+[mode=do-not-disturb urgency=critical]
+invisible=0
