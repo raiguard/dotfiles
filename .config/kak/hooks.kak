@@ -37,7 +37,7 @@ hook global BufOpenFile .* modeline-parse
 # FILETYPES
 
 # Generic
-hook global WinSetOption filetype=(css|go|latex) %{
+hook global WinSetOption filetype=(css|go) %{
     lsp-init
     rainbow-enable-window
 }
@@ -102,6 +102,14 @@ hook global ModuleLoaded hare %{
     add-highlighter shared/hare/code/operator regex "(=|\+|-|\*|/|<|>|;|:|!|\?|,|&|\.\.\.)" 0:operator
     add-highlighter shared/hare/code/function regex "\b(\w*)\(" 1:function
     add-highlighter shared/hare/code/moduleuse regex "\b(\w*)::" 1:module
+}
+
+hook global WinSetOption filetype=latex %{
+    lsp-init
+    rainbow-enable-window
+
+    hook window BufWritePost .* texlab-build
+    hook window BufWritePre .* lsp-formatting-sync
 }
 
 hook global WinSetOption filetype=lua %{
