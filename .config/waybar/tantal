@@ -44,7 +44,8 @@
         "interval": 1800
     },
     "clock": {
-        "format": "{:%a, %d. %b %H:%M}"
+        "format": "{:%a, %d. %b %H:%M}",
+        "on-click": "wofi-util-menu"
     },
     "custom/lb": {
         "format": "<span color=\"#70798a\">[</span>"
