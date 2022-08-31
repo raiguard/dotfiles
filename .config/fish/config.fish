@@ -5,6 +5,7 @@ alias k "kks edit"
 alias sk "sudoedit"
 alias dlg "lazygit --work-tree ~"
 alias lg lazygit
+alias t "todoist-cli --color"
 alias fac1 /home/rai/dev/factorio/1/bin/x64/factorio
 alias fac2 /home/rai/dev/factorio/2/bin/x64/factorio
 alias facs-1.1 /home/rai/dev/projects/wube/Factorio-1.1/bin/Debugx64Clang/factorio-run
