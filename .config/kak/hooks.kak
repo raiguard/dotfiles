@@ -108,8 +108,14 @@ hook global WinSetOption filetype=latex %{
     lsp-init
     rainbow-enable-window
 
-    hook window BufWritePost .* texlab-build
     hook window BufWritePre .* lsp-formatting-sync
+    hook window BufWritePost .* texlab-build
+    define-command latex-preview %{
+        evaluate-commands %sh{
+            filename=${kak_buffile%.tex}.pdf
+            echo "pstart 'zathura $filename'"
+        }
+    }
 }
 
 hook global WinSetOption filetype=lua %{

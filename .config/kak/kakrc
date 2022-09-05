@@ -57,6 +57,8 @@ cork kakoune-mirror "https://github.com/delapouite/kakoune-mirror" %{
     map global normal "'" ": enter-user-mode -lock mirror<ret>"
 }
 
+cork kakoune-snippets "https://github.com/CharlesGueunet/kakoune-snippets"
+
 cork kakoune-sort-selections "https://github.com/occivink/kakoune-sort-selections"
 
 cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save"
@@ -70,6 +72,8 @@ cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
 }
 
 cork mark.kak "https://github.com/alexherbo2/mark.kak"
+
+cork pmanage.kak "https://github.com/andreyorst/pmanage.kak"
 
 cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
 
@@ -116,5 +120,6 @@ source "%val{config}/tool/move-lines.kak"
 source "%val{config}/tool/nnn.kak"
 source "%val{config}/tool/replace-mode.kak"
 source "%val{config}/tool/status-line.kak"
+source "%val{config}/tool/tex.kak"
 source "%val{config}/tool/todo.kak"
 source "%val{config}/tool/windowing.kak"

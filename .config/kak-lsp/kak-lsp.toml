@@ -37,6 +37,9 @@ filetypes = ["tex", "latex"]
 roots = [".git/"]
 command = "texlab"
 
+[language.latex.settings.texlab]
+build.args = ["--pdf", "%f"]
+
 [language.lua]
 filetypes = ["lua"]
 roots = [".git/"]
