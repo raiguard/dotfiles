@@ -45,3 +45,9 @@ invisible=0
 
 [mode=do-not-disturb app-name=blueman]
 invisible=0
+
+[mode=do-not-disturb app-name=pasystray]
+invisible=0
+
+[mode=do-not-disturb app-name=poweralertd]
+invisible=0
