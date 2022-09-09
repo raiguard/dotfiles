@@ -78,8 +78,8 @@ hook global WinSetOption filetype=factorio-changelog %{
 }
 
 hook global WinSetOption filetype=(git-commit|mail) %{
-    set-option global autowrap_column 72
-    set-option global autowrap_format_paragraph true
+    set-option window autowrap_column 72
+    set-option window autowrap_format_paragraph true
     autowrap-enable
 }
 
@@ -102,6 +102,9 @@ hook global ModuleLoaded hare %{
 hook global WinSetOption filetype=latex %{
     lsp-init
     rainbow-enable-window
+
+    set-option window autowrap_format_paragraph true
+    autowrap-enable
 
     hook window BufWritePre .* lsp-formatting-sync
     define-command latex-automake %{
