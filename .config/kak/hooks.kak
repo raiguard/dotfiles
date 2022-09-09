@@ -17,16 +17,6 @@ hook global WinCreate .* %{
 # Remove trailing whitespace on save
 hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
 
-# Auto complete with tab
-hook global InsertCompletionShow .* %{
-    map window insert <tab> <c-n>
-    map window insert <s-tab> <c-p>
-}
-hook global InsertCompletionHide .* %{
-    map window insert <tab> <tab>
-    map window insert <s-tab> <s-tab>
-}
-
 # Set first client as the jumpclient
 hook -once global ClientCreate .* %{
     set global jumpclient "%val{client}"
@@ -35,6 +25,11 @@ hook -once global ClientCreate .* %{
 hook global BufOpenFile .* modeline-parse
 
 # FILETYPES
+
+# All
+hook global WinCreate .* %{
+    map-tab-completion
+}
 
 # Generic
 hook global WinSetOption filetype=(css|go) %{
@@ -109,13 +104,27 @@ hook global WinSetOption filetype=latex %{
     rainbow-enable-window
 
     hook window BufWritePre .* lsp-formatting-sync
-    hook window BufWritePost .* texlab-build
-    define-command latex-preview %{
-        evaluate-commands %sh{
-            filename=${kak_buffile%.tex}.pdf
-            echo "pstart 'zathura $filename'"
-        }
+    define-command latex-automake %{
+        hook window BufWritePost .* texlab-build
+        evaluate-commands %sh{ echo "pstart 'zathura ${kak_buffile%.tex}.pdf'" }
     }
+
+    hook window WinSetOption snippets_placeholder_groups=(.+) %{
+        echo -debug "snippet entered"
+        unmap-tab-completion
+        map window insert <tab> '<a-;>:snippets-select-next-placeholders<ret>'
+    }
+    hook window WinSetOption snippets_placeholder_groups= %{
+        echo -debug "snippet exited"
+        unmap window insert <tab> '<a-;>:snippets-select-next-placeholders<ret>'
+        map-tab-completion
+    }
+
+    set-option -add global snippets \
+        Sum \bsum\b %{ snippets-insert "\sum_{$1}^{$2} ($3) $4" } \
+        "Block math" bmath %{ snippets-insert "$$$$ $1 $$$$" } \
+        Fraction // %{ snippets-insert "\frac{$1}{$2} $3" } \
+        Limit \blim\b %{ snippets-insert "\lim_{${1:n} \to ${2:\infty}} $3" }
 }
 
 hook global WinSetOption filetype=lua %{
