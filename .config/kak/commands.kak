@@ -43,3 +43,11 @@ define-command unmap-tab-completion %{
     unmap window insert <tab> <c-n>
     unmap window insert <s-tab> <c-p>
 }
+
+declare-option range-specs face_test_ranges
+define-command -params 1 test-face %{
+    add-highlighter -override window/face-test-ranges ranges face_test_ranges
+    update-option window face_test_ranges
+    set-face window test_face %arg{1}
+    set-option window face_test_ranges %val{timestamp} "%val{selection_desc}|test_face"
+}
