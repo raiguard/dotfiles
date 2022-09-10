@@ -33,11 +33,3 @@ exec swayidle -w \
     timeout 900 'systemctl suspend' \
     before-sleep 'bluetoothctl disconnect; swaylock -f' \
     after-resume 'swaymsg "output * dpms on"'
-
-# Rules
-
-for_window [title="floating"] {
-    floating enable
-    resize set width 70ppt
-    resize set height 80ppt
-}

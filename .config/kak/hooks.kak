@@ -24,6 +24,30 @@ hook -once global ClientCreate .* %{
 
 hook global BufOpenFile .* modeline-parse
 
+# Add extra sway commands
+hook global ModuleLoaded sway %{
+    declare-option str foot_app_id foot
+    set-option global termcmd "foot -a %opt{foot_app_id} sh -c"
+    hook global WinSetOption foot_app_id=.* %{
+        set-option window termcmd "foot -a %opt{foot_app_id} sh -c"
+    }
+    define-command -params .. terminal-floating %{
+        set-option window foot_app_id "foot.floating -w 1528x984"
+        terminal %arg{@}
+        set-option window foot_app_id foot
+    }
+}
+
+# # Snippet completion
+# hook global WinSetOption snippets_placeholder_groups=(.*) %{
+#     unmap-tab-completion
+#     map window insert <tab> '<a-;>:snippets-select-next-placeholders<ret>'
+# }
+# hook global WinSetOption snippets_placeholder_groups= %{
+#     unmap window insert <tab> '<a-;>:snippets-select-next-placeholders<ret>'
+#     map-tab-completion
+# }
+
 # FILETYPES
 
 # All
@@ -112,18 +136,7 @@ hook global WinSetOption filetype=latex %{
         evaluate-commands %sh{ echo "pstart 'zathura ${kak_buffile%.tex}.pdf'" }
     }
 
-    hook window WinSetOption snippets_placeholder_groups=(.+) %{
-        echo -debug "snippet entered"
-        unmap-tab-completion
-        map window insert <tab> '<a-;>:snippets-select-next-placeholders<ret>'
-    }
-    hook window WinSetOption snippets_placeholder_groups= %{
-        echo -debug "snippet exited"
-        unmap window insert <tab> '<a-;>:snippets-select-next-placeholders<ret>'
-        map-tab-completion
-    }
-
-    set-option -add global snippets \
+        set-option -add global snippets \
         Sum \bsum\b %{ snippets-insert "\sum_{$1}^{$2} ($3) $4" } \
         "Block math" bmath %{ snippets-insert "$$$$ $1 $$$$" } \
         Fraction // %{ snippets-insert "\frac{$1}{$2} $3" } \
@@ -158,6 +171,16 @@ hook global WinSetOption filetype=rust %{
 
     # Format on save
     hook window BufWritePre .* lsp-formatting-sync
+}
+
+# TODO: Create a kak plugin for this filetype
+hook global BufCreate .+\.scd %{
+    set-option buffer filetype scdoc
+}
+hook global WinSetOption filetype=scdoc %{
+    noexpandtab
+    autowrap-enable
+    set-option window autowrap_format_paragraph true
 }
 
 hook global WinSetOption filetype=typescript %{

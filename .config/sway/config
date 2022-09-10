@@ -16,6 +16,7 @@ exec nm-applet --indicator
 exec pasystray
 exec udiskie --tray
 exec /usr/bin/polkit-dumb-agent
+exec kak -d -s rai
 
 ### GTK3 workaround
 
@@ -24,7 +25,7 @@ exec_always import-gsettings
 ### Key bindings
 
 # Start a terminal
-bindsym $mod+Return exec kitty
+bindsym $mod+Return exec foot
 
 # Kill focused window
 bindsym $mod+backspace kill
@@ -178,6 +179,11 @@ for_window [title="qutebrowser"] {
     layout tabbed
 }
 for_window [title="File Operation Progress"] floating enable
+for_window [app_id="foot.floating"] {
+    floating enable
+    # resize set width 60ppt
+    # resize set height 70ppt
+}
 
 ### Other
 

@@ -12,3 +12,8 @@ alias facs-1.1 /home/rai/dev/projects/wube/Factorio-1.1/bin/Debugx64Clang/factor
 alias facs-1.2 /home/rai/dev/projects/wube/Factorio-1.2/bin/Debugx64Clang/factorio-run
 
 source /usr/share/autojump/autojump.fish
+
+# Enable jumping to fish prompts in scrollback in foot
+function mark_prompt_start --on-event fish_prompt
+    echo -en "\e]133;A\e\\"
+end

@@ -11,7 +11,10 @@ map global goto "f" '<esc>: prompt -shell-script-candidates %{ fd --type f --hid
 map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
 
 # Git client
-map global view "g" "<esc>: terminal-popup lazygit<ret>" -docstring "lazygit..."
+map global view "g" "<esc>: terminal-floating lazygit<ret>" -docstring "lazygit..."
+
+# Pick file with NNN
+map global normal <minus> ': terminal-floating nnn-pick %val{buffile} %val{client} %val{session}<ret>'
 
 # Search case-insensitive by default
 map global normal "/" "/(?i)"

@@ -19,12 +19,3 @@ exec swayidle -w \
     timeout 1200 'systemctl suspend' \
     before-sleep 'swaylock -f' \
     after-resume 'swaymsg "output * dpms on"'
-
-# Rules
-
-for_window [title="floating"] {
-    floating enable
-    resize set width 60ppt
-    resize set height 70ppt
-}
-
