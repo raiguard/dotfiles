@@ -60,7 +60,7 @@ hook global WinSetOption filetype=(css|go) %{
     lsp-init
     rainbow-enable-window
 }
-hook global WinSetOption filetype=(fish|i3|json|kak|python|sh|toml) %{
+hook global WinSetOption filetype=(fish|i3|json|kak|sh|toml) %{
     rainbow-enable-window
 }
 
@@ -154,6 +154,14 @@ hook global WinSetOption filetype=lua %{
     set-option window indentwidth 2
 
     set-option window formatcmd "stylua -"
+}
+
+hook global WinSetOption filetype=python %{
+    lsp-init
+    rainbow-enable-window
+
+    set-option window formatcmd "autopep8 -"
+    hook window BufWritePre .* format
 }
 
 hook global WinSetOption filetype=rainmeter %{

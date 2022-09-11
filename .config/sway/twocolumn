@@ -6,12 +6,14 @@ from i3ipc import Connection, Event
 
 COLUMNS = 2
 
-def move_container (con1, con2):
+
+def move_container(con1, con2):
     con2.command("mark __column-layout");
     con1.command("move window to mark __column-layout")
     con2.command("unmark __column-layout");
 
-def layout (i3, event):
+
+def layout(i3, event):
     if event.change == "close":
         for reply in i3.get_workspaces():
             if reply.focused:
