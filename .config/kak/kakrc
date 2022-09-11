@@ -6,6 +6,7 @@ evaluate-commands %sh{
 
 try %{ source "~/dev/projects/personal/pesticide/rc/pesticide.kak" }
 
+
 # --------------------------------------------------
 # PLUGINS
 
@@ -13,6 +14,11 @@ cork fzf.kak "https://github.com/andreyorst/fzf.kak"
 
 cork harpoon.kak "https://git.sr.ht/~raiguard/harpoon.kak" %{
     harpoon-add-bindings
+}
+
+cork kak-move-lines "https://git.sr.ht/~raiguard/kak-move-lines" %{
+    map global normal ⓙ ': move-lines-down %val{count}<ret>'
+    map global normal <c-k> ': move-lines-up %val{count}<ret>'
 }
 
 cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
@@ -116,7 +122,6 @@ source "%val{config}/hooks.kak"
 source "%val{config}/keybindings.kak"
 
 source "%val{config}/tool/lsp.kak"
-source "%val{config}/tool/move-lines.kak"
 source "%val{config}/tool/replace-mode.kak"
 source "%val{config}/tool/status-line.kak"
 source "%val{config}/tool/todo.kak"
