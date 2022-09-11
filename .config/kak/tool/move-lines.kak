@@ -20,5 +20,5 @@ define-command -override -docstring 'move line up' -params 1 move-lines-up %{
     }
 }
 
-map global normal ⓙ ': move-lines-down %val{count}<ret>'
-map global normal <c-k> ': move-lines-up %val{count}<ret>'
+map global normal <c-s-j> ': move-lines-down %val{count}<ret>'
+map global normal <c-s-k> ': move-lines-up %val{count}<ret>'
