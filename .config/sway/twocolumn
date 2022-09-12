@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python
 #
 # Automatically splits windows so workspaces are laid out in 2 columns.
 
@@ -8,16 +8,17 @@ COLUMNS = 2
 
 
 def move_container(con1, con2):
-    con2.command("mark __column-layout");
+    con2.command("mark __column-layout")
     con1.command("move window to mark __column-layout")
-    con2.command("unmark __column-layout");
+    con2.command("unmark __column-layout")
 
 
 def layout(i3, event):
     if event.change == "close":
         for reply in i3.get_workspaces():
             if reply.focused:
-                workspace = i3.get_tree().find_by_id(reply.ipc_data["id"]).workspace()
+                workspace = i3.get_tree().find_by_id(
+                    reply.ipc_data["id"]).workspace()
 
                 if len(workspace.nodes) == 1 and len(workspace.nodes[0].nodes) == 1:
                     child = workspace.nodes[0].nodes[0]
@@ -30,6 +31,7 @@ def layout(i3, event):
                 for node in workspace.nodes:
                     if node.layout != "splitv":
                         node.command("splitv")
+
 
 i3 = Connection()
 i3.on(Event.WINDOW_NEW, layout)

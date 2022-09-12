@@ -6,7 +6,6 @@ evaluate-commands %sh{
 
 try %{ source "~/dev/projects/personal/pesticide/rc/pesticide.kak" }
 
-
 # --------------------------------------------------
 # PLUGINS
 

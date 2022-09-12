@@ -10,6 +10,7 @@ set $right l
 ### Autostart
 
 exec blueman-applet
+exec ~/.config/sway/tab-browser
 exec ~/.config/sway/twocolumn
 exec mako
 exec nm-applet --indicator
@@ -174,10 +175,6 @@ assign [class="factorio"] 3
 assign [class="discord"] 4
 assign [app_id="obs"] 4
 
-for_window [title="qutebrowser"] {
-    focus child
-    layout tabbed
-}
 for_window [title="File Operation Progress"] floating enable
 for_window [app_id="foot.floating"] {
     floating enable
