@@ -119,8 +119,7 @@ alias global connect kks-connect
 source "%val{config}/commands.kak"
 source "%val{config}/hooks.kak"
 source "%val{config}/keybindings.kak"
-
-source "%val{config}/tool/lsp.kak"
-source "%val{config}/tool/replace-mode.kak"
-source "%val{config}/tool/status-line.kak"
-source "%val{config}/tool/todo.kak"
+source "%val{config}/lsp.kak"
+source "%val{config}/replace-mode.kak"
+source "%val{config}/status-line.kak"
+source "%val{config}/todo.kak"
