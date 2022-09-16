@@ -1,7 +1,14 @@
 #!/bin/sh
 
+nnn_pick() {
+    tmp="${TMPDIR:-/tmp}/nnn_pick_$$"
+    nnn -p "$tmp" "$1"
+    cat "$tmp"
+    rm "$tmp"
+}
+
 start_location=$1 kak_client=$2 kak_session=$3
-filename=$(nnn -H -p - "$start_location")
+filename=$(nnn_pick "$start_location")
 if [ -n "$filename" ]; then
     echo "evaluate-commands -client $kak_client edit $filename" | kak -p $kak_session
 fi
