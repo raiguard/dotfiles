@@ -56,11 +56,11 @@ hook global WinCreate .* %{
 }
 
 # Generic
-hook global WinSetOption filetype=(css|go) %{
+hook global WinSetOption filetype=(css|go|sh) %{
     lsp-init
     rainbow-enable-window
 }
-hook global WinSetOption filetype=(fish|i3|json|kak|sh|toml) %{
+hook global WinSetOption filetype=(fish|i3|json|kak|toml) %{
     rainbow-enable-window
 }
 

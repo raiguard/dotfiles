@@ -11,6 +11,12 @@ verbosity = 2
 # # kak-lsp does not support newText https://github.com/ul/kak-lsp/issues/40
 # args = ["--init={\"completion\":{\"detailedLabel\":false}}"]
 
+[language.bash]
+filetypes = ["sh"]
+roots = [".git", ".hg"]
+command = "bash-language-server"
+args = ["start"]
+
 [language.c_cpp]
 filetypes = ["c", "cpp"]
 roots = ["compile_commands.json", ".clangd", ".git", ".hg"]
