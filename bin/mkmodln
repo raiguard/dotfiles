@@ -1,8 +1,11 @@
 #!/bin/sh
 
 dir="$PWD"
+subdir=$(basename $PWD | sed 's/Factorio-//')
 if [ -d "src" ]; then
     dir="$dir/src"
+elif [ -d $subdir ]; then
+    dir="$dir/$subdir"
 fi
 
 if [ ! -f "$dir/info.json" ]; then
@@ -18,9 +21,14 @@ fi
 
 destination="$HOME/dev/factorio/linked/mods/$modname"
 
-if [ -e "$destination" ]; then
-    echo "Mod already exists in the mods folder"
-    exit
+if [ -L "$destination" ]; then
+    if [ "$1" == "--force" ]; then
+        rm $destination
+        echo "Forcibly removed existing mod"
+    else
+        echo "Mod already exists in the mods folder"
+        exit
+    fi
 fi
 
 ln -s $dir $destination

@@ -1,6 +1,5 @@
 game_dir = "/home/rai/dev/factorio/1"
 mods_dir = "/home/rai/dev/factorio/linked/mods"
-sync_latest_versions = true
 
 [sets]
 AdjustableInserters = ["AdjustableInserters", "bobinserters", "EditorExtensions", "Sandbox"]
