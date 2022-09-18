@@ -62,13 +62,19 @@ hint.setType = true
 hover.expandAlias = false
 runtime.plugin = "/home/rai/dev/factorio/plugin/plugin.lua"
 runtime.version = "Lua 5.2"
-semantic.enable = true
+semantic.enable = false
 telemetry.enable = false
-workspace.ignoreDir = [".vscode"]
+workspace.ignoreDir = [".vscode", "src/archive"]
 workspace.ignoreSubmodules = false
-workspace.library = ["/home/rai/dev/factorio/libs"]
-workspace.maxPreload = 1000000
-workspace.preloadFileSize = 1000000
+workspace.library = [
+    "/home/rai/dev/factorio/1/data",
+    "/home/rai/dev/factorio/1/data/core/lualib",
+    "/home/rai/dev/factorio/runtime-api/",
+    "/home/rai/dev/projects/personal/flib"
+]
+
+workspace.preloadFileSize = 10000
+
 
 [language.python]
 filetypes = ["python"]
