@@ -1,12 +1,36 @@
 # Default window settings
 hook global WinCreate .* %{
-    try %{
-        # Tabs
-        expandtab
-        set-option window tabstop 4
-        set-option window softtabstop 4
-        set-option window indentwidth 4
+    # Tabs
+    expandtab
+    set-option window tabstop 4
+    set-option window softtabstop 4
+    set-option window indentwidth 4
 
+    # Hide and show cursors when focusing in and out
+    hook window FocusOut .* %{
+        set-face window PrimaryCursor ""
+        set-face window PrimaryCursorEol ""
+        set-face window PrimarySelection ""
+        set-face window SecondaryCursor ""
+        set-face window SecondaryCursorEol ""
+        set-face window SecondarySelection ""
+    }
+    hook window FocusIn .* %{
+        try %{
+            unset-face window PrimaryCursor
+            unset-face window PrimaryCursorEol
+            unset-face window PrimarySelection
+            unset-face window SecondaryCursor
+            unset-face window SecondaryCursorEol
+            unset-face window SecondarySelection
+        }
+    }
+
+    # Other
+    map-tab-completion
+    enable-auto-pairs
+
+    try %{
         # Show and automatically update git diff on write
         git show-diff
         hook window BufWritePost .* %{ git update-diff }
@@ -49,12 +73,6 @@ hook global ModuleLoaded sway %{
 # }
 
 # FILETYPES
-
-# All
-hook global WinCreate .* %{
-    map-tab-completion
-    enable-auto-pairs
-}
 
 # Generic
 hook global WinSetOption filetype=(css|go|sh) %{

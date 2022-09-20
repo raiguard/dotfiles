@@ -4,17 +4,10 @@ evaluate-commands %sh{
     kak-lsp --kakoune -s $kak_session
 }
 
-try %{ source "~/dev/projects/personal/pesticide/rc/pesticide.kak" }
-
 # --------------------------------------------------
 # PLUGINS
 
 cork auto-pairs.kak "https://github.com/alexherbo2/auto-pairs.kak"
-
-cork fzf.kak "https://github.com/andreyorst/fzf.kak" %{
-    require-module fzf-grep
-    set-option global fzf_terminal_command 'terminal-floating kak -c %val{session} -e "%arg{@}"'
-}
 
 cork harpoon.kak "https://git.sr.ht/~raiguard/harpoon.kak" %{
     harpoon-add-bindings
@@ -23,6 +16,11 @@ cork harpoon.kak "https://git.sr.ht/~raiguard/harpoon.kak" %{
 cork kak-move-lines "https://git.sr.ht/~raiguard/kak-move-lines" %{
     map global normal ⓙ ': move-lines-down %val{count}<ret>'
     map global normal <c-k> ': move-lines-up %val{count}<ret>'
+}
+
+cork kak-live-grep "https://git.sr.ht/~raiguard/kak-live-grep" %{
+    map global user g ": live-grep<ret>" -docstring "live grep"
+    set-option global live_grep_select_matches true
 }
 
 cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
