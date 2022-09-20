@@ -9,7 +9,12 @@ try %{ source "~/dev/projects/personal/pesticide/rc/pesticide.kak" }
 # --------------------------------------------------
 # PLUGINS
 
-cork fzf.kak "https://github.com/andreyorst/fzf.kak"
+cork auto-pairs.kak "https://github.com/alexherbo2/auto-pairs.kak"
+
+cork fzf.kak "https://github.com/andreyorst/fzf.kak" %{
+    require-module fzf-grep
+    set-option global fzf_terminal_command 'terminal-floating kak -c %val{session} -e "%arg{@}"'
+}
 
 cork harpoon.kak "https://git.sr.ht/~raiguard/harpoon.kak" %{
     harpoon-add-bindings
@@ -23,11 +28,6 @@ cork kak-move-lines "https://git.sr.ht/~raiguard/kak-move-lines" %{
 cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
     set-option global rainbow_mode 0
     set-option global rainbow_check_templates Y
-}
-
-cork kakoune-buffer-switcher "https://github.com/occivink/kakoune-buffer-switcher" %{
-    set-face global BufferSwitcherCurrent green
-    map global normal <backspace> ": buffer-switcher<ret>"
 }
 
 cork kakoune-fandt "https://github.com/listentolist/kakoune-fandt" %{
@@ -58,8 +58,9 @@ cork kakoune-grep-write "https://github.com/JacobTravers/kakoune-grep-write" %{
     }
 }
 
-cork kakoune-mirror "https://github.com/delapouite/kakoune-mirror" %{
-    map global normal "'" ": enter-user-mode -lock mirror<ret>"
+cork kakoune-inc-dec "https://gitlab.com/Screwtapello/kakoune-inc-dec" %{
+    map global normal = ": inc-dec-modify-numbers - 1<ret>"
+    map global normal + ": inc-dec-modify-numbers + 1<ret>"
 }
 
 cork kakoune-snippets "https://github.com/CharlesGueunet/kakoune-snippets"
@@ -70,8 +71,6 @@ cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save"
 
 cork kakoune-sudo-write "https://github.com/occivink/kakoune-sudo-write"
 
-cork kakoune-text-objects "https://github.com/delapouite/kakoune-text-objects"
-
 cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
     set-option global source_local_kakrc true
 }
@@ -81,6 +80,10 @@ cork mark.kak "https://github.com/alexherbo2/mark.kak"
 cork pmanage.kak "https://github.com/andreyorst/pmanage.kak"
 
 cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
+
+cork surround.kak "https://github.com/alexherbo2/surround.kak" %{
+    map global normal "'" ": enter-user-mode surround<ret>"
+}
 
 # --------------------------------------------------
 # GENERAL

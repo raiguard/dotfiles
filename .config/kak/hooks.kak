@@ -53,6 +53,7 @@ hook global ModuleLoaded sway %{
 # All
 hook global WinCreate .* %{
     map-tab-completion
+    enable-auto-pairs
 }
 
 # Generic
