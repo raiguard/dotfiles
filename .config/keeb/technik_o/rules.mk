@@ -1,6 +1,5 @@
 # Disabled qmk features
 BOOTMAGIC_ENABLE = no
-MOUSEKEY_ENABLE = no
 CONSOLE_ENABLE = no
 COMMAND_ENABLE = no
 COMBO_ENABLE = no
