@@ -9,8 +9,12 @@ evaluate-commands %sh{
 
 cork auto-pairs.kak "https://github.com/alexherbo2/auto-pairs.kak"
 
-cork harpoon.kak "https://git.sr.ht/~raiguard/harpoon.kak" %{
+cork kak-harpoon "https://git.sr.ht/~raiguard/kak-harpoon" %{
     harpoon-add-bindings
+}
+
+cork kak-mirror "https://git.sr.ht/~raiguard/kak-mirror" %{
+    map global normal "'" ': enter-user-mode -lock mirror<ret>' -docstring 'mirror lock'
 }
 
 cork kak-move-lines "https://git.sr.ht/~raiguard/kak-move-lines" %{
@@ -78,10 +82,6 @@ cork mark.kak "https://github.com/alexherbo2/mark.kak"
 cork pmanage.kak "https://github.com/andreyorst/pmanage.kak"
 
 cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
-
-cork surround.kak "https://github.com/alexherbo2/surround.kak" %{
-    map global normal "'" ": enter-user-mode surround<ret>"
-}
 
 # --------------------------------------------------
 # GENERAL
