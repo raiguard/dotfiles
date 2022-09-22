@@ -197,6 +197,7 @@ hook global BufSetOption filetype=rainmeter %{
 hook global WinSetOption filetype=rust %{
     lsp-init
     rainbow-enable-window
+    lsp-inlay-hints-enable window
 
     # Format on save
     hook window BufWritePre .* lsp-formatting-sync

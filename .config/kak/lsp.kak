@@ -11,7 +11,6 @@ set-option global lsp_auto_highlight_references true
 set-option global lsp_hover_max_lines 50
 
 lsp-inlay-diagnostics-enable global
-lsp-inlay-hints-enable global
 lsp-auto-signature-help-enable
 
 define-command lsp-restart -docstring "Restart kak-lsp session" %{ lsp-stop; lsp-start }
