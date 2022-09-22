@@ -24,7 +24,6 @@ cork kak-move-lines "https://git.sr.ht/~raiguard/kak-move-lines" %{
 
 cork kak-live-grep "https://git.sr.ht/~raiguard/kak-live-grep" %{
     map global user g ": live-grep<ret>" -docstring "live grep"
-    set-option global live_grep_select_matches true
 }
 
 cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
@@ -94,6 +93,8 @@ set-face global MarkedPrimaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}
 set-face global MarkedPrimarySelection "default,rgba:%opt{magenta}%opt{selectionalpha}"
 set-face global MarkedSecondaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}"
 set-face global MarkedSecondarySelection "default,rgba:%opt{magenta}%opt{selectionalpha}"
+# kak-live-grep faces
+set-face global LiveGrepMatch ",,rgb:%opt{darkorange}+u"
 # Trailing whitespace
 add-highlighter global/trailing-whitespaces regex "(\h+)$" "1:default,rgba:%opt{darkred}%opt{selectionalpha}"
 # Highlighters
