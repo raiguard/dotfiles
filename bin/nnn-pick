@@ -8,7 +8,11 @@ nnn_pick() {
 }
 
 start_location=$1 kak_client=$2 kak_session=$3
-filename=$(nnn_pick "$start_location")
+if [ -f "$start_location" ]; then
+    filename=$(nnn_pick "$start_location")
+else
+    filename=$(nnn_pick "$PWD")
+fi
 if [ -n "$filename" ]; then
     echo "evaluate-commands -client $kak_client edit $filename" | kak -p $kak_session
 fi
