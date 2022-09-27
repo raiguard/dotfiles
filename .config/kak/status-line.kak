@@ -135,4 +135,5 @@ hook global WinCreate .* %{
         modeline-update-bufstatus
     }
     hook window FocusIn .* modeline-update-git-branch
+    hook window BufWritePost .* modeline-update-bufstatus
 }

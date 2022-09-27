@@ -104,7 +104,7 @@ add-highlighter global/ show-matching
 # UI settings
 set-option global ui_options terminal_assistant=off terminal_set_title=false
 set-option global startup_info_version 10000000000000 # Don't show changelog
-set-option global scrolloff 100,5 # Always center cursor vertically
+set-option global scrolloff 5,5
 
 # Auto-reload please
 set-option global autoreload yes
