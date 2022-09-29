@@ -67,8 +67,8 @@ telemetry.enable = false
 workspace.ignoreDir = [".vscode", "src/archive"]
 workspace.ignoreSubmodules = false
 workspace.library = [
-    "/home/rai/dev/factorio/1/data",
-    "/home/rai/dev/factorio/1/data/core/lualib",
+    # "/home/rai/dev/factorio/1/data",
+    # "/home/rai/dev/factorio/1/data/core/lualib",
     "/home/rai/dev/factorio/runtime-api/",
     "/home/rai/dev/projects/personal/flib"
 ]
