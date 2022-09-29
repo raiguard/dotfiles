@@ -7,7 +7,6 @@ hook global WinCreate .* %{
     set-option window indentwidth 4
 
     # Other
-    map-tab-completion
     enable-auto-pairs
 
     try %{
@@ -42,15 +41,33 @@ hook global ModuleLoaded sway %{
     }
 }
 
-# # Snippet completion
-# hook global WinSetOption snippets_placeholder_groups=(.*) %{
-#     unmap-tab-completion
-#     map window insert <tab> '<a-;>:snippets-select-next-placeholders<ret>'
-# }
-# hook global WinSetOption snippets_placeholder_groups= %{
-#     unmap window insert <tab> '<a-;>:snippets-select-next-placeholders<ret>'
-#     map-tab-completion
-# }
+declare-option bool in_snippet false
+hook global WinSetOption snippets_placeholder_groups=.* %{ evaluate-commands %sh{
+    eval set -- "$kak_quoted_opt_snippets_placeholder_groups"
+    if [ $# = 0 ]; then
+        printf %s\\n "
+            set-option window in_snippet false
+            unmap window insert <tab> '<a-;>: snippets-select-next-placeholders<ret>'
+        "
+    else
+        printf %s\\n "
+            set-option window in_snippet true
+            map window insert <tab> '<a-;>: snippets-select-next-placeholders<ret>'
+        "
+    fi
+}}
+hook global InsertCompletionShow .* %{ evaluate-commands %sh{
+    if [ "$kak_opt_in_snippet" = false ]; then
+        printf %s\\n "
+            map window insert <tab> <c-n>
+            map window insert <s-tab> <c-p>
+        "
+    fi
+}}
+hook global InsertCompletionHide .* %{
+    unmap window insert <tab> <c-n>
+    unmap window insert <s-tab> <c-p>
+}
 
 # FILETYPES
 
@@ -137,11 +154,12 @@ hook global WinSetOption filetype=latex %{
         evaluate-commands %sh{ echo "pstart 'zathura ${kak_buffile%.tex}.pdf'" }
     }
 
-        set-option -add global snippets \
-        Sum \bsum\b %{ snippets-insert "\sum_{$1}^{$2} ($3) $4" } \
-        "Block math" bmath %{ snippets-insert "$$$$ $1 $$$$" } \
-        Fraction // %{ snippets-insert "\frac{$1}{$2} $3" } \
-        Limit \blim\b %{ snippets-insert "\lim_{${1:n} \to ${2:\infty}} $3" }
+    set-option -add global snippets \
+    Sum \bsum\b %{snippets-insert "\sum_{$1}^{$2} ($3) $4"} \
+    "Block math" bmath %{snippets-insert "$$$$ $1 $$$$"} \
+    Fraction // %{snippets-insert "\frac{$1}{$2} $3"} \
+    Limit \blim\b %{snippets-insert "\lim_{${1:n} \to ${2:\infty}} $3"} \
+    Leq \s<=\s  %{snippets-insert " \leq "}
 }
 
 hook global WinSetOption filetype=lua %{
