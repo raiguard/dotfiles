@@ -4,7 +4,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-fd -t f -I ".*" "$HOME"/{documents,school,downloads} |
+fd -t f -I -E "gas" ".*" "$HOME"/{documents,school,downloads} |
 	wofi --insensitive -d --prompt="Search" |
 	tr '\n' '\0' |
 	xargs -0 xdg-open
