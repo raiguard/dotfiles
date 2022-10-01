@@ -28,7 +28,7 @@
         "interval": 1,
     },
     "temperature": {
-        "hwmon-path": "/sys/class/hwmon/hwmon2/temp2_input",
+        "hwmon-path": "/sys/class/hwmon/hwmon3/temp2_input",
         "interval": 1
     },
     "memory": {

@@ -58,4 +58,10 @@ map global sort s "<esc>: sort-selections<ret>" -docstring "selections"
 # Toggle
 declare-user-mode toggle
 map global toggle s ': info "%val{client}/%val{session}"<ret>' -docstring "session info"
+map global toggle i ': show-tab-info<ret>' -docstring "tab settings"
+define-command show-tab-info %{
+    info -title "tab settings" "tabstop: %opt{tabstop}
+softtabstop: %opt{softtabstop}
+indentwidth: %opt{indentwidth}"
+}
 map global user t ": enter-user-mode toggle<ret>" -docstring "toggle..."
