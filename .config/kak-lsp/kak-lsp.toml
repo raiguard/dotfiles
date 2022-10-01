@@ -38,6 +38,11 @@ settings_section = "gopls"
 # See https://github.com/golang/tools/blob/master/gopls/doc/settings.md
 # "build.buildFlags" = []
 
+[language.hare]
+filetypes = ["hare"]
+roots = [".git/", "Makefile", "hare.ini"]
+command = "/home/rai/dev/projects/personal/hare-ls/hare-ls"
+
 [language.latex]
 filetypes = ["tex", "latex"]
 roots = [".git/"]

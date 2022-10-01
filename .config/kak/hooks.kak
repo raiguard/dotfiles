@@ -124,14 +124,13 @@ hook global WinSetOption filetype=(git-commit|mail) %{
 }
 
 hook global WinSetOption filetype=hare %{
+    lsp-init
     rainbow-enable-window
 
     noexpandtab
-    set-option window tabstop 8
-    set-option window softtabstop 8
-    set-option window indentwidth 8
-
-    set-face window meta keyword
+    set-option window tabstop 4
+    set-option window softtabstop 0
+    set-option window indentwidth 0
 }
 # Custom hare highlighting
 hook global ModuleLoaded hare %{
