@@ -41,7 +41,7 @@ settings_section = "gopls"
 [language.hare]
 filetypes = ["hare"]
 roots = [".git/", "Makefile", "hare.ini"]
-command = "/home/rai/dev/projects/personal/hare-ls/hare-ls"
+command = "harepls"
 
 [language.latex]
 filetypes = ["tex", "latex"]
@@ -68,7 +68,8 @@ semantic.enable = false
 telemetry.enable = false
 workspace.library = [
     # "/home/rai/dev/factorio/1/data",
-    # "/home/rai/dev/factorio/1/data/core/lualib",
+    "/home/rai/dev/factorio/1/data/core/prototypes/style.lua",
+    "/home/rai/dev/factorio/1/data/core/lualib",
     "/home/rai/dev/factorio/runtime-api/",
     "/home/rai/dev/projects/personal/flib"
 ]

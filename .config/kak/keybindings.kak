@@ -5,7 +5,7 @@ map global normal "#" ": comment-line<ret>"
 map global normal "<a-#>" ": comment-block<ret>"
 
 # Go to file (basic fuzzy finder)
-map global goto "f" '<esc>: prompt -shell-script-candidates %{ fd --type f --hidden --exclude ".git" --no-ignore } file: %{ edit %val{text} }<ret>' -docstring "file"
+map global goto "f" '<esc>: prompt -shell-script-candidates %{ fd --type f --hidden --exclude ".git" } file: %{ edit %val{text} }<ret>' -docstring "file"
 
 # Go to buffer
 map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"

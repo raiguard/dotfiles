@@ -2,6 +2,7 @@ evaluate-commands %sh{
     cork init
     kks init
     kak-lsp --kakoune -s $kak_session
+    pesticide --kakoune
 }
 
 # --------------------------------------------------
