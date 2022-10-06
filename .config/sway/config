@@ -11,7 +11,7 @@ set $right l
 
 exec blueman-applet
 exec ~/.config/sway/tab-browser
-exec ~/.config/sway/twocolumn
+# exec ~/.config/sway/twocolumn
 exec mako
 exec nm-applet --indicator
 exec pasystray
