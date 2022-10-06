@@ -21,7 +21,7 @@ define-command -hidden update-prompt %{
         else
             markup="{value}"
         fi
-        mode=$(echo "$kak_mode" | tr a-z A-Z)
+        mode=$(echo "$kak_mode" | tr A-Z a-z)
         echo "{comment}[$markup$mode{comment}]$space"
     }
 }
