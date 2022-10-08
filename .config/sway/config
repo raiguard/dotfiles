@@ -119,8 +119,8 @@ bindsym $mod+s sticky toggle
 
 # Focus the parent container
 bindsym $mod+a focus parent
-# Toggle stacking layout
-bindsym $mod+t layout toggle split tabbed
+# Toggle tabbed / stacking layout
+bindsym $mod+t layout toggle split tabbed stacking
 
 # Move the currently focused window to the scratchpad
 bindsym $mod+Shift+minus move scratchpad
