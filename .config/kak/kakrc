@@ -4,6 +4,7 @@ evaluate-commands %sh{
     kak-lsp --kakoune -s $kak_session
     pesticide --kakoune
 }
+set-option global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
 # --------------------------------------------------
 # PLUGINS
@@ -24,7 +25,7 @@ cork kak-move-lines "https://git.sr.ht/~raiguard/kak-move-lines" %{
 }
 
 cork kak-live-grep "https://git.sr.ht/~raiguard/kak-live-grep" %{
-    map global user g ": live-grep<ret>" -docstring "live grep"
+    map global user / ": live-grep<ret>" -docstring "live grep"
 }
 
 cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
