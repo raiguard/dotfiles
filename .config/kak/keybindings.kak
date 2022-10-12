@@ -68,7 +68,7 @@ declare-user-mode git
 map global git b ": git blame<ret>" -docstring "blame"
 map global git B ": git hide-blame<ret>" -docstring "hide blame"
 map global git d ": git diff<ret>" -docstring "diff"
+map global git g ": terminal-floating lazygit<ret>" -docstring "lazygit"
 map global git l ": git log<ret>" -docstring "log"
 map global git s ": git status<ret>" -docstring "status"
-map global git v ": terminal-floating lazygit<ret>" -docstring "lazygit"
 map global user g ": enter-user-mode git<ret>" -docstring "git"
