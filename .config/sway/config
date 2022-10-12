@@ -167,6 +167,8 @@ client.urgent #e06c75 #70798a #abb2bf #e5c07b
 font Source Code Pro Medium 8.5
 title_align center
 
+smart_borders no_gaps
+
 ### Rules
 
 assign [class="factorio"] 3
