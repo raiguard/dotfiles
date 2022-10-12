@@ -35,3 +35,9 @@ exec swayidle -w \
     after-resume 'swaymsg "output * dpms on"'
 
 smart_borders no_gaps
+
+for_window [app_id="inkscape"] {
+    floating enable
+    resize set width 100 ppt height 100 ppt
+    focus floating
+}

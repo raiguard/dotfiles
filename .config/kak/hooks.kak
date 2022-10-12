@@ -128,9 +128,11 @@ hook global WinSetOption filetype=hare %{
     rainbow-enable-window
 
     noexpandtab
-    set-option window tabstop 4
+    set-option window tabstop 8
     set-option window softtabstop 0
     set-option window indentwidth 0
+
+    add-highlighter window/ruler column 81 ",rgb:%opt{subbg}"
 }
 
 hook global WinSetOption filetype=latex %{
@@ -145,6 +147,28 @@ hook global WinSetOption filetype=latex %{
         hook window BufWritePost .* texlab-build
         evaluate-commands %sh{ echo "pstart 'zathura ${kak_buffile%.tex}.pdf'" }
     }
+
+    define-command create-figure %{
+        execute-keys giGl
+        set-register f %sh{
+            inkscape-figures create "$kak_selection" "$(dirname $kak_buffile)/figures"
+        }
+        execute-keys '"fR"zZ'
+        execute-keys "sincfig<ret>ll<a-i>B"
+        nop %sh{
+            ( inkscape "$(dirname $kak_buffile)/figures/$kak_selection.svg" 2>&1 & ) > /dev/null 2>&1 < /dev/null
+        }
+        execute-keys '"zz'
+    }
+
+    define-command edit-figures %{ nop %sh{
+        ( inkscape-figures edit "$(dirname $kak_buffile)/figures" 2>&1 & ) > /dev/null 2>&1 < /dev/null
+    }}
+
+    declare-user-mode figures
+    map global user f ": enter-user-mode figures<ret>" -docstring "figures..."
+    map global figures c ": create-figure<ret>" -docstring "create"
+    map global figures e ": edit-figures<ret>" -docstring "edit"
 
     set-option -add global snippets \
     Sum \bsum\b %{snippets-insert "\sum_{$1}^{$2} ($3) $4"} \
