@@ -17,7 +17,6 @@ exec nm-applet --indicator
 exec pasystray
 exec udiskie --tray
 exec /usr/bin/polkit-dumb-agent
-exec kak -d -s rai
 
 ### GTK3 workaround
 

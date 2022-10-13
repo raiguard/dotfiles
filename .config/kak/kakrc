@@ -1,6 +1,5 @@
 evaluate-commands %sh{
     cork init
-    kks init
     kak-lsp --kakoune -s $kak_session
     pesticide --kakoune
 }
@@ -113,9 +112,6 @@ set-option global autoreload yes
 
 # Use ripgrep instead of grep
 set-option global grepcmd 'rg -Hn --no-heading --sort path --vimgrep'
-
-# Make kks work as a stand-in for kcr
-alias global connect kks-connect
 
 # --------------------------------------------------
 # OTHERS

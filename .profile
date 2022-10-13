@@ -1,6 +1,5 @@
-export EDITOR="kks edit"
+export EDITOR="kak"
 export PAGER="less"
-export KKS_USE_GITDIR_SESSIONS=1
 export KAKOUNE_POSIX_SHELL=/bin/dash
 
 export PATH="$HOME/bin/$HOSTNAME:$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
