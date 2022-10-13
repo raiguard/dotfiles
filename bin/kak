@@ -1,0 +1,15 @@
+#!/bin/sh
+
+kak=/usr/local/bin/kak
+session="default"
+
+basedir=$(git rev-parse --show-toplevel 2> /dev/null)
+if [ -n "$basedir" ]; then
+    session=$(basename "$basedir")
+fi
+
+if [ -n "$($kak -l | grep "\b$session\b")" ]; then
+    $kak -c $session $@
+else
+    $kak -s $session $@
+fi
