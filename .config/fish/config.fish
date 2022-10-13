@@ -3,7 +3,8 @@ set fish_greeting
 alias n nnn
 alias k "kak"
 alias sk "sudoedit"
-alias dlg "lazygit --work-tree ~"
+alias dlg "lazygit --work-tree $HOME --git-dir $HOME/.dotfiles"
+alias dgit='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias lg lazygit
 alias t "todoist-cli --color"
 alias f1 /home/rai/dev/factorio/1/bin/x64/factorio
