@@ -139,8 +139,7 @@ hook global WinSetOption filetype=latex %{
     lsp-init
     rainbow-enable-window
 
-    set-option window autowrap_format_paragraph true
-    autowrap-enable
+    add-highlighter window/ruler column 81 ",rgb:%opt{subbg}"
 
     hook window BufWritePre .* lsp-formatting-sync
     define-command latex-automake %{
@@ -149,16 +148,17 @@ hook global WinSetOption filetype=latex %{
     }
 
     define-command create-figure %{
-        execute-keys giGl
-        set-register f %sh{
-            inkscape-figures create "$kak_selection" "$(dirname $kak_buffile)/figures"
+        prompt name: %{
+            set-register f %sh{
+                inkscape-figures create "$kak_text" "$(dirname $kak_buffile)/figures"
+            }
+            execute-keys '"fR"zZ'
+            execute-keys "sincfig<ret>ll<a-i>B"
+            nop %sh{
+                ( inkscape "$(dirname $kak_buffile)/figures/$kak_selection.svg" 2>&1 & ) > /dev/null 2>&1 < /dev/null
+            }
+            execute-keys '"zz'
         }
-        execute-keys '"fR"zZ'
-        execute-keys "sincfig<ret>ll<a-i>B"
-        nop %sh{
-            ( inkscape "$(dirname $kak_buffile)/figures/$kak_selection.svg" 2>&1 & ) > /dev/null 2>&1 < /dev/null
-        }
-        execute-keys '"zz'
     }
 
     define-command edit-figures %{ nop %sh{

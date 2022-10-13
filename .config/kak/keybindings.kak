@@ -62,6 +62,10 @@ softtabstop: %opt{softtabstop}
 indentwidth: %opt{indentwidth}"
 }
 map global user t ": enter-user-mode toggle<ret>" -docstring "toggle..."
+map global user w ": wrap-paragraph<ret>"
+define-command wrap-paragraph %{
+    execute-keys "<a-i>p<a-j>|fold -s -w %opt{autowrap_column}<ret>"
+}
 
 # Git
 declare-user-mode git
