@@ -5,7 +5,13 @@ map global normal <c-a> ": lsp-code-actions<ret>"
 map global normal <c-r> ": lsp-rename-prompt<ret>"
 map global normal <c-e> ": lsp-diagnostics<ret>"
 
-set-option global lsp_diagnostic_line_error_sign "×"
+# From: https://github.com/AstroNvim/AstroNvim/blob/fa82ff92b438d764f2ed683cca2ec7e95e7ffb72/lua/core/utils/init.lua#L126
+set-option global lsp_diagnostic_line_error_sign 
+set-option global lsp_diagnostic_line_hint_sign 
+set-option global lsp_diagnostic_line_info_sign 
+set-option global lsp_diagnostic_line_warning_sign 
+set-face global LineFlagHint yellow
+
 set-option global lsp_hover_anchor true
 set-option global lsp_auto_highlight_references true
 set-option global lsp_hover_max_lines 50

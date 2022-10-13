@@ -49,7 +49,7 @@ define-command -hidden modeline-update-lsp-progress %{
 
 declare-option -hidden str modeline_lsp_section
 define-command -hidden modeline-update-lsp %{
-    set-option window modeline_lsp_section %sh{[ "$kak_opt_lsp_enabled" = true ] && echo "{comment}[{InlayDiagnosticError}${kak_opt_lsp_diagnostic_line_error_sign}${kak_opt_lsp_diagnostic_error_count} {InlayDiagnosticWarning}${kak_opt_lsp_diagnostic_line_warning_sign}${kak_opt_lsp_diagnostic_warning_count}{comment}]"}
+    set-option window modeline_lsp_section %sh{[ "$kak_opt_lsp_enabled" = true ] && echo "{comment}[{InlayDiagnosticError}${kak_opt_lsp_diagnostic_line_error_sign} ${kak_opt_lsp_diagnostic_error_count} {InlayDiagnosticWarning}${kak_opt_lsp_diagnostic_line_warning_sign} ${kak_opt_lsp_diagnostic_warning_count}{comment}]"}
 }
 
 declare-option -hidden str modeline_misc_section
@@ -95,7 +95,7 @@ define-command -hidden modeline-update-bufstatus %{
         if [ "$kak_opt_readonly" = true ]; then
             echo "{InlayDiagnosticError} "
         elif [ "$kak_modified" = true ]; then
-            echo "{InlayDiagnosticWarning}留"
+            echo "{InlayDiagnosticWarning} "
         else
             echo "{string} "
         fi

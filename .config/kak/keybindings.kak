@@ -39,12 +39,12 @@ map global insert <s-backspace> "<backspace>"
 # USER
 
 # System clipboard integration
-declare-option -hidden str copy_cmd "wl-copy"
-declare-option -hidden str paste_cmd "wl-paste"
-map global user p "<a-!>%opt{paste_cmd}<ret>" -docstring 'Paste system clipboard (after)'
-map global user P "!%opt{paste_cmd}<ret>" -docstring 'Paste system clipboard(before)'
-map global user y "<a-|>%opt{copy_cmd}<ret>:echo -markup %%{{Information}Copied primary selection to system clipboard}<ret>" -docstring 'Yank to system clipboard'
-map global user R "|%opt{paste_cmd}<ret>" -docstring 'Replace from system clipboard'
+declare-user-mode clipboard
+map global user c ": enter-user-mode clipboard<ret>" -docstring "clipboard..."
+map global clipboard p "<a-!>wl-paste<ret>" -docstring 'Paste system clipboard (after)'
+map global clipboard P "!wl-paste<ret>" -docstring 'Paste system clipboard (before)'
+map global clipboard y "<a-|>wl-copy<ret>" -docstring 'Yank to system clipboard'
+map global clipboard R "|wl-paste<ret>" -docstring 'Replace from system clipboard'
 
 # Sort
 declare-user-mode sort
@@ -54,25 +54,27 @@ map global sort s "<esc>: sort-selections<ret>" -docstring "selections"
 
 # Toggle
 declare-user-mode toggle
-map global toggle s ': info "%val{client}/%val{session}"<ret>' -docstring "session info"
+map global user t ": enter-user-mode toggle<ret>" -docstring "toggle..."
 map global toggle i ': show-tab-info<ret>' -docstring "tab settings"
 define-command show-tab-info %{
     info -title "tab settings" "tabstop: %opt{tabstop}
 softtabstop: %opt{softtabstop}
 indentwidth: %opt{indentwidth}"
 }
-map global user t ": enter-user-mode toggle<ret>" -docstring "toggle..."
-map global user w ": wrap-paragraph<ret>"
+map global toggle s ': info "%val{client}/%val{session}"<ret>' -docstring "session info"
+
+# Wrap paragraphs
+map global user w ": wrap-paragraph<ret>" -docstring "wrap paragraph"
 define-command wrap-paragraph %{
     execute-keys "<a-i>p<a-j>|fold -s -w %opt{autowrap_column}<ret>"
 }
 
 # Git
 declare-user-mode git
+map global user g ": enter-user-mode git<ret>" -docstring "git..."
 map global git b ": git blame<ret>" -docstring "blame"
 map global git B ": git hide-blame<ret>" -docstring "hide blame"
 map global git d ": git diff<ret>" -docstring "diff"
 map global git g ": terminal-floating lazygit<ret>" -docstring "lazygit"
 map global git l ": git log<ret>" -docstring "log"
 map global git s ": git status<ret>" -docstring "status"
-map global user g ": enter-user-mode git<ret>" -docstring "git"

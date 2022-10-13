@@ -1,7 +1,6 @@
 evaluate-commands %sh{
     cork init
     kak-lsp --kakoune -s $kak_session
-    pesticide --kakoune
 }
 set-option global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
@@ -58,11 +57,6 @@ cork kakoune-grep-write "https://github.com/JacobTravers/kakoune-grep-write" %{
     hook global BufCreate \*grep\* %{
         alias buffer w grep-write
     }
-}
-
-cork kakoune-inc-dec "https://gitlab.com/Screwtapello/kakoune-inc-dec" %{
-    map global normal = ": inc-dec-modify-numbers - 1<ret>"
-    map global normal + ": inc-dec-modify-numbers + 1<ret>"
 }
 
 cork kakoune-snippets "https://github.com/CharlesGueunet/kakoune-snippets"
