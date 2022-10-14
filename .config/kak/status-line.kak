@@ -71,7 +71,7 @@ define-command -hidden modeline-update-git-branch %{
     set-option window modeline_git_branch %sh{
         branch=$(git -C "${kak_buffile%/*}" rev-parse --abbrev-ref HEAD 2>/dev/null)
         if [ -n "$branch" ]; then
-            printf "{comment}[{string} $branch{comment}]"
+            printf "{comment}[{string} $branch{comment}]"
         fi
     }
 }

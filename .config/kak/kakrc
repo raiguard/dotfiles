@@ -33,20 +33,6 @@ cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
 
 cork kakoune-fandt "https://github.com/listentolist/kakoune-fandt" %{
     require-module fandt
-
-    hook global ModeChange push:.*:user.fandt %{
-        set-face window PrimarySelection ",rgba:%opt{lightorange}%opt{selectionalpha}"
-        set-face window PrimaryCursor ",rgba:%opt{lightorange}%opt{cursoralpha}"
-        set-face window SecondarySelection ",rgba:%opt{darkorange}%opt{selectionalpha}"
-        set-face window SecondaryCursor ",rgba:%opt{darkorange}%opt{cursoralpha}"
-    }
-
-    hook global ModeChange pop:user.fandt:.* %{
-        set-face window PrimarySelection ",rgba:%opt{blue}%opt{selectionalpha}"
-        set-face window PrimaryCursor ",rgba:%opt{blue}%opt{cursoralpha}"
-        set-face window SecondarySelection ",rgba:%opt{green}%opt{selectionalpha}"
-        set-face window SecondaryCursor ",rgba:%opt{green}%opt{cursoralpha}"
-    }
 }
 
 cork kakoune-focus "https://github.com/caksoylar/kakoune-focus" %{
@@ -65,8 +51,6 @@ cork kakoune-sort-selections "https://github.com/occivink/kakoune-sort-selection
 
 cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save"
 
-cork kakoune-sudo-write "https://github.com/occivink/kakoune-sudo-write"
-
 cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
     set-option global source_local_kakrc true
 }
@@ -80,18 +64,8 @@ cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
 # --------------------------------------------------
 # GENERAL
 
-# Color scheme
-colorscheme one-darker
-one-enable-fancy-underlines
-# Mark.kak faces
-set-face global MarkedPrimaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}"
-set-face global MarkedPrimarySelection "default,rgba:%opt{magenta}%opt{selectionalpha}"
-set-face global MarkedSecondaryCursor "default,rgba:%opt{magenta}%opt{cursoralpha}"
-set-face global MarkedSecondarySelection "default,rgba:%opt{magenta}%opt{selectionalpha}"
-# kak-live-grep faces
-set-face global LiveGrepMatch ",,rgb:%opt{darkorange}+u"
-# Trailing whitespace
-add-highlighter global/trailing-whitespaces regex "(\h+)$" "1:default,rgba:%opt{darkred}%opt{selectionalpha}"
+# PC-specific config
+source "%val{config}/%sh{uname -n}.kak"
 # Highlighters
 add-highlighter global/ number-lines -relative -separator " " -hlcursor
 add-highlighter global/ show-matching

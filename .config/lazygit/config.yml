@@ -12,6 +12,3 @@ keybinding:
   universal:
     nextPage: '<c-f>'
     prevPage: '<c-b>'
-
-os:
-  editCommand: 'kks edit'
