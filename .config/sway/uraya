@@ -18,7 +18,7 @@ input type:pointer {
 }
 
 # Output configuration
-output eDP-1 bg ~/pictures/wallpapers/wallhaven-md8y3k~2.png fill
+output eDP-1 bg ~/pictures/wallpaper fill
 
 ### Idle configuration
 
