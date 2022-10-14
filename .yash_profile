@@ -1,3 +1,5 @@
+export LANG=en_US.UTF-8
+
 export EDITOR="kak"
 export PAGER="less"
 export KAKOUNE_POSIX_SHELL=/bin/dash
@@ -16,12 +18,12 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
     --color=info:#e5c07b,prompt:#61afef,pointer:#e5c07b
     --color=marker:#e06c75,spinner:#c678dd,header:#98c379'
 
-
-# Make Java applications work correctly (pycharm)
+# Make Java applications work correctly
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 [[ -f ~/.env ]] && . ~/.env
-[[ -f ~/.bashrc ]] && . ~/.bashrc
 
-# If running from tty1 start sway
+# If running from tty1, start sway
 [ "$(tty)" = "/dev/tty1" ] && exec sway
+
+# vim: ft=sh

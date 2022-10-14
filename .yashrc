@@ -1,0 +1,50 @@
+. --autoload --no-alias initialization/common
+
+# Custom prompt
+if [ -n "${SSH_CONNECTION-}" ]; then
+  _hc='\fy.'     # yellow hostname for SSH remote
+else
+  _hc='\fg.'     # green hostname for local
+fi
+if [ "$(id -u)" -eq 0 ]; then
+  _uc='\fr.'     # red username for root
+  _2c='\fr.'     # red PS2 for root
+else
+  _uc=$_hc _hc=  # same username color as hostname for non-root user
+  _2c=           # PS2 in normal color for non-root user
+fi
+# The main prompt ($YASH_PS1) contains the username, hostname, working
+# directory, and last exit status (only if non-zero).
+YASH_PS1=$_uc'${LOGNAME}'$_hc'@${HOSTNAME%%.*}\fd. '\
+'${${${PWD:/~/\~}##*/}:-$PWD}${{?:/0/}:+ \\fr.$?\\fd.}> '
+YASH_PS1R='\fc.${_vcs_info}'
+YASH_PS1S='\fo.'
+YASH_PS2=$_2c'> '
+#YASH_PS2R=
+YASH_PS2S=$YASH_PS1S
+YASH_PS4='\fm.+ '
+YASH_PS4S='\fmo.'
+unset _hc _uc _2c
+# No escape sequences allowed in the POSIXly-correct mode.
+PS1='${LOGNAME}@${HOSTNAME%%.*} '$PS1
+
+# FIXME: Does not automatically add directories
+eval "$(fasd --init posix-hook posix-alias)"
+
+alias n=nnn
+alias k="kak"
+alias sk="sudoedit"
+alias dlg="lazygit --work-tree $HOME --git-dir $HOME/.dotfiles"
+alias dgit="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+alias lg=lazygit
+alias t="todoist-cli --color"
+alias f1=/home/rai/dev/factorio/1/bin/x64/factorio
+alias f2=/home/rai/dev/factorio/2/bin/x64/factorio
+alias f3=/home/rai/dev/factorio/3/bin/x64/factorio
+alias f4=/home/rai/dev/factorio/4/bin/x64/factorio
+alias fd11=/home/rai/dev/projects/wube/Factorio-1.1/bin/Debugx64Clang/factorio-run
+alias fr11=/home/rai/dev/projects/wube/Factorio-1.1/bin/Releasex64Clang/factorio-run
+alias fd12=/home/rai/dev/projects/wube/Factorio-1.2/bin/Debugx64Clang/factorio-run
+alias fr12=/home/rai/dev/projects/wube/Factorio-1.1/bin/Releasex64Clang/factorio-run
+
+# vim: ft=sh
