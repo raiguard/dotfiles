@@ -11,7 +11,7 @@ start_location=$1 kak_client=$2 kak_session=$3
 if [ -f "$start_location" ]; then
     filename=$(nnn_pick "$start_location")
 else
-    filename=$(nnn_pick "$PWD")
+    filename=$(nnn_pick "$(dirname $start_location)")
 fi
 if [ -n "$filename" ]; then
     echo "evaluate-commands -client $kak_client edit $filename" | kak -p $kak_session

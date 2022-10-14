@@ -8,7 +8,18 @@ if [ -n "$basedir" ]; then
     session=$(basename "$basedir")
 fi
 
-if [ -n "$($kak -l | grep "\b$session\b")" ]; then
+if [ "$1" == "-p" ]; then
+    $kak $@
+    exit
+fi
+
+sessions=$($kak -l)
+if $(echo "$sessions" | grep -q "(dead)"); then
+    echo "Clearing dead sessions"
+    $kak -clear
+    sessions=$($kak -l)
+fi
+if $(echo "$sessions" | grep -q "\b$session\b"); then
     $kak -c $session $@
 else
     $kak -s $session $@
