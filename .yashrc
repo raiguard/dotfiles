@@ -28,8 +28,9 @@ unset _hc _uc _2c
 # No escape sequences allowed in the POSIXly-correct mode.
 PS1='${LOGNAME}@${HOSTNAME%%.*} '$PS1
 
-# FIXME: Does not automatically add directories
 eval "$(fasd --init posix-hook posix-alias)"
+# fasd only adds to $PS1, but yash uses $YASH_PS1 when not in posix mode
+YASH_PS1='$(_fasd_ps1_func)'$YASH_PS1
 
 alias n=nnn
 alias k="kak"
@@ -46,5 +47,11 @@ alias fd11=/home/rai/dev/projects/wube/Factorio-1.1/bin/Debugx64Clang/factorio-r
 alias fr11=/home/rai/dev/projects/wube/Factorio-1.1/bin/Releasex64Clang/factorio-run
 alias fd12=/home/rai/dev/projects/wube/Factorio-1.2/bin/Debugx64Clang/factorio-run
 alias fr12=/home/rai/dev/projects/wube/Factorio-1.1/bin/Releasex64Clang/factorio-run
+
+# Foot: Open new terminals in PWD
+osc7_cwd() {
+    printf "%b" "\e]7;file://${HOSTNAME}${PWD}\e\\"
+}
+PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }osc7_cwd
 
 # vim: ft=sh
