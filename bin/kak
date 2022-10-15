@@ -1,16 +1,20 @@
 #!/bin/sh
 
 kak=/usr/local/bin/kak
+
+# Only do stuff if invoked with 'kak <filename>'
+case "$1" in
+    -*)
+        $kak $@
+        exit
+    ;;
+esac
+
 session="default"
 
 basedir=$(git rev-parse --show-toplevel 2> /dev/null)
 if [ -n "$basedir" ]; then
     session=$(basename "$basedir")
-fi
-
-if [ "$1" == "-p" ]; then
-    $kak $@
-    exit
 fi
 
 sessions=$($kak -l)

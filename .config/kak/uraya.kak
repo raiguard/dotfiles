@@ -7,8 +7,6 @@ set-face global MarkedSecondaryCursor MarkedPrimaryCursor
 set-face global MarkedSecondarySelection MarkedPrimarySelection
 # kak-live-grep faces
 set-face global LiveGrepMatch +u
-# Trailing whitespace
-add-highlighter global/trailing-whitespaces regex "(\h+)$" 1:,red+B
 # FandT faces
 hook global ModeChange push:.*:user.fandt %{
     set-face window PrimarySelection black,yellow

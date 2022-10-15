@@ -180,6 +180,14 @@ for_window [app_id="foot.floating"] {
     # resize set width 60ppt
     # resize set height 70ppt
 }
+for_window [app_id="org.speedcrunch.speedcrunch"] {
+    floating enable
+    sticky enable
+    move position 1272 480
+    move scratchpad
+    scratchpad show
+}
+for_window [app_id="org.qutebrowser.qutebrowser"] inhibit_idle fullscreen
 
 ### Other
 

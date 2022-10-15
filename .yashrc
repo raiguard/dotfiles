@@ -1,6 +1,6 @@
 . --autoload --no-alias initialization/common
 
-# Custom prompt
+# custom PS1 prompt
 if [ -n "${SSH_CONNECTION-}" ]; then
   _hc='\fy.'     # yellow hostname for SSH remote
 else
@@ -8,29 +8,30 @@ else
 fi
 if [ "$(id -u)" -eq 0 ]; then
   _uc='\fr.'     # red username for root
-  _2c='\fr.'     # red PS2 for root
 else
   _uc=$_hc _hc=  # same username color as hostname for non-root user
-  _2c=           # PS2 in normal color for non-root user
 fi
-# The main prompt ($YASH_PS1) contains the username, hostname, working
-# directory, and last exit status (only if non-zero).
-YASH_PS1="\e]133;A\e"$_uc'${LOGNAME}'$_hc'@${HOSTNAME%%.*}\fd. '\
-'${${${PWD:/~/\~}##*/}:-$PWD}${{?:/0/}:+ \\fr.$?\\fd.}> '
-YASH_PS1R='\fc.${_vcs_info}'
-YASH_PS1S='\fo.'
-YASH_PS2=$_2c'> '
-#YASH_PS2R=
-YASH_PS2S=$YASH_PS1S
-YASH_PS4='\fm.+ '
-YASH_PS4S='\fmo.'
+# '${{_vcs_info:/0/}:+\fc.(${_vcs_info})\fd. }'\
+YASH_PS1=$_uc'${LOGNAME}'$_hc'@${HOSTNAME%%.*}\fd. '\
+'${${${PWD:/~/\~}##*/}:-$PWD}${{?:/0/}:+ \\fr.[$?]\\fd.}> '
+# don't show PS1R at all
+YASH_PS1R=''
 unset _hc _uc _2c
 # No escape sequences allowed in the POSIXly-correct mode.
 PS1='${LOGNAME}@${HOSTNAME%%.*} '$PS1
 
+# enable fasd integration
 eval "$(fasd --init posix-hook posix-alias)"
 # fasd only adds to $PS1, but yash uses $YASH_PS1 when not in posix mode
 YASH_PS1='$(_fasd_ps1_func)'$YASH_PS1
+
+# foot: add custom escape code to enable prompt-jumping
+YASH_PS1="\e]133;A\e\r"$YASH_PS1
+# foot: Open new terminals in PWD
+osc7_cwd() {
+    printf "%b" "\e]7;file://${HOSTNAME}${PWD}\e\\"
+}
+PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }osc7_cwd
 
 alias n=nnn
 alias k="kak"
@@ -47,11 +48,5 @@ alias fd11=/home/rai/dev/projects/wube/Factorio-1.1/bin/Debugx64Clang/factorio-r
 alias fr11=/home/rai/dev/projects/wube/Factorio-1.1/bin/Releasex64Clang/factorio-run
 alias fd12=/home/rai/dev/projects/wube/Factorio-1.2/bin/Debugx64Clang/factorio-run
 alias fr12=/home/rai/dev/projects/wube/Factorio-1.1/bin/Releasex64Clang/factorio-run
-
-# Foot: Open new terminals in PWD
-osc7_cwd() {
-    printf "%b" "\e]7;file://${HOSTNAME}${PWD}\e\\"
-}
-PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }osc7_cwd
 
 # vim: ft=sh
