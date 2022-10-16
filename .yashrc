@@ -1,6 +1,85 @@
-. --autoload --no-alias initialization/common
+##### Common Yashrc #####
+# This file is in the public domain.
+# This file has been edited from the original
 
-# custom PS1 prompt
+# enable bash-like extended expansion
+set --brace-expand
+
+# enable recursive pathname expansion
+set --extended-glob
+
+# prevent redirections from overwriting existing files
+set --no-clobber
+
+# don't implicitly expand non-existent variables to empty strings
+set --no-unset
+
+# if yash is built with command history enabled...
+if command --identify --builtin-command history >/dev/null; then
+
+  # don't save commands starting with a space in history
+  set --hist-space
+
+  # prevent clearing history by accident
+  history()
+  if [ -t 0 ] && (
+    for arg do
+      case "${arg}" in
+        (-[drsw]?* | --*=*) ;;
+        (-*c*) exit;;
+      esac
+    done
+    false
+  ) then
+    printf 'history: seems you are trying to clear the whole history.\n' >&2
+    printf 'are you sure? (yes/no) ' >&2
+    case "$(head -n 1)" in
+      ([Yy]*) command history "$@";;
+      (*)     printf 'history: cancelled.\n' >&2;;
+    esac
+  else
+    command history "$@"
+  fi
+
+fi
+
+# avoid removing/overwriting existing files by accident
+cp() if [ -t 0 ]; then command cp -i "$@"; else command cp "$@"; fi
+mv() if [ -t 0 ]; then command mv -i "$@"; else command mv "$@"; fi
+rm() if [ -t 0 ]; then command rm -i "$@"; else command rm "$@"; fi
+
+# normally yash is more POSIX-compliant than /bin/sh :-)
+sh() { yash --posix "$@"; }
+yash() { command yash "$@"; }
+# By re-defining 'yash' using the 'command' built-in, the 'jobs' built-in
+# prints a command name that exposes the arguments like
+# 'yash --posix -n foo.sh' rather than a command name that hides the
+# arguments like 'yash --posix "${@}"'. This applies to the 'yash' command
+# invoked via the 'sh' function.
+
+# ensure job control works as expected
+case $- in (*m*)
+  trap - TSTP TTIN TTOU
+esac
+
+# define some basic variables if missing
+: ${PAGER:=less} ${EDITOR:=vi} ${FCEDIT:=$EDITOR}
+: ${LOGNAME:=$(logname)} ${HOSTNAME:=$(uname -n)}
+
+# disable confusing treatment of arguments in the echo command
+: ${ECHO_STYLE:=RAW}
+
+# variables needed for command history
+HISTFILE=~/.yash_history HISTSIZE=5000
+# HISTRMDUP makes prediction less accurate
+# HISTRMDUP=500
+
+# initialize event handlers
+COMMAND_NOT_FOUND_HANDLER=()
+PROMPT_COMMAND=()
+YASH_AFTER_CD=()
+
+# define prompt
 if [ -n "${SSH_CONNECTION-}" ]; then
   _hc='\fy.'     # yellow hostname for SSH remote
 else
@@ -8,17 +87,117 @@ else
 fi
 if [ "$(id -u)" -eq 0 ]; then
   _uc='\fr.'     # red username for root
+  _2c='\fr.'     # red PS2 for root
 else
   _uc=$_hc _hc=  # same username color as hostname for non-root user
+  _2c=           # PS2 in normal color for non-root user
 fi
+# TODO: Figure out how to show vcs_info in PS1
 # '${{_vcs_info:/0/}:+\fc.(${_vcs_info})\fd. }'\
 YASH_PS1=$_uc'${LOGNAME}'$_hc'@${HOSTNAME%%.*}\fd. '\
 '${${${PWD:/~/\~}##*/}:-$PWD}${{?:/0/}:+ \\fr.[$?]\\fd.}> '
-# don't show PS1R at all
+# Don't show PS1R at all
 YASH_PS1R=''
+YASH_PS1S='\fo.'
+YASH_PS2=$_2c'> '
+#YASH_PS2R=
+YASH_PS2S=$YASH_PS1S
+YASH_PS4='\fm.+ '
+YASH_PS4S='\fmo.'
 unset _hc _uc _2c
 # No escape sequences allowed in the POSIXly-correct mode.
 PS1='${LOGNAME}@${HOSTNAME%%.*} '$PS1
+
+# find escape sequence to change terminal window title
+case "$TERM" in
+  (foot|xterm|xterm[+-]*|gnome|gnome[+-]*|putty|putty[+-]*|cygwin)
+    _tsl='\033];' _fsl='\a' ;;
+  (*)
+    _tsl=$( (tput tsl 0; echo) 2>/dev/null |
+    sed -e 's;\\;\\\\;g' -e 's;;\\033;g' -e 's;;\\a;g' -e 's;%;%%;g')
+    _fsl=$( (tput fsl  ; echo) 2>/dev/null |
+    sed -e 's;\\;\\\\;g' -e 's;;\\033;g' -e 's;;\\a;g' -e 's;%;%%;g') ;;
+esac
+# if terminal window title can be changed...
+if [ "$_tsl" ] && [ "$_fsl" ]; then
+
+  # set terminal window title on each prompt
+  _set_term_title()
+  if [ -t 2 ]; then
+    printf "$_tsl"'%s@%s:%s'"$_fsl" "${LOGNAME}" "${HOSTNAME%%.*}" \
+      "${${PWD:/$HOME/\~}/#$HOME\//\~\/}" >&2
+  fi
+  PROMPT_COMMAND=("$PROMPT_COMMAND" '_set_term_title')
+
+  # reset window title when changing host or user
+  ssh() {
+    if [ -t 2 ]; then printf "$_tsl"'ssh %s'"$_fsl" "$*" >&2; fi
+    command ssh "$@"
+  }
+  su() {
+    if [ -t 2 ]; then printf "$_tsl"'su %s'"$_fsl" "$*" >&2; fi
+    command su "$@"
+  }
+  sudo() {
+    if [ -t 2 ]; then printf "$_tsl"'sudo %s'"$_fsl" "$*" >&2; fi
+    command sudo "$@"
+  }
+
+fi
+
+# define function that updates $_vcs_info and $_vcs_root
+_update_vcs_info() {
+  typeset type branch
+  {
+    read --raw-mode type
+    read --raw-mode _vcs_root
+    read --raw-mode branch
+  } <(
+    exec 2>/dev/null
+    typeset COMMAND_NOT_FOUND_HANDLER=
+    while true; do
+      if [ -e .git ] || [ . -ef "${GIT_WORK_TREE-}" ]; then
+        printf 'git\n%s\n' "${GIT_WORK_TREE:-$PWD}"
+        git branch --no-color | sed -n '/^\*/s/^..//p'
+        exit
+      elif [ -d .hg ]; then
+        printf 'hg\n%s\n' "$PWD"
+        exec cat .hg/branch
+      elif [ -d .svn ]; then
+        printf 'svn\n'
+        _vcs_root=$(svn info --show-item=wc-root)
+        printf '%s\n' "$_vcs_root"
+        path=$(svn info --show-item=relative-url)
+        case $path in
+          (*/branches/*)
+            printf '%s\n' "${${path#*/branches/}%%/*}"
+        esac
+        exit
+      fi
+      if [ / -ef . ] || [ . -ef .. ]; then
+        exit
+      fi
+      \command cd -P ..
+    done
+  )
+  case "$type#$branch" in
+    (hg#default) _vcs_info='hg';;
+    (git#master) _vcs_info='git';;
+    (*#        ) _vcs_info="$type";;
+    (*         ) _vcs_info="$type@$branch";;
+  esac
+}
+# update $_vcs_info on each prompt
+PROMPT_COMMAND=("$PROMPT_COMMAND" '_update_vcs_info')
+
+# print file type when executing non-executable files
+_file_type()
+if [ -e "$1" ] && ! [ -d "$1" ]; then
+  file -- "$1"
+fi
+COMMAND_NOT_FOUND_HANDLER=("$COMMAND_NOT_FOUND_HANDLER" '_file_type "$@"')
+
+# ------------------------------------------------------------------------------
 
 # enable fasd integration
 eval "$(fasd --init posix-hook posix-alias)"
