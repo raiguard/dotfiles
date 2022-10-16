@@ -204,13 +204,14 @@ eval "$(fasd --init posix-hook posix-alias)"
 # fasd only adds to $PS1, but yash uses $YASH_PS1 when not in posix mode
 YASH_PS1='$(_fasd_ps1_func)'$YASH_PS1
 
-# foot: add custom escape code to enable prompt-jumping
-YASH_PS1="\e]133;A\e\r"$YASH_PS1
-# foot: Open new terminals in PWD
-osc7_cwd() {
+# insert special escape codes for foot terminal
+foot_escs() {
+    # jump between shell prompts
     printf "%b" "\e]7;file://${HOSTNAME}${PWD}\e\\"
+    # open new terminals in PWD
+    printf '%b' '\e]133;A\e\\'
 }
-PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }osc7_cwd
+PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }foot_escs
 
 alias n=nnn
 alias k="kak"
