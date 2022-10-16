@@ -61,7 +61,11 @@ define-command show-tab-info %{
 softtabstop: %opt{softtabstop}
 indentwidth: %opt{indentwidth}"
 }
-map global toggle s ': info "%val{client}/%val{session}"<ret>' -docstring "session info"
+map global toggle s ': show-session-info<ret>' -docstring "session info"
+define-command -hidden show-session-info %{
+    info -title "session info" "%val{client}/%val{session}
+%sh{pwd}"
+}
 
 # Wrap paragraphs
 map global user w ": wrap-paragraph<ret>" -docstring "wrap paragraph"
