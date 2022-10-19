@@ -213,6 +213,9 @@ foot_escs() {
 }
 PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }foot_escs
 
+# Disable ctrl+s and ctrl+q
+stty -ixon
+
 alias n=nnn
 alias k="kak"
 alias sk="sudoedit"

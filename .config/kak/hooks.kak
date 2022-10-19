@@ -139,7 +139,7 @@ hook global WinSetOption filetype=latex %{
     lsp-init
     rainbow-enable-window
 
-    add-highlighter window/ruler column 81 ",rgb:%opt{subbg}"
+    add-highlighter window/ruler column 81 ",black"
 
     hook window BufWritePre .* lsp-formatting-sync
     define-command latex-automake %{

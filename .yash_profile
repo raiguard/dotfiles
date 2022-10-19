@@ -1,5 +1,5 @@
 export LANG=en_US.UTF-8
-export PATH="$HOME/bin/$HOSTNAME:$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/bin/$(uname -n):$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 
 export EDITOR="kak"
 export PAGER="less"
