@@ -14,7 +14,12 @@ session="default"
 
 basedir=$(git rev-parse --show-toplevel 2> /dev/null)
 if [ -n "$basedir" ]; then
+    # Set session name
     session=$(basename "$basedir")
+    # Change filename to absolute path
+    # This only works with the first one, but that's fine
+    set -- $(realpath $1)
+    # Change to project root dir
     cd $basedir
 fi
 
