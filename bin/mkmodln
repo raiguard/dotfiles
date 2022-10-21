@@ -1,11 +1,9 @@
 #!/bin/sh
 
-dir="$PWD"
-subdir=$(basename $PWD | sed 's/Factorio-//')
-if [ -d "src" ]; then
-    dir="$dir/src"
-elif [ -d $subdir ]; then
-    dir="$dir/$subdir"
+if [ -f "info.json" ]; then
+    dir="$PWD"
+elif [ -f "src/info.json" ]; then
+    dir="$PWD/src"
 fi
 
 if [ ! -f "$dir/info.json" ]; then
