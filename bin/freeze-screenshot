@@ -1,0 +1,7 @@
+#!/bin/sh
+
+grim -o eDP-1 /tmp/freeze-screenshot
+imv -f /tmp/freeze-screenshot &
+imv_pid=$$
+grimshot --notify copy area
+killall imv-wayland # FIXME: This closes all IMV instances, but pkill won't work
