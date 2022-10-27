@@ -1,8 +1,8 @@
 # Color scheme
 colorscheme one-darker-16
 # Mark.kak faces
-set-face global MarkedPrimaryCursor PrimaryCursor
-set-face global MarkedPrimarySelection black,magenta
+set-face global MarkedPrimaryCursor black,magenta+f
+set-face global MarkedPrimarySelection black,magenta+f
 set-face global MarkedSecondaryCursor MarkedPrimaryCursor
 set-face global MarkedSecondarySelection MarkedPrimarySelection
 # kak-live-grep faces
