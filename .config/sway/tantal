@@ -3,9 +3,15 @@
 # Autostart
 exec wlsunset -l 40.3 -L -111.8 -t 2500 -g 0.9
 
+# Input configuration
+input type:keyboard {
+    repeat_delay 300
+    repeat_rate 40
+}
+
 # Output configuration
-output DP-1 position 2560,0 mode 2560x1440@60.009Hz bg ~/pictures/wallpapers/1122673.jpg fill
-output DP-2 position 0,0 bg ~/pictures/wallpapers/1182498.png fill
+output DP-1 position 2560,0 mode 2560x1440@60.009Hz bg ~/pictures/wallpaper-dp-1 fill
+output DP-2 position 0,0 bg ~/pictures/wallpaper-dp-2 fill
 output HDMI-A-1 disable mode 3840x2160@120Hz adaptive_sync on bg ~/pictures/wallpapers/1225904.jpg fill
 
 # Idle configuration

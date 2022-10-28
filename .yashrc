@@ -230,6 +230,6 @@ alias f4=/home/rai/dev/factorio/4/bin/x64/factorio
 alias fd11=/home/rai/dev/projects/wube/Factorio-1.1/bin/Debugx64Clang/factorio-run
 alias fr11=/home/rai/dev/projects/wube/Factorio-1.1/bin/Releasex64Clang/factorio-run
 alias fd12=/home/rai/dev/projects/wube/Factorio-1.2/bin/Debugx64Clang/factorio-run
-alias fr12=/home/rai/dev/projects/wube/Factorio-1.1/bin/Releasex64Clang/factorio-run
+alias fr12=/home/rai/dev/projects/wube/Factorio-1.2/bin/Releasex64Clang/factorio-run
 
 # vim: ft=sh

@@ -39,6 +39,8 @@ cork kakoune-focus "https://github.com/caksoylar/kakoune-focus" %{
     map global user <space> ': focus-toggle<ret>' -docstring "toggle selections focus"
 }
 
+cork kakoune-gdb "https://github.com/occivink/kakoune-gdb"
+
 cork kakoune-grep-write "https://github.com/JacobTravers/kakoune-grep-write" %{
     hook global BufCreate \*grep\* %{
         alias buffer w grep-write
