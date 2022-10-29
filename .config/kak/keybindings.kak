@@ -1,5 +1,9 @@
 # NORMAL
 
+# Selection history
+map global normal <tab> <c-k>
+map global normal <s-tab> <c-h>
+
 # Comment
 map global normal "#" ": comment-line<ret>"
 map global normal "<a-#>" ": comment-block<ret>"

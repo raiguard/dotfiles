@@ -132,7 +132,7 @@ hook global WinSetOption filetype=hare %{
     set-option window softtabstop 0
     set-option window indentwidth 0
 
-    add-highlighter window/ruler column 81 ",rgb:%opt{subbg}"
+    add-highlighter window/ruler column 81 Ruler
 }
 
 hook global WinSetOption filetype=latex %{
