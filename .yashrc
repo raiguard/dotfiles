@@ -43,6 +43,11 @@ if command --identify --builtin-command history >/dev/null; then
 
 fi
 
+# enable command line prediction
+set --le-predict
+bindkey --vi-insert '\^F' end-of-line
+bindkey --vi-insert '\^O' clear-candidates
+
 # avoid removing/overwriting existing files by accident
 cp() if [ -t 0 ]; then command cp -i "$@"; else command cp "$@"; fi
 mv() if [ -t 0 ]; then command mv -i "$@"; else command mv "$@"; fi
