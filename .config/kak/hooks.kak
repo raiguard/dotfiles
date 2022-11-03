@@ -225,6 +225,11 @@ hook global WinSetOption filetype=scdoc %{
     noexpandtab
     autowrap-enable
     set-option window autowrap_format_paragraph true
+
+    # Highlighting
+    add-highlighter window/scdoc_header regex "^##?\s*.*?$" 0:+b
+    add-highlighter window/scdoc_bold regex "\*.*?\*" 0:+b
+    add-highlighter window/scdoc_underline regex "\b_.*?_\b" 0:+u
 }
 
 hook global WinSetOption filetype=typescript %{
