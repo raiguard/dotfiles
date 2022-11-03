@@ -33,6 +33,9 @@ map global normal X "giGl" -docstring "Select inner line"
 # Select all occurances of current selection in file
 map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
 
+# Yank selections to system clipboard using OSC 52
+map global normal "<c-y>" ": osc-yank<ret>"
+
 # INSERT
 
 # Delete words in insert mode
@@ -41,14 +44,6 @@ map global insert <c-backspace> "<esc>hBdi"
 map global insert <s-backspace> "<backspace>"
 
 # USER
-
-# System clipboard integration
-declare-user-mode clipboard
-map global user c ": enter-user-mode clipboard<ret>" -docstring "clipboard..."
-map global clipboard p "<a-!>wl-paste<ret>" -docstring 'Paste system clipboard (after)'
-map global clipboard P "!wl-paste<ret>" -docstring 'Paste system clipboard (before)'
-map global clipboard y "<a-|>wl-copy<ret>" -docstring 'Yank to system clipboard'
-map global clipboard R "|wl-paste<ret>" -docstring 'Replace from system clipboard'
 
 # Sort
 declare-user-mode sort
@@ -86,3 +81,12 @@ map global git d ": git diff<ret>" -docstring "diff"
 map global git g ": terminal-floating lazygit<ret>" -docstring "lazygit"
 map global git l ": git log<ret>" -docstring "log"
 map global git s ": git status<ret>" -docstring "status"
+
+# Spell
+declare-user-mode spell
+map global user p ": enter-user-mode spell<ret>" -docstring "spell..."
+map global spell a ": spell-add<ret>" -docstring "add"
+map global spell c ": spell-clear<ret>" -docstring "clear"
+map global spell p ": spell<ret>" -docstring "spell"
+map global spell r ": spell-replace<ret>" -docstring "replace"
+map global spell ] ": spell-next<ret>" -docstring "next"

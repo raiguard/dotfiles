@@ -35,3 +35,17 @@ define-command -params 1 test-face %{
     set-face window test_face %arg{1}
     set-option window face_test_ranges %val{timestamp} "%val{selection_desc}|test_face"
 }
+
+define-command -hidden osc-yank \
+-docstring "yank selection to terminal clipboard using OSC 52" %{
+    nop %sh{
+        eval set -- "$kak_quoted_selections"
+        copy=$1
+        shift
+        for sel; do
+            copy=$(printf '%s\n%s' "$copy" "$sel")
+        done
+        encoded=$(printf %s "$copy" | base64 | tr -d '\n')
+        printf "\e]52;;%s\e\\" "$encoded" >/dev/tty
+    }
+}
