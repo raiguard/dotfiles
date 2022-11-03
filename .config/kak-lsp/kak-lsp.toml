@@ -93,6 +93,12 @@ command = "/home/rai/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rus
 [language.rust.settings.rust-analyzer]
 checkOnSave.command = "clippy"
 
+[language.scss]
+filetypes = ["scss"]
+roots = ["package.json", ".git", ".hg"]
+command = "vscode-css-languageserver"
+args = ["--stdio"]
+
 [language.tsx]
 filetypes = ["typescript"]
 roots = ["package.json"]
