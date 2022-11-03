@@ -10,8 +10,6 @@ case "$1" in
     ;;
 esac
 
-session="default"
-
 basedir=$(git rev-parse --show-toplevel 2> /dev/null)
 if [ -n "$basedir" ]; then
     # Set session name
@@ -21,6 +19,12 @@ if [ -n "$basedir" ]; then
     set -- $(realpath $1)
     # Change to project root dir
     cd $basedir
+fi
+
+# TODO: Convenient way to connect to last session?
+if [ -z "$session" ]; then
+    $kak $@
+    exit
 fi
 
 sessions=$($kak -l)
