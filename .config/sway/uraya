@@ -1,5 +1,3 @@
-# kak: filetype=i3
-
 # Autostart
 exec inkscape-figures watch
 exec pactl load-module module-switch-on-connect
@@ -44,3 +42,5 @@ for_window [app_id="inkscape"] {
     resize set width 100 ppt height 100 ppt
     focus floating
 }
+
+# vim: ft=i3
