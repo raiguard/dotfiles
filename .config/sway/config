@@ -9,13 +9,8 @@ set $right l
 
 ### Autostart
 
-exec blueman-applet
 exec ~/.config/sway/tab-browser
-# exec ~/.config/sway/twocolumn
 exec mako
-exec nm-applet --indicator
-exec pasystray
-exec udiskie --tray
 exec /usr/bin/polkit-dumb-agent
 
 ### GTK3 workaround
@@ -175,11 +170,7 @@ assign [class="discord"] 4
 assign [app_id="obs"] 4
 
 for_window [title="File Operation Progress"] floating enable
-for_window [app_id="foot.floating"] {
-    floating enable
-    # resize set width 60ppt
-    # resize set height 70ppt
-}
+for_window [app_id="foot.floating"] floating enable
 for_window [app_id="org.speedcrunch.speedcrunch"] {
     floating enable
     sticky enable
@@ -188,6 +179,7 @@ for_window [app_id="org.speedcrunch.speedcrunch"] {
     scratchpad show
 }
 for_window [app_id="org.qutebrowser.qutebrowser"] inhibit_idle fullscreen
+for_window [app_id="com.obsproject.studio"] inhibit_idle open
 
 ### Input configuration
 
@@ -196,9 +188,33 @@ input type:keyboard {
     repeat_rate 40
 }
 
-### Other
+### Bar
 
-bar swaybar_command waybar
+set $bg #181a1f
+set $subbg #272b33
+set $comment #70798a
+set $fg #abb2bf
+set $cyan #56b6c2
+set $red #e06c75
+
+bar {
+    font "Source Code Pro Bold 9"
+    position top
+    status_command while date +'%T %F %Z'; do sleep 1; done
+    pango_markup enable
+    strip_workspace_name yes
+    icon_theme "Tela-blue-dark"
+    colors {
+        background $bg
+        statusline $fg
+        active_workspace $bg $bg $fg
+        focused_workspace $bg $bg $cyan
+        inactive_workspace $bg $bg $comment
+        urgent_workspace $red $red $bg
+    }
+}
+
+### Other
 
 include "~/.config/sway/`uname -n`"
 include /etc/sway/config.d/*
