@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Source: https://github.com/smsegal/scripts/blob/master/wofi-filesearch
+
+set -euo pipefail
+IFS=$'\n\t'
+
+fd -t f -I -E "gas" ".*" "$HOME"/{documents,school,downloads} |
+	fuzzel -d -w 100 | tr '\n' '\0' | xargs -0 xdg-open
+
