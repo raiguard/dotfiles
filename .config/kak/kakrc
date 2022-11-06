@@ -24,6 +24,7 @@ cork kak-move-lines "https://git.sr.ht/~raiguard/kak-move-lines" %{
 
 cork kak-live-grep "https://git.sr.ht/~raiguard/kak-live-grep" %{
     map global user / ": live-grep<ret>" -docstring "live grep"
+    set-face global LiveGrepMatch +u
 }
 
 cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
@@ -31,8 +32,20 @@ cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
     set-option global rainbow_check_templates Y
 }
 
+cork kak-replace-mode "https://git.sr.ht/~raiguard/kak-replace-mode" %{
+    map global normal <a-r> ":enter-replace-mode<ret>"
+}
+
 cork kakoune-fandt "https://github.com/listentolist/kakoune-fandt" %{
     require-module fandt
+    hook global ModeChange push:.*:user.fandt %{
+        set-face window PrimarySelection black,yellow
+        set-face window SecondarySelection black,yellow
+    }
+    hook global ModeChange pop:user.fandt:.* %{
+        unset-face window PrimarySelection
+        unset-face window SecondarySelection
+    }
 }
 
 cork kakoune-focus "https://github.com/caksoylar/kakoune-focus" %{
@@ -57,7 +70,12 @@ cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
     set-option global source_local_kakrc true
 }
 
-cork mark.kak "https://github.com/alexherbo2/mark.kak"
+cork mark.kak "https://github.com/alexherbo2/mark.kak" %{
+    set-face global MarkedPrimaryCursor black,magenta+f
+    set-face global MarkedPrimarySelection black,magenta+f
+    set-face global MarkedSecondaryCursor MarkedPrimaryCursor
+    set-face global MarkedSecondarySelection MarkedPrimarySelection
+}
 
 cork pmanage.kak "https://github.com/andreyorst/pmanage.kak"
 
@@ -68,23 +86,6 @@ cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
 
 # Color scheme
 colorscheme one-darker-16
-# Mark.kak faces
-set-face global MarkedPrimaryCursor black,magenta+f
-set-face global MarkedPrimarySelection black,magenta+f
-set-face global MarkedSecondaryCursor MarkedPrimaryCursor
-set-face global MarkedSecondarySelection MarkedPrimarySelection
-# kak-live-grep faces
-set-face global LiveGrepMatch +u
-# FandT faces
-hook global ModeChange push:.*:user.fandt %{
-    set-face window PrimarySelection black,yellow
-    set-face window SecondarySelection black,yellow
-}
-hook global ModeChange pop:user.fandt:.* %{
-    unset-face window PrimarySelection
-    unset-face window SecondarySelection
-}
-# Custom faces
 set-face global Ruler ,black
 # Highlighters
 add-highlighter global/ number-lines -relative -separator " " -hlcursor
@@ -101,13 +102,469 @@ set-option global autoreload yes
 # Use ripgrep instead of grep
 set-option global grepcmd 'rg -Hn --no-heading --sort path --vimgrep'
 
-# --------------------------------------------------
-# OTHERS
+# Conveniently edit config
+define-command edit-kakrc %{ e ~/.config/kak/kakrc }
 
-source "%val{config}/commands.kak"
-source "%val{config}/hooks.kak"
-source "%val{config}/keybindings.kak"
-source "%val{config}/lsp.kak"
-source "%val{config}/replace-mode.kak"
-source "%val{config}/status-line.kak"
-source "%val{config}/todo.kak"
+# Conveniently close all buffers
+define-command delete-all-buffers -docstring "delete all buffers" %{
+  evaluate-commands %sh{
+    eval "set -- $kak_quoted_buflist"
+    while [ $# -gt 0 ]; do
+        echo "try %{ delete-buffer '$1' } catch %{ echo -markup '{Error}Not all buffers were closed' }"
+        shift
+    done
+  }
+}
+define-command delete-all-buffers-force -docstring "forcibly delete all buffers" %{
+  evaluate-commands %sh{
+    eval "set -- $kak_quoted_buflist"
+    while [ $# -gt 0 ]; do
+        echo "try %{ delete-buffer! '$1' } catch %{ echo -markup '{Error}Not all buffers were closed' }"
+        shift
+    done
+  }
+}
+# C for 'close'
+alias global c delete-buffer
+alias global c! delete-buffer!
+alias global ca delete-all-buffers
+alias global ca! delete-all-buffers-force
+
+# System clipboard integration
+define-command -hidden osc-yank \
+-docstring "yank selection to terminal clipboard using OSC 52" %{
+    nop %sh{
+        eval set -- "$kak_quoted_selections"
+        copy=$1
+        shift
+        for sel; do
+            copy=$(printf '%s\n%s' "$copy" "$sel")
+        done
+        encoded=$(printf %s "$copy" | base64 | tr -d '\n')
+        printf "\e]52;;%s\e\\" "$encoded" >/dev/tty
+    }
+}
+map global normal "<c-y>" ": osc-yank<ret>"
+
+# Remove trailing whitespace on save
+hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
+
+# Automatically parse modelines
+hook global BufOpenFile .* modeline-parse
+
+# Add extra sway commands
+hook global ModuleLoaded sway %{
+    declare-option str foot_app_id foot
+    set-option global termcmd "foot -a %opt{foot_app_id} sh -c"
+    hook global WinSetOption foot_app_id=.* %{
+        set-option window termcmd "foot -a %opt{foot_app_id} sh -c"
+    }
+    define-command -params .. terminal-floating %{
+        set-option window foot_app_id "foot.floating"
+        terminal %arg{@}
+        set-option window foot_app_id foot
+    }
+}
+
+# Supertab - completion and snippet jumping
+declare-option bool in_snippet false
+hook global WinSetOption snippets_placeholder_groups=.* %{ evaluate-commands %sh{
+    eval set -- "$kak_quoted_opt_snippets_placeholder_groups"
+    if [ $# = 0 ]; then
+        printf %s\\n "
+            set-option window in_snippet false
+            unmap window insert <tab> '<a-;>: snippets-select-next-placeholders<ret>'
+        "
+    else
+        printf %s\\n "
+            set-option window in_snippet true
+            map window insert <tab> '<a-;>: snippets-select-next-placeholders<ret>'
+        "
+    fi
+}}
+hook global InsertCompletionShow .* %{ evaluate-commands %sh{
+    if [ "$kak_opt_in_snippet" = false ]; then
+        printf %s\\n "
+            map window insert <tab> <c-n>
+            map window insert <s-tab> <c-p>
+        "
+    fi
+}}
+hook global InsertCompletionHide .* %{
+    unmap window insert <tab> <c-n>
+    unmap window insert <s-tab> <c-p>
+}
+
+# --------------------------------------------------
+# FILETYPE HOOKS
+
+# Default window settings
+hook global WinCreate .* %{
+    expandtab
+    set-option window tabstop 4
+    set-option window softtabstop 4
+    set-option window indentwidth 4
+
+    enable-auto-pairs
+
+    try %{
+        # Show and automatically update git diff on write
+        git show-diff
+        hook window BufWritePost .* %{ git update-diff }
+        hook window BufReload .* %{ git update-diff }
+    }
+}
+
+# Generic
+hook global WinSetOption filetype=(css|go|sh|scss) %{
+    lsp-init
+    rainbow-enable-window
+}
+hook global WinSetOption filetype=(fish|i3|json|kak|toml) %{
+    rainbow-enable-window
+}
+
+hook global WinSetOption filetype=(c|cpp) %{
+    lsp-init
+    rainbow-enable-window
+
+    set-option window tabstop 2
+    set-option window softtabstop 2
+    set-option window indentwidth 2
+
+    # Highlight operators
+    try %{
+        remove-highlighter buffer/operators
+        add-highlighter    buffer/operators regex (\+|-|\*|&|=|\\|\?|%|\|-|!|\||->|\.|,|<|>|:|\^|/|~|\[|\]) 0:operator
+    }
+}
+
+hook global BufCreate (.*/|^)changelog\.txt %{
+    evaluate-commands %sh{
+        # Factorio mods will have an info.json in the same directory
+        if [ -f "${kak_hook_param_capture_1}info.json" ]; then
+            echo "set-option buffer filetype factorio-changelog"
+        fi
+    }
+}
+hook global WinSetOption filetype=factorio-changelog %{
+    # Highlighters
+    add-highlighter window/changelog_date regex ^(Date):\s(.*?)$ 1:type 2:function
+    add-highlighter window/changelog_entry regex ^(\s\s)*(-)\s(.*?)$ 2:value 3:string
+    add-highlighter window/changelog_keyword regex ^\s*(Balancing|Bugfixes|Changes|Features|Gui|Info|Optimizations): 1:type
+    add-highlighter window/changelog_separator regex ^-+$ 0:keyword
+    add-highlighter window/changelog_version regex ^(Version):\s(\d+\.\d+\.\d+)$ 1:type 2:value
+
+    # Two-space indents
+    set-option window tabstop 2
+    set-option window softtabstop 2
+    set-option window indentwidth 2
+}
+
+hook global WinSetOption filetype=(git-commit|mail) %{
+    set-option window autowrap_column 72
+    set-option window autowrap_format_paragraph true
+    autowrap-enable
+}
+
+hook global WinSetOption filetype=hare %{
+    # lsp-init
+    rainbow-enable-window
+
+    noexpandtab
+    set-option window tabstop 8
+    set-option window softtabstop 0
+    set-option window indentwidth 0
+
+    add-highlighter window/ruler column 81 Ruler
+}
+
+hook global WinSetOption filetype=latex %{
+    lsp-init
+    rainbow-enable-window
+
+    add-highlighter window/ruler column 81 ",black"
+
+    hook window BufWritePre .* lsp-formatting-sync
+    define-command latex-automake %{
+        hook window BufWritePost .* texlab-build
+        evaluate-commands %sh{ echo "pstart 'zathura ${kak_buffile%.tex}.pdf'" }
+    }
+
+    define-command create-figure %{
+        prompt name: %{
+            set-register f %sh{
+                inkscape-figures create "$kak_text" "$(dirname $kak_buffile)/figures"
+            }
+            execute-keys '"fR"zZ'
+            execute-keys "sincfig<ret>ll<a-i>B"
+            nop %sh{
+                ( inkscape "$(dirname $kak_buffile)/figures/$kak_selection.svg" 2>&1 & ) > /dev/null 2>&1 < /dev/null
+            }
+            execute-keys '"zz'
+        }
+    }
+
+    define-command edit-figures %{ nop %sh{
+        ( inkscape-figures edit "$(dirname $kak_buffile)/figures" 2>&1 & ) > /dev/null 2>&1 < /dev/null
+    }}
+
+    declare-user-mode figures
+    map global user f ": enter-user-mode figures<ret>" -docstring "figures..."
+    map global figures c ": create-figure<ret>" -docstring "create"
+    map global figures e ": edit-figures<ret>" -docstring "edit"
+
+    set-option -add global snippets \
+    Sum \bsum\b %{snippets-insert "\sum_{$1}^{$2} ($3) $4"} \
+    "Block math" bmath %{snippets-insert "$$$$ $1 $$$$"} \
+    Fraction // %{snippets-insert "\frac{$1}{$2} $3"} \
+    Limit \blim\b %{snippets-insert "\lim_{${1:n} \to ${2:\infty}} $3"} \
+    Leq \s<=\s  %{snippets-insert " \leq "}
+}
+
+hook global WinSetOption filetype=lua %{
+    lsp-init
+    rainbow-enable-window
+
+    set-option window tabstop 2
+    set-option window softtabstop 2
+    set-option window indentwidth 2
+
+    set-option window formatcmd "stylua -"
+}
+
+hook global WinSetOption filetype=python %{
+    lsp-init
+    rainbow-enable-window
+
+    set-option window formatcmd "autopep8 -"
+    hook window BufWritePre .* format
+}
+
+hook global WinSetOption filetype=rainmeter %{
+    rainbow-enable-window
+
+    # Swap variable and operator colors
+    face buffer variable "rgb:%opt{lightred}"
+    face buffer operator default
+}
+hook global BufSetOption filetype=rainmeter %{
+    set-option buffer comment_line ';'
+}
+
+hook global WinSetOption filetype=rust %{
+    lsp-init
+    rainbow-enable-window
+    lsp-inlay-hints-enable window
+
+    # Format on save
+    hook window BufWritePre .* lsp-formatting-sync
+}
+
+# TODO: Create a kak plugin for this filetype
+hook global BufCreate .+\.scd %{
+    set-option buffer filetype scdoc
+}
+hook global WinSetOption filetype=scdoc %{
+    noexpandtab
+    autowrap-enable
+    set-option window autowrap_format_paragraph true
+
+    # Highlighting
+    add-highlighter window/scdoc_header regex "^##?\s*.*?$" 0:+b
+    add-highlighter window/scdoc_bold regex "\*.*?\*" 0:+b
+    add-highlighter window/scdoc_underline regex "\b_.*?_\b" 0:+u
+}
+
+hook global WinSetOption filetype=typescript %{
+    lsp-init
+    rainbow-enable-window
+
+    # Format on save
+    hook window BufWritePre .* lsp-formatting-sync
+}
+
+hook global WinSetOption filetype=yaml %{
+    rainbow-enable-window
+
+    set-option window tabstop 2
+    set-option window softtabstop 2
+    set-option window indentwidth 2
+}
+
+# --------------------------------------------------
+# GENERAL MAPPINGS
+
+# NORMAL
+
+# Selection history
+map global normal <tab> <c-k>
+map global normal <s-tab> <c-h>
+
+# Comment
+map global normal "#" ": comment-line<ret>"
+map global normal "<a-#>" ": comment-block<ret>"
+
+# Go to file (basic fuzzy finder)
+map global goto "f" '<esc>: prompt -shell-script-candidates %{ fd --type f --hidden --no-ignore --exclude .git --exclude target --exclude .vscode/factorio } file: %{ edit %val{text} }<ret>' -docstring "file"
+
+# Go to buffer
+map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
+
+# Pick file with NNN
+map global normal <minus> ': terminal-floating nnn-pick %val{buffile} %val{client} %val{session}<ret>'
+
+# Search case-insensitive by default
+map global normal "/" "/(?i)"
+map global normal "?" "?(?i)"
+map global normal "<a-/>" "<a-/>(?i)"
+map global normal "<a-?>" "<a-?>(?i)"
+
+# Always select entire lines
+map global normal J "Jx"
+map global normal K "Kx"
+
+# Select inner line
+map global normal X "giGl" -docstring "Select inner line"
+
+# Select all occurances of current selection in file
+map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
+
+# INSERT
+
+# Delete words in insert mode
+map global insert <c-backspace> "<esc>hBdi"
+# Also delete when holding shift
+map global insert <s-backspace> "<backspace>"
+
+# USER
+
+# Sort
+declare-user-mode sort
+map global user s ": enter-user-mode sort<ret>" -docstring "sort..."
+map global sort l "|sort<ret>" -docstring "lines"
+map global sort s "<esc>: sort-selections<ret>" -docstring "selections"
+
+# Toggle
+declare-user-mode toggle
+map global user t ": enter-user-mode toggle<ret>" -docstring "toggle..."
+map global toggle i ': show-tab-info<ret>' -docstring "tab settings"
+define-command show-tab-info %{
+    info -title "tab settings" "tabstop: %opt{tabstop}
+softtabstop: %opt{softtabstop}
+indentwidth: %opt{indentwidth}"
+}
+map global toggle s ': show-session-info<ret>' -docstring "session info"
+define-command -hidden show-session-info %{
+    info -title "session info" "%val{client}/%val{session}
+%sh{pwd}"
+}
+
+# Wrap paragraphs
+map global user w ": wrap-paragraph<ret>" -docstring "wrap paragraph"
+define-command wrap-paragraph %{
+    execute-keys "<a-i>p<a-j>|fold -s -w %opt{autowrap_column}<ret>"
+}
+
+# Git
+declare-user-mode git
+map global user g ": enter-user-mode git<ret>" -docstring "git..."
+map global git b ": git blame<ret>" -docstring "blame"
+map global git B ": git hide-blame<ret>" -docstring "hide blame"
+map global git d ": git diff<ret>" -docstring "diff"
+map global git g ": terminal-floating lazygit<ret>" -docstring "lazygit"
+map global git l ": git log<ret>" -docstring "log"
+map global git s ": git status<ret>" -docstring "status"
+
+# Spell
+declare-user-mode spell
+map global user p ": enter-user-mode spell<ret>" -docstring "spell..."
+map global spell a ": spell-add<ret>" -docstring "add"
+map global spell c ": spell-clear<ret>" -docstring "clear"
+map global spell p ": spell<ret>" -docstring "spell"
+map global spell r ": spell-replace<ret>" -docstring "replace"
+map global spell ] ": spell-next<ret>" -docstring "next"
+
+
+# --------------------------------------------------
+# LSP
+
+# From: https://github.com/AstroNvim/AstroNvim/blob/fa82ff92b438d764f2ed683cca2ec7e95e7ffb72/lua/core/utils/init.lua#L126
+set-option global lsp_diagnostic_line_error_sign " "
+set-option global lsp_diagnostic_line_hint_sign ""
+set-option global lsp_diagnostic_line_info_sign " "
+set-option global lsp_diagnostic_line_warning_sign " "
+set-face global LineFlagHint yellow
+
+set-option global lsp_hover_anchor true
+set-option global lsp_auto_highlight_references true
+set-option global lsp_hover_max_lines 50
+
+lsp-auto-signature-help-enable
+
+define-command lsp-restart -docstring "Restart kak-lsp session" %{ lsp-stop; lsp-start }
+
+define-command lsp-init -docstring "Enable LSP with default settings" %{
+    map window user l ": enter-user-mode lsp<ret>" -docstring "lsp..."
+    map window normal "ⓗ" ": lsp-hover<ret>"
+    map window normal <c-a-h> ": lsp-hover-buffer<ret>"
+    map window normal <c-a> ": lsp-code-actions<ret>"
+    map window normal <c-r> ": lsp-rename-prompt<ret>"
+    map window normal <c-e> ": lsp-diagnostics<ret>"
+    lsp-inlay-diagnostics-enable window
+
+    echo -debug "Enabling LSP for filetype %opt{filetype}"
+    lsp-enable-window
+    set-option window lsp_enabled true
+
+    # Semantic tokens
+    # TODO: These hooks should be in kak-lsp
+    hook window -group semantic-tokens BufReload .* lsp-semantic-tokens
+    hook window -group semantic-tokens NormalIdle .* lsp-semantic-tokens
+    hook window -group semantic-tokens InsertIdle .* lsp-semantic-tokens
+    hook -once -always window WinSetOption filetype=.* %{
+        rmhooks window semantic-tokens
+    }
+}
+
+hook global KakEnd .* lsp-exit
+
+# Custom status line
+
+declare-option bool lsp_enabled false
+declare-option -hidden str lsp_modeline_progress ""
+define-command -hidden -params 6 -override lsp-handle-progress %{
+    set-option global lsp_modeline_progress %sh{
+        if ! "$6"; then
+            echo "$2${5:+" ($5%)"}${4:+": $4"}"
+        fi
+    }
+}
+
+# --------------------------------------------------
+# TODO
+
+# Highlight TODO and other related comment tags
+hook global WinSetOption comment_line=(.*) %{
+    add-highlighter -override window/todo regex "\Q%val{hook_param_capture_1}\E\h*(TODO:)[^\n]*" 1:green
+    add-highlighter -override window/fixme regex "\Q%val{hook_param_capture_1}\E\h*(BUG:|FIXME:|TEMPORARY:|XXX:)[^\n]*" 1:red
+    add-highlighter -override window/note regex "\Q%val{hook_param_capture_1}\E\h*(NOTE:)[^\n]*" 1:blue
+}
+# Show list of TODOs in the current project
+map global toggle t ": grep (BUG:|FIXME:|TODO:|TEMPORARY:)<ret>" -docstring "TODOs"
+
+# --------------------------------------------------
+# MODELINE
+
+# Git branch
+declare-option -hidden str modeline_git_branch
+hook global WinDisplay .* %{
+    set-option window modeline_git_branch %sh{
+        branch=$(git -C "${kak_buffile%/*}" rev-parse --abbrev-ref HEAD 2>/dev/null)
+        if [ -n "$branch" ]; then
+            printf "$branch "
+        fi
+    }
+}
+
+set-option global modelinefmt '%opt{lsp_modeline_progress} {green}%opt{modeline_git_branch}{yellow}%sh{ [ -n "$kak_opt_filetype" ] && echo "$kak_opt_filetype " }{default}%val{bufname}{{context_info}}{default} {{mode_info}} {cyan}%val{cursor_line}:%val{cursor_char_column}'
