@@ -1,5 +1,3 @@
-#!/bin/sh
-
 pamixer -$1 5
 vol=$(pamixer --get-volume)
 voldisp=$(pamixer --get-volume-human)

@@ -9,7 +9,7 @@ set $right l
 
 ### Autostart
 
-exec ~/.config/sway/tab-browser
+exec ~/.config/sway/tab-browser.py
 exec mako
 exec /usr/bin/polkit-dumb-agent
 
@@ -126,16 +126,16 @@ bindsym $mod+minus scratchpad show
 bindsym $mod+escape exec swaylock
 
 # Media controls
-bindsym --locked XF86AudioRaiseVolume exec ~/.config/sway/volume i
-bindsym --locked XF86AudioLowerVolume exec ~/.config/sway/volume d
-bindsym --locked XF86AudioMute exec ~/.config/sway/volume t
-bindsym --locked XF86AudioPlay exec ~/.config/sway/media play-pause
-bindsym --locked XF86AudioNext exec ~/.config/sway/media next
-bindsym --locked XF86AudioPrev exec ~/.config/sway/media previous
+bindsym --locked XF86AudioRaiseVolume exec ~/.config/sway/volume.sh i
+bindsym --locked XF86AudioLowerVolume exec ~/.config/sway/volume.sh d
+bindsym --locked XF86AudioMute exec ~/.config/sway/volume.sh t
+bindsym --locked XF86AudioPlay exec ~/.config/sway/media.sh play-pause
+bindsym --locked XF86AudioNext exec ~/.config/sway/media.sh next
+bindsym --locked XF86AudioPrev exec ~/.config/sway/media.sh previous
 
 # Brightness controls
-bindsym --locked XF86MonBrightnessUp exec ~/.config/sway/brightness +5%
-bindsym --locked XF86MonBrightnessDown exec ~/.config/sway/brightness 5%-
+bindsym --locked XF86MonBrightnessUp exec ~/.config/sway/brightness.sh +5%
+bindsym --locked XF86MonBrightnessDown exec ~/.config/sway/brightness.sh 5%-
 
 # Screenshots
 # Select region
@@ -202,7 +202,7 @@ set $red #e06c75
 bar {
     font "Source Code Pro Bold 9"
     position top
-    status_command while date +'%F %T %Z'; do sleep 1; done
+    status_command while ~/.config/sway/status.sh; do sleep 1; done
     pango_markup enable
     strip_workspace_name yes
     icon_theme "Tela-blue-dark"
