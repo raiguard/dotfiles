@@ -1,0 +1,24 @@
+#!/bin/sh
+
+entries="Network settings"
+
+if makoctl mode | grep -q "do-not-disturb"; then
+    entries="Disable do-not-disturb\n$entries"
+else
+    entries="Enable do-not-disturb\n$entries"
+fi
+
+selected=$(echo -e $entries | fuzzel -d -w 24 -l 6)
+
+case "$selected" in
+    "Disable do-not-disturb")
+        makoctl mode -r do-not-disturb
+        notify-send -c system -u low "Do-not-disturb is disabled"
+        ;;
+    "Enable do-not-disturb")
+        makoctl mode -a do-not-disturb
+        notify-send -c system -u low "Do-not-disturb is enabled"
+        ;;
+    "Network settings")
+        networkmanager_dmenu;;
+esac
