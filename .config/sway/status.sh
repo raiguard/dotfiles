@@ -1,19 +1,16 @@
-comment="#70798a"
 # lightred="#e06c75"
 darkred="#be5046"
 green="#98c379"
-lightorange="#e5c07b"
+# lightorange="#e5c07b"
 # darkorange="#d19a66"
 blue="#61afef"
 # magenta="#c678dd"
 # cyan="#56b6c2"
 
-spacer=" <span foreground='$comment'>|</span> "
-
 # TODO: Cache wttr.in and display it over a day
 
 # IP address
-ip_address=$(ip address | grep "wlan0" | grep "inet" | awk '{ print $2 }')
+ip_address=$(ip -br address | grep UP | head -1 | awk '{ print $1 " " $3 }' | sed "s/\\/.*//")
 if [ -n "$ip_address" ]; then
     ip_address="<span foreground='$blue'>$ip_address</span>  "
 fi
