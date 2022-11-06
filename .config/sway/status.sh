@@ -22,7 +22,7 @@ fi
 if [ "$HOSTNAME" = "uraya" ]; then
     bat_color=$green
     charge=$(cat /sys/class/power_supply/BAT0/capacity)
-    if [ "$charge" -lt 22 ]; then
+    if [ "$charge" -lt 21 ]; then
         bat_color=$darkred
     fi
     bat="<span foreground='$bat_color'>$charge%</span>  "

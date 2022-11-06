@@ -41,7 +41,7 @@ bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. 
 # Launcher
 bindsym $mod+r exec fuzzel
 bindsym $mod+w exec fuzzel-filesearch
-bindsym $mod+q exec fuzzel-util-menu
+bindsym $mod+q exec fuzzel-power-menu
 bindsym $mod+n exec networkmanager_dmenu
 
 # Move your focus around
