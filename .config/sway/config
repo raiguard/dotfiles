@@ -38,11 +38,10 @@ bindsym $mod+Shift+c reload
 # Exit sway (logs you out of your Wayland session)
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
-# Wofi
-bindsym $mod+r exec wofi --show drun
-bindsym $mod+e exec rofimoji --files math superscripts_and_subscripts
-bindsym $mod+w exec wofi-filesearch
-bindsym $mod+q exec wofi-util-menu
+# Launcher
+bindsym $mod+r exec fuzzel
+bindsym $mod+w exec fuzzel-filesearch
+bindsym $mod+q exec fuzzel-util-menu
 
 # Move your focus around
 bindsym $mod+$left focus left
@@ -200,7 +199,7 @@ set $red #e06c75
 bar {
     font "Source Code Pro Bold 9"
     position top
-    status_command while date +'%T %F %Z'; do sleep 1; done
+    status_command while date +'%F %T %Z'; do sleep 1; done
     pango_markup enable
     strip_workspace_name yes
     icon_theme "Tela-blue-dark"

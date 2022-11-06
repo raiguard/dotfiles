@@ -3,6 +3,7 @@ export PATH="$HOME/bin/$(uname -n):$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$
 
 export EDITOR="kak"
 export PAGER="less"
+export TERMINAL="foot"
 
 export MOZ_ENABLE_WAYLAND=1
 export QT_PLATFORM_THEME=qt5ct
