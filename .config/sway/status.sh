@@ -10,7 +10,7 @@ lightorange="#e5c07b"
 
 spacer=" <span foreground='$comment'>|</span> "
 
-# title=$(swaymsg -t subscribe -m '["window"]' | jq -r '.container.name')
+# TODO: Cache wttr.in and display it over a day
 
 # Battery info
 if [ "$HOSTNAME" = "uraya" ]; then
@@ -21,6 +21,5 @@ if [ "$HOSTNAME" = "uraya" ]; then
     fi
     bat="<span foreground='$bat_color'>$charge%</span>  "
 fi
-# date=$(date +'%F %T %Z')
-date=$(date +'%a %F %T %Z')
+date=$(date +'%a %b %d %-H:%M:%S %Z')
 echo "$bat$date"
