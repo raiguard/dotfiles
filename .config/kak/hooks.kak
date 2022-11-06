@@ -35,7 +35,7 @@ hook global ModuleLoaded sway %{
         set-option window termcmd "foot -a %opt{foot_app_id} sh -c"
     }
     define-command -params .. terminal-floating %{
-        set-option window foot_app_id "foot.floating -w 1528x984"
+        set-option window foot_app_id "foot.floating"
         terminal %arg{@}
         set-option window foot_app_id foot
     }

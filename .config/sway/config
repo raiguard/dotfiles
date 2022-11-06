@@ -169,7 +169,11 @@ assign [class="discord"] 4
 assign [app_id="obs"] 4
 
 for_window [title="File Operation Progress"] floating enable
-for_window [app_id="foot.floating"] floating enable
+for_window [app_id="foot.floating"] {
+    floating enable
+    resize set width 60ppt
+    resize set height 80ppt
+}
 for_window [app_id="org.speedcrunch.speedcrunch"] {
     floating enable
     sticky enable
@@ -178,7 +182,7 @@ for_window [app_id="org.speedcrunch.speedcrunch"] {
     scratchpad show
 }
 for_window [app_id="org.qutebrowser.qutebrowser"] inhibit_idle fullscreen
-for_window [app_id="com.obsproject.studio"] inhibit_idle open
+for_window [app_id="com.obsproject.Studio"] inhibit_idle open
 
 ### Input configuration
 
@@ -190,7 +194,6 @@ input type:keyboard {
 ### Bar
 
 set $bg #181a1f
-set $subbg #272b33
 set $comment #70798a
 set $fg #abb2bf
 set $cyan #56b6c2
