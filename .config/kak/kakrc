@@ -207,11 +207,16 @@ hook global WinCreate .* %{
 
     enable-auto-pairs
 
-    try %{
-        # Show and automatically update git diff on write
-        git show-diff
-        hook window BufWritePost .* %{ git update-diff }
-        hook window BufReload .* %{ git update-diff }
+    # Show and automatically update git diff on write
+    evaluate-commands %sh{
+        branch=$(git -C "${kak_buffile%/*}" rev-parse --abbrev-ref HEAD 2>/dev/null)
+        if [ -n "$branch" ]; then
+            printf %s\\n "
+                git show-diff
+                hook window BufWritePost .* %{ git update-diff }
+                hook window BufReload .* %{ git update-diff }
+            "
+        fi
     }
 }
 
