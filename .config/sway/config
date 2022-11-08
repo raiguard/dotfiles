@@ -184,6 +184,7 @@ for_window [app_id="org.speedcrunch.speedcrunch"] {
 }
 for_window [app_id="org.qutebrowser.qutebrowser"] inhibit_idle fullscreen
 for_window [app_id="com.obsproject.Studio"] inhibit_idle open
+for_window [app_id="qemu"] inhibit_idle open
 
 ### Input configuration
 
