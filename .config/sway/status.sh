@@ -1,3 +1,5 @@
+#!/bin/sh
+
 lightred="#e06c75"
 # darkred="#be5046"
 green="#98c379"
