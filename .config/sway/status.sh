@@ -4,7 +4,7 @@ lightred="#e06c75"
 # darkred="#be5046"
 green="#98c379"
 # lightorange="#e5c07b"
-# darkorange="#d19a66"
+darkorange="#d19a66"
 blue="#61afef"
 # magenta="#c678dd"
 # cyan="#56b6c2"
@@ -18,14 +18,21 @@ if [ -n "$ssid" ]; then
     network="<span foreground='$blue'>$ssid</span>  "
 fi
 
+# Do-not-disturb
+if $(makoctl mode | grep -q "do-not-disturb"); then
+    dnd="<span foreground='$darkorange'>DND</span>  "
+fi
+
 # Battery info
 if [ "$HOSTNAME" = "uraya" ]; then
     bat_color=$green
-    charge=$(cat /sys/class/power_supply/BAT0/capacity)
+    bat_status=$(cat /sys/class/power_supply/BAT0/status \
+        | awk '/Charging/ { print "+ " }')
+    bat_charge=$(cat /sys/class/power_supply/BAT0/capacity)
     if [ "$charge" -lt 21 ]; then
         bat_color=$lightred
     fi
-    bat="<span foreground='$bat_color'>$charge%</span>  "
+    bat="<span foreground='$bat_color'>$bat_status$bat_charge%</span>  "
 fi
 date=$(date +'%a %b %d %-H:%M:%S %Z')
-echo "$bat$network$date"
+echo "$dnd$bat$network$date"
