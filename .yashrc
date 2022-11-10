@@ -37,25 +37,26 @@ YASH_PS1=$_uc'$(whoami)'$_hc'@$(uname -n)\fd. '\
 '\fc.$(git_branch)\fd. $ '
 unset _hc _uc
 
-# ------------------------------------------------------------------------------
-
 # enable fasd integration
 eval "$(fasd --init posix-hook posix-alias)"
 # fasd only adds to $PS1, but yash uses $YASH_PS1 when not in posix mode
 YASH_PS1='$(_fasd_ps1_func)'$YASH_PS1
 
-# insert special escape codes for foot terminal
-foot_escs() {
-    # update window title
-    title=$(echo $PWD | sed 's/\/home\/rai/~/')
-    printf "\033];%s\a" "$title" >&2
-    # jump between shell prompts
-    printf "%b" "\e]7;file://$(uname -n)${PWD}\e\\"
-    # open new terminals in PWD
-    printf '%b' '\e]133;A\e\\'
-}
-PROMPT_COMMAND=foot_escs
+if [ "$TERM" == "foot" ]; then
+    # insert special escape codes for foot terminal
+    foot_escs() {
+        # update window title
+        title=$(echo $PWD | sed 's/\/home\/rai/~/')
+        printf "\033];%s\a" "$title" >&2
+        # jump between shell prompts
+        printf "%b" "\e]7;file://$(uname -n)${PWD}\e\\"
+        # open new terminals in PWD
+        printf '%b' '\e]133;A\e\\'
+    }
+    PROMPT_COMMAND=foot_escs
+fi
 
+# aliases
 alias n=nnn
 alias k="kak"
 alias sk="sudoedit"
