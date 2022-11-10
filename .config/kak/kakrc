@@ -9,6 +9,8 @@ set-option global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
 cork auto-pairs.kak "https://github.com/alexherbo2/auto-pairs.kak"
 
+cork kak-ansi "https://github.com/eraserhd/kak-ansi"
+
 cork kak-harpoon "https://git.sr.ht/~raiguard/kak-harpoon" %{
     harpoon-add-bindings
 }
@@ -24,7 +26,9 @@ cork kak-move-lines "https://git.sr.ht/~raiguard/kak-move-lines" %{
 
 cork kak-live-grep "https://git.sr.ht/~raiguard/kak-live-grep" %{
     map global user / ": live-grep<ret>" -docstring "live grep"
-    set-face global LiveGrepMatch +u
+    hook global User ColorschemeLoaded %{
+        set-face global LiveGrepMatch ",,rgb:%opt{lightorange}+u"
+    }
 }
 
 cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
@@ -38,13 +42,21 @@ cork kak-replace-mode "https://git.sr.ht/~raiguard/kak-replace-mode" %{
 
 cork kakoune-fandt "https://github.com/listentolist/kakoune-fandt" %{
     require-module fandt
-    hook global ModeChange push:.*:user.fandt %{
-        set-face window PrimarySelection black,yellow
-        set-face window SecondarySelection black,yellow
+    hook global ModeChange push:.*:next-key\[user.fandt\] %{
+        set-face window PrimarySelection ",rgba:%opt{darkorange}%opt{selectionalpha}"
+        set-face window PrimaryCursor ",rgba:%opt{darkorange}%opt{cursoralpha}"
+        set-face window PrimaryCursorEol ",rgba:%opt{darkorange}%opt{cursoralpha}"
+        set-face window SecondarySelection ",rgba:%opt{lightorange}%opt{selectionalpha}"
+        set-face window SecondaryCursor ",rgba:%opt{lightorange}%opt{cursoralpha}"
+        set-face window SecondaryCursorEol ",rgba:%opt{lightorange}%opt{cursoralpha}"
     }
-    hook global ModeChange pop:user.fandt:.* %{
+    hook global ModeChange pop:next-key\[user.fandt\]:.* %{
         unset-face window PrimarySelection
+        unset-face window PrimaryCursor
+        unset-face window PrimaryCursorEol
         unset-face window SecondarySelection
+        unset-face window SecondaryCursor
+        unset-face window SecondaryCursorEol
     }
 }
 
@@ -71,10 +83,12 @@ cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
 }
 
 cork mark.kak "https://github.com/alexherbo2/mark.kak" %{
-    set-face global MarkedPrimaryCursor black,magenta+f
-    set-face global MarkedPrimarySelection black,magenta+f
-    set-face global MarkedSecondaryCursor MarkedPrimaryCursor
-    set-face global MarkedSecondarySelection MarkedPrimarySelection
+    hook global User ColorschemeLoaded %{
+        set-face global MarkedPrimaryCursor ",rgba:%opt{magenta}%opt{cursoralpha}"
+        set-face global MarkedPrimarySelection ",rgba:%opt{magenta}%opt{selectionalpha}"
+        set-face global MarkedSecondaryCursor MarkedPrimaryCursor
+        set-face global MarkedSecondarySelection MarkedPrimarySelection
+    }
 }
 
 cork pmanage.kak "https://github.com/andreyorst/pmanage.kak"
@@ -85,8 +99,9 @@ cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
 # GENERAL
 
 # Color scheme
-colorscheme one-darker-16
-set-face global Ruler ,black
+colorscheme one-darker
+trigger-user-hook ColorschemeLoaded
+set-face global Ruler StatusLine
 # Highlighters
 add-highlighter global/ number-lines -relative -separator " " -hlcursor
 add-highlighter global/ show-matching
@@ -567,4 +582,4 @@ hook global WinDisplay .* %{
     }
 }
 
-set-option global modelinefmt '%opt{lsp_modeline_progress} {green}%opt{modeline_git_branch}{yellow}%sh{ [ -n "$kak_opt_filetype" ] && echo "$kak_opt_filetype " }{default}%val{bufname}{{context_info}}{default} {{mode_info}} {cyan}%val{cursor_line}:%val{cursor_char_column}'
+set-option global modelinefmt '%opt{lsp_modeline_progress} {string}%opt{modeline_git_branch}{type}%sh{ [ -n "$kak_opt_filetype" ] && echo "$kak_opt_filetype " }{default}%val{bufname}{{context_info}}{default} {{mode_info}} {meta}%val{cursor_line}:%val{cursor_char_column}'
