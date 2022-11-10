@@ -29,7 +29,7 @@ if [ "$HOSTNAME" = "uraya" ]; then
     bat_status=$(cat /sys/class/power_supply/BAT0/status \
         | awk '/Charging/ { print "+ " }')
     bat_charge=$(cat /sys/class/power_supply/BAT0/capacity)
-    if [ "$charge" -lt 21 ]; then
+    if [ "$bat_charge" -lt 21 ]; then
         bat_color=$lightred
     fi
     bat="<span foreground='$bat_color'>$bat_status$bat_charge%</span>  "

@@ -21,18 +21,19 @@ if [ -n "$basedir" ]; then
     cd $basedir
 fi
 
-# TODO: Convenient way to connect to last session?
-if [ -z "$session" ]; then
-    $kak $@
-    exit
-fi
-
 sessions=$($kak -l)
 if $(echo "$sessions" | grep -q "(dead)"); then
     echo "Clearing dead sessions"
     $kak -clear
     sessions=$($kak -l)
 fi
+
+# TODO: Convenient way to connect to last session?
+if [ -z "$session" ]; then
+    $kak $@
+    exit
+fi
+
 if $(echo "$sessions" | grep -q "\b$session\b"); then
     $kak -c $session $@
 else
