@@ -64,7 +64,23 @@ cork kakoune-focus "https://github.com/caksoylar/kakoune-focus" %{
     map global user <space> ': focus-toggle<ret>' -docstring "toggle selections focus"
 }
 
-cork kakoune-gdb "https://github.com/occivink/kakoune-gdb"
+cork kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
+    declare-user-mode gdb
+    map global user d ":enter-user-mode -lock gdb<ret>" -docstring "gdb"
+    map global gdb n ":gdb-next<ret>" -docstring "step over (next)"
+    map global gdb s ":gdb-step<ret>" -docstring "step in (step)"
+    map global gdb f ":gdb-print<ret>" -docstring "step out (finish)"
+    map global gdb r ":gdb-start<ret>" -docstring "start"
+    map global gdb R ":gdb-run<ret>" -docstring "run"
+    map global gdb c ":gdb-continue<ret>" -docstring "continue"
+    map global gdb g ":gdb-jump<ret>" -docstring "jump"
+    map global gdb G ":gdb-toggle-autojump<ret>" -docstring "toggle autojump"
+    map global gdb t ":gdb-toggle-breakpoint<ret>" -docstring "toggle breakpoint"
+    map global gdb T ":gdb-backtrace<ret>" -docstring "backtrace"
+    map global gdb p ":gdb-print<ret>" -docstring "print"
+    map global gdb Q ":gdb-session-new<ret>" -docstring "new"
+    map global gdb q ":gdb-session-stop<ret>" -docstring "stop"
+}
 
 cork kakoune-grep-write "https://github.com/JacobTravers/kakoune-grep-write" %{
     hook global BufCreate \*grep\* %{
@@ -582,4 +598,4 @@ hook global WinDisplay .* %{
     }
 }
 
-set-option global modelinefmt '%opt{lsp_modeline_progress} {string}%opt{modeline_git_branch}{type}%sh{ [ -n "$kak_opt_filetype" ] && echo "$kak_opt_filetype " }{default}%val{bufname}{{context_info}}{default} {{mode_info}} {meta}%val{cursor_line}:%val{cursor_char_column}'
+set-option global modelinefmt '%opt{lsp_modeline_progress} {Error}%sh{ [ -n "$kak_opt_gdb_indicator" ] && echo "$kak_opt_gdb_indicator " }{string}%opt{modeline_git_branch}{type}%sh{ [ -n "$kak_opt_filetype" ] && echo "$kak_opt_filetype " }{default}%val{bufname}{{context_info}}{default} {{mode_info}} {meta}%val{cursor_line}:%val{cursor_char_column}'
