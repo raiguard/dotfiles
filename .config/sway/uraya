@@ -19,7 +19,7 @@ input type:pointer {
 }
 
 # Output configuration
-output eDP-1 bg ~/pictures/wallpaper fill
+output * bg ~/pictures/wallpaper fill
 
 ### Idle configuration
 
