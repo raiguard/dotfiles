@@ -25,14 +25,30 @@ fi
 
 # Battery info
 if [ "$HOSTNAME" = "uraya" ]; then
+    # Pen tablet
+    tablet_path=$(upower -d | grep Device: | grep wacom_battery \
+        | awk '{ print $2 }')
+    if [ -n "$tablet_path" ]; then
+        tablet_info=$(upower -i "$tablet_path")
+        tablet_color=$green
+        tablet_charge=$(echo "$tablet_info" | grep percentage \
+            | awk '{ print $2 }' | sed "s/%//")
+        if [ "$tablet_charge" -lt 21 ]; then
+            tablet_color=$lightred
+        fi
+        tablet_status=$(echo "$tablet_info" | grep "power supply" \
+            | awk '/yes/ { print "+" }')
+        bat="<span foreground='$tablet_color'>T:$tablet_status$tablet_charge%</span>  "
+    fi
+    # Laptop
     bat_color=$green
     bat_status=$(cat /sys/class/power_supply/BAT0/status \
-        | awk '/Charging/ { print "+ " }')
+        | awk '/Charging/ { print "+" }')
     bat_charge=$(cat /sys/class/power_supply/BAT0/capacity)
     if [ "$bat_charge" -lt 21 ]; then
         bat_color=$lightred
     fi
-    bat="<span foreground='$bat_color'>$bat_status$bat_charge%</span>  "
+    bat="$bat<span foreground='$bat_color'>$bat_status$bat_charge%</span>  "
 fi
 date=$(date +'%a %b %d %-H:%M:%S %Z')
 echo "$dnd$bat$network$date"
