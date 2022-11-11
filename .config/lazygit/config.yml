@@ -1,9 +1,11 @@
 gui:
-  showCommandLog: false
+  # showCommandLog: false
   showFileTree: false
   theme:
+    selectedLineFgColor:
+      - default
     selectedLineBgColor:
-      - reverse
+      - '#2a3f53'
     selectedRangeBgColor:
       - reverse
 
