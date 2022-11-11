@@ -369,6 +369,12 @@ hook global WinSetOption filetype=lua %{
     set-option window formatcmd "stylua -"
 }
 
+hook global WinSetOption filetype=go %{
+    add-highlighter shared/go/code/function regex "\b(\w*)\b\(" 1:function
+
+    set-option window indentwidth 0
+}
+
 hook global WinSetOption filetype=python %{
     lsp-init
     rainbow-enable-window
@@ -525,8 +531,6 @@ map global spell ] ": spell-next<ret>" -docstring "next"
 # --------------------------------------------------
 # LSP
 
-set-face global LineFlagHint yellow
-
 set-option global lsp_hover_anchor true
 set-option global lsp_auto_highlight_references true
 set-option global lsp_hover_max_lines 50
@@ -577,9 +581,9 @@ define-command -hidden -params 6 -override lsp-handle-progress %{
 
 # Highlight TODO and other related comment tags
 hook global WinSetOption comment_line=(.*) %{
-    add-highlighter -override window/todo regex "\Q%val{hook_param_capture_1}\E\h*(TODO:)[^\n]*" 1:green
-    add-highlighter -override window/fixme regex "\Q%val{hook_param_capture_1}\E\h*(BUG:|FIXME:|TEMPORARY:|XXX:)[^\n]*" 1:red
-    add-highlighter -override window/note regex "\Q%val{hook_param_capture_1}\E\h*(NOTE:)[^\n]*" 1:blue
+    add-highlighter -override window/todo regex "\Q%val{hook_param_capture_1}\E\h*(TODO:)[^\n]*" 1:string
+    add-highlighter -override window/fixme regex "\Q%val{hook_param_capture_1}\E\h*(BUG:|FIXME:|TEMPORARY:|XXX:)[^\n]*" 1:Error
+    add-highlighter -override window/note regex "\Q%val{hook_param_capture_1}\E\h*(NOTE:)[^\n]*" 1:function
 }
 # Show list of TODOs in the current project
 map global toggle t ": grep (BUG:|FIXME:|TODO:|TEMPORARY:)<ret>" -docstring "TODOs"
