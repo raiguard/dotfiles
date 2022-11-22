@@ -1,13 +1,12 @@
 evaluate-commands %sh{
     cork init
     kak-lsp --kakoune -s $kak_session
+    rm -f /tmp/kak-lsp.log
 }
 set-option global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
 # --------------------------------------------------
 # PLUGINS
-
-cork auto-pairs.kak "https://github.com/alexherbo2/auto-pairs.kak"
 
 cork kak-ansi "https://github.com/eraserhd/kak-ansi"
 
@@ -135,6 +134,7 @@ set-option global grepcmd 'rg -Hn --no-heading --sort path --vimgrep'
 
 # Conveniently edit config
 define-command edit-kakrc %{ e ~/.config/kak/kakrc }
+define-command edit-lsp %{ e ~/.config/kak-lsp/kak-lsp.toml }
 
 # Conveniently close all buffers
 define-command delete-all-buffers -docstring "delete all buffers" %{
@@ -236,8 +236,6 @@ hook global WinCreate .* %{
     set-option window softtabstop 4
     set-option window indentwidth 4
 
-    enable-auto-pairs
-
     # Show and automatically update git diff on write
     evaluate-commands %sh{
         branch=$(git -C "${kak_buffile%/*}" rev-parse --abbrev-ref HEAD 2>/dev/null)
@@ -295,6 +293,8 @@ hook global WinSetOption filetype=factorio-changelog %{
     set-option window tabstop 2
     set-option window softtabstop 2
     set-option window indentwidth 2
+
+    hook window BufWritePost .* spell
 }
 
 hook global WinSetOption filetype=(git-commit|mail) %{
@@ -371,7 +371,6 @@ hook global WinSetOption filetype=lua %{
 
 hook global WinSetOption filetype=go %{
     add-highlighter shared/go/code/function regex "\b(\w*)\b\(" 1:function
-
     set-option window indentwidth 0
 
     hook window BufWritePre .* lsp-formatting-sync
@@ -446,17 +445,17 @@ map global normal <tab> <c-k>
 map global normal <s-tab> <c-h>
 
 # Comment
-map global normal "#" ": comment-line<ret>"
-map global normal "<a-#>" ": comment-block<ret>"
+map global normal "#" ":comment-line<ret>"
+map global normal "<a-#>" ":comment-block<ret>"
 
 # Go to file (basic fuzzy finder)
-map global goto "f" '<esc>: prompt -shell-script-candidates %{ fd --type f --hidden --no-ignore --exclude .git --exclude target --exclude .vscode/factorio } file: %{ edit %val{text} }<ret>' -docstring "file"
+map global goto "f" '<esc>:prompt -shell-script-candidates %{ fd --type f --hidden --no-ignore --exclude .git --exclude target --exclude .vscode/factorio } file: %{ edit %val{text} }<ret>' -docstring "file"
 
 # Go to buffer
-map global goto "b" '<esc>: prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
+map global goto "b" '<esc>:prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
 
 # Pick file with NNN
-map global normal <minus> ': terminal-floating nnn-pick %val{buffile} %val{client} %val{session}<ret>'
+map global normal <minus> ':terminal-floating nnn-pick %val{buffile} %val{client} %val{session}<ret>'
 
 # Search case-insensitive by default
 map global normal "/" "/(?i)"
@@ -483,14 +482,14 @@ map global insert <c-w> "<esc>hBdi"
 
 # Sort
 declare-user-mode sort
-map global user s ": enter-user-mode sort<ret>" -docstring "sort..."
+map global user s ":enter-user-mode sort<ret>" -docstring "sort..."
 map global sort l "|sort<ret>" -docstring "lines"
-map global sort s "<esc>: sort-selections<ret>" -docstring "selections"
+map global sort s "<esc>:sort-selections<ret>" -docstring "selections"
 
 # Toggle
 declare-user-mode toggle
-map global user t ": enter-user-mode toggle<ret>" -docstring "toggle..."
-map global toggle i ': show-tab-info<ret>' -docstring "tab settings"
+map global user t ":enter-user-mode toggle<ret>" -docstring "toggle..."
+map global toggle i ':show-tab-info<ret>' -docstring "tab settings"
 define-command show-tab-info %{
     info -title "tab settings" "tabstop: %opt{tabstop}
 softtabstop: %opt{softtabstop}
@@ -510,22 +509,22 @@ define-command wrap-paragraph %{
 
 # Git
 declare-user-mode git
-map global user g ": enter-user-mode git<ret>" -docstring "git..."
-map global git b ": git blame<ret>" -docstring "blame"
-map global git B ": git hide-blame<ret>" -docstring "hide blame"
-map global git d ": git diff<ret>" -docstring "diff"
-map global git g ": terminal-floating lazygit<ret>" -docstring "lazygit"
-map global git l ": git log<ret>" -docstring "log"
-map global git s ": git status<ret>" -docstring "status"
+map global user g ":enter-user-mode git<ret>" -docstring "git..."
+map global git b ":git blame<ret>" -docstring "blame"
+map global git B ":git hide-blame<ret>" -docstring "hide blame"
+map global git d ":git diff<ret>" -docstring "diff"
+map global git g ":terminal-floating lazygit<ret>" -docstring "lazygit"
+map global git l ":git log<ret>" -docstring "log"
+map global git s ":git status<ret>" -docstring "status"
 
 # Spell
 declare-user-mode spell
-map global user p ": enter-user-mode spell<ret>" -docstring "spell..."
-map global spell a ": spell-add<ret>" -docstring "add"
-map global spell c ": spell-clear<ret>" -docstring "clear"
-map global spell p ": spell<ret>" -docstring "spell"
-map global spell r ": spell-replace<ret>" -docstring "replace"
-map global spell ] ": spell-next<ret>" -docstring "next"
+map global user p ":enter-user-mode spell<ret>" -docstring "spell..."
+map global spell a ":spell-add<ret>" -docstring "add"
+map global spell c ":spell-clear<ret>" -docstring "clear"
+map global spell p ":spell<ret>" -docstring "spell"
+map global spell r ":spell-replace<ret>" -docstring "replace"
+map global spell ] ":spell-next<ret>" -docstring "next"
 
 
 # --------------------------------------------------
@@ -540,12 +539,13 @@ lsp-auto-signature-help-enable
 define-command lsp-restart -docstring "Restart kak-lsp session" %{ lsp-stop; lsp-start }
 
 define-command lsp-init -docstring "Enable LSP with default settings" %{
-    map window user l ": enter-user-mode lsp<ret>" -docstring "lsp..."
-    map window normal "ⓗ" ": lsp-hover<ret>"
-    map window normal <c-a-h> ": lsp-hover-buffer<ret>"
-    map window normal <c-a> ": lsp-code-actions<ret>"
-    map window normal <c-r> ": lsp-rename-prompt<ret>"
-    map window normal <c-e> ": lsp-diagnostics<ret>"
+    map window goto m "<esc>:lsp-implementation<ret>" -docstring "implementations"
+    map window user l ":enter-user-mode lsp<ret>" -docstring "lsp..."
+    map window normal "ⓗ" ":lsp-hover<ret>"
+    map window normal <c-a-h> ":lsp-hover-buffer<ret>"
+    map window normal <c-a> ":lsp-code-actions<ret>"
+    map window normal <c-r> ":lsp-rename-prompt<ret>"
+    map window normal <c-e> ":lsp-diagnostics<ret>"
     lsp-inlay-diagnostics-enable window
 
     echo -debug "Enabling LSP for filetype %opt{filetype}"
