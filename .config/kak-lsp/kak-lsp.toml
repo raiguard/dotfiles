@@ -54,26 +54,41 @@ build.args = ["--pdf", "%f"]
 [language.lua]
 filetypes = ["lua"]
 roots = [".git/"]
-command = "lua-language-server"
-args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
+command = "/home/rai/dev/projects/personal/luapls/luapls"
 
-[language.lua.settings.Lua]
-diagnostics.disable = ["lowercase-global", "redefined-local"]
-diagnostics.globals = ["__DebugAdapter", "__Profiler", "global", "data", "mods", "log", "serpent", "table_size", "localised_print"]
-diagnostics.severity = { unused-local = "Warning", undefined-global = "Error" }
-hover.expandAlias = false
-runtime.plugin = "/home/rai/dev/factorio/plugin/plugin.lua"
-runtime.version = "Lua 5.2"
-semantic.enable = false
-telemetry.enable = false
-workspace.library = [
+[language.lua.settings.luapls]
+preload = [
     # "/home/rai/dev/factorio/1/data",
     "/home/rai/dev/factorio/1/data/core/prototypes/style.lua",
     "/home/rai/dev/factorio/1/data/core/lualib",
     "/home/rai/dev/factorio/runtime-api/",
     "/home/rai/dev/projects/personal/flib"
 ]
-workspace.preloadFileSize = 10000
+
+# [language.lua]
+# filetypes = ["lua"]
+# roots = [".git/"]
+# command = "lua-language-server"
+# args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
+
+# [language.lua.settings.Lua]
+# diagnostics.disable = ["lowercase-global", "redefined-local"]
+# diagnostics.globals = ["__DebugAdapter", "__Profiler", "global", "data", "mods", "log", "serpent", "table_size", "localised_print"]
+# diagnostics.severity = { unused-local = "Warning", undefined-global = "Error" }
+# hover.expandAlias = false
+# runtime.plugin = "/home/rai/dev/factorio/plugin/plugin.lua"
+# runtime.version = "Lua 5.2"
+# semantic.enable = false
+# telemetry.enable = false
+# workspace.library = [
+#     # "/home/rai/dev/factorio/1/data",
+#     "/home/rai/dev/factorio/1/data/core/prototypes/style.lua",
+#     "/home/rai/dev/factorio/1/data/core/lualib",
+#     "/home/rai/dev/factorio/runtime-api/",
+#     "/home/rai/dev/projects/personal/flib"
+# ]
+# workspace.preloadFileSize = 10000
+# workspace.ignoreDir = ["docs"]
 
 [language.python]
 filetypes = ["python"]
