@@ -477,9 +477,7 @@ map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in 
 # INSERT
 
 # Delete words in insert mode
-map global insert <c-backspace> "<esc>hBdi"
-# Also delete when holding shift
-map global insert <s-backspace> "<backspace>"
+map global insert <c-w> "<esc>hBdi"
 
 # USER
 
