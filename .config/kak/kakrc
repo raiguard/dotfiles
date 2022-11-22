@@ -371,6 +371,7 @@ hook global WinSetOption filetype=lua %{
 
 hook global WinSetOption filetype=go %{
     add-highlighter shared/go/code/function regex "\b(\w*)\b\(" 1:function
+    noexpandtab
     set-option window indentwidth 0
 
     hook window BufWritePre .* lsp-formatting-sync
