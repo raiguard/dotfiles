@@ -373,6 +373,8 @@ hook global WinSetOption filetype=go %{
     add-highlighter shared/go/code/function regex "\b(\w*)\b\(" 1:function
 
     set-option window indentwidth 0
+
+    hook window BufWritePre .* lsp-formatting-sync
 }
 
 hook global WinSetOption filetype=python %{
