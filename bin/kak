@@ -1,6 +1,10 @@
 #!/bin/sh
 
-kak="/usr/bin/kak"
+if [ -f "/usr/local/bin/kak" ]; then
+    kak="/usr/local/bin/kak"
+else
+    kak="/usr/bin/kak"
+fi
 
 # Only do stuff if invoked with 'kak <filename>'
 case "$1" in
