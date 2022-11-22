@@ -17,6 +17,9 @@ input type:keyboard {
 input type:pointer {
     pointer_accel 0
 }
+input type:tablet_tool {
+    map_to_output eDP-1
+}
 
 # Output configuration
 output * bg ~/pictures/wallpaper fill
