@@ -7,7 +7,7 @@ bindsym print exec grimshot --notify copy area
 # Output configuration
 output DP-1 position 2560,0 mode 2560x1440@59.951Hz bg ~/pictures/wallpaper-dp-1 fill
 output DP-2 position 0,0 bg ~/pictures/wallpaper-dp-2 fill
-output HDMI-A-1 disable mode 3840x2160@120Hz adaptive_sync on bg ~/pictures/wallpapers/1225904.jpg fill
+output HDMI-A-1 disable mode 3840x2160@60Hz adaptive_sync on bg ~/pictures/wallpaper-hdmi-1 fill
 
 # Idle configuration
 # Lock after 5 minutes
