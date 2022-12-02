@@ -250,7 +250,7 @@ hook global WinCreate .* %{
 }
 
 # Generic
-hook global WinSetOption filetype=(css|go|sh|scss) %{
+hook global WinSetOption filetype=(css|go|scss) %{
     lsp-init
     rainbow-enable-window
 }
