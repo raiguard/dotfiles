@@ -4,6 +4,12 @@ exec wlsunset -l 40.3 -L -111.8 -t 2500 -g 0.9
 # Select region
 bindsym print exec grimshot --notify copy area
 
+# Input configuration
+
+input type:keyboard {
+    xkb_options caps:escape
+}
+
 # Output configuration
 output DP-1 position 2560,0 mode 2560x1440@59.951Hz bg ~/pictures/wallpaper-dp-1 fill
 output DP-2 position 0,0 bg ~/pictures/wallpaper-dp-2 fill
