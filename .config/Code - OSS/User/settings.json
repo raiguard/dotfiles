@@ -1,0 +1,109 @@
+{
+    "dance.modes": {
+        "normal": {
+            "cursorStyle": "block",
+            "selectionBehavior": "character",
+        }
+    },
+    "debug.disassemblyView.showSourceCode": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.cursorSmoothCaretAnimation": true,
+    "editor.fontFamily": "'Source Code Pro'",
+    "editor.fontSize": 13,
+    "editor.fontWeight": 600,
+    "editor.guides.bracketPairs": true,
+    "editor.selectionHighlight": false,
+    "editor.semanticTokenColorCustomizations": {
+        "[One Dark Pro Darker]": {
+            "rules": {
+                "variable": "#abb2bf",
+                "property": "#abb2bf",
+                "parameter": {
+                    "foreground": "#abb2bf",
+                    "italic": true
+                },
+                "*.mutable": {
+                    "underline": false
+                },
+                "operator": "#e06c75",
+                "punctuation": "#e06c75",
+                "lifetime": "#56b6c2",
+                "typeParameter": "#e06c75",
+                "function.defaultLibrary": "#61afef",
+                "builtinAttribute": "#61afef",
+                "attribute": "#61afef"
+            }
+        }
+    },
+    "editor.smoothScrolling": true,
+    "editor.tokenColorCustomizations": {
+        "[One Dark Pro Darker]": {
+            "variables": "#abb2bf",
+            "textMateRules": [
+                {
+                    "scope": "keyword.operator",
+                    "settings": {
+                        "foreground": "#e06c75"
+                    }
+                }
+            ]
+        }
+    },
+    "explorer.confirmDelete": false,
+    "extensions.ignoreRecommendations": true,
+    "factorio.package.movedToCommitMessage": "Move to version $VERSION",
+    "factorio.package.preparingCommitMessage": "Prepare to release version $VERSION",
+    "factorio.package.tagName": "v$VERSION",
+    "factorio.versions": [
+        {
+            "name": "Factorio",
+            "factorioPath": "${FACTORIO}",
+            "active": true
+        },
+        {
+            "name": "Release - 1.1",
+            "factorioPath": "${FACTORIO_R11}",
+            "active": true
+        },
+        {
+            "name": "Release - 1.2",
+            "factorioPath": "${FACTORIO_R12}",
+            "active": true
+        }
+    ],
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    "http.systemCertificates": false,
+    "keyboard.dispatch": "keyCode",
+    "Lua.format.enable": false,
+    "Lua.hover.expandAlias": false,
+    "Lua.runtime.plugin": "/home/rai/dev/factorio/plugin/plugin.lua",
+    "Lua.telemetry.enable": false,
+    "Lua.workspace.library": [
+        "/home/rai/dev/factorio/runtime-api/",
+        "/home/rai/dev/projects/personal/flib"
+    ],
+    "projectManager.git.baseFolders": [
+        "~/dev/projects"
+    ],
+    "security.workspace.trust.enabled": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "terminal.integrated.defaultProfile.linux": "fish",
+    "terminal.integrated.fontWeight": 600,
+    "update.mode": "none",
+    "window.menuBarVisibility": "toggle",
+    "workbench.colorCustomizations": {
+        "[One Dark Pro Darker]": {
+            "sideBar.background": "#181a1f",
+            "editor.background": "#181a1f",
+            "panel.background": "#181a1f",
+            "activityBar.activeBackground": "#181a1f",
+            "activityBar.background": "#181a1f",
+            "terminal.background": "#181a1f"
+        }
+    },
+    "workbench.colorTheme": "One Dark Pro Darker",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.sideBar.location": "right"
+}
