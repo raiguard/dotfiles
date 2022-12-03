@@ -80,10 +80,6 @@
     "Lua.hover.expandAlias": false,
     "Lua.runtime.plugin": "/home/rai/dev/factorio/plugin/plugin.lua",
     "Lua.telemetry.enable": false,
-    "Lua.workspace.library": [
-        "/home/rai/dev/factorio/runtime-api/",
-        "/home/rai/dev/projects/personal/flib"
-    ],
     "projectManager.git.baseFolders": [
         "~/dev/projects"
     ],
