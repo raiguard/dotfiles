@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# factorio-fork copies the Factorio config file and changes the write directory
+# to a temporary folder. The write directory receives symlinked mods, saves,
+# scenarios, and blueprint-storage.dat files, and a unique username.
+
+if [ -z "$FACTORIO" ]; then
+    echo "FACTORIO environment variable is not defined"
+    exit 1
+fi
+
+basedir=$(dirname "$FACTORIO")/../..
+write=$(mktemp -d /tmp/factorio-fork.XXX)
+awk -v writedata="write-data=$write" '
+    { flag = 1 }
+    /write-data/ { flag = 0; print writedata }
+    /check-updates/ { flag = 0; print "check-updates=false" }
+    flag { print }
+' $basedir/config/config.ini > $write/config.ini
+
+ln -s $basedir/atlas-cache.dat $write/atlas-cache.dat
+ln -s $basedir/crop-cache.dat $write/crop-cache.dat
+
+ln -s $basedir/mods $write/mods
+ln -s $basedir/saves $write/saves
+ln -s $basedir/scenarios $write/scenarios
+
+jq \
+    --arg username $(echo "$write" | sed "s~/tmp/factorio-fork\.~~") \
+    '.["service-username"] = $username | .["service-token"] = ""' \
+    $basedir/player-data.json > $write/player-data.json
+
+echo "Write directory: $write"
+$FACTORIO --config "$write/config.ini" "$@"
+rm -rf $write

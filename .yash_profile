@@ -5,6 +5,10 @@ export EDITOR="kak"
 export PAGER="less"
 export TERMINAL="foot"
 
+export FACTORIO="$HOME/dev/factorio/1.1/bin/x64/factorio"
+export FACTORIO_R11="$HOME/dev/projects/wube/Factorio-1.1/bin/Releasex64Clang/factorio-run"
+export FACTORIO_R12="$HOME/dev/projects/wube/Factorio-1.2/bin/Releasex64Clang/factorio-run"
+
 export MOZ_ENABLE_WAYLAND=1
 export QT_PLATFORM_THEME=qt5ct
 export QT_QPA_PLATFORMTHEME=qt5ct

@@ -1,15 +1,12 @@
 #!/bin/sh
 
-if [ "$1" == "-r" ]; then
-    gamepath=$HOME/dev/projects/wube/Factorio-1.1/
-    factorio=$gamepath/bin/Releasex64Clang/factorio-run
-    shift
-else
-    gamepath=$HOME/dev/factorio/1
-    factorio=$gamepath/bin/x64/factorio
+if [ -z "$FACTORIO" ]; then
+    echo "FACTORIO environment variable is not defined"
+    exit 1
 fi
-configpath=$gamepath/config/config.ini
+
+configpath=$(dirname $FACTORIO)/../../config/config.ini
 
 sed -i "s/locale=.*/locale=ja/" $configpath
-$factorio "$@"
+$FACTORIO "$@"
 sed -i "s/locale=ja/locale=/" $configpath

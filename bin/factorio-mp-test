@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# factorio-mp-test spins up a Factorio server, then a configurable number of
+# clients, in a debug world.
+
+if [ -z "$FACTORIO" ]; then
+    echo "FACTORIO environment variable is not defined"
+    exit 1
+fi
+
+if [ "$1" = "-n" ]; then
+    num=$2
+    shift 2
+else
+    num=2
+fi
+
+$FACTORIO --start-server-load-scenario base/freeplay &
+# TODO: Detect when the server has started up
+sleep 5
+
+for i in $(seq 1 $num); do
+    factorio-fork --mp-connect localhost:34197 &
+done
+
+trap "killall factorio" SIGINT # Kill all Factorio instances on ctrl+c
+cat # wait forever

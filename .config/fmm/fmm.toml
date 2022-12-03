@@ -1,5 +1,4 @@
-game_dir = "/home/rai/dev/factorio/1"
-mods_dir = "/home/rai/dev/factorio/linked/mods"
+game_dir = "/home/rai/dev/factorio/1.1"
 
 [sets]
 bpt = ["BlueprintTools", "EditorExtensions", "flib"]
