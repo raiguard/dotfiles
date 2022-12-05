@@ -46,4 +46,8 @@ for_window [app_id="inkscape"] {
     focus floating
 }
 
+for_window [title="SwingTerminalFrame"] {
+    floating enable
+}
+
 # vim: ft=i3
