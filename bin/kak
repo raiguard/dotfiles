@@ -9,11 +9,12 @@ fi
 # Only do stuff if invoked with 'kak <filename>'
 case "$1" in
     -*)
-        $kak $@
+        $kak "$@"
         exit
     ;;
 esac
 
+# Attempt to root by git repo, or by .kakrc file
 basedir=$(git rev-parse --show-toplevel 2> /dev/null)
 if [ -n "$basedir" ]; then
     # Set session name
@@ -23,6 +24,16 @@ if [ -n "$basedir" ]; then
     set -- $(realpath $1)
     # Change to project root dir
     cd $basedir
+else
+    oldpwd=$PWD
+    while [ "$PWD" != "/" ]; do
+        if [ -f .kakrc ]; then
+            session=$(basename "$PWD" | sed "s/\./-/g")
+            break
+        fi
+        cd ..
+    done
+    cd $oldpwd
 fi
 
 sessions=$($kak -l)
@@ -34,12 +45,12 @@ fi
 
 # TODO: Convenient way to connect to last session?
 if [ -z "$session" ]; then
-    $kak $@
+    $kak "$@"
     exit
 fi
 
 if $(echo "$sessions" | grep -q "\b$session\b"); then
-    $kak -c $session $@
+    $kak -c $session "$@"
 else
-    $kak -s $session $@
+    $kak -s $session "$@"
 fi

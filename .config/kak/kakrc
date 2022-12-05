@@ -93,10 +93,6 @@ cork kakoune-sort-selections "https://github.com/occivink/kakoune-sort-selection
 
 cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save"
 
-cork local-kakrc "https://github.com/dgmulf/local-kakrc" %{
-    set-option global source_local_kakrc true
-}
-
 cork mark.kak "https://github.com/alexherbo2/mark.kak" %{
     hook global User ColorschemeLoaded %{
         set-face global MarkedPrimaryCursor ",rgba:%opt{magenta}%opt{cursoralpha}"
@@ -350,12 +346,12 @@ hook global WinSetOption filetype=latex %{
     map global figures c ": create-figure<ret>" -docstring "create"
     map global figures e ": edit-figures<ret>" -docstring "edit"
 
-    set-option -add global snippets \
-    Sum \bsum\b %{snippets-insert "\sum_{$1}^{$2} ($3) $4"} \
-    "Block math" bmath %{snippets-insert "$$$$ $1 $$$$"} \
-    Fraction // %{snippets-insert "\frac{$1}{$2} $3"} \
-    Limit \blim\b %{snippets-insert "\lim_{${1:n} \to ${2:\infty}} $3"} \
-    Leq \s<=\s  %{snippets-insert " \leq "}
+    # set-option -add global snippets \
+    # Sum \bsum\b %{snippets-insert "\sum_{$1}^{$2} ($3) $4"} \
+    # "Block math" bmath %{snippets-insert "$$$$ $1 $$$$"} \
+    # Fraction // %{snippets-insert "\frac{$1}{$2} $3"} \
+    # Limit \blim\b %{snippets-insert "\lim_{${1:n} \to ${2:\infty}} $3"} \
+    # Leq \s<=\s  %{snippets-insert " \leq "}
 }
 
 hook global WinSetOption filetype=lua %{
@@ -420,6 +416,15 @@ hook global WinSetOption filetype=scdoc %{
     add-highlighter window/scdoc_underline regex "\b_.*?_\b" 0:+u
 }
 
+hook global WinSetOption filetype=sile %{
+    rainbow-enable-window
+    hook -group silemake window BufWritePost .* %{
+        make
+        execute-keys <c-o>
+        echo "Building file..."
+    }
+}
+
 hook global WinSetOption filetype=typescript %{
     lsp-init
     rainbow-enable-window
@@ -469,7 +474,7 @@ map global normal J "Jx"
 map global normal K "Kx"
 
 # Select inner line
-map global normal X "giGl" -docstring "Select inner line"
+map global normal X x_
 
 # Select all occurances of current selection in file
 map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
@@ -604,3 +609,12 @@ hook global WinDisplay .* %{
 }
 
 set-option global modelinefmt '%opt{lsp_modeline_progress} {Error}%sh{ [ -n "$kak_opt_gdb_indicator" ] && echo "$kak_opt_gdb_indicator " }{string}%opt{modeline_git_branch}{type}%sh{ [ -n "$kak_opt_filetype" ] && echo "$kak_opt_filetype " }{default}%val{bufname}{{context_info}}{default} {{mode_info}} {meta}%val{cursor_line}:%val{cursor_char_column}'
+
+# OTHER
+
+# Load local configuration
+evaluate-commands %sh{
+    if [ -f ".kakrc" ]; then
+        echo "source ./.kakrc"
+    fi
+}
