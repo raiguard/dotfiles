@@ -532,6 +532,20 @@ map global spell p ":spell<ret>" -docstring "spell"
 map global spell r ":spell-replace<ret>" -docstring "replace"
 map global spell ] ":spell-next<ret>" -docstring "next"
 
+# Navigation
+declare-user-mode next-location
+map global user ] ":enter-user-mode next-location<ret>" -docstring "next..."
+map global next-location g ":lsp-next-location *goto*<ret>" -docstring "goto"
+map global next-location / ":lsp-next-location *grep*<ret>" -docstring "grep"
+map global next-location m ":lsp-next-location *make*<ret>" -docstring "make"
+map global next-location p ":lsp-next-location *spell*<ret>" -docstring "spell"
+
+declare-user-mode previous-location
+map global user [ ":enter-user-mode previous-location<ret>" -docstring "previous..."
+map global previous-location g ":lsp-previous-location *goto*<ret>" -docstring "goto"
+map global previous-location / ":lsp-previous-location *grep*<ret>" -docstring "grep"
+map global previous-location m ":lsp-previous-location *make*<ret>" -docstring "make"
+map global previous-location p ":lsp-previous-location *spell*<ret>" -docstring "spell"
 
 # --------------------------------------------------
 # LSP
