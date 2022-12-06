@@ -57,17 +57,17 @@
     "factorio.versions": [
         {
             "name": "Factorio",
-            "factorioPath": "${FACTORIO}",
+            "factorioPath": "${env:FACTORIO}",
             "active": true
         },
         {
             "name": "Release - 1.1",
-            "factorioPath": "${FACTORIO_R11}",
+            "factorioPath": "${env:FACTORIO_R11}",
             "active": true
         },
         {
             "name": "Release - 1.2",
-            "factorioPath": "${FACTORIO_R12}",
+            "factorioPath": "${env:FACTORIO_R12}",
             "active": true
         }
     ],
