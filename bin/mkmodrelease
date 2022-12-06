@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # Some mods have src/ folders, some don't
 if [ -d "src" ]; then
     changelogfile="src/changelog.txt"
@@ -15,6 +17,29 @@ fi
 branch=$(git branch | awk '/^\* / { print $2 }')
 modname=$(awk '/"name":/ { gsub(/("|,)/, ""); print $2 }' $infojsonfile)
 version=$(awk '/^Version:/ { print $2 }' $changelogfile | head -1)
+
+# Crowdin
+if [ -f $archivepath/crowdin.yml ]; then
+    # Quote sources
+    for file in $(find $archivepath/locale -name "*.cfg"); do
+      perl -pi -e 's/\"/\\\"/g' $file
+      perl -pi -e 's/([^=])=(.*)/\1="\2"/' $file
+    done
+
+    # Sync with Crowdin
+    crowdin push sources
+    crowdin push translations
+    crowdin pull
+
+    # Unquote translations
+    for file in $(find $archivepath/locale -name "*.cfg"); do
+      perl -pi -e 's/([^=])="(.*)"/\1=\2/' $file
+      perl -pi -e 's/\\\"/\"/g' $file
+    done
+
+    git add .
+    git commit -m "Update Crowdin translations"
+fi
 
 # Datestamp changelog and commit
 sed -i "3s/.*/Date: $(date -I)/" $changelogfile

@@ -1,12 +1,21 @@
 #!/bin/sh
 
-if [ -z "$2" ]; then
-    new_location="$HOME/dev/factorio/linked/saves/TROUBLESHOOTING.zip"
-else
-    repo=$(basename $PWD)
-    new_location="$HOME/dev/factorio/linked/saves/${repo#Factorio-}/Bugs/$2.zip"
+# modbugbash copies the given save into the Factorio saves folder, syncs mods
+# and startup settings with fmm, then launches the game and loads that save
+# file.
+
+if [ -z "$FACTORIO" ]; then
+    echo "FACTORIO environment variable is not defined"
+    exit 1
 fi
+
+if [ -z "$1" ]; then
+    echo "Must provide a save file."
+fi
+
+saves=$(dirname "$FACTORIO")/../../saves
+new_location=$saves/$(basename "$1")
 mv "$1" "$new_location"
 echo "Relocated save file to $new_location"
 fmm sync-file $new_location
-$HOME/dev/factorio/1/bin/x64/factorio --load-game $new_location
+$FACTORIO --load-game $new_location
