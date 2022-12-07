@@ -1,0 +1,29 @@
+#!/bin/sh
+
+set -e
+
+# Some mods have src/ folders, some don't
+if [ -d "src" ]; then
+    modpath="src"
+else
+    modpath="."
+fi
+
+# Quote sources
+for file in $(find $modpath/locale -name "*.cfg"); do
+  perl -pi -e 's/\"/\\\"/g' $file
+  perl -pi -e 's/([^=])=(.*)/\1="\2"/' $file
+done
+
+# Sync with Crowdin
+crowdin push sources
+crowdin pull
+
+# Unquote translations
+for file in $(find $modpath/locale -name "*.cfg"); do
+  perl -pi -e 's/([^=])="(.*)"/\1=\2/' $file
+  perl -pi -e 's/\\\"/\"/g' $file
+done
+
+git add .
+git commit -m "Update Crowdin translations"
