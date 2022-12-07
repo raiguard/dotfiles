@@ -28,7 +28,7 @@ if [ -f $archivepath/crowdin.yml ]; then
 
     # Sync with Crowdin
     crowdin push sources
-    crowdin push translations
+    # crowdin push translations
     crowdin pull
 
     # Unquote translations
