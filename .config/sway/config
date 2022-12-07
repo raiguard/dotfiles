@@ -9,7 +9,6 @@ set $right l
 
 ### Autostart
 
-exec ~/.config/sway/tab-browser.py
 exec mako
 exec /usr/bin/polkit-dumb-agent
 
