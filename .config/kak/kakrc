@@ -659,7 +659,7 @@ hook global WinDisplay .* %{
     }
 }
 
-set-option global modelinefmt '%opt{lsp_modeline_progress} {Error}%sh{ [ -n "$kak_opt_gdb_indicator" ] && echo "$kak_opt_gdb_indicator " }{string}%opt{modeline_git_branch}{type}%sh{ [ -n "$kak_opt_filetype" ] && echo "$kak_opt_filetype " }{default}%val{bufname}{{context_info}}{default} {{mode_info}} {meta}%val{cursor_line}:%val{cursor_char_column}'
+set-option global modelinefmt '%opt{lsp_modeline_progress} {+r@Error}%opt{gdb_indicator}{StatusLine}{string}%opt{modeline_git_branch}{type}%sh{ [ -n "$kak_opt_filetype" ] && echo "$kak_opt_filetype " }{default}%val{bufname}{{context_info}}{default} {{mode_info}} {meta}%val{cursor_line}:%val{cursor_char_column}'
 
 # OTHER
 
