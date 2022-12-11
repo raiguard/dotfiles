@@ -197,22 +197,6 @@ alias global c! delete-buffer!
 alias global ca delete-all-buffers
 alias global ca! delete-all-buffers-force
 
-# System clipboard integration
-define-command -hidden osc-yank \
--docstring "yank selection to terminal clipboard using OSC 52" %{
-    nop %sh{
-        eval set -- "$kak_quoted_selections"
-        copy=$1
-        shift
-        for sel; do
-            copy=$(printf '%s\n%s' "$copy" "$sel")
-        done
-        encoded=$(printf %s "$copy" | base64 | tr -d '\n')
-        printf "\e]52;;%s\e\\" "$encoded" >/dev/tty
-    }
-}
-map global normal "<c-y>" ": osc-yank<ret>"
-
 # Remove trailing whitespace on save
 hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
 
@@ -506,7 +490,7 @@ map global goto "f" '<esc>:prompt -shell-script-candidates %{ fd --type f --hidd
 map global goto "b" '<esc>:prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
 
 # Pick file with NNN
-map global normal <minus> ':terminal-floating nnn-pick %val{buffile} %val{client} %val{session}<ret>'
+map global normal <minus> ':terminal-floating nnn-pick "%val{buffile}" "%val{client}" "%val{session}"<ret>'
 
 # Search case-insensitive by default
 map global normal "/" "/(?i)"
@@ -523,6 +507,12 @@ map global normal X x_
 
 # Select all occurances of current selection in file
 map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
+
+# System clipboard integration
+map global normal <c-p> "<a-!>wl-paste<ret>"
+map global normal <c-P> "!wl-paste<ret>"
+map global normal <c-y> "<a-|>wl-copy<ret>"
+map global normal <c-R> "|wl-paste<ret>"
 
 # INSERT
 
