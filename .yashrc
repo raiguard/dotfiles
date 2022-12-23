@@ -65,10 +65,6 @@ alias dgit="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias lg=lazygit
 alias t="todoist-cli --color"
 alias f=/home/rai/dev/factorio/1.1/bin/x64/factorio
-# alias f1=/home/rai/dev/factorio/1/bin/x64/factorio
-# alias f2=/home/rai/dev/factorio/2/bin/x64/factorio
-# alias f3=/home/rai/dev/factorio/3/bin/x64/factorio
-# alias f4=/home/rai/dev/factorio/4/bin/x64/factorio
 alias fh=/home/rai/dev/factorio/headless/bin/x64/factorio
 alias fs=factorio-test-server
 alias fj=factorio-japanese
