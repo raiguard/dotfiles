@@ -1,6 +1,7 @@
 evaluate-commands %sh{
     cork init
     kak-lsp --kakoune -s $kak_session
+    pesticide --kakoune
 }
 
 # kak-lsp debugging
@@ -15,7 +16,7 @@ define-command -hidden setup-factorio-workspace %{
         [language.lua.settings.Lua]
         # TODO: kak-lsp completely overwrites our settings instead of merging them
         diagnostics.disable = ["lowercase-global", "redefined-local"]
-        diagnostics.severity = { unused-local = "Warning", undefined-global = "Error" }
+        diagnostics.severity = { unused-local = "Error", undefined-global = "Error", undefined-field = "Error" }
         hover.expandAlias = false
         telemetry.enable = false
         workspace.userThirdParty = ["/home/rai/dev/.sumneko"]
@@ -59,8 +60,8 @@ cork kak-mirror "https://git.sr.ht/~raiguard/kak-mirror" %{
 }
 
 cork kak-move-lines "https://git.sr.ht/~raiguard/kak-move-lines" %{
-    map global normal ⓙ ': move-lines-down %val{count}<ret>'
-    map global normal <c-k> ': move-lines-up %val{count}<ret>'
+    map global normal <c-a-j> ': move-lines-down %val{count}<ret>'
+    map global normal <c-a-k> ': move-lines-up %val{count}<ret>'
 }
 
 cork kak-live-grep "https://git.sr.ht/~raiguard/kak-live-grep" %{
@@ -286,6 +287,8 @@ hook global WinSetOption filetype=(c|cpp) %{
     set-option window softtabstop 2
     set-option window indentwidth 2
 
+    map global user a ":c-alternative-file<ret>"
+
     # Highlight operators
     try %{
         remove-highlighter buffer/operators
@@ -321,6 +324,14 @@ hook global WinSetOption filetype=(git-commit|mail) %{
     set-option window autowrap_column 72
     set-option window autowrap_format_paragraph true
     autowrap-enable
+}
+
+hook global WinSetOption filetype=go %{
+    noexpandtab
+    set-option window indentwidth 0
+    add-highlighter window/ column 81 Ruler
+
+    hook window BufWritePre .* lsp-formatting-sync
 }
 
 hook global WinSetOption filetype=hare %{
@@ -391,15 +402,24 @@ hook global WinSetOption filetype=lua %{
     set-option window softtabstop 2
     set-option window indentwidth 2
 
+    set-face window BadIndent ",rgba:%opt{darkred}%opt{selectionalpha}"
+    add-highlighter window/bad-indent regex ^\t\t\t(\t)+ 0:BadIndent
+
     set-option window formatcmd "stylua -"
 }
 
-hook global WinSetOption filetype=go %{
-    add-highlighter shared/go/code/function regex "\b(\w*)\b\(" 1:function
+hook global WinSetOption filetype=makefile %{
     noexpandtab
     set-option window indentwidth 0
+}
 
-    hook window BufWritePre .* lsp-formatting-sync
+hook global WinSetOption filetype=pesticide %{
+    noexpandtab
+    set-option window indentwidth 0
+    add-highlighter window/ column 81 Ruler
+
+    add-highlighter window/pesticide_directive regex "^\s*(adapter)" 1:keyword
+    rainbow-enable-window
 }
 
 hook global WinSetOption filetype=python %{
@@ -484,7 +504,8 @@ map global normal "#" ":comment-line<ret>"
 map global normal "<a-#>" ":comment-block<ret>"
 
 # Go to file (basic fuzzy finder)
-map global goto "f" '<esc>:prompt -shell-script-candidates %{ fd --type f --hidden --no-ignore --exclude .git --exclude target --exclude .vscode/factorio } file: %{ edit %val{text} }<ret>' -docstring "file"
+map global goto f '<esc>:prompt -menu -shell-script-candidates %{ git ls-files -c -m -o } git-file: %{ edit %val{text} }<ret>' -docstring "git file..."
+map global user f '<esc>:prompt -shell-script-candidates %{ fd --type f --hidden --no-ignore --exclude .git --exclude target --exclude .vscode/factorio } file: %{ edit %val{text} }<ret>' -docstring "file"
 
 # Go to buffer
 map global goto "b" '<esc>:prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
@@ -513,6 +534,10 @@ map global normal <c-p> "<a-!>wl-paste<ret>"
 map global normal <c-P> "!wl-paste<ret>"
 map global normal <c-y> "<a-|>wl-copy<ret>"
 map global normal <c-R> "|wl-paste<ret>"
+
+# Selection undo and redo
+map global normal <s-tab> <c-h>
+map global normal <tab> <c-k>
 
 # INSERT
 
@@ -591,7 +616,6 @@ set-option global lsp_hover_anchor true
 set-option global lsp_auto_highlight_references true
 set-option global lsp_hover_max_lines 50
 
-lsp-auto-signature-help-enable
 
 define-command lsp-restart -docstring "Restart kak-lsp session" %{ lsp-stop; lsp-start }
 
