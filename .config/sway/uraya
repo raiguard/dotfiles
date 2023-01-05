@@ -48,4 +48,11 @@ for_window [title="SwingTerminalFrame"] {
     floating enable
 }
 
+for_window [title="Picture-in-Picture"] {
+    floating enable
+    sticky enable
+    move position 1321 721
+    resize set width 599 height 337
+}
+
 # vim: ft=i3

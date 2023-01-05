@@ -122,6 +122,8 @@ cork kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
     map global gdb q ":gdb-session-stop<ret>" -docstring "stop"
 }
 
+cork grep-expand "https://github.com/JacobTravers/grep-expand.kak"
+
 cork kakoune-grep-write "https://github.com/JacobTravers/kakoune-grep-write" %{
     hook global BufCreate \*grep\* %{
         alias buffer w grep-write
@@ -401,9 +403,6 @@ hook global WinSetOption filetype=lua %{
     set-option window tabstop 2
     set-option window softtabstop 2
     set-option window indentwidth 2
-
-    set-face window BadIndent ",rgba:%opt{darkred}%opt{selectionalpha}"
-    add-highlighter window/bad-indent regex ^\t\t\t(\t)+ 0:BadIndent
 
     set-option window formatcmd "stylua -"
 }
