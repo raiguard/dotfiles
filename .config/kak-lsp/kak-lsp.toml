@@ -4,13 +4,6 @@ verbosity = 2
 
 # LANGUAGES
 
-# [language.c_cpp]
-# filetypes = ["c", "cpp"]
-# roots = [".ccls-root", "compile_commands.json"]
-# command = "ccls"
-# # kak-lsp does not support newText https://github.com/ul/kak-lsp/issues/40
-# args = ["--init={\"completion\":{\"detailedLabel\":false}}"]
-
 [language.bash]
 filetypes = ["sh"]
 roots = [".git", ".hg"]
@@ -32,11 +25,6 @@ args = ["--stdio"]
 filetypes = ["go"]
 roots = ["Gopkg.toml", "go.mod", ".git", ".hg"]
 command = "gopls"
-settings_section = "gopls"
-
-[language.go.settings.gopls]
-# See https://github.com/golang/tools/blob/master/gopls/doc/settings.md
-# "build.buildFlags" = []
 
 [language.hare]
 filetypes = ["hare"]
@@ -74,11 +62,6 @@ workspace.userThirdParty = ["/home/rai/dev/.sumneko"]
 filetypes = ["python"]
 roots = ["requirements.txt", "setup.py", ".git", ".hg"]
 command = "pylsp"
-settings_section = "_"
-
-[language.python.settings._]
-# See https://github.com/python-lsp/python-lsp-server#configuration
-# pylsp.configurationSources = ["flake8"]
 
 [language.rust]
 filetypes = ["rust"]
@@ -130,6 +113,10 @@ face = "type"
 [[semantic_tokens]]
 token = "character"
 face = "string"
+
+[[semantic_tokens]]
+token = "class"
+face = "type"
 
 [[semantic_tokens]]
 token = "colon"
