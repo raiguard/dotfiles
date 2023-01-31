@@ -17,6 +17,9 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
+# for osu
+export SDL_VIDEODRIVER=wayland
+
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
     --color=fg:#abb2bf,bg:-1,hl:#56b6c2
     --color=fg+:#abb2bf,bg+:,hl+:#56b6c2
