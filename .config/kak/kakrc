@@ -399,9 +399,9 @@ hook global WinSetOption filetype=lua %{
     lsp-init
     rainbow-enable-window
 
-    set-option window tabstop 2
-    set-option window softtabstop 2
-    set-option window indentwidth 2
+    set-option window tabstop 4
+    set-option window softtabstop 4
+    set-option window indentwidth 0
 
     set-option window formatcmd "stylua -"
 }
