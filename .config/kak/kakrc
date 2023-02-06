@@ -389,12 +389,10 @@ hook global WinSetOption filetype=latex %{
     map global figures c ": create-figure<ret>" -docstring "create"
     map global figures e ": edit-figures<ret>" -docstring "edit"
 
-    # set-option -add global snippets \
-    # Sum \bsum\b %{snippets-insert "\sum_{$1}^{$2} ($3) $4"} \
-    # "Block math" bmath %{snippets-insert "$$$$ $1 $$$$"} \
-    # Fraction // %{snippets-insert "\frac{$1}{$2} $3"} \
-    # Limit \blim\b %{snippets-insert "\lim_{${1:n} \to ${2:\infty}} $3"} \
-    # Leq \s<=\s  %{snippets-insert " \leq "}
+    set-option -add global snippets \
+    Fraction // %{snippets-insert "\frac{$1}{$2} $3"} \
+    Sum \bsm\b %{snippets-insert "\sum{$1 \to $2} $3"} \
+    Partial \bpD\b %{snippets-insert "\partial "}
 }
 
 evaluate-commands %sh{
@@ -505,10 +503,6 @@ hook global WinSetOption filetype=yaml %{
 # GENERAL MAPPINGS
 
 # NORMAL
-
-# Selection history
-map global normal <tab> <c-k>
-map global normal <s-tab> <c-h>
 
 # Comment
 map global normal "#" ":comment-line<ret>"
@@ -625,7 +619,6 @@ map global previous-location p ":lsp-previous-location *spell*<ret>" -docstring 
 set-option global lsp_hover_anchor true
 set-option global lsp_auto_highlight_references true
 set-option global lsp_hover_max_lines 50
-
 
 define-command lsp-restart -docstring "Restart kak-lsp session" %{ lsp-stop; lsp-start }
 
