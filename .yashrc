@@ -64,6 +64,7 @@ alias dlg="lazygit --work-tree $HOME --git-dir $HOME/.dotfiles"
 alias dgit="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias lg=lazygit
 alias t="todoist-cli --color"
+alias ipconfig="nmcli dev show wlan0 | grep IP4"
 alias f=/home/rai/dev/factorio/1.1/bin/x64/factorio
 alias fh=/home/rai/dev/factorio/headless/bin/x64/factorio
 alias fs=factorio-test-server
@@ -74,5 +75,9 @@ alias ffr=/home/rai/dev/projects/wube/Factorio-1.1/bin/FinalReleasex64GCC/factor
 alias fde=/home/rai/dev/projects/wube/Factorio-1.2/bin/Debugx64GCC/factorio-run
 alias fre=/home/rai/dev/projects/wube/Factorio-1.2/bin/Releasex64GCC/factorio-run
 alias ffre=/home/rai/dev/projects/wube/Factorio-1.2/bin/FinalReleasex64GCC/factorio-run
+
+# PC-specific configuration
+file=~/.yashrc_$(uname -n)
+[[ -f $file ]] && . $file
 
 # vim: ft=sh

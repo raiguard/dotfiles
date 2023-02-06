@@ -49,7 +49,7 @@ if [ -z "$session" ]; then
     exit
 fi
 
-if $(echo "$sessions" | grep -q "\b$session\b"); then
+if $(echo "$sessions" | grep -q "^$session$"); then
     $kak -c $session "$@"
 else
     $kak -s $session "$@"

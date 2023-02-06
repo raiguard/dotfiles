@@ -5,5 +5,5 @@ set -euo pipefail
 IFS=$'\n\t'
 
 fd -t f -I -E "gas" ".*" "$HOME"/{documents,school,downloads} |
-    grep .pdf | fuzzel -d -w 100 | tr '\n' '\0' | xargs -0 xdg-open
+    rg "(\.pdf|\.png)" | fuzzel -d -w 100 | tr '\n' '\0' | xargs -0 xdg-open
 
