@@ -21,8 +21,6 @@ input type:tablet_tool {
 
 # Output configuration
 output * bg ~/pictures/wallpaper fill
-output DP-3 bg ~/pictures/wallpaper-dp-3 fill
-output DP-5 bg ~/pictures/wallpaper-dp-5 fill
 
 ### Idle configuration
 
