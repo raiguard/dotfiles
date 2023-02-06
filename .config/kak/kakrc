@@ -276,7 +276,7 @@ hook global WinSetOption filetype=(css|go|scss) %{
     lsp-init
     rainbow-enable-window
 }
-hook global WinSetOption filetype=(fish|i3|json|kak|toml) %{
+hook global WinSetOption filetype=(fish|i3|json|kak|sh|toml) %{
     rainbow-enable-window
 }
 
@@ -356,11 +356,13 @@ hook global WinSetOption filetype=latex %{
     lsp-init
     rainbow-enable-window
 
-    add-highlighter window/ruler column 81 ",black"
+    add-highlighter window/ruler column 81 Ruler
 
     hook window BufWritePre .* lsp-formatting-sync
     define-command latex-automake %{
         hook window BufWritePost .* texlab-build
+    }
+    define-command latex-preview %{
         evaluate-commands %sh{ echo "pstart 'zathura ${kak_buffile%.tex}.pdf'" }
     }
 
@@ -370,7 +372,7 @@ hook global WinSetOption filetype=latex %{
                 inkscape-figures create "$kak_text" "$(dirname $kak_buffile)/figures"
             }
             execute-keys '"fR"zZ'
-            execute-keys "sincfig<ret>ll<a-i>B"
+            execute-keys '2<a-f>{lt}'
             nop %sh{
                 ( inkscape "$(dirname $kak_buffile)/figures/$kak_selection.svg" 2>&1 & ) > /dev/null 2>&1 < /dev/null
             }
@@ -393,6 +395,17 @@ hook global WinSetOption filetype=latex %{
     # Fraction // %{snippets-insert "\frac{$1}{$2} $3"} \
     # Limit \blim\b %{snippets-insert "\lim_{${1:n} \to ${2:\infty}} $3"} \
     # Leq \s<=\s  %{snippets-insert " \leq "}
+}
+
+evaluate-commands %sh{
+    if [ $(basename "$PWD") == "notes" ] || [ $(basename $(dirname "$PWD")) == "homework" ]; then
+        printf "%s\\n" "
+            hook -once global WinDisplay .* %{
+                latex-automake
+                latex-preview
+            }
+        "
+    fi
 }
 
 hook global WinSetOption filetype=lua %{
@@ -528,10 +541,9 @@ map global normal X x_
 map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
 
 # System clipboard integration
-map global normal <c-p> "<a-!>wl-paste<ret>"
-map global normal <c-P> "!wl-paste<ret>"
+map global normal <c-p> "!wl-paste<ret>"
 map global normal <c-y> "<a-|>wl-copy<ret>"
-map global normal <c-R> "|wl-paste<ret>"
+map global normal <c-r> "|wl-paste<ret>"
 
 # Selection undo and redo
 map global normal <s-tab> <c-h>
