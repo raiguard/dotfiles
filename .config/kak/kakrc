@@ -391,7 +391,7 @@ hook global WinSetOption filetype=latex %{
 
     set-option -add global snippets \
     Fraction // %{snippets-insert "\frac{$1}{$2} $3"} \
-    Sum \bsm\b %{snippets-insert "\sum{$1 \to $2} $3"} \
+    Sum \bsm\s %{snippets-insert "\sum{$1 \to $2} $3"} \
     Partial \bpD\b %{snippets-insert "\partial "}
 }
 

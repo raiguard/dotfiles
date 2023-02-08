@@ -156,7 +156,7 @@ client.focused_inactive #70798a #70798a #181a1f #e5c07b
 client.unfocused #70798a #70798a #181a1f #e5c07b
 client.urgent #e06c75 #70798a #abb2bf #e5c07b
 
-font Source Code Pro Medium 8.5
+font Source Code Pro Medium 8
 title_align center
 
 smart_borders no_gaps
