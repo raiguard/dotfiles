@@ -56,6 +56,24 @@ if [ "$TERM" == "foot" ]; then
     PROMPT_COMMAND=foot_escs
 fi
 
+fbuild() {
+    mode="Debug"
+
+    if [ ! -z "$1" ]; then
+        mode="$1"
+    fi
+
+    target="run"
+    if [ ! -z "$2" ]; then
+        target="$2"
+    fi
+
+    threads=$(grep -c vendor_id /proc/cpuinfo)
+    threads=$(($threads - 2))
+
+    fastbuild/linux/fbuild -config fastbuild/fbuild.bff -j$threads GCC-${mode}x64-factorio-${target}
+}
+
 # aliases
 alias n=nnn
 alias k="kak"
