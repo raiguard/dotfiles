@@ -22,6 +22,7 @@ define-command -hidden setup-factorio-workspace %{
         diagnostics.globals = ["__DebugAdapter", "__Profiler"]
         workspace.library = [
             "/home/rai/dev/factorio/1.1/data/core/lualib",
+            "/home/rai/dev/factorio/1.1/data/base",
             "/home/rai/dev/.sumneko/factorio/library/",
             "/home/rai/dev/projects/personal/flib"
         ]
