@@ -164,6 +164,7 @@ smart_borders no_gaps
 ### Rules
 
 assign [class="factorio"] 3
+assign [app_id="factorio-run"] 3
 assign [class="discord"] 4
 assign [app_id="obs"] 4
 
