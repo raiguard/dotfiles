@@ -41,7 +41,7 @@ define-command -hidden setup-factorio-workspace %{
     )
 }
 evaluate-commands %sh{
-    if [ -f "info.json" ] || [ -f "src/info.json" ]; then
+    if [ -f "info.json" ] || [ -f "src/info.json" ] || [ -f "version.txt" ]; then
         echo "setup-factorio-workspace"
     fi
 }
@@ -411,9 +411,9 @@ hook global WinSetOption filetype=lua %{
     lsp-init
     rainbow-enable-window
 
-    set-option window tabstop 4
-    set-option window softtabstop 4
-    set-option window indentwidth 0
+    set-option window tabstop 2
+    set-option window softtabstop 2
+    set-option window indentwidth 2
 
     set-option window formatcmd "stylua -"
 }

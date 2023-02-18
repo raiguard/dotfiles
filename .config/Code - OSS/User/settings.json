@@ -7,7 +7,7 @@
     },
     "debug.disassemblyView.showSourceCode": true,
     "editor.bracketPairColorization.enabled": true,
-    "editor.cursorSmoothCaretAnimation": true,
+    "editor.cursorSmoothCaretAnimation": "on",
     "editor.fontFamily": "'Source Code Pro'",
     "editor.fontSize": 13,
     "editor.fontWeight": 600,

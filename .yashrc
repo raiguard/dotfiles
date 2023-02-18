@@ -58,7 +58,6 @@ fi
 
 fbuild() {
     mode="Debug"
-
     if [ ! -z "$1" ]; then
         mode="$1"
     fi
@@ -72,6 +71,8 @@ fbuild() {
     threads=$(($threads - 2))
 
     fastbuild/linux/fbuild -config fastbuild/fbuild.bff -j$threads GCC-${mode}x64-factorio-${target}
+
+    notify-send -u low -t 0 "Compilation finished"
 }
 
 # aliases
