@@ -12,8 +12,8 @@ cyan="#56b6c2"
 
 while true; do
     # CPU info
-    cpuusage=$(printf "%.1f%%" $(mpstat 1 1 | awk '/PM  all/ { print 100 - $13 }'))
-    cputemp=$(sensors | awk '/Package/ { print substr($4, 2) }')
+    cpuusage=$(mpstat 1 1 | awk '/PM  all/ { printf "%.1f%%", 100 - $13 }')
+    cputemp=$(sensors | awk '/Package/ { printf "%.0f°C", substr($4, 2, length($4) - 3) }')
     cpu="<span foreground='$magenta'>$cpuusage  $cputemp</span>  "
 
     # RAM info
