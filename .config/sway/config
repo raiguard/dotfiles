@@ -203,7 +203,7 @@ set $red #e06c75
 bar {
     font "Source Code Pro Bold 9"
     position top
-    status_command while ~/.config/sway/status.sh; do sleep 1; done
+    status_command ~/.config/sway/status.sh
     pango_markup enable
     strip_workspace_name yes
     icon_theme "Tela-blue-dark"
