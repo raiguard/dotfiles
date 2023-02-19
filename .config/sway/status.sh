@@ -57,7 +57,7 @@ while true; do
         if [ "$bat_charge" -lt 21 ]; then
             bat_color=$lightred
         fi
-        bat="$bat<span foreground='$bat_color'>$bat_status$bat_charge%</span>  "
+        bat="<span foreground='$bat_color'>$bat_status$bat_charge%</span>  "
     fi
     date=$(date +'%a %b %d %-H:%M:%S %Z')
     echo "$cpu$ram$dnd$bat$network$date"
