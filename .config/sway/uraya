@@ -21,6 +21,8 @@ input type:tablet_tool {
 
 # Output configuration
 output * bg ~/pictures/wallpaper fill
+output HDMI-A-1 position 0,0
+output eDP-1 position 320,1440
 
 ### Idle configuration
 

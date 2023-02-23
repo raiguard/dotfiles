@@ -47,7 +47,9 @@ while true; do
             fi
             tablet_status=$(echo "$tablet_info" | grep "power supply" \
                 | awk '/yes/ { print "+" }')
-            bat="<span foreground='$tablet_color'>T:$tablet_status$tablet_charge%</span>  "
+            tablet_bat="<span foreground='$tablet_color'>T:$tablet_status$tablet_charge%</span>  "
+        else
+            tablet_bat=""
         fi
         # Laptop
         bat_color=$green
@@ -57,7 +59,7 @@ while true; do
         if [ "$bat_charge" -lt 21 ]; then
             bat_color=$lightred
         fi
-        bat="<span foreground='$bat_color'>$bat_status$bat_charge%</span>  "
+        bat="$tablet_bat<span foreground='$bat_color'>$bat_status$bat_charge%</span>  "
     fi
     date=$(date +'%a %b %d %-H:%M:%S %Z')
     echo "$cpu$ram$dnd$bat$network$date"
