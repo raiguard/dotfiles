@@ -14,7 +14,7 @@ exec /usr/bin/polkit-dumb-agent
 
 ### GTK3 workaround
 
-exec_always import-gsettings
+exec_always import-gsettings.sh
 
 ### Key bindings
 
