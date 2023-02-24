@@ -27,6 +27,14 @@ while true; do
         network="<span foreground='$blue'>$ssid</span>  "
     fi
 
+    # GPU
+    if [ "$HOSTNAME" = "tantal" ]; then
+        gpubusy=$(cat "/sys/class/drm/card0/device/gpu_busy_percent")
+        gputemp=$(cat "/sys/class/drm/card0/device/hwmon/hwmon5/temp1_input")
+        gputemp=$(expr $gputemp / 1000)
+        gpu="<span foreground='$lightred'>$gpubusy%  $gputemp°C</span>  "
+    fi
+
     # Do-not-disturb
     if $(makoctl mode | grep -q "do-not-disturb"); then
         dnd="<span foreground='$darkorange'>DND</span>  "
@@ -62,5 +70,5 @@ while true; do
         bat="$tablet_bat<span foreground='$bat_color'>$bat_status$bat_charge%</span>  "
     fi
     date=$(date +'%a %b %d %-H:%M:%S %Z')
-    echo "$cpu$ram$dnd$bat$network$date"
+    echo "$cpu$ram$gpu$dnd$bat$network$date"
 done
