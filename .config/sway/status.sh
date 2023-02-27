@@ -25,6 +25,8 @@ while true; do
     ssid=$(iwconfig | grep ESSID | awk -F '"' '{ print $2 }')
     if [ -n "$ssid" ]; then
         network="<span foreground='$blue'>$ssid</span>  "
+    else
+        network=""
     fi
 
     # GPU
