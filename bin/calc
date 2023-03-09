@@ -1,0 +1,4 @@
+#!/bin/sh
+
+read -r input
+echo $(echo "print($input $1)" | lua)
