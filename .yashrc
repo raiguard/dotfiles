@@ -63,7 +63,7 @@ fbuild() {
         return
     fi
     mode="Debug"
-    if [ ! -z "$1" ]; then
+    if [ -n "$1" ]; then
         mode="$1"
     fi
 
@@ -73,7 +73,7 @@ fbuild() {
     fi
 
     target="run"
-    if [ ! -z "$2" ]; then
+    if [ -n "$2" ]; then
         target="$2"
     fi
 
@@ -81,6 +81,17 @@ fbuild() {
     threads=$(($threads - 2))
 
     fastbuild/linux/fbuild -config fastbuild/fbuild.bff -j$threads GCC-${mode}x64-factorio-${target}
+}
+
+frun() {
+    mode="$1"
+    if [ -z "$mode" ]; then
+        mode="Debug"
+    else
+        shift
+    fi
+
+    "bin/${mode}x64GCC/factorio-run" "$@"
 }
 
 # aliases

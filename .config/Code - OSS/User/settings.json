@@ -107,5 +107,6 @@
     "workbench.colorTheme": "One Dark Pro Darker",
     "workbench.iconTheme": "material-icon-theme",
     "workbench.sideBar.location": "right",
-    "git.openRepositoryInParentFolders": "never"
+    "git.openRepositoryInParentFolders": "never",
+    "lldb.suppressUpdateNotifications": true
 }

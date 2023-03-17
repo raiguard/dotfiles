@@ -7,6 +7,8 @@ evaluate-commands %sh{
 # nop %sh{ rm -f /tmp/kak-lsp.log }
 # set-option global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
+source "~/dev/projects/personal/kak-fastbuild/fastbuild.kak"
+
 # --------------------------------------------------
 # FACTORIO WORKSPACE CONFIGURATION
 
@@ -201,7 +203,7 @@ alias global ca delete-all-buffers
 alias global ca! delete-all-buffers-force
 
 # Remove trailing whitespace on save
-hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
+hook -group auto-trim-whitespace global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
 
 # Automatically parse modelines
 hook global BufOpenFile .* modeline-parse
@@ -277,7 +279,7 @@ hook global WinSetOption filetype=(css|go|scss) %{
     lsp-init
     rainbow-enable-window
 }
-hook global WinSetOption filetype=(fish|i3|json|kak|sh|toml) %{
+hook global WinSetOption filetype=(fish|i3|json|kak|sh|toml|fastbuild) %{
     rainbow-enable-window
 }
 
@@ -350,7 +352,6 @@ hook global WinSetOption filetype=hare %{
 
 hook global WinSetOption filetype=json %{
     set-option window formatcmd 'jq .'
-    hook window BufWritePre .* format
 }
 
 hook global WinSetOption filetype=latex %{
