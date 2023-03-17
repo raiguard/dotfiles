@@ -2,7 +2,6 @@
 exec inkscape-figures watch
 exec pactl load-module module-switch-on-connect
 exec poweralertd
-exec wlsunset -l 40.3 -L -111.8 -t 2500
 
 # Input configuration
 input type:touchpad {

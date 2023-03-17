@@ -11,6 +11,7 @@ set $right l
 
 exec mako
 exec /usr/bin/polkit-dumb-agent
+exec wlsunset -l 40.3 -L -111.8 -t 2500
 
 ### GTK3 workaround
 
@@ -169,6 +170,7 @@ assign [app_id="factorio-run"] 3
 assign [class="discord"] 4
 assign [app_id="obs"] 4
 
+# for_window [title="Blender Preferences"] floating enable
 for_window [title="File Operation Progress"] floating enable
 for_window [app_id="foot.floating"] {
     floating enable
