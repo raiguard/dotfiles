@@ -1,0 +1,202 @@
+### Variables
+
+set $mod Mod4
+
+set $left h
+set $down j
+set $up k
+set $right l
+
+### Autostart
+
+exec dunst
+exec --no-startup-id nitrogen --restore
+exec setxkbmap -layout us -option caps:escape
+exec /usr/bin/polkit-dumb-agent
+exec xrandr --output DisplayPort-1 --left-of DisplayPort-0 --output HDMI-A-0 --off
+exec xset r rate 200
+
+### Key bindings
+
+# Start a terminal
+bindsym $mod+Return exec kitty
+
+# Kill focused window
+bindsym $mod+BackSpace kill
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize with right mouse button.
+floating_modifier $mod
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+
+# Exit i3 (logs you out of your Wayland session)
+bindsym $mod+Shift+e exec i3nag -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your Wayland session.' -B 'Yes, exit i3' 'i3msg exit'
+
+# Launcher
+# bindsym $mod+y exec fuzzel-util-menu
+bindsym $mod+r exec rofi -show drun
+# bindsym $mod+w exec fuzzel-filesearch
+# bindsym $mod+q exec fuzzel-power-menu
+
+# Move your focus around
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# Move the focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+# Resize the focused window
+bindsym $mod+Control+$left resize shrink width 30px
+bindsym $mod+Control+$down resize grow height 30px
+bindsym $mod+Control+$up resize shrink height 30px
+bindsym $mod+Control+$right resize grow width 30px
+
+# Output assignments
+workspace 1 output DisplayPort-1
+workspace 4 output DisplayPort-2
+
+# Switch to workspace
+bindsym $mod+u workspace 1
+bindsym $mod+i workspace 2
+bindsym $mod+o workspace 3
+bindsym $mod+p workspace 4
+bindsym $mod+m workspace 5
+bindsym $mod+comma workspace 6
+bindsym $mod+period workspace 7
+bindsym $mod+slash workspace 8
+# Move focused container to workspace
+bindsym $mod+Shift+u move container to workspace 1
+bindsym $mod+Shift+i move container to workspace 2
+bindsym $mod+Shift+o move container to workspace 3
+bindsym $mod+Shift+p move container to workspace 4
+bindsym $mod+Shift+m move container to workspace 5
+bindsym $mod+Shift+comma move container to workspace 6
+bindsym $mod+Shift+period move container to workspace 7
+bindsym $mod+Shift+slash move container to workspace 8
+
+# You can "split" the current object of your focus with
+# $mod+b or $mod+v, for horizontal and vertical splits
+# respectively.
+bindsym $mod+b splith
+bindsym $mod+v splitv
+
+# Make the current focus fullscreen
+bindsym $mod+f fullscreen
+
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+space floating toggle
+
+# Swap focus between the tiling area and the floating area
+bindsym $mod+Shift+space focus mode_toggle
+
+# Toggle sticky on the current window
+bindsym $mod+s sticky toggle
+
+# Focus the parent container
+bindsym $mod+a focus parent
+# Toggle tabbed / stacking layout
+bindsym $mod+t layout toggle split tabbed stacking
+
+# Move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
+# Lock
+bindsym $mod+escape exec i3lock
+
+# Media controls
+bindsym XF86AudioRaiseVolume exec ~/.config/sway/volume.sh i
+bindsym XF86AudioLowerVolume exec ~/.config/sway/volume.sh d
+bindsym XF86AudioMute exec ~/.config/sway/volume.sh t
+bindsym XF86AudioPlay exec ~/.config/sway/media.sh play-pause
+bindsym XF86AudioNext exec ~/.config/sway/media.sh next
+bindsym XF86AudioPrev exec ~/.config/sway/media.sh previous
+
+# Brightness controls
+bindsym XF86MonBrightnessUp exec ~/.config/i3/brightness.sh +5%
+bindsym XF86MonBrightnessDown exec ~/.config/i3/brightness.sh 5%-
+
+# # Screenshots
+# bindsym print exec freeze-screenshot copy
+# # Focused  monitor
+# bindsym Shift+print exec grimshot --notify copy output
+# # Focused  window
+# bindsym Control+print exec grimshot --notify copy active
+# # Choose window
+# bindsym Alt+print exec freeze-screenshot save
+
+### Looks
+
+default_border pixel 2
+default_floating_border pixel 2
+
+client.focused #56b6c2 #56b6c2 #181a1f #e5c07b
+client.focused_inactive #70798a #70798a #181a1f #e5c07b
+client.unfocused #70798a #70798a #181a1f #e5c07b
+client.urgent #e06c75 #70798a #abb2bf #e5c07b
+
+font pango:Source Code Pro Medium 8
+title_align center
+
+smart_borders on
+
+### Rules
+
+assign [class="factorio"] 3
+assign [class="discord"] 4
+assign [class="obs"] 4
+
+for_window [title="File Operation Progress"] floating enable
+# for_window [app_id="foot.floating"] {
+#     floating enable
+#     resize set width 60ppt
+#     resize set height 80ppt
+# }
+# for_window [app_id="org.speedcrunch.speedcrunch"] {
+#     floating enable
+#     sticky enable
+#     move position 1427 701
+#     move scratchpad
+#     scratchpad show
+# }
+# for_window [app_id="org.qutebrowser.qutebrowser"] inhibit_idle fullscreen
+# for_window [app_id="com.obsproject.Studio"] inhibit_idle open
+# for_window [app_id="qemu"] inhibit_idle open
+
+### Bar
+
+set $bg #181a1f
+set $comment #70798a
+set $fg #abb2bf
+set $cyan #56b6c2
+set $red #e06c75
+
+bar {
+    font "pango:Source Code Pro Bold 9"
+    position top
+    status_command ~/.config/sway/status.sh
+    strip_workspace_name yes
+    colors {
+        background $bg
+        statusline $fg
+        active_workspace $bg $bg $fg
+        focused_workspace $bg $bg $cyan
+        inactive_workspace $bg $bg $comment
+        urgent_workspace $red $red $bg
+    }
+}
+
+### Other
+
+# include "~/.config/i3/`uname -n`"
+include /etc/i3/config.d/*

@@ -34,4 +34,7 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 # If running from tty1, start sway
 [ "$(tty)" = "/dev/tty1" ] && exec sway
 
+# If running from tty2, start i3
+[ "$(tty)" = "/dev/tty2" ] && exec startx i3
+
 # vim: ft=sh
