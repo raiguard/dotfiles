@@ -52,9 +52,8 @@ git tag v$version -a -m "$changelog"
 
 # Create archive and upload it
 rootpath=$PWD
-filename="${modname}_${version}.zip"
 cd $archivepath
-git archive --format=zip --prefix=$modname/ HEAD -o $filename
+filename=$(fmtk package | awk '{ print $2 }')
 if [ "$1" != "--noupload" ]; then
     fmm upload $filename
     rm $filename
