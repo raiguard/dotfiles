@@ -84,6 +84,7 @@ fbuild() {
 }
 
 # aliases
+alias dmenu="fuzzel -d"
 alias n=nnn
 alias k="kak"
 alias sk="sudoedit"

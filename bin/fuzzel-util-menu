@@ -1,11 +1,11 @@
 #!/bin/sh
 
-entries="Network settings"
+entries="Network settings\nBluetooth settings"
 
 if makoctl mode | grep -q "do-not-disturb"; then
-    entries="Disable do-not-disturb\n$entries"
+    entries="$entries\nDisable do-not-disturb"
 else
-    entries="Enable do-not-disturb\n$entries"
+    entries="$entries\nEnable do-not-disturb"
 fi
 
 selected=$(echo -e $entries | fuzzel -d -w 24 -l 6)
@@ -21,4 +21,6 @@ case "$selected" in
         ;;
     "Network settings")
         networkmanager_dmenu;;
+    "Bluetooth settings")
+        dmenu-bluetooth;;
 esac
