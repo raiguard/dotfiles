@@ -31,10 +31,10 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 # Local environment configuration
 [[ -f ~/.env ]] && . ~/.env
 
-# If running from tty1, start sway
+# Sway, i3, Gnome (x11), Gnome (wayland)
 [ "$(tty)" = "/dev/tty1" ] && exec sway
-
-# If running from tty2, start i3
-[ "$(tty)" = "/dev/tty2" ] && exec startx i3
+[ "$(tty)" = "/dev/tty2" ] && startx /usr/bin/i3
+[ "$(tty)" = "/dev/tty3" ] && startx /usr/bin/gnome-shell
+[ "$(tty)" = "/dev/tty4" ] && gnome-shell --wayland
 
 # vim: ft=sh
