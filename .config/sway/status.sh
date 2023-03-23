@@ -74,5 +74,5 @@ while true; do
     date=$(date +'%a %b %d')
     prague=$(TZ=Europe/Prague date +"%-H:%M %Z")
     local=$(date +"%-H:%M %Z")
-    echo "$cpu$ram$gpu$dnd$bat$network$date  $prague  $local"
+    echo "$cpu$ram$gpu$dnd$bat$network$date $prague $local"
 done
