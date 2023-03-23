@@ -71,6 +71,8 @@ while true; do
         fi
         bat="$tablet_bat<span foreground='$bat_color'>$bat_status$bat_charge%</span>  "
     fi
-    date=$(date +'%a %b %d %-H:%M:%S %Z')
-    echo "$cpu$ram$gpu$dnd$bat$network$date"
+    date=$(date +'%a %b %d')
+    prague=$(TZ=Europe/Prague date +"%-H:%M %Z")
+    local=$(date +"%-H:%M %Z")
+    echo "$cpu$ram$gpu$dnd$bat$network$date  $prague  $local"
 done
