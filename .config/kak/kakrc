@@ -515,10 +515,20 @@ map global normal X x_
 # Select all occurances of current selection in file
 map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
 
-# System clipboard integration
-map global normal <c-p> "!wl-paste<ret>"
-map global normal <c-y> "<a-|>wl-copy<ret>"
-map global normal <c-r> "|wl-paste<ret>"
+map global normal <c-y> ":osc-yank<ret>"
+define-command -hidden osc-yank \
+-docstring "yank selection to terminal clipboard using OSC 52" %{
+    nop %sh{
+        eval set -- "$kak_quoted_selections"
+        copy=$1
+        shift
+        for sel; do
+            copy=$(printf '%s\n%s' "$copy" "$sel")
+        done
+        encoded=$(printf %s "$copy" | base64 | tr -d '\n')
+        printf "\e]52;;%s\e\\" "$encoded" >/dev/tty
+    }
+}
 
 # Selection undo and redo
 map global normal <s-tab> <c-h>
