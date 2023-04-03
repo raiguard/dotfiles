@@ -14,6 +14,7 @@ args = ["start"]
 filetypes = ["c", "cpp"]
 roots = ["compile_commands.json", ".clangd", ".git", ".hg"]
 command = "clangd"
+args = ["--limit-references=0"]
 
 [language.css]
 filetypes = ["css"]

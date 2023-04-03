@@ -108,5 +108,8 @@
     "workbench.iconTheme": "material-icon-theme",
     "workbench.sideBar.location": "right",
     "git.openRepositoryInParentFolders": "never",
-    "lldb.suppressUpdateNotifications": true
+    "lldb.suppressUpdateNotifications": true,
+    "clangd.arguments": [
+        "--limit-references=0"
+    ]
 }
