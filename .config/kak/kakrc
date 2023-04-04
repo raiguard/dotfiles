@@ -7,8 +7,6 @@ evaluate-commands %sh{
 # nop %sh{ rm -f /tmp/kak-lsp.log }
 # set-option global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
-source "~/dev/projects/personal/kak-fastbuild/fastbuild.kak"
-
 # --------------------------------------------------
 # FACTORIO WORKSPACE CONFIGURATION
 
@@ -52,6 +50,8 @@ evaluate-commands %sh{
 # PLUGINS
 
 cork kak-ansi "https://github.com/eraserhd/kak-ansi"
+
+cork kak-fastbuild "https://github.com/raiguard/kak-fastbuild"
 
 cork kak-harpoon "https://git.sr.ht/~raiguard/kak-harpoon" %{
     harpoon-add-bindings
@@ -441,17 +441,6 @@ hook global WinSetOption filetype=python %{
     hook window BufWritePre .* format
 }
 
-hook global WinSetOption filetype=rainmeter %{
-    rainbow-enable-window
-
-    # Swap variable and operator colors
-    face buffer variable "rgb:%opt{lightred}"
-    face buffer operator default
-}
-hook global BufSetOption filetype=rainmeter %{
-    set-option buffer comment_line ';'
-}
-
 hook global WinSetOption filetype=rust %{
     lsp-init
     rainbow-enable-window
@@ -474,15 +463,6 @@ hook global WinSetOption filetype=scdoc %{
     add-highlighter window/scdoc_header regex "^##?\s*.*?$" 0:+b
     add-highlighter window/scdoc_bold regex "\*.*?\*" 0:+b
     add-highlighter window/scdoc_underline regex "\b_.*?_\b" 0:+u
-}
-
-hook global WinSetOption filetype=sile %{
-    rainbow-enable-window
-    hook -group silemake window BufWritePost .* %{
-        make
-        execute-keys <c-o>
-        echo "Building file..."
-    }
 }
 
 hook global WinSetOption filetype=typescript %{
@@ -511,7 +491,6 @@ map global normal "#" ":comment-line<ret>"
 map global normal "<a-#>" ":comment-block<ret>"
 
 # Go to file (basic fuzzy finder)
-# map global goto f '<esc>:prompt -menu -shell-script-candidates %{ git ls-files -c -m -o } git-file: %{ edit %val{text} }<ret>' -docstring "git file..."
 map global goto f '<esc>:prompt -shell-script-candidates %{ fd --type f --hidden } file: %{ edit %val{text} }<ret>' -docstring "file"
 
 # Go to buffer
