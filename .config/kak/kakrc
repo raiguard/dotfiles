@@ -605,7 +605,7 @@ define-command lsp-restart -docstring "Restart kak-lsp session" %{ lsp-stop; lsp
 define-command lsp-init -docstring "Enable LSP with default settings" %{
     map window goto m "<esc>:lsp-implementation<ret>" -docstring "implementations"
     map window user l ":enter-user-mode lsp<ret>" -docstring "lsp..."
-    map window normal "ⓗ" ":lsp-hover<ret>"
+    map window normal <c-h> ":lsp-hover<ret>"
     map window normal <c-a-h> ":lsp-hover-buffer<ret>"
     map window normal <c-a> ":lsp-code-actions<ret>"
     map window normal <c-r> ":lsp-rename-prompt<ret>"
