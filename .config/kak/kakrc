@@ -127,7 +127,7 @@ cork kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
 cork grep-expand "https://github.com/JacobTravers/grep-expand.kak"
 
 cork kakoune-grep-write "https://github.com/JacobTravers/kakoune-grep-write" %{
-    hook global BufCreate \*grep\* %{
+    hook global WinSetOption filetype=(grep|lsp-goto) %{
         alias buffer w grep-write
     }
 }
