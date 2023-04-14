@@ -220,6 +220,14 @@ hook global ModuleLoaded sway %{
         terminal %arg{@}
         set-option window foot_app_id foot
     }
+    define-command -params .. vsplit %{
+        nop %sh{ swaymsg splith }
+        new %arg{@}
+    }
+    define-command -params .. hsplit %{
+        nop %sh{ swaymsg splitv }
+        new %arg{@}
+    }
 }
 
 # Supertab - completion and snippet jumping
