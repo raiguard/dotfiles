@@ -56,44 +56,6 @@ if [ "$TERM" == "foot" ]; then
     PROMPT_COMMAND=foot_escs
 fi
 
-fbuild() {
-    # Avoid accidentally freezing system
-    if [ $(uname -n) = "uraya" ] && [ -n "$(pgrep clangd)" ]; then
-        echo "Close editor before compiling"
-        return
-    fi
-    mode="Debug"
-    if [ -n "$1" ]; then
-        mode="$1"
-    fi
-
-    if [ "$mode" = "compdb" ]; then
-        fastbuild/linux/fbuild -config fastbuild/fbuild.bff GCC-Debugx64-factorio-run GCC-Debugx64-factorio-test -compdb
-        return
-    fi
-
-    target="run"
-    if [ -n "$2" ]; then
-        target="$2"
-    fi
-
-    threads=$(grep -c vendor_id /proc/cpuinfo)
-    threads=$(($threads - 2))
-
-    fastbuild/linux/fbuild -config fastbuild/fbuild.bff -j$threads GCC-${mode}x64-factorio-${target}
-}
-
-frun() {
-    mode="$1"
-    if [ -z "$mode" ]; then
-        mode="Debug"
-    else
-        shift
-    fi
-
-    "bin/${mode}x64GCC/factorio-run" "$@"
-}
-
 # aliases
 alias dmenu="fuzzel -d"
 alias n=nnn

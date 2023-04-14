@@ -1,0 +1,33 @@
+#!/bin/sh
+
+if [ ! -e "fastbuild/linux/fbuild" ]; then
+    echo "Not in a Factorio source directory"
+    exit
+fi
+
+fbuild="fastbuild/linux/fbuild -config fastbuild/fbuild.bff"
+
+# Avoid accidentally freezing laptop
+if [ $(uname -n) = "uraya" ] && [ -n "$(pgrep clangd)" ]; then
+    echo "Close editor before compiling"
+    exit
+fi
+mode="FastDebug"
+if [ -n "$1" ]; then
+    mode="$1"
+fi
+
+if [ "$mode" = "compdb" ]; then
+    $fbuild GCC-Debugx64-factorio-run GCC-Debugx64-factorio-test -compdb
+    exit
+fi
+
+target="run"
+if [ -n "$2" ]; then
+    target="$2"
+fi
+
+threads=$(grep -c vendor_id /proc/cpuinfo)
+threads=$(($threads - 2))
+
+$fbuild -j$threads GCC-${mode}x64-factorio-${target}

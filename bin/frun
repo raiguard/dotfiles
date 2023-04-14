@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ ! -e "fastbuild/linux/fbuild" ]; then
+    echo "Not in a Factorio source directory"
+    exit
+fi
+
+mode="FastDebug"
+if [ -n "$1" ]; then
+    mode="$1"
+    shift
+fi
+
+bin/${mode}x64GCC/factorio-run "$@"
