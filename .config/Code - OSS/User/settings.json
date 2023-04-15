@@ -111,5 +111,7 @@
     "lldb.suppressUpdateNotifications": true,
     "clangd.arguments": [
         "--limit-references=0"
-    ]
+    ],
+    "editor.inlayHints.enabled": "off",
+    "workbench.editor.wrapTabs": true
 }
