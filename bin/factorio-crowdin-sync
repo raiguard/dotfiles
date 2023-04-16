@@ -17,7 +17,7 @@ def modify_files(transformer):
             file.close()
 
         with open(filename, "w") as file:
-            file.write('\n'.join(out))
+            file.write('\n'.join(out) + '\n')
             file.close()
 
 
@@ -31,3 +31,6 @@ subprocess.run(["crowdin", "pull"])
 # Unquote
 modify_files(lambda components: '{}={}'.format(
     components[0], components[1].rstrip()[1:-1].replace('\\"', '"')))
+
+# Stage
+subprocess.run(["git", "add", "."])
