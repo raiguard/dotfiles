@@ -49,6 +49,14 @@ evaluate-commands %sh{
 # --------------------------------------------------
 # PLUGINS
 
+cork luar "https://github.com/gustavo-hms/luar" %{
+    require-module luar
+}
+
+cork peneira "https://github.com/gustavo-hms/peneira" %{
+    require-module peneira
+}
+
 cork kak-ansi "https://github.com/eraserhd/kak-ansi"
 
 cork kak-fastbuild "https://github.com/raiguard/kak-fastbuild"
@@ -287,7 +295,7 @@ hook global WinSetOption filetype=(css|go|scss) %{
     lsp-init
     rainbow-enable-window
 }
-hook global WinSetOption filetype=(fish|i3|json|kak|sh|toml|fastbuild) %{
+hook global WinSetOption filetype=(fish|i3|kak|sh|toml|fastbuild) %{
     rainbow-enable-window
 }
 
@@ -359,7 +367,13 @@ hook global WinSetOption filetype=hare %{
 }
 
 hook global WinSetOption filetype=json %{
+    lsp-init
+    rainbow-enable-window
     set-option window formatcmd 'jq .'
+
+    set-option window tabstop 2
+    set-option window softtabstop 2
+    set-option window indentwidth 2
 }
 
 hook global WinSetOption filetype=latex %{

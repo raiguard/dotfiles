@@ -32,6 +32,22 @@ filetypes = ["hare"]
 roots = [".git/", "Makefile", "hare.ini"]
 command = "harepls"
 
+[language.json]
+filetypes = ["json"]
+roots = ["info.json", "package.json"]
+command = "vscode-json-languageserver"
+args = ["--stdio"]
+
+[language.json.settings.json]
+format.enable = true
+
+[[language.json.settings.json.schemas]]
+fileMatch = ["info.json"]
+url = "file:///usr/lib/node_modules/factoriomod-debug/schema/modinfo.json"
+
+    # [language.json.settings.json.schemas.schema]
+    # type = "array"
+
 [language.latex]
 filetypes = ["tex", "latex"]
 roots = [".git/"]
