@@ -16,7 +16,7 @@ basedir="$FACTORIO"
 if [ -e "fastbuild/linux/fbuild" ]; then
   insrc=true
   # We are in a Factorio source directory
-  basedir="."
+  basedir="$PWD"
 elif [ "$1" = "1.1" ]; then
   # Use 1.1
   insrc=true
