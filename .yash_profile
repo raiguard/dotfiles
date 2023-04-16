@@ -5,9 +5,9 @@ export EDITOR="kak"
 export PAGER="less"
 export TERMINAL="foot"
 
-export FACTORIO="$HOME/dev/factorio/1.1/bin/x64/factorio"
-export FACTORIO_R11="$HOME/dev/projects/wube/Factorio-1.1/bin/Releasex64GCC/factorio-run"
-export FACTORIO_R12="$HOME/dev/projects/wube/Factorio-1.2/bin/Releasex64GCC/factorio-run"
+export FACTORIO="$HOME/dev/factorio/1.1"
+export FACTORIO_11="$HOME/dev/projects/wube/Factorio-1.1"
+export FACTORIO_12="$HOME/dev/projects/wube/Factorio-1.2"
 
 # QT theme
 export QT_PLATFORM_THEME=qt5ct

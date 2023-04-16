@@ -1,14 +1,84 @@
 #!/bin/sh
 
-if [ ! -e "fastbuild/linux/fbuild" ]; then
-    echo "Not in a Factorio source directory"
-    exit
+set -e
+
+while getopts 'cfhl:' c
+do
+  case $c in
+    c) mpargs="--mp-connect localhost:34197" ;;
+    h) mpargs="--start-server-load-scenario base/freeplay" ;;
+    l) locale=$OPTARG ;;
+  esac
+done
+shift $((OPTIND-1))
+
+basedir="$FACTORIO"
+if [ -e "fastbuild/linux/fbuild" ]; then
+  insrc=true
+  # We are in a Factorio source directory
+  basedir="."
+elif [ "$1" = "1.1" ]; then
+  # Use 1.1
+  insrc=true
+  basedir="$FACTORIO_11"
+  shift
+elif [ "$1" = "1.2" ]; then
+  # Use 1.2
+  insrc=true
+  basedir="$FACTORIO_12"
+  shift
 fi
 
-mode="FastDebug"
-if [ -n "$1" ]; then
-    mode="$1"
-    shift
+if [ $insrc ]; then
+  arch="x64GCC"
+  mode="FastDebug"
+  bin="factorio-run"
+  case $1 in
+    asan) mode="DebugASAN"; shift ;;
+    debug) mode="Debug"; shift ;;
+    fastdebug) shift ;; # Useless
+    finalrelease) mode="FinalRelease"; shift ;;
+    release) mode="Release"; shift ;;
+    testasan) mode="FastDebugASAN"; bin="factorio-test"; shift ;;
+    test) mode="FastDebug"; bin="factorio-test"; shift ;;
+  esac
+else
+  arch="x64"
+  bin="factorio"
 fi
 
-bin/${mode}x64GCC/factorio-run "$@"
+# Allow running multiple instances at once
+if [ -e "$basedir/.lock" ] || [ -n "$locale" ]; then
+  write=$(mktemp -d /tmp/frun.XXX)
+  awk -v locale="locale=$locale" -v writedata="write-data=$write" '
+    { flag = 1 }
+    /write-data/ { flag = 0; print writedata }
+    /locale/ { flag = 0; print locale }
+    /check-updates/ { flag = 0; print "check-updates=false" }
+    flag { print }
+  ' $basedir/config/config.ini > $write/config.ini
+
+  ln -s $basedir/atlas-cache.dat $write/atlas-cache.dat
+  ln -s $basedir/crop-cache.dat $write/crop-cache.dat
+
+  ln -s $basedir/mods $write/mods
+  ln -s $basedir/saves $write/saves
+  ln -s $basedir/scenarios $write/scenarios
+
+  ln -s $basedir/server-adminlist.json $write/server-adminlist.json
+  ln -s $basedir/server-settings.json $write/server-settings.json
+
+  jq \
+    --arg username $(echo "$write" | sed "s~/tmp/frun\.~~") \
+    '.["service-username"] = $username | .["service-token"] = ""' \
+    $basedir/player-data.json > $write/player-data.json
+
+  echo "Forked - write directory: $write/config.ini"
+  forkargs="--config $write/config.ini"
+fi
+
+$basedir/bin/$mode$arch/$bin $forkargs $mpargs "$@"
+
+if [ -n "$write" ]; then
+  rm -rf $write
+fi

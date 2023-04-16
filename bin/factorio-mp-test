@@ -15,10 +15,10 @@ else
     num=2
 fi
 
-factorio-fork -h &
+frun -h &
 # TODO: Detect when the server has started up
 sleep 5
 
 for i in $(seq 1 $num); do
-    (factorio-fork -c) 2>&1 > /dev/null &
+    (frun -c) 2>&1 > /dev/null &
 done

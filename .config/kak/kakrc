@@ -273,9 +273,9 @@ hook global InsertCompletionHide .* %{
 # Default window settings
 hook global WinCreate .* %{
     expandtab
-    set-option window tabstop 4
-    set-option window softtabstop 4
-    set-option window indentwidth 4
+    set-option window tabstop 2
+    set-option window softtabstop 2
+    set-option window indentwidth 2
 
     # Show and automatically update git diff on write
     evaluate-commands %sh{
