@@ -6,8 +6,8 @@ while getopts 'cfhl:' c
 do
   case $c in
     c) mpargs="--mp-connect localhost:34197" ;;
-    h) mpargs="--start-server-load-scenario base/freeplay" ;;
     l) locale=$OPTARG ;;
+    s) mpargs="--start-server-load-scenario base/freeplay" ;;
   esac
 done
 shift $((OPTIND-1))
