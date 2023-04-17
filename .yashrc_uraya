@@ -63,4 +63,6 @@ newalghw() {
     newhw "$@"
 }
 
+export FACTORIO_COMPILE_THREADS=4
+
 # vim: ft=sh

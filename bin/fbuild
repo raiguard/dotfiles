@@ -7,11 +7,6 @@ fi
 
 fbuild="fastbuild/linux/fbuild -config fastbuild/fbuild.bff"
 
-# Avoid accidentally freezing laptop
-if [ $(uname -n) = "uraya" ] && [ -n "$(pgrep clangd)" ]; then
-    echo "Close editor before compiling"
-    exit
-fi
 mode="FastDebug"
 if [ -n "$1" ]; then
     mode="$1"
@@ -27,7 +22,10 @@ if [ -n "$2" ]; then
     target="$2"
 fi
 
-threads=$(grep -c vendor_id /proc/cpuinfo)
-threads=$(($threads - 2))
+threads=$FACTORIO_COMPILE_THREADS
+if [ -z "$threads" ]; then
+  threads=$(grep -c vendor_id /proc/cpuinfo)
+  threads=$(($threads - 2))
+fi
 
 $fbuild -j$threads GCC-${mode}x64-factorio-${target}
