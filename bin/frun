@@ -39,7 +39,7 @@ if [ $insrc ]; then
     fastdebug) shift ;; # Useless
     finalrelease) mode="FinalRelease"; shift ;;
     release) mode="Release"; shift ;;
-    testasan) mode="FastDebugASAN"; bin="factorio-test"; shift ;;
+    testasan) mode="DebugASAN"; bin="factorio-test"; shift ;;
     test) mode="FastDebug"; bin="factorio-test"; shift ;;
   esac
 else
