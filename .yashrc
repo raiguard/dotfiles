@@ -2,6 +2,8 @@
 set --le-predict
 bindkey --vi-insert '\^F' end-of-line
 bindkey --vi-insert '\^O' clear-candidates
+bindkey --vi-insert '\^B' backward-viword
+bindkey --vi-insert '\^L' clear-and-redraw-all
 
 # normally yash is more POSIX-compliant than /bin/sh :-)
 sh() { yash --posix "$@"; }
@@ -36,11 +38,14 @@ YASH_PS1=$_uc'$(whoami)'$_hc'@$(uname -n)\fd. '\
 '$(echo "$PWD" | sed "s/\/home\/rai/~/")'\
 '\fc.$(git_branch)\fd. $ '
 unset _hc _uc
+# color predictions as dim
+PS1P='\fi.'
 
 # enable fasd integration
 eval "$(fasd --init posix-hook posix-alias)"
 # fasd only adds to $PS1, but yash uses $YASH_PS1 when not in posix mode
 YASH_PS1='$(_fasd_ps1_func)'$YASH_PS1
+
 
 if [ "$TERM" == "foot" ]; then
     # insert special escape codes for foot terminal
