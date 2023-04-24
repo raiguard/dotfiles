@@ -8,45 +8,6 @@ evaluate-commands %sh{
 # set-option global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
 # --------------------------------------------------
-# FACTORIO WORKSPACE CONFIGURATION
-
-define-command -hidden setup-factorio-workspace %{
-    set-option global lsp_config %(
-        [language.lua.settings.Lua]
-        # TODO: kak-lsp completely overwrites our settings instead of merging them
-        diagnostics.disable = ["lowercase-global", "redefined-local"]
-        diagnostics.severity = { unused-local = "Error", undefined-global = "Error", undefined-field = "Error" }
-        hover.expandAlias = false
-        telemetry.enable = false
-        workspace.userThirdParty = ["/home/rai/dev/.sumneko"]
-        diagnostics.globals = ["__DebugAdapter", "__Profiler"]
-        workspace.library = [
-            "/home/rai/dev/factorio/1.1/data/core/lualib",
-            # "/home/rai/dev/factorio/1.1/data/base/prototypes",
-            "/home/rai/dev/.sumneko/factorio/library/",
-            "/home/rai/dev/projects/personal/flib"
-        ]
-        [language.lua.settings.Lua.runtime]
-        plugin = "/home/rai/dev/.sumneko/factorio/plugin.lua"
-        version = "Lua 5.2"
-        [language.lua.settings.Lua.runtime.builtin]
-        io = "disable"
-        os = "disable"
-        math = "disable"
-        debug = "disable"
-        coroutine = "disable"
-        package = "disable"
-        [language.lua.settings.Lua.runtime.special]
-        __object_name = "type"
-    )
-}
-evaluate-commands %sh{
-    if [ -f "info.json" ] || [ -f "src/info.json" ] || [ -f "version.txt" ]; then
-        echo "setup-factorio-workspace"
-    fi
-}
-
-# --------------------------------------------------
 # PLUGINS
 
 cork luar "https://github.com/gustavo-hms/luar" %{
