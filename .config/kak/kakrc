@@ -228,11 +228,11 @@ hook global ModuleLoaded sway %{
         terminal %arg{@}
         set-option window foot_app_id foot
     }
-    define-command -params .. vsplit %{
+    define-command -params .. -command-completion vsplit %{
         nop %sh{ swaymsg splith }
         new %arg{@}
     }
-    define-command -params .. hsplit %{
+    define-command -params .. -command-completion hsplit %{
         nop %sh{ swaymsg splitv }
         new %arg{@}
     }
@@ -444,15 +444,6 @@ hook global WinSetOption filetype=lua %{
 hook global WinSetOption filetype=makefile %{
     noexpandtab
     set-option window indentwidth 0
-}
-
-hook global WinSetOption filetype=pesticide %{
-    noexpandtab
-    set-option window indentwidth 0
-    add-highlighter window/ column 81 Ruler
-
-    add-highlighter window/pesticide_directive regex "^\s*(adapter)" 1:keyword
-    rainbow-enable-window
 }
 
 hook global WinSetOption filetype=python %{
