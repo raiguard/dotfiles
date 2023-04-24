@@ -17,7 +17,7 @@ if [ -z "$modname" ]; then
     exit
 fi
 
-destination=$(dirname $FACTORIO)/../../mods/$modname
+destination=$FACTORIO/mods/$modname
 
 if [ -L "$destination" ]; then
     if [ "$1" == "--force" ]; then
