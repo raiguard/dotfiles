@@ -45,9 +45,6 @@ format.enable = true
 fileMatch = ["info.json"]
 url = "file:///usr/lib/node_modules/factoriomod-debug/schema/modinfo.json"
 
-    # [language.json.settings.json.schemas.schema]
-    # type = "array"
-
 [language.latex]
 filetypes = ["tex", "latex"]
 roots = [".git/"]

@@ -57,17 +57,17 @@
     "factorio.versions": [
         {
             "name": "Factorio",
-            "factorioPath": "${env:FACTORIO}",
+            "factorioPath": "${env:FACTORIO}/bin/x64/factorio",
             "active": true
         },
         {
             "name": "Release - 1.1",
-            "factorioPath": "${env:FACTORIO_R11}",
+            "factorioPath": "${env:FACTORIO_11}/bin/Releasex64GCC/factorio-run",
             "active": true
         },
         {
             "name": "Release - 1.2",
-            "factorioPath": "${env:FACTORIO_R12}",
+            "factorioPath": "${env:FACTORIO_12}/bin/Releasex64GCC/factorio-run",
             "active": true
         }
     ],
