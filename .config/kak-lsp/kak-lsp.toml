@@ -98,6 +98,11 @@ offset_encoding = "utf-8"
 command = "typescript-language-server"
 args = ['--stdio']
 
+[language.zig]
+filetypes = ["zig"]
+roots = ["build.zig"]
+command = "zls"
+
 # SEMANTIC TOKENS
 
 [[semantic_tokens]]

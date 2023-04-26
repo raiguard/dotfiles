@@ -252,7 +252,7 @@ hook global WinCreate .* %{
 }
 
 # Generic
-hook global WinSetOption filetype=(css|go|scss) %{
+hook global WinSetOption filetype=(css|go|scss|zig) %{
     lsp-init
     rainbow-enable-window
 }
@@ -505,8 +505,8 @@ define-command -hidden osc-yank \
 }
 
 # Selection undo and redo
-map global normal <s-tab> <c-h>
-map global normal <tab> <c-k>
+map global normal <a-u> <c-h>
+map global normal <a-U> <c-k>
 
 # INSERT
 
@@ -594,6 +594,7 @@ define-command lsp-init -docstring "Enable LSP with default settings" %{
     map window normal <c-a> ":lsp-code-actions<ret>"
     map window normal <c-r> ":lsp-rename-prompt<ret>"
     map window normal <c-e> ":lsp-diagnostics<ret>"
+    map global lsp m ":lsp-show-message-request-next<ret>"
     lsp-inlay-diagnostics-enable window
 
     echo -debug "Enabling LSP for filetype %opt{filetype}"
