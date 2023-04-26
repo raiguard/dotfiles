@@ -5,8 +5,9 @@ set -e
 while getopts 'cfhl:' c
 do
   case $c in
-    c) mpargs="--mp-connect localhost:34197" ;;
-    l) locale=$OPTARG ;;
+    c) fork=true; mpargs="--mp-connect localhost:34197" ;;
+    f) fork=true ;;
+    l) fork=true; locale=$OPTARG ;;
     s) mpargs="--start-server-load-scenario base/freeplay" ;;
   esac
 done
@@ -48,7 +49,7 @@ else
 fi
 
 # Allow running multiple instances at once
-if [ -e "$basedir/.lock" ] || [ -n "$locale" ]; then
+if [ $fork ]; then
   write=$(mktemp -d /tmp/frun.XXX)
   awk -v locale="locale=$locale" -v writedata="write-data=$write" '
     { flag = 1 }
