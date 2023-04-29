@@ -68,7 +68,7 @@ args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
 diagnostics.disable = ["lowercase-global", "redefined-local"]
 diagnostics.severity = { unused-local = "Warning", undefined-global = "Error" }
 hover.expandAlias = false
-semantic.enable = false
+semantic.enable = true
 telemetry.enable = false
 workspace.userThirdParty = ["/home/rai/dev/.sumneko"]
 
