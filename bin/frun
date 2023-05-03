@@ -2,7 +2,7 @@
 
 set -e
 
-while getopts 'cfhl:' c
+while getopts 'cfl:s' c
 do
   case $c in
     c) fork=true; mpargs="--mp-connect localhost:34197" ;;
