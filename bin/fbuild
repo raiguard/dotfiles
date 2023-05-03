@@ -7,7 +7,7 @@ fi
 
 fbuild="fastbuild/linux/fbuild -config fastbuild/fbuild.bff"
 
-mode="FastDebug"
+mode="Debug"
 if [ -n "$1" ]; then
   mode="$1"
 fi
