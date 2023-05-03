@@ -42,6 +42,7 @@ if [ $insrc ]; then
     release) mode="Release"; shift ;;
     testasan) mode="DebugASAN"; bin="factorio-test"; shift ;;
     test) mode="FastDebug"; bin="factorio-test"; shift ;;
+    testdebug) mode="Debug"; bin="factorio-test"; shift ;;
   esac
 else
   arch="x64"
