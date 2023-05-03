@@ -91,6 +91,7 @@ cork kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
     map global gdb p ":gdb-print<ret>" -docstring "print"
     map global gdb Q ":gdb-session-new<ret>" -docstring "new"
     map global gdb q ":gdb-session-stop<ret>" -docstring "stop"
+    gdb-enable-autojump
 }
 
 cork grep-expand "https://github.com/JacobTravers/grep-expand.kak"
@@ -549,8 +550,14 @@ map global git b ":git blame<ret>" -docstring "blame"
 map global git B ":git hide-blame<ret>" -docstring "hide blame"
 map global git d ":git diff<ret>" -docstring "diff"
 map global git g ":terminal-floating lazygit<ret>" -docstring "lazygit"
-map global git l ":git log<ret>" -docstring "log"
-map global git s ":git status<ret>" -docstring "status"
+map global git f ":lazygit-current-file<ret>" -docstring "file history"
+define-command lazygit-current-file %{
+  terminal-floating lazygit -f %val{buffile}
+}
+map global git l ":lazygit-current-line<ret>" -docstring "line history"
+define-command lazygit-current-line %{
+  terminal-floating lazygit -f "-L%val{cursor_line},+1:%val{buffile}"
+}
 
 # Spell
 declare-user-mode spell
