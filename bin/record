@@ -1,0 +1,35 @@
+#!/bin/sh
+
+set -e
+
+getTargetDirectory() {
+  test -f ${XDG_CONFIG_HOME:-~/.config}/user-dirs.dirs && \
+    . ${XDG_CONFIG_HOME:-~/.config}/user-dirs.dirs
+
+  echo ${XDG_VIDEOS_DIR:-$HOME}
+}
+
+target="region"
+while getopts 'sw' c
+do
+  case $c in
+    s) target="screen" ;;
+    w) target="window" ;;
+  esac
+done
+shift $((OPTIND-1))
+
+if [ $target = "region" ]; then
+  GEOM=$(slurp)
+elif [ $target = "screen" ]; then
+  GEOM=$(slurp -o)
+elif [ $target = "window" ]; then
+  GEOM=$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)
+fi
+
+if [ -z "$GEOM" ]; then
+  exit
+fi
+
+FILE=${3:-$(getTargetDirectory)/$(date -Ins).mp4}
+wf-recorder -t -g "$GEOM" -f "$FILE" -r 30
