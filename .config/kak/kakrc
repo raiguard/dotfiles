@@ -26,6 +26,15 @@ cork kak-harpoon "https://git.sr.ht/~raiguard/kak-harpoon" %{
     harpoon-add-bindings
 }
 
+cork kak-mark "https://github.com/raiguard/kak-mark" %{
+    hook global User ColorschemeLoaded %{
+        set-face global MarkedPrimaryCursor ",rgba:%opt{magenta}%opt{cursoralpha}"
+        set-face global MarkedPrimarySelection ",rgba:%opt{magenta}%opt{selectionalpha}"
+        set-face global MarkedSecondaryCursor MarkedPrimaryCursor
+        set-face global MarkedSecondarySelection MarkedPrimarySelection
+    }
+}
+
 cork kak-mirror "https://git.sr.ht/~raiguard/kak-mirror" %{
     map global normal "'" ': enter-user-mode -lock mirror<ret>' -docstring 'mirror lock'
 }
@@ -107,15 +116,6 @@ cork kakoune-snippets "https://github.com/CharlesGueunet/kakoune-snippets"
 cork kakoune-sort-selections "https://github.com/occivink/kakoune-sort-selections"
 
 cork kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save"
-
-cork mark.kak "https://github.com/alexherbo2/mark.kak" %{
-    hook global User ColorschemeLoaded %{
-        set-face global MarkedPrimaryCursor ",rgba:%opt{magenta}%opt{cursoralpha}"
-        set-face global MarkedPrimarySelection ",rgba:%opt{magenta}%opt{selectionalpha}"
-        set-face global MarkedSecondaryCursor MarkedPrimaryCursor
-        set-face global MarkedSecondarySelection MarkedPrimarySelection
-    }
-}
 
 cork pmanage.kak "https://github.com/andreyorst/pmanage.kak"
 
@@ -467,6 +467,8 @@ map global normal "<a-#>" ":comment-block<ret>"
 
 # Go to file (basic fuzzy finder)
 map global goto f '<esc>:prompt -shell-script-candidates %{ fd --type f --hidden } file: %{ edit %val{text} }<ret>' -docstring "file"
+# Or with fzf
+map global user f ':terminal-floating fzf-pick "%val{client}" "%val{session}"<ret>'
 
 # Go to buffer
 map global goto "b" '<esc>:prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
