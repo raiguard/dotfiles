@@ -126,6 +126,12 @@ cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
 
 # Color scheme
 colorscheme one-darker
+colorscheme one-darker-16
+set-face global value "rgb:%opt{darkorange}"
+set-face global comment "rgb:%opt{comment}"
+set-face global LineNumbers comment
+set-face global LineNumberCursor value
+
 trigger-user-hook ColorschemeLoaded
 set-face global Ruler StatusLine
 # Highlighters
