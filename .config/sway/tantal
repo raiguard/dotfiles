@@ -1,3 +1,5 @@
+gaps inner 4
+
 # Input configuration
 
 input type:keyboard {
