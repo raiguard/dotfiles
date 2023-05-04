@@ -1,56 +1,61 @@
 #!/bin/sh
 
 if [ -f "/usr/local/bin/kak" ]; then
-    kak="/usr/local/bin/kak"
+  kak="/usr/local/bin/kak"
 else
-    kak="/usr/bin/kak"
+  kak="/usr/bin/kak"
 fi
 
-# Only do stuff if invoked with 'kak <filename>'
+# Don't do stuff if any args were passed to kak
 case "$1" in
-    -*)
-        $kak "$@"
-        exit
-    ;;
+  -*)
+    $kak "$@"
+    exit
+  ;;
 esac
 
 # Attempt to root by git repo, or by .kakrc file
 basedir=$(git rev-parse --show-toplevel 2> /dev/null)
 if [ -n "$basedir" ]; then
-    # Set session name
-    session=$(basename "$basedir" | sed "s/\./-/g")
-    # Change filename to absolute path
-    # This only works with the first one, but that's fine
-    set -- $(realpath $1)
-    # Change to project root dir
-    cd $basedir
+  # Set session name
+  session=$(basename "$basedir" | sed "s/\./-/g")
+  # Change filename to absolute path
+  # This only works with the first one, but that's fine
+  set -- $(realpath $1)
+  # Change to project root dir
+  cd $basedir
 else
-    oldpwd=$PWD
-    while [ "$PWD" != "/" ]; do
-        if [ -f .kakrc ]; then
-            session=$(basename "$PWD" | sed "s/\./-/g")
-            break
-        fi
-        cd ..
-    done
-    cd $oldpwd
+  oldpwd=$PWD
+  while [ "$PWD" != "/" ]; do
+    if [ -f .kakrc ]; then
+      session=$(basename "$PWD" | sed "s/\./-/g")
+      break
+    fi
+    cd ..
+  done
+  cd $oldpwd
 fi
 
 sessions=$($kak -l)
 if $(echo "$sessions" | grep -q "(dead)"); then
-    echo "Clearing dead sessions"
-    $kak -clear
-    sessions=$($kak -l)
+  echo "Clearing dead sessions"
+  $kak -clear
+  sessions=$($kak -l)
+fi
+
+# Fuzzy-find filename if it was not provided
+if [ -z "$1" ]; then
+  set -- $(fzf)
 fi
 
 # TODO: Convenient way to connect to last session?
 if [ -z "$session" ]; then
-    $kak "$@"
-    exit
+  $kak "$@"
+  exit
 fi
 
 if $(echo "$sessions" | grep -q "^$session$"); then
-    $kak -c $session "$@"
+  $kak -c $session "$@"
 else
-    $kak -s $session "$@"
+  $kak -s $session "$@"
 fi
