@@ -22,12 +22,6 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 export MOZ_ENABLE_WAYLAND=1
 export SDL_VIDEODRIVER=wayland
 
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
-    --color=fg:#abb2bf,bg:-1,hl:#56b6c2
-    --color=fg+:#abb2bf,bg+:,hl+:#56b6c2
-    --color=info:#e5c07b,prompt:#61afef,pointer:#e5c07b
-    --color=marker:#e06c75,spinner:#c678dd,header:#98c379'
-
 # Local environment configuration
 [[ -f ~/.env ]] && . ~/.env
 

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+fzf=/usr/bin/fzf
+
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+    --color=fg:-1,bg:-1,hl:cyan:underline
+    --color=fg+:-1,bg+:-1,hl+:cyan:underline
+    --color=info:yellow,prompt:blue,pointer:blue
+    --color=marker:red,spinner:yellow,header:green
+    --color=border:bright-black'
+
+$fzf "$@"
