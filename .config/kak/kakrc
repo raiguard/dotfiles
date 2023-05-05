@@ -10,14 +10,6 @@ evaluate-commands %sh{
 # --------------------------------------------------
 # PLUGINS
 
-cork luar "https://github.com/gustavo-hms/luar" %{
-    require-module luar
-}
-
-cork peneira "https://github.com/gustavo-hms/peneira" %{
-    require-module peneira
-}
-
 cork kak-ansi "https://github.com/eraserhd/kak-ansi"
 
 cork kak-fastbuild "https://github.com/raiguard/kak-fastbuild"
