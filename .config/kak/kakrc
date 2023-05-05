@@ -22,7 +22,7 @@ cork kak-ansi "https://github.com/eraserhd/kak-ansi"
 
 cork kak-fastbuild "https://github.com/raiguard/kak-fastbuild"
 
-cork kak-harpoon "https://git.sr.ht/~raiguard/kak-harpoon" %{
+cork kak-harpoon "https://github.com/raiguard/kak-harpoon" %{
     harpoon-add-bindings
 }
 
