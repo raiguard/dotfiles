@@ -7,6 +7,13 @@ evaluate-commands %sh{
 # nop %sh{ rm -f /tmp/kak-lsp.log }
 # set-option global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
+declare-option bool in_own_factorio_project false
+evaluate-commands %sh{
+  if [ -f "info.json" ] && [ -n $(jq ".author" < info.json) ]; then
+    echo "hook global BufWritePre .*\.lua format"
+  fi
+}
+
 # --------------------------------------------------
 # PLUGINS
 
@@ -123,6 +130,10 @@ set-face global value "rgb:%opt{darkorange}"
 set-face global comment "rgb:%opt{comment}"
 set-face global LineNumbers comment
 set-face global LineNumberCursor value
+set-face global DiagnosticError ",,rgb:%opt{lightred}+c"
+set-face global DiagnosticWarning ",,rgb:%opt{lightorange}+c"
+set-face global DiagnosticInfo ",,rgb:%opt{blue}+c"
+set-face global DiagnosticHint ",,rgb:%opt{hint}+u"
 
 trigger-user-hook ColorschemeLoaded
 set-face global Ruler StatusLine
