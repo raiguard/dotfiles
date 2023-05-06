@@ -80,7 +80,7 @@ command = "pylsp"
 [language.rust]
 filetypes = ["rust"]
 roots = ["Cargo.toml"]
-command = "/home/rai/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rust-analyzer"
+command = "rust-analyzer"
 
 [language.rust.settings.rust-analyzer]
 checkOnSave.command = "clippy"

@@ -27,16 +27,16 @@ cork kak-mark "https://github.com/raiguard/kak-mark" %{
     }
 }
 
-cork kak-mirror "https://git.sr.ht/~raiguard/kak-mirror" %{
+cork kak-mirror "https://github.com/raiguard/kak-mirror" %{
     map global normal "'" ': enter-user-mode -lock mirror<ret>' -docstring 'mirror lock'
 }
 
-cork kak-move-lines "https://git.sr.ht/~raiguard/kak-move-lines" %{
+cork kak-move-lines "https://github.com/raiguard/kak-move-lines" %{
     map global normal <c-a-j> ': move-lines-down %val{count}<ret>'
     map global normal <c-a-k> ': move-lines-up %val{count}<ret>'
 }
 
-cork kak-live-grep "https://git.sr.ht/~raiguard/kak-live-grep" %{
+cork kak-live-grep "https://github.com/raiguard/kak-live-grep" %{
     map global user / ": live-grep<ret>" -docstring "live grep"
     hook global User ColorschemeLoaded %{
         set-face global LiveGrepMatch ",,rgb:%opt{lightorange}+u"
@@ -48,7 +48,7 @@ cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
     set-option global rainbow_check_templates Y
 }
 
-cork kak-replace-mode "https://git.sr.ht/~raiguard/kak-replace-mode" %{
+cork kak-replace-mode "https://github.com/raiguard/kak-replace-mode" %{
     map global normal <a-r> ":enter-replace-mode<ret>"
 }
 
