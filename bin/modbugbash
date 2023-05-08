@@ -17,5 +17,5 @@ saves=$(dirname "$FACTORIO")/../../saves
 new_location=$saves/$(basename "$1")
 mv "$1" "$new_location"
 echo "Relocated save file to $new_location"
-fmm sync-file $new_location
+fmm sync $new_location
 $FACTORIO --load-game $new_location
