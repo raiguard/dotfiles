@@ -11,7 +11,7 @@ if [ ! -f "$dir/info.json" ]; then
     exit
 fi
 
-modname=$(awk '/"name":/ { gsub(/("|,)/, ""); print $2 }' $dir/info.json)
+modname=$(jq -r .name < $dir/info.json)
 if [ -z "$modname" ]; then
     echo "Could not extract mod name"
     exit
