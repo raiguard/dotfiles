@@ -28,4 +28,4 @@ if [ -z "$threads" ]; then
   threads=$(($threads - 2))
 fi
 
-$fbuild -j$threads GCC-${mode}x64-factorio-${target}
+CC="/usr/bin/gcc-12" CXX="/usr/bin/g++-12" $fbuild -j$threads GCC-${mode}x64-factorio-${target}
