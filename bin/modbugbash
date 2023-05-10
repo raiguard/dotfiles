@@ -13,9 +13,9 @@ if [ -z "$1" ]; then
     echo "Must provide a save file."
 fi
 
-saves=$(dirname "$FACTORIO")/../../saves
+saves=$FACTORIO/saves
 new_location=$saves/$(basename "$1")
 mv "$1" "$new_location"
 echo "Relocated save file to $new_location"
 fmm sync $new_location
-$FACTORIO --load-game $new_location
+frun -- --load-game $new_location
