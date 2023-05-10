@@ -61,6 +61,11 @@
             "active": true
         },
         {
+            "name": "Debug - 1.1",
+            "factorioPath": "${env:FACTORIO_11}/bin/Debugx64GCC/factorio-run",
+            "active": true
+        },
+        {
             "name": "Release - 1.1",
             "factorioPath": "${env:FACTORIO_11}/bin/Releasex64GCC/factorio-run",
             "active": true
