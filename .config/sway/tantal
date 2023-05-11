@@ -27,4 +27,9 @@ exec swayidle -w \
     before-sleep 'swaylock -f' \
     after-resume 'swaymsg "output * dpms on"'
 
+exec pactl load-module module-loopback source="chat_sink.monitor" sink="bluez_output.80_C3_BA_2A_73_5A.1"
+exec pactl load-module module-loopback source="game_sink.monitor" sink="bluez_output.80_C3_BA_2A_73_5A.1"
+exec pactl load-module module-null-sink sink_name=chat_sink sink_properties=device.description=Chat-Sink
+exec pactl load-module module-null-sink sink_name=game_sink sink_properties=device.description=Game-Sink
+
 # vim:ft=i3
