@@ -2,10 +2,6 @@ gaps inner 4
 
 # Input configuration
 
-input type:keyboard {
-    xkb_options caps:escape
-}
-
 input type:tablet_tool {
     map_to_output DP-1
 }
