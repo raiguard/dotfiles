@@ -21,6 +21,10 @@ if [ -n "$1" ]; then
   esac
 fi
 
+if [ -n "$2" ]; then
+  type="$2"
+fi
+
 threads=$FACTORIO_COMPILE_THREADS
 if [ -z "$threads" ]; then
   threads=$(grep -c vendor_id /proc/cpuinfo)

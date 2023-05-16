@@ -8,15 +8,8 @@ input type:touchpad {
     natural_scroll enabled
     tap enabled
 }
-input type:keyboard {
-    xkb_options caps:escape
-}
-input type:pointer {
-    pointer_accel 0
-}
-input type:tablet_tool {
-    map_to_output eDP-1
-}
+input type:pointer pointer_accel 0
+input type:tablet_tool map_to_output eDP-1
 
 # Output configuration
 output * bg ~/pictures/wallpaper fill

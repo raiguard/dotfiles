@@ -1,13 +1,11 @@
 # Input configuration
 
-input type:tablet_tool {
-    map_to_output DP-1
-}
+input type:tablet_tool map_to_output DP-1
 
 # Output configuration
 output DP-1 position 2560,0 mode 2560x1440@59.951Hz bg ~/pictures/wallpaper-dp-1 fill
 output DP-2 position 0,0 bg ~/pictures/wallpaper-dp-2 fill
-output HDMI-A-1 disable mode 3840x2160@60Hz adaptive_sync on bg ~/pictures/wallpaper-hdmi-1 fill
+output HDMI-A-1 disable mode 3840x2160@120Hz scale 2 adaptive_sync on bg ~/pictures/wallpaper-hdmi-1 fill
 
 # Idle configuration
 # Lock after 5 minutes
@@ -20,10 +18,5 @@ exec swayidle -w \
     timeout 1200 'systemctl suspend' \
     before-sleep 'swaylock -f' \
     after-resume 'swaymsg "output * dpms on"'
-
-exec pactl load-module module-loopback source="chat_sink.monitor" sink="bluez_output.80_C3_BA_2A_73_5A.1"
-exec pactl load-module module-loopback source="game_sink.monitor" sink="bluez_output.80_C3_BA_2A_73_5A.1"
-exec pactl load-module module-null-sink sink_name=chat_sink sink_properties=device.description=Chat-Sink
-exec pactl load-module module-null-sink sink_name=game_sink sink_properties=device.description=Game-Sink
 
 # vim:ft=i3

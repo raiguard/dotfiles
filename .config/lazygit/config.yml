@@ -13,3 +13,6 @@ keybinding:
   universal:
     nextPage: '<c-f>'
     prevPage: '<c-b>'
+
+os:
+  edit: 'kak {{filename}}'
