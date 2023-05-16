@@ -26,12 +26,10 @@ cork kak-harpoon "https://github.com/raiguard/kak-harpoon" %{
 }
 
 cork kak-mark "https://github.com/raiguard/kak-mark" %{
-  hook global User ColorschemeLoaded %{
-    set-face global MarkedPrimaryCursor ",rgba:%opt{magenta}%opt{cursoralpha}"
-    set-face global MarkedPrimarySelection ",rgba:%opt{magenta}%opt{selectionalpha}"
-    set-face global MarkedSecondaryCursor MarkedPrimaryCursor
-    set-face global MarkedSecondarySelection MarkedPrimarySelection
-  }
+  set-face global MarkedPrimaryCursor black,magenta
+  set-face global MarkedPrimarySelection black,magenta
+  set-face global MarkedSecondaryCursor MarkedPrimaryCursor
+  set-face global MarkedSecondarySelection MarkedPrimarySelection
 }
 
 cork kak-mirror "https://github.com/raiguard/kak-mirror" %{
@@ -39,8 +37,8 @@ cork kak-mirror "https://github.com/raiguard/kak-mirror" %{
 }
 
 cork kak-move-lines "https://github.com/raiguard/kak-move-lines" %{
-  map global normal <c-a-j> ': move-lines-down %val{count}<ret>'
-  map global normal <c-a-k> ': move-lines-up %val{count}<ret>'
+  map global normal <c-a-j> ':move-lines-down %val{count}<ret>'
+  map global normal <c-a-k> ':move-lines-up %val{count}<ret>'
 }
 
 # cork kak-live-grep "https://github.com/raiguard/kak-live-grep" %{
@@ -62,12 +60,12 @@ cork kak-replace-mode "https://github.com/raiguard/kak-replace-mode" %{
 cork kakoune-fandt "https://github.com/listentolist/kakoune-fandt" %{
   require-module fandt
   hook global ModeChange push:.*:next-key\[user.fandt\] %{
-    set-face window PrimarySelection ",rgba:%opt{darkorange}%opt{selectionalpha}"
-    set-face window PrimaryCursor ",rgba:%opt{darkorange}%opt{cursoralpha}"
-    set-face window PrimaryCursorEol ",rgba:%opt{darkorange}%opt{cursoralpha}"
-    set-face window SecondarySelection ",rgba:%opt{lightorange}%opt{selectionalpha}"
-    set-face window SecondaryCursor ",rgba:%opt{lightorange}%opt{cursoralpha}"
-    set-face window SecondaryCursorEol ",rgba:%opt{lightorange}%opt{cursoralpha}"
+    set-face window PrimarySelection "black,rgb:%opt{darkorange}"
+    set-face window PrimaryCursor black,white
+    set-face window PrimaryCursorEol black,red
+    set-face window SecondarySelection black,yellow
+    set-face window SecondaryCursor black,white
+    set-face window SecondaryCursorEol black,cyan
   }
   hook global ModeChange pop:next-key\[user.fandt\]:.* %{
     unset-face window PrimarySelection
