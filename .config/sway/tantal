@@ -1,5 +1,3 @@
-gaps inner 4
-
 # Input configuration
 
 input type:tablet_tool {

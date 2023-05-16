@@ -170,6 +170,7 @@ font Source Code Pro Medium 8
 title_align center
 
 smart_borders no_gaps
+gaps inner 4
 
 ### Rules
 
