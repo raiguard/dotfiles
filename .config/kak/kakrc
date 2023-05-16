@@ -9,7 +9,7 @@ evaluate-commands %sh{
 
 declare-option bool in_own_factorio_project false
 evaluate-commands %sh{
-  if [ -f "info.json" ] && [ $(jq ".author" < info.json) = "raiguard" ]; then
+  if [ -f "info.json" ] && [ $(jq -r ".author" < info.json) = "raiguard" ]; then
     echo "hook global BufWritePre .*\.lua format"
   fi
 }
