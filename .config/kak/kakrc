@@ -44,7 +44,7 @@ cork kak-move-lines "https://github.com/raiguard/kak-move-lines" %{
 # cork kak-live-grep "https://github.com/raiguard/kak-live-grep" %{
 #   map global user / ": live-grep<ret>" -docstring "live grep"
 #   hook global User ColorschemeLoaded %{
-#     set-face global LiveGrepMatch ",,rgb:%opt{lightorange}+u"
+#     set-face global LiveGrepMatch ,,bright-yellow+u
 #   }
 # }
 
@@ -60,12 +60,12 @@ cork kak-replace-mode "https://github.com/raiguard/kak-replace-mode" %{
 cork kakoune-fandt "https://github.com/listentolist/kakoune-fandt" %{
   require-module fandt
   hook global ModeChange push:.*:next-key\[user.fandt\] %{
-    set-face window PrimarySelection "black,rgb:%opt{darkorange}"
+    set-face window PrimarySelection black,bright-yellow
     set-face window PrimaryCursor black,white
     set-face window PrimaryCursorEol black,red
     set-face window SecondarySelection black,yellow
-    set-face window SecondaryCursor black,white
-    set-face window SecondaryCursorEol black,cyan
+    set-face window SecondaryCursor black,cyan
+    set-face window SecondaryCursorEol black,red
   }
   hook global ModeChange pop:next-key\[user.fandt\]:.* %{
     unset-face window PrimarySelection
@@ -122,16 +122,7 @@ cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
 # GENERAL
 
 # Color scheme
-colorscheme one-darker
 colorscheme one-darker-16
-set-face global value "rgb:%opt{darkorange}"
-set-face global comment "rgb:%opt{comment}"
-set-face global LineNumbers comment
-set-face global LineNumberCursor value
-set-face global DiagnosticError ",,rgb:%opt{lightred}+c"
-set-face global DiagnosticWarning ",,rgb:%opt{lightorange}+c"
-set-face global DiagnosticInfo ",,rgb:%opt{blue}+c"
-set-face global DiagnosticHint ",,rgb:%opt{hint}+u"
 
 trigger-user-hook ColorschemeLoaded
 set-face global Ruler StatusLine
@@ -278,11 +269,10 @@ hook global WinSetOption filetype=(c|cpp) %{
 
   map global user a ":c-alternative-file<ret>"
 
-  # Highlight operators
-  try %{
-    remove-highlighter buffer/operators
-    add-highlighter  buffer/operators regex (\+|-|\*|&|=|\\|\?|%|\|-|!|\||->|\.|,|<|>|:|\^|/|~|\[|\]) 0:operator
-  }
+  # Better highlighting
+  add-highlighter "shared/%opt{filetype}/code/operators" regex (\+|-|\*|&|=|\\|\?|%|\|-|!|\||->|\.|,|<|>|:|\^|/|~|\[|\]) 0:operator
+  add-highlighter "shared/%opt{filetype}/code/function_call" regex \b([a-zA-Z0-9_]*)\( 1:function
+  add-highlighter "shared/%opt{filetype}/code/constant" regex \b([A-Z0-9_]*)\b 1:value
 }
 
 hook global BufCreate (.*/|^)changelog\.txt %{
