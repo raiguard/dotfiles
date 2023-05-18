@@ -7,16 +7,4 @@ output DP-1 position 2560,0 mode 2560x1440@59.951Hz bg ~/pictures/wallpaper-dp-1
 output DP-2 position 0,0 bg ~/pictures/wallpaper-dp-2 fill
 output HDMI-A-1 disable mode 3840x2160@120Hz scale 2 adaptive_sync on bg ~/pictures/wallpaper-hdmi-1 fill
 
-# Idle configuration
-# Lock after 5 minutes
-# Turn off screens after 10 minutes
-# Suspend after 20 minutes
-exec swayidle -w \
-    timeout 300 'swaylock -f' \
-    timeout 600 'swaymsg "output * dpms off"' \
-    resume 'swaymsg "output * dpms on"' \
-    timeout 1200 'systemctl suspend' \
-    before-sleep 'swaylock -f' \
-    after-resume 'swaymsg "output * dpms on"'
-
 # vim:ft=i3

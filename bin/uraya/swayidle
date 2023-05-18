@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Blank screen after 5 minutes
+# Lock after 10 minutes
+# Suspend after 15 minutes
+# Disconnect all bluetooth devices before sleeping (temporary fix for instant resume)
+/usr/bin/swayidle -w \
+    timeout 300 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    timeout 600 'swaylock -f' \
+    timeout 900 'systemctl suspend' \
+    before-sleep 'bluetoothctl disconnect; swaylock -f' \
+    after-resume 'swaymsg "output * dpms on"'
