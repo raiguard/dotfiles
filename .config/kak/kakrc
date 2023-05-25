@@ -188,11 +188,11 @@ hook global ModuleLoaded sway %{
     terminal %arg{@}
     set-option window foot_app_id foot
   }
-  define-command -params .. -command-completion vsplit %{
+  define-command -params .. -command-completion splith %{
     nop %sh{ swaymsg splith }
     new %arg{@}
   }
-  define-command -params .. -command-completion hsplit %{
+  define-command -params .. -command-completion splitv %{
     nop %sh{ swaymsg splitv }
     new %arg{@}
   }
