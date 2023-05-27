@@ -400,9 +400,9 @@ hook global WinSetOption filetype=lua %{
   set-option window formatcmd "stylua -"
 
   # Highlight EmmyLua annotations
-  add-highlighter window/emmylua_direct regex "(?:---|--\[\[)\s*(@(?:alias|as|class|return|type))\s+([^\n\]]*)" 1:attribute 2:type
-  add-highlighter window/emmylua_labeled regex "(?:---|--\[\[)\s*(@(?:alias|cast|field|param))\s+([a-zA-Z0-9_]*) ([^\n\]]*)" 1:attribute 2:variable 3:type
-  add-highlighter window/emmylua_enum_variant regex '(?:---|--\[\[)\s*\|\s*("[^\n]*")' 1:string
+  add-highlighter window/emmylua_direct regex "---\s*(@(?:alias|as|class|return|type))\s+([^\n]*)" 1:attribute 2:type
+  add-highlighter window/emmylua_labeled regex "---\s*(@(?:alias|cast|field|param))\s+([a-zA-Z0-9_]*) ([^\n]*)" 1:attribute 2:variable 3:type
+  add-highlighter window/emmylua_enum_variant regex '---\s*\|\s*("[^\n]*")' 1:string
 }
 
 hook global WinSetOption filetype=makefile %{

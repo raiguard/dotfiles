@@ -3,9 +3,10 @@
 font=Source Code Pro Medium 10
 background-color=#272b33
 border-size=2
-margin=6
+margin=4
 padding=5,8
 progress-color=#373c47
+border-radius=4
 
 # No urgency
 text-color=#98c379
