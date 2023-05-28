@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 lightred="#e06c75"
 # darkred="#be5046"
 green="#98c379"
@@ -13,11 +12,14 @@ cyan="#56b6c2"
 while true; do
     # CPU info
     cpuusage=$(mpstat 1 1 | awk '/M  all/ { printf "%.1f%%", 100 - $13 }')
-    cputemp=$(sensors | head -10 | awk '
+    cputemp=$(sensors | awk '
       /Package/ { printf "%.0f°C", substr($4, 2, length($4) - 3) }
       /Tdie/ { printf "%.0f°C", substr($2, 2, length($2) - 2) }
-    ')
-    cpu="<span foreground='$magenta'>$cpuusage  $cputemp</span>  "
+    ' | head -1)
+    if [ -n "$cputemp" ]; then
+      cputemp="  $cputemp"
+    fi
+    cpu="<span foreground='$magenta'>$cpuusage$cputemp</span>  "
 
     # RAM info
     used=$(free | awk '/Mem/ { printf "%.2f \n", $3/1024/1024 }')
