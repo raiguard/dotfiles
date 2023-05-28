@@ -1,0 +1,9 @@
+[Unit]
+Description=wlsunset
+
+[Service]
+Type=simple
+ExecStart=/home/rai/bin/wlsunset
+
+[Install]
+WantedBy=default.target

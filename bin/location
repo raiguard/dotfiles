@@ -1,0 +1,9 @@
+#!/bin/sh
+
+location=$(curl http://api.ipapi.com/api/check?access_key=$IPAPI_KEY)
+if [ -z "$location" ] || [ $(jq .success <<< "$location") = false ]; then
+  exit
+fi
+
+echo "$location" > ~/.local/state/location.json
+systemctl --user restart wlsunset

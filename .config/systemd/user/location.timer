@@ -1,0 +1,11 @@
+[Unit]
+Description=IPAPI location
+Requires=location.service
+After=network-online.target
+
+[Timer]
+Unit=location.service
+OnCalendar=hourly
+
+[Install]
+WantedBy=timers.target

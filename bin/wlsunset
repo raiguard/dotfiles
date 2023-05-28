@@ -1,0 +1,8 @@
+#!/bin/sh
+
+lat=$(jq .latitude < /home/rai/.local/state/location.json)
+lon=$(jq .longitude < /home/rai/.local/state/location.json)
+if [ -z "$lat$lon" ]; then
+  exit
+fi
+/usr/bin/wlsunset -l $lat -l $lon -t 2500 "$@"
