@@ -1,0 +1,9 @@
+[Unit]
+Description=poweralertd
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/poweralertd
+
+[Install]
+WantedBy=default.target
