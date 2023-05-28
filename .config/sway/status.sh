@@ -77,7 +77,9 @@ while true; do
         bat="$tablet_bat<span foreground='$bat_color'>$bat_status$bat_charge%</span>  "
     fi
     date=$(date +'%a %b %d')
-    prague=$(TZ=Europe/Prague date +"%-H:%M %Z")
+    if [ $(date +%Z) != "CEST" ]; then
+      prague="$(TZ=Europe/Prague date +'%-H:%M %Z') "
+    fi
     local=$(date +"%-H:%M %Z")
-    echo "$cpu$ram$gpu$dnd$bat$network$date $prague $local"
+    echo "$cpu$ram$gpu$dnd$bat$network$date $prague$local"
 done
