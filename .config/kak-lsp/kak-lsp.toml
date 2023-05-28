@@ -70,7 +70,7 @@ diagnostics.severity = { unused-local = "Warning", undefined-global = "Error" }
 hover.expandAlias = false
 semantic.enable = true
 telemetry.enable = false
-workspace.userThirdParty = ["/home/rai/dev/.luals"]
+workspace.userThirdParty = ["/home/rai/dev/luals"]
 
 [language.python]
 filetypes = ["python"]
