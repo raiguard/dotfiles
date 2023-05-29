@@ -275,10 +275,14 @@ hook global WinSetOption filetype=(c|cpp) %{
   add-highlighter "shared/%opt{filetype}/code/constant" regex \b([A-Z0-9_]*)\b 1:value
 }
 
-hook global BufCreate (.*/|^)changelog\.txt %{
+hook global WinCreate (.*/|^)changelog\.txt %{
+  try %{
+    execute-keys -draft ggxs---------------------------------------------------------------------------------------------------<ret>
+    set-option window filetype factorio-changelog
+  }
   evaluate-commands %sh{
     # Factorio mods will have an info.json in the same directory
-    if [ -f "${kak_hook_param_capture_1}info.json" ]; then
+    if [ -f "${kak_hook_param_capture_1}info.json" ] || [ "$kak_hook_param" = "data/changelog.txt" ]; then
       echo "set-option buffer filetype factorio-changelog"
     fi
   }
