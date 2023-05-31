@@ -514,10 +514,6 @@ define-command -hidden osc-yank \
   }
 }
 
-# Selection undo and redo
-map global normal <a-u> <c-h>
-map global normal <a-U> <c-k>
-
 # Jumps centered please
 map global normal <c-o> <c-o>vv
 map global normal <c-i> <c-i>vv

@@ -56,7 +56,7 @@ build.args = ["--pdf", "%f"]
 # [language.lua]
 # filetypes = ["lua"]
 # roots = [".git/"]
-# command = "/home/rai/dev/projects/personal/luapls/luapls"
+# command = "/home/rai/dev/luapls/luapls"
 
 [language.lua]
 filetypes = ["lua"]
