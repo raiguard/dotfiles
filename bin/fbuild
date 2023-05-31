@@ -10,6 +10,11 @@ fbuild="fastbuild/linux/fbuild -config fastbuild/fbuild.bff"
 if [ "$1" = "compdb" ]; then
   $fbuild GCC-Debugx64-factorio-run GCC-Debugx64-factorio-test -compdb
   exit
+elif [ "$1" = "docs" ]; then
+  cd scripts/lua_doc
+  ./gen-docs.sh
+  cd ../..
+  exit
 fi
 
 mode="debug"
