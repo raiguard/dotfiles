@@ -13,8 +13,8 @@ while true; do
     # CPU info
     cpuusage=$(mpstat 1 1 | awk '/M  all/ { printf "%.1f%%", 100 - $13 }')
     cputemp=$(sensors | awk '
-      /Package/ { printf "%.0f°C", substr($4, 2, length($4) - 3) }
-      /Tdie/ { printf "%.0f°C", substr($2, 2, length($2) - 2) }
+      /Package/ { printf "%.0f°C\n", substr($4, 2, length($4) - 3) }
+      /Tdie/ { printf "%.0f°C\n", substr($2, 2, length($2) - 2) }
     ' | head -1)
     if [ -n "$cputemp" ]; then
       cputemp="  $cputemp"
