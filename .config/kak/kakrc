@@ -315,6 +315,8 @@ hook global WinSetOption filetype=go %{
   add-highlighter window/ column 81 Ruler
 
   hook window BufWritePre .* lsp-formatting-sync
+
+  map window user a :go-alternative-file<ret> -docstring "alternative file"
 }
 
 hook global WinSetOption filetype=hare %{
