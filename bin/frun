@@ -36,6 +36,10 @@ if [ $insrc ]; then
   bin="factorio-run"
   case $1 in
     asan) mode="DebugASAN"; shift ;;
+    docs) # Open Lua documentation
+      xdg-open $basedir/scripts/lua_doc/doc-files/index.html < /dev/null > /dev/null 2>&1 & disown
+      exit
+      ;;
     fastdebug) mode="FastDebug" shift ;;
     finalrelease) mode="FinalRelease"; shift ;;
     release) mode="Release"; shift ;;
