@@ -89,7 +89,7 @@
         "editor.formatOnSave": true
     },
     "projectManager.git.baseFolders": [
-        "~/dev/projects"
+        "~/dev"
     ],
     "security.workspace.trust.enabled": false,
     "security.workspace.trust.untrustedFiles": "open",
@@ -118,5 +118,7 @@
         "--limit-references=0"
     ],
     "editor.inlayHints.enabled": "off",
-    "workbench.editor.wrapTabs": true
+    "workbench.editor.wrapTabs": true,
+    "glassit.force_sway": true,
+    "glassit.alpha": 220
 }
