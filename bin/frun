@@ -31,13 +31,14 @@ if [ -e "fastbuild/fbuild.bff" ]; then
   fi
 fi
 
-while getopts 'cfl:s' c
+while getopts 'cfl:ms:' c
 do
   case $c in
     c) fork=true; mpargs="--mp-connect localhost:34197" ;;
     f) fork=true ;;
     l) fork=true; locale=$OPTARG ;;
-    s) fork=true; mpargs="--start-server-load-scenario base/freeplay" ;;
+    m) fork=true; mpargs="--start-server-load-scenario" ;;
+    s) fork=true; mpargs="--start-server $OPTARG" ;;
   esac
 done
 shift $((OPTIND-1))
