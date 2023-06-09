@@ -4,3 +4,5 @@ set recolor-lightcolor "#181A1F"
 set recolor-darkcolor "#CCCCCC"
 
 set selection-clipboard clipboard
+
+set font "SauceCodePro Nerd Font"
