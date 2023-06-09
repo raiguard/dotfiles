@@ -2,17 +2,6 @@
 
 set -e
 
-while getopts 'cfl:s' c
-do
-  case $c in
-    c) fork=true; mpargs="--mp-connect localhost:34197" ;;
-    f) fork=true ;;
-    l) fork=true; locale=$OPTARG ;;
-    s) fork=true; mpargs="--start-server-load-scenario base/freeplay" ;;
-  esac
-done
-shift $((OPTIND-1))
-
 basedir="$FACTORIO"
 mode="x64"
 bin="factorio"
@@ -31,19 +20,27 @@ if [ -e "fastbuild/fbuild.bff" ]; then
         ;;
       testasan) mode="DebugASANx64GCC"; bin="factorio-test"; shift ;;
       test) mode="Debugx64GCC"; bin="factorio-test"; shift ;;
-      *) mode=$(fd -i -I -t d \\b$1 bin | head -1 | awk -F / '{ print $2 }'); shift ;;
+      *)
+        parsedmode=$(fd -i -I -t d \\b$1 bin | head -1 | awk -F / '{ print $2 }')
+        if [ -n "$parsedmode" ]; then
+          mode=$parsedmode
+          shift
+        fi
+        ;;
     esac
   fi
 fi
 
-if [ -z "$mode" ]; then
-  echo "Unable to find binary for mode '$modeinput'"
-  exit
-fi
-
-if [ "$1" = "--" ]; then
-  shift
-fi
+while getopts 'cfl:s' c
+do
+  case $c in
+    c) fork=true; mpargs="--mp-connect localhost:34197" ;;
+    f) fork=true ;;
+    l) fork=true; locale=$OPTARG ;;
+    s) fork=true; mpargs="--start-server-load-scenario base/freeplay" ;;
+  esac
+done
+shift $((OPTIND-1))
 
 # Allow running multiple instances at once
 if [ $fork ]; then
