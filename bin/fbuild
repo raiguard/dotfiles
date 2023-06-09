@@ -5,6 +5,8 @@ if [ ! -e "fastbuild/linux/fbuild" ]; then
   exit
 fi
 
+export CC="/usr/bin/gcc-12"
+export CXX="/usr/bin/g++-12"
 fbuild="fastbuild/linux/fbuild -config fastbuild/fbuild.bff"
 
 if [ "$1" = "compdb" ]; then
@@ -36,4 +38,4 @@ if [ -z "$threads" ]; then
   threads=$(($threads - 2))
 fi
 
-CC="/usr/bin/gcc-12" CXX="/usr/bin/g++-12" $fbuild -j$threads GCC-${mode}x64-factorio-${type}
+$fbuild -j$threads GCC-${mode}x64-factorio-${type}
