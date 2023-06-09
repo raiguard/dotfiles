@@ -1,5 +1,5 @@
 # enable command line prediction
-set --le-predict
+set --le-predict --le-prompt-sp
 bindkey --vi-insert '\^F' end-of-line
 bindkey --vi-insert '\^O' clear-candidates
 bindkey --vi-insert '\^B' backward-viword
@@ -76,5 +76,6 @@ alias f=frun
 # PC-specific configuration
 file=~/.yashrc_$(uname -n)
 [[ -f $file ]] && . $file
+
 
 # vim: ft=sh
