@@ -605,7 +605,7 @@ set-option global lsp_hover_max_lines 1000
 define-command lsp-restart -docstring "Restart kak-lsp session" %{ lsp-stop; lsp-start }
 
 define-command lsp-init -docstring "Enable LSP with default settings" %{
-  map window goto m "<esc>:lsp-implementation<ret>" -docstring "implementations"
+  map window goto m "<esc><c-s>:lsp-implementation<ret>" -docstring "implementations"
   map window user l ":enter-user-mode lsp<ret>" -docstring "lsp..."
   map window normal <c-h> ":lsp-hover<ret>"
   map window normal <c-a-h> ":lsp-hover-buffer<ret>"
@@ -613,6 +613,9 @@ define-command lsp-init -docstring "Enable LSP with default settings" %{
   map window normal <c-r> ":lsp-rename-prompt<ret>"
   map window normal <c-e> ":lsp-diagnostics<ret>"
   map global lsp m ":lsp-show-message-request-next<ret>"
+  map window goto d "<esc><c-s>:lsp-definition<ret>"
+  map window goto r "<esc><c-s>:lsp-references<ret>"
+  map window goto y "<esc><c-s>:lsp-type-definition<ret>"
   lsp-inlay-diagnostics-enable window
 
   echo -debug "Enabling LSP for filetype %opt{filetype}"
@@ -670,3 +673,28 @@ evaluate-commands %sh{
     echo "source ./.kakrc"
   fi
 }
+
+# # EXPERIMENT
+# # Always show a "symbol outline" on the left and synchronously keep it updated with the current viewport
+
+# declare-option str-list lsp_symbols_outline "{attribute}󰏗 {type}MyObject::method1" "{operator}# {Default}MyObject::field1"
+# declare-option line-specs lsp_symbols_outline_line_specs
+# hook global WinCreate .* %{
+#   add-highlighter window/lsp_symbols_outline flag-lines Default lsp_symbols_outline_line_specs
+#   hook window BufWritePost .* update-lsp-symbols-outline
+#   hook window RawKey .* update-lsp-symbols-outline
+#   hook window WinDisplay .* update-lsp-symbols-outline
+#   hook window WinResize .* update-lsp-symbols-outline
+# }
+
+# define-command update-lsp-symbols-outline %{ evaluate-commands %sh{
+#   start_line=$(awk '{ print $1+1 }' <<< $kak_window_range)
+#   eval set -- "$kak_quoted_opt_lsp_symbols_outline"
+#   output="set-option window lsp_symbols_outline_line_specs $kak_timestamp"
+#   while [ $# -gt 0 ]; do
+#     output="$output %{$start_line|$1}"
+#     shift
+#     start_line=$((start_line+1))
+#   done
+#   echo $output
+# }}
