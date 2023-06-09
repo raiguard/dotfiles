@@ -1,6 +1,9 @@
 #!/bin/sh
 
+default=$(pactl get-default-sink --id)
 pactl load-module module-null-sink sink_name=chat_sink sink_properties=device.description='Chat Sink'
 pactl load-module module-null-sink sink_name=game_sink sink_properties=device.description='Game Sink'
-pactl load-module module-loopback source="chat_sink.monitor" sink="bluez_output.80_C3_BA_2A_73_5A.1"
-pactl load-module module-loopback source="game_sink.monitor" sink="bluez_output.80_C3_BA_2A_73_5A.1"
+pactl load-module module-null-sink sink_name=music_sink sink_properties=device.description='Music Sink'
+pactl load-module module-loopback source="chat_sink.monitor" sink="$default"
+pactl load-module module-loopback source="game_sink.monitor" sink="$default"
+pactl load-module module-loopback source="music_sink.monitor" sink="$default"
