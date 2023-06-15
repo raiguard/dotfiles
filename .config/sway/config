@@ -9,6 +9,7 @@ set $right l
 
 ### Autostart
 
+exec autotiling
 exec mako
 exec swayidle
 exec /usr/bin/polkit-dumb-agent
@@ -162,10 +163,10 @@ bindsym Alt+print exec freeze-screenshot save
 default_border pixel 2
 default_floating_border pixel 2
 
-client.focused #56b6c2 #56b6c2 #181a1f #e5c07b
-client.focused_inactive #70798a #70798a #181a1f #e5c07b
-client.unfocused #70798a #70798a #181a1f #e5c07b
-client.urgent #e06c75 #70798a #abb2bf #e5c07b
+client.focused #56b6c2 #56b6c2 #181a1f #56b6c2
+client.focused_inactive #70798a #70798a #181a1f #70798a
+client.unfocused #70798a #70798a #181a1f #70798a
+client.urgent #e06c75 #70798a #abb2bf #e06c75
 
 font Source Code Pro Medium 8
 title_align center
