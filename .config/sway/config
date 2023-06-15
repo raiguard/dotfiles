@@ -183,6 +183,7 @@ assign [app_id="factorio"] 3
 assign [app_id="factorio-run"] 3
 assign [class="discord"] 4
 assign [app_id="obs"] 4
+assign [class="Minecraft.*"] 3
 
 # for_window [title="Blender Preferences"] floating enable
 for_window [title="File Operation Progress"] floating enable
