@@ -83,7 +83,7 @@ cork kakoune-focus "https://github.com/caksoylar/kakoune-focus" %{
 
 cork kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
   declare-user-mode gdb
-  map global user d ":enter-user-mode -lock gdb<ret>" -docstring "gdb"
+  map global user d ":enter-user-mode -lock gdb<ret>" -docstring "gdb..."
   map global gdb n ":gdb-next<ret>" -docstring "step over (next)"
   map global gdb s ":gdb-step<ret>" -docstring "step in (step)"
   map global gdb f ":gdb-print<ret>" -docstring "step out (finish)"
@@ -476,8 +476,8 @@ map global normal "<a-#>" ":comment-block<ret>"
 # Go to file (basic fuzzy finder)
 map global goto f '<esc>:prompt -shell-script-candidates %{ fd --type f --hidden } file: %{ edit %val{text} }<ret>' -docstring "file"
 # Or with fzf
-map global user f ':terminal-floating fzf-pick "%val{client}" "%val{session}"<ret>'
-map global user / ':terminal-floating fzf-search "%val{client}" "%val{session}"<ret>'
+map global user f ':terminal-floating fzf-pick "%val{client}" "%val{session}"<ret>' -docstring "pick file"
+map global user / ':terminal-floating fzf-search "%val{client}" "%val{session}"<ret>' -docstring "fuzzy search"
 
 # Go to buffer
 map global goto "b" '<esc>:prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
@@ -526,6 +526,8 @@ map global normal <c-i> <c-i>vv
 map global insert <c-w> "<esc>hBdi"
 
 # USER
+
+map global user n ":new<ret>" -docstring "new window"
 
 # Sort
 declare-user-mode sort
