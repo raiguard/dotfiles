@@ -46,6 +46,8 @@ bindsym $mod+r exec fuzzel
 bindsym $mod+w exec fuzzel-filesearch
 bindsym $mod+q exec fuzzel-power-menu
 
+bindsym $mod+d exec i3-quickterm
+
 # Move your focus around
 bindsym $mod+$down focus down
 bindsym $mod+$left focus left

@@ -1,0 +1,5 @@
+{
+  "menu": "fuzzel -d",
+  "term": "foot",
+  "shells": { "yash": "/usr/bin/yash", "lua": "/usr/bin/lua5.2", "kak": "/usr/local/bin/kak" }
+}
