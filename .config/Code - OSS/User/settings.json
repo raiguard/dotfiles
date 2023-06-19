@@ -56,25 +56,10 @@
     "factorio.package.tagName": "v$VERSION",
     "factorio.versions": [
         {
-            "name": "Factorio",
-            "factorioPath": "${env:FACTORIO}/bin/x64/factorio",
+            "name": "Factorio - Default",
+            "factorioPath": "${env:FACTORIO_DEFAULT}/bin/x64/factorio",
             "active": true
         },
-        {
-            "name": "Debug - 1.1",
-            "factorioPath": "${env:FACTORIO_11}/bin/Debugx64GCC/factorio-run",
-            "active": true
-        },
-        {
-            "name": "Release - 1.1",
-            "factorioPath": "${env:FACTORIO_11}/bin/Releasex64GCC/factorio-run",
-            "active": true
-        },
-        {
-            "name": "Release - 1.2",
-            "factorioPath": "${env:FACTORIO_12}/bin/Releasex64GCC/factorio-run",
-            "active": true
-        }
     ],
     "git.autofetch": true,
     "git.confirmSync": false,
