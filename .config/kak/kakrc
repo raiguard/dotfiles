@@ -512,7 +512,7 @@ define-command -hidden osc-yank \
       copy=$(printf '%s\n%s' "$copy" "$sel")
     done
     encoded=$(printf %s "$copy" | base64 | tr -d '\n')
-    printf "\e]52;;%s\e\\" "$encoded" >/dev/tty
+    printf "\e]52;;%s\e\\" "$encoded" >"/proc/$kak_client_pid/fd/0"
   }
 }
 
@@ -527,7 +527,7 @@ map global insert <c-w> "<esc>hBdi"
 
 # USER
 
-map global user n ":new<ret>" -docstring "new window"
+map global user n ':new edit %val{bufname}<ret>' -docstring "new window"
 
 # Sort
 declare-user-mode sort
