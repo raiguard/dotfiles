@@ -82,6 +82,10 @@ cork kakoune-focus "https://github.com/caksoylar/kakoune-focus" %{
 }
 
 cork kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
+  define-command custom-gdb-session-connect %{
+    gdb-session-connect
+    osc-yank "new-ui mi3 %opt{gdb_dir}/pty"
+  }
   declare-user-mode gdb
   map global user d ":enter-user-mode -lock gdb<ret>" -docstring "gdb..."
   map global gdb n ":gdb-next<ret>" -docstring "step over (next)"
@@ -95,8 +99,9 @@ cork kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
   map global gdb t ":gdb-toggle-breakpoint<ret>" -docstring "toggle breakpoint"
   map global gdb T ":gdb-backtrace<ret>" -docstring "backtrace"
   map global gdb p ":gdb-print<ret>" -docstring "print"
-  map global gdb Q ":gdb-session-new<ret>" -docstring "new"
-  map global gdb q ":gdb-session-stop<ret>" -docstring "stop"
+  map global gdb Q ":custom-gdb-session-connect<ret>" -docstring "connect"
+  map global gdb q ":gdb-session-new<ret>" -docstring "new"
+  map global gdb
   gdb-enable-autojump
 }
 
@@ -502,10 +507,12 @@ map global normal X x_
 map global normal "<a-*>" "*<percent>s<ret>" -docstring "Select all matching in file"
 
 map global normal <c-y> ":osc-yank<ret>"
-define-command -hidden osc-yank \
--docstring "yank selection to terminal clipboard using OSC 52" %{
+define-command -hidden osc-yank -params .. \
+-docstring "yank argument or selections to terminal clipboard using OSC 52" %{
   nop %sh{
-    eval set -- "$kak_quoted_selections"
+    if [ $# = 0 ]; then
+      eval set -- "$kak_quoted_selections"
+    fi
     copy=$1
     shift
     for sel; do
