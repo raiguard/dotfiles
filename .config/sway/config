@@ -9,7 +9,6 @@ set $right l
 
 ### Autostart
 
-exec autotiling
 exec mako
 exec swayidle
 exec /usr/bin/polkit-dumb-agent
