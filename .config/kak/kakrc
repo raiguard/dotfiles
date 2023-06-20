@@ -85,6 +85,11 @@ cork kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
   define-command custom-gdb-session-connect %{
     gdb-session-connect
     osc-yank "new-ui mi3 %opt{gdb_dir}/pty"
+    gdb-enable-autojump
+  }
+  define-command custom-gdb-session-new %{
+    gdb-session-new
+    gdb-enable-autojump
   }
   declare-user-mode gdb
   map global user d ":enter-user-mode -lock gdb<ret>" -docstring "gdb..."
@@ -100,9 +105,8 @@ cork kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
   map global gdb T ":gdb-backtrace<ret>" -docstring "backtrace"
   map global gdb p ":gdb-print<ret>" -docstring "print"
   map global gdb Q ":custom-gdb-session-connect<ret>" -docstring "connect"
-  map global gdb q ":gdb-session-new<ret>" -docstring "new"
+  map global gdb q ":custom-gdb-session-new<ret>" -docstring "new"
   map global gdb
-  gdb-enable-autojump
 }
 
 cork grep-expand "https://github.com/JacobTravers/grep-expand.kak"
