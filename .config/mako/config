@@ -37,7 +37,6 @@ on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/complete.oga
 
 [urgency=critical category=compilation]
 default-timeout=10000
-on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/complete.oga
 
 [mode=do-not-disturb]
 invisible=1
