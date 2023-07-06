@@ -9,7 +9,7 @@
     "editor.bracketPairColorization.enabled": true,
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.fontFamily": "'Source Code Pro'",
-    "editor.fontSize": 13,
+    "editor.fontSize": 13.5,
     "editor.fontWeight": 600,
     "editor.guides.bracketPairs": true,
     "editor.selectionHighlight": false,
@@ -56,8 +56,23 @@
     "factorio.package.tagName": "v$VERSION",
     "factorio.versions": [
         {
-            "name": "Factorio - Default",
+            "name": "Default",
             "factorioPath": "${env:FACTORIO_DEFAULT}/bin/x64/factorio",
+            "active": true
+        },
+        {
+            "name": "Experimental",
+            "factorioPath": "${env:FACTORIO}/experimental/bin/x64/factorio",
+            "active": true
+        },
+        {
+            "name": "1.1.x",
+            "factorioPath": "${env:FACTORIO}/1.1.x/bin/Releasex64GCC/factorio-run",
+            "active": true
+        },
+        {
+            "name": "master",
+            "factorioPath": "${env:FACTORIO}/master/bin/Releasex64GCC/factorio-run",
             "active": true
         },
     ],

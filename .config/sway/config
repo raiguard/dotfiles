@@ -159,6 +159,20 @@ bindsym Control+print exec grimshot --notify copy active
 # Choose window
 bindsym Alt+print exec freeze-screenshot save
 
+bindsym $mod+g mode inhibited
+mode inhibited {
+  bindsym $mod+g mode default
+}
+
+for_window [app_id=wlroots] {
+  gaps inner 0
+  move to workspace 9
+  workspace 9
+  border none
+  shadows disable
+  gaps inner 4
+}
+
 ### Looks
 
 default_border pixel 2
@@ -180,11 +194,10 @@ corner_radius 4
 
 ### Rules
 
-assign [class="factorio"] 3
-assign [app_id="factorio"] 3
-assign [app_id="factorio-run"] 3
+# assign [class="factorio"] 3
+# assign [app_id="factorio"] 3
+# assign [app_id="factorio-run"] 3
 assign [class="discord"] 4
-assign [app_id="obs"] 4
 assign [class="Minecraft.*"] 3
 
 # for_window [title="Blender Preferences"] floating enable
@@ -221,6 +234,7 @@ set $cyan #56b6c2
 set $red #e06c75
 
 bar {
+    id bar
     font "Source Code Pro Bold 9"
     position top
     status_command ~/.config/sway/status.sh

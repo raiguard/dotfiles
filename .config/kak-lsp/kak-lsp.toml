@@ -66,7 +66,7 @@ args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
 
 [language.lua.settings.Lua]
 diagnostics.disable = ["lowercase-global", "redefined-local"]
-diagnostics.severity = { unused-local = "Warning", undefined-global = "Error", undefined-field = "Error" }
+diagnostics.severity = { unused-local = "Error", undefined-global = "Error", undefined-field = "Error" }
 hover.expandAlias = false
 semantic.enable = false
 telemetry.enable = false

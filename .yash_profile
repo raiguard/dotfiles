@@ -19,7 +19,7 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # Make things run on Wayland
 export MOZ_ENABLE_WAYLAND=1
-export SDL_VIDEODRIVER=wayland,X11
+# export SDL_VIDEODRIVER=wayland,X11
 
 # Local environment configuration
 [[ -f ~/.env ]] && . ~/.env
