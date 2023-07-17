@@ -68,9 +68,9 @@ while true; do
         fi
         # Laptop
         bat_color=$green
-        bat_status=$(cat /sys/class/power_supply/BAT0/status \
+        bat_status=$(cat /sys/class/power_supply/BAT1/status \
             | awk '/Charging/ { print "+" }')
-        bat_charge=$(cat /sys/class/power_supply/BAT0/capacity)
+        bat_charge=$(cat /sys/class/power_supply/BAT1/capacity)
         if [ "$bat_charge" -lt 21 ]; then
             bat_color=$lightred
         fi
