@@ -33,4 +33,8 @@ for_window [title="Picture-in-Picture"] {
     resize set width 599 height 337
 }
 
+assign [app_id="factorio"] workspace 3
+assign [app_id="factorio-run"] workspace 3
+assign [class="factorio"] workspace 3
+
 # vim: ft=i3

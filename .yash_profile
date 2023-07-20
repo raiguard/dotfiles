@@ -22,12 +22,12 @@ export MOZ_ENABLE_WAYLAND=1
 # export SDL_VIDEODRIVER=wayland,X11
 
 # Local environment configuration
-[[ -f ~/.env ]] && . ~/.env
+[ -f ~/.env ] && . ~/.env
 
-# Sway, i3, Gnome (x11), Gnome (wayland)
+[ "$(uname -n)" = "uraya" ] && export SDL_VIDEODRIVER=wayland
+
+# Launch desktop
 [ "$(tty)" = "/dev/tty1" ] && exec sway
 [ "$(tty)" = "/dev/tty2" ] && startx /usr/bin/i3
-[ "$(tty)" = "/dev/tty3" ] && startx /usr/bin/gnome-shell
-[ "$(tty)" = "/dev/tty4" ] && gnome-shell --wayland
 
 # vim: ft=sh
