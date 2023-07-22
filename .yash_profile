@@ -7,6 +7,7 @@ export TERMINAL="foot"
 
 export FACTORIO="$HOME/dev/factorio"
 export FACTORIO_DEFAULT="$HOME/dev/factorio/experimental"
+export FACTORIO_PATH="$FACTORIO_DEFAULT"
 
 # QT theme
 export QT_PLATFORM_THEME=qt5ct

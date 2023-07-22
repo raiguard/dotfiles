@@ -1,3 +1,5 @@
+# vim: ft=i3
+
 # Input configuration
 
 input type:tablet_tool map_to_output DP-1
@@ -6,5 +8,3 @@ input type:tablet_tool map_to_output DP-1
 output DP-1 mode 3440x1440@59.973Hz bg ~/pictures/wallpaper-dp-1 fill
 output HDMI-A-1 disable mode 3840x2160@120Hz scale 2 adaptive_sync on bg ~/pictures/wallpaper-hdmi-1 fill
 output WL-1 bg ~/pictures/wallpaper-wl-1 fill
-
-# vim:ft=i3

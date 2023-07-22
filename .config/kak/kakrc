@@ -90,23 +90,14 @@ cork kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
   define-command custom-gdb-session-new %{
     gdb-session-new
     gdb-enable-autojump
+    trigger-user-hook GDBPostInit
   }
-  declare-user-mode gdb
-  map global user d ":enter-user-mode -lock gdb<ret>" -docstring "gdb..."
-  map global gdb n ":gdb-next<ret>" -docstring "step over (next)"
-  map global gdb s ":gdb-step<ret>" -docstring "step in (step)"
-  map global gdb f ":gdb-print<ret>" -docstring "step out (finish)"
-  map global gdb r ":gdb-start<ret>" -docstring "start"
-  map global gdb R ":gdb-run<ret>" -docstring "run"
-  map global gdb c ":gdb-continue<ret>" -docstring "continue"
-  map global gdb g ":gdb-jump<ret>" -docstring "jump"
-  map global gdb G ":gdb-toggle-autojump<ret>" -docstring "toggle autojump"
-  map global gdb t ":gdb-toggle-breakpoint<ret>" -docstring "toggle breakpoint"
-  map global gdb T ":gdb-backtrace<ret>" -docstring "backtrace"
-  map global gdb p ":gdb-print<ret>" -docstring "print"
-  map global gdb Q ":custom-gdb-session-connect<ret>" -docstring "connect"
-  map global gdb q ":custom-gdb-session-new<ret>" -docstring "new"
-  map global gdb
+  map global normal <F5> ":custom-gdb-session-new<ret>" -docstring "new GDB session"
+  map global normal <s-F5> ":custom-gdb-session-connect<ret>" -docstring "connect to GDB session"
+  map global normal <F9> ":gdb-toggle-breakpoint<ret>" -docstring "GDB toggle breakpoint"
+  map global normal <F10> ":gdb-next<ret>" -docstring "GDB next"
+  map global normal <F11> ":gdb-step<ret>" -docstring "GDB step"
+  map global normal <F12> ":gdb-continue<ret>" -docstring "GDB continue"
 }
 
 cork grep-expand "https://github.com/JacobTravers/grep-expand.kak"
