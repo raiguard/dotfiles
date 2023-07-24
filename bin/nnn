@@ -6,4 +6,12 @@ if [ ! -f "$prog" ]; then
 fi
 
 BLK="05" CHR="05" DIR="04" EXE="02" REG="00" HARDLINK="00" SYMLINK="06" MISSING="08" ORPHAN="01" FIFO="03" SOCK="03" OTHER="08"
-NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER" $prog -A -H $@
+
+NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$" \
+NNN_COLORS="4325" \
+NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER" \
+NNN_FIFO='/tmp/nnn.fifo' \
+NNN_PLUG='v:imgview;p:preview-tui' \
+NNN_TERMINAL=foot \
+NNN_TRASH=1 \
+$prog -AHoTv "$@"
