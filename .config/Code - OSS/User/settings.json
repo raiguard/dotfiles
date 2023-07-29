@@ -120,5 +120,6 @@
     "editor.inlayHints.enabled": "off",
     "workbench.editor.wrapTabs": true,
     "glassit.force_sway": true,
-    "glassit.alpha": 230
+    "glassit.alpha": 230,
+    "editor.stickyScroll.enabled": true
 }
