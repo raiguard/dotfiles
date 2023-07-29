@@ -676,6 +676,13 @@ evaluate-commands %sh{
   fi
 }
 
+# Quickly test faces
+declare-option range-specs test_ranges
+define-command add-test-face -params 2 %{
+  set-option -add window test_ranges "%val{selection_desc}|%arg{1}"
+  add-highlighter -override window/test_ranges ranges test_ranges
+}
+
 # # EXPERIMENT
 # # Always show a "symbol outline" on the left and synchronously keep it updated with the current viewport
 
