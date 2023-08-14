@@ -267,7 +267,7 @@ hook global WinSetOption filetype=(c|cpp) %{
   set-option window softtabstop 2
   set-option window indentwidth 2
 
-  map global user a ":c-alternative-file<ret>"
+  map global user a ":clangd-switch-source-header<ret>"
 
   # Better highlighting
   add-highlighter -override "shared/%opt{filetype}/code/operators" regex (\+|-|\*|&|=|\\|\?|%|\|-|!|\||->|<|>|\^|/|~|\[|\]) 0:operator
@@ -644,12 +644,12 @@ define-command -hidden -params 6 -override lsp-handle-progress %{
 
 # Highlight TODO and other related comment tags
 hook global WinSetOption comment_line=(.*) %{
-  add-highlighter -override window/todo regex "\Q%val{hook_param_capture_1}\E\h*(TODO:)[^\n]*" 1:string
-  add-highlighter -override window/fixme regex "\Q%val{hook_param_capture_1}\E\h*(BUG:|FIXME:|TEMPORARY:|XXX:)[^\n]*" 1:Error
+  add-highlighter -override window/todo regex "\Q%val{hook_param_capture_1}\E\h*(TODO(?: raiguard)?:)[^\n]*" 1:string
+  add-highlighter -override window/fixme regex "\Q%val{hook_param_capture_1}\E\h*((?:BUG|FIXME|TEMPORARY|XXX)(?: raiguard)?:)[^\n]*" 1:Error
   add-highlighter -override window/note regex "\Q%val{hook_param_capture_1}\E\h*(NOTE:)[^\n]*" 1:function
 }
 # Show list of TODOs in the current project
-map global toggle t ": grep (BUG:|FIXME:|TODO:|TEMPORARY:)<ret>" -docstring "TODOs"
+map global toggle t ": grep '(BUG|FIXME|TODO|TEMPORARY)( raiguard)?:'<ret>" -docstring "TODOs"
 
 # --------------------------------------------------
 # MODELINE
