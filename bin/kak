@@ -6,7 +6,13 @@ else
   kak="/usr/bin/kak"
 fi
 
-# Don't do stuff if any args were passed to kak
+# Don't do stuff if we are being piped into
+if [ ! -t 0 ]; then
+  echo "$(cat)" | $kak "$@"
+  exit
+fi
+
+# Don't do stuff if any flags were passed to kak
 case "$1" in
   -*)
     $kak "$@"
@@ -44,6 +50,7 @@ if $(echo "$sessions" | grep -q "(dead)"); then
 fi
 
 # Fuzzy-find filename if it was not provided
+# TODO: Integrate with kak-harpoon somehow
 if [ -z "$1" ]; then
   set -- $(fzf)
 fi

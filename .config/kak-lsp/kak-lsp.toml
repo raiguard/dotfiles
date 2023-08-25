@@ -102,3 +102,43 @@ args = ['--stdio']
 filetypes = ["zig"]
 roots = ["build.zig"]
 command = "zls"
+
+# SEMANTIC TOKENS
+
+[[semantic_tokens]]
+token = "formatSpecifier"
+face = "operator"
+
+[[semantic_tokens]]
+token = "lifetime"
+face = "attribute"
+
+[[semantic_tokens]]
+token = "macro"
+face = "value"
+
+[[semantic_tokens]]
+token = "macroBang"
+face = "value"
+
+[[semantic_tokens]]
+token = "method"
+face = "function"
+
+[[semantic_tokens]]
+token = "regexp"
+face = "value"
+
+[[semantic_tokens]]
+token = "typeParameter"
+face = "operator"
+
+[[semantic_tokens]]
+token = "variable"
+face = "+s@variable"
+modifiers = ["consuming"]
+
+[[semantic_tokens]]
+token = "variable"
+face = "value"
+modifiers = ["globalScope"]
