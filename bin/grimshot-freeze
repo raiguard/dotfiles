@@ -1,8 +1,0 @@
-#!/bin/sh
-
-set -euo pipefail
-grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') - |
-    swayimg -s fit -f -b none - &
-swayimg_pid=$!
-grimshot $@
-kill $swayimg_pid

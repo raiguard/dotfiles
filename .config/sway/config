@@ -151,13 +151,13 @@ bindsym --locked XF86MonBrightnessUp exec ~/.config/sway/brightness.sh +5%
 bindsym --locked XF86MonBrightnessDown exec ~/.config/sway/brightness.sh 5%-
 
 # Screenshots
-bindsym print exec grimshot-freeze --notify copy area
+bindsym print exec freeze-screenshot copy
 # Focused  monitor
 bindsym --locked Shift+print exec grimshot --notify copy output
 # Focused  window
 bindsym Control+print exec grimshot --notify copy active
 # Choose window
-bindsym Alt+print exec grimshot-freeze --notify save area
+bindsym Alt+print exec freeze-screenshot save
 
 ### Looks
 
