@@ -1,0 +1,5 @@
+{
+  "package.movedToCommitMessage": "Move to version $VERSION",
+  "package.preparingCommitMessage": "Prepare to release version $VERSION",
+  "package.tagName": "v$VERSION"
+}
