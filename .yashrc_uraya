@@ -15,51 +15,19 @@ newhw() {
     kak "$1.tex"
 }
 
-# PHYS-2320
+# ENGL-2010
 
-physnotes() {
-    cd ~/school/2023-spring/phys-2320/notes
-    kak notes-phys-2320.tex
+ennotes() {
+    cd ~/school/2023-fall/engl-2010/notes
+    kak notes-engl-2010.tex
 }
 
-physhw() {
-    cd ~/school/2023-spring/phys-2320/homework
+enhw() {
+    cd ~/school/2023-fall/engl-2010/homework
 }
 
-newphyshw() {
-    physhw
-    newhw "$@"
-}
-
-# MATH-2210
-
-calcnotes() {
-    cd ~/school/2023-spring/math-2210/notes
-    kak notes-math-2210.tex
-}
-
-calchw() {
-    cd ~/school/2023-spring/math-2210/homework
-}
-
-newcalchw() {
-    calchw
-    newhw "$@"
-}
-
-# MATH-2270
-
-algnotes() {
-    cd ~/school/2023-spring/math-2270/notes
-    kak notes-math-2270.tex
-}
-
-alghw() {
-    cd ~/school/2023-spring/math-2270/homework
-}
-
-newalghw() {
-    alghw
+newenhw() {
+    enhw
     newhw "$@"
 }
 

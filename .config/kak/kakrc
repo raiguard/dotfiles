@@ -292,6 +292,7 @@ hook global WinCreate (.*/|^)changelog\.txt %{
   }
 }
 hook global WinSetOption filetype=factorio-changelog %{
+  lsp-init
   # Highlighters
   add-highlighter window/changelog_date regex ^(Date):\s(.*?)$ 1:type 2:function
   add-highlighter window/changelog_entry regex ^(\s\s)*(-)\s(.*?)$ 2:value 3:string
@@ -518,6 +519,9 @@ define-command -hidden osc-yank -params .. \
 map global normal <c-o> <c-o>vv
 map global normal <c-i> <c-i>vv
 
+# Convenient popup terminal
+map global normal '<c-;>' ':terminal-floating %sh{ echo "$SHELL" }<ret>'
+
 # INSERT
 
 # Delete words in insert mode
@@ -595,6 +599,14 @@ map global previous-location g ":lsp-previous-location *goto*<ret>" -docstring "
 map global previous-location / ":lsp-previous-location *grep*<ret>" -docstring "grep"
 map global previous-location m ":lsp-previous-location *make*<ret>" -docstring "make"
 map global previous-location p ":lsp-previous-location *spell*<ret>" -docstring "spell"
+
+# IDE
+
+declare-user-mode ide
+map global user i ":enter-user-mode ide<ret>"
+map global ide t ':set-option global toolsclient %val{client}<ret>' -docstring "set toolsclient"
+map global ide j ':set-option global jumpclient %val{client}<ret>' -docstring "set jumpclient"
+map global ide d ':set-option global docsclient %val{client}<ret>' -docstring "set docsclient"
 
 # --------------------------------------------------
 # LSP

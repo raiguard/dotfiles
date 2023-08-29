@@ -74,7 +74,13 @@ while true; do
         if [ "$bat_charge" -lt 21 ]; then
             bat_color=$lightred
         fi
-        bat="$tablet_bat<span foreground='$bat_color'>$bat_status$bat_charge%</span>  "
+        # Wattage
+        bat_wattage=$(echo - | awk "{printf \"%.1f\", \
+          $(( \
+            $(cat /sys/class/power_supply/BAT1/current_now) * \
+            $(cat /sys/class/power_supply/BAT1/voltage_now) \
+          )) / 1000000000000 }")
+        bat="$tablet_bat<span foreground='$bat_color'>$bat_status$bat_charge%  $bat_wattage W</span>  "
     fi
     date=$(date +'%a %b %d')
     if [ $(date +%Z) != "CEST" ]; then

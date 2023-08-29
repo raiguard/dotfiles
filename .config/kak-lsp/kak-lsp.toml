@@ -22,6 +22,12 @@ roots = ["package.json", ".git", ".hg"]
 command = "vscode-css-languageserver"
 args = ["--stdio"]
 
+[language.factorio-changelog]
+filetypes = ["factorio-changelog"]
+roots = ["changelog.txt"]
+command = "fmtk"
+args = ["lsp", "--stdio"]
+
 [language.go]
 filetypes = ["go"]
 roots = ["Gopkg.toml", "go.mod", ".git", ".hg"]
@@ -128,10 +134,6 @@ face = "function"
 [[semantic_tokens]]
 token = "regexp"
 face = "value"
-
-[[semantic_tokens]]
-token = "typeParameter"
-face = "operator"
 
 [[semantic_tokens]]
 token = "variable"

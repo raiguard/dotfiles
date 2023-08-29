@@ -1,5 +1,9 @@
-# enable command line prediction
+# vim: ft=sh
+
+# prediction
 set --le-predict --le-prompt-sp
+
+# keybindings
 bindkey --vi-insert '\^F' end-of-line
 bindkey --vi-insert '\^O' clear-candidates
 bindkey --vi-insert '\^B' backward-viword
@@ -14,19 +18,19 @@ case $- in (*m*)
   trap - TSTP TTIN TTOU
 esac
 
-# variables needed for command history
+# command history
 HISTFILE=~/.yash_history HISTSIZE=5000
 
-# define prompt
+# prompt
 if [ -n "${SSH_CONNECTION-}" ]; then
-  _hc='\fy.'     # yellow hostname for SSH remote
+  hostcolor='\fy.'     # yellow hostname for SSH remote
 else
-  _hc='\fg.'     # green hostname for local
+  hostcolor='\fg.'     # green hostname for local
 fi
 if [ "$(id -u)" -eq 0 ]; then
-  _uc='\fr.'     # red username for root
+  usercolor='\fr.'     # red username for root
 else
-  _uc=$_hc _hc=  # same username color as hostname for non-root user
+  usercolor=$hostcolor hostcolor=  # same username color as hostname for non-root user
 fi
 git_branch() {
     branch=$(git -C "$PWD" rev-parse --abbrev-ref HEAD 2>/dev/null)
@@ -34,10 +38,10 @@ git_branch() {
         echo " ($branch)"
     fi
 }
-YASH_PS1=$_uc'$(whoami)'$_hc'@$(uname -n)\fd. '\
+YASH_PS1=$usercolor'$(whoami)'$hostcolor'@$(uname -n)\fd. '\
 '$(echo "$PWD" | sed "s/\/home\/rai/~/")'\
 '\fc.$(git_branch)\fd. $ '
-unset _hc _uc
+unset hostcolor usercolor
 # color predictions as dim
 PS1P='\fi.'
 
@@ -45,7 +49,6 @@ PS1P='\fi.'
 eval "$(fasd --init posix-hook posix-alias)"
 # fasd only adds to $PS1, but yash uses $YASH_PS1 when not in posix mode
 YASH_PS1='$(_fasd_ps1_func)'$YASH_PS1
-
 
 if [ "$TERM" == "foot" ]; then
     # insert special escape codes for foot terminal
@@ -76,6 +79,3 @@ alias f=frun
 # PC-specific configuration
 file=~/.yashrc_$(uname -n)
 [[ -f $file ]] && . $file
-
-
-# vim: ft=sh
