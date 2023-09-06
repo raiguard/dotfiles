@@ -4,8 +4,8 @@ evaluate-commands %sh{
 }
 
 # kak-lsp debugging
-nop %sh{ rm -f /tmp/kak-lsp.log }
-set-option global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
+# nop %sh{ rm -f /tmp/kak-lsp.log }
+# set-option global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
 declare-option bool in_own_factorio_project false
 evaluate-commands %sh{
@@ -329,6 +329,18 @@ hook global WinSetOption filetype=hare %{
   add-highlighter window/ruler column 81 Ruler
 }
 
+hook global WinSetOption filetype=java %{
+  lsp-init
+  rainbow-enable-window
+
+  add-highlighter shared/java/code/value regex \b[0-9]*\b 0:value
+  add-highlighter shared/java/code/functioncall regex \b([a-zA-Z0-9]*)\s*\( 1:function
+
+  set-option window tabstop 4
+  set-option window softtabstop 4
+  set-option window indentwidth 4
+}
+
 hook global WinSetOption filetype=json %{
   lsp-init
   rainbow-enable-window
@@ -634,9 +646,9 @@ define-command lsp-init -docstring "Enable LSP with default settings" %{
   lsp-enable-window
   set-option window lsp_enabled true
 
-  hook -group lsp window NormalIdle .* lsp-semantic-tokens
-  hook -group lsp window InsertKey .* lsp-semantic-tokens
-  hook -group lsp window BufReload .* lsp-semantic-tokens
+  # hook -group lsp window NormalIdle .* lsp-semantic-tokens
+  # hook -group lsp window InsertKey .* lsp-semantic-tokens
+  # hook -group lsp window BufReload .* lsp-semantic-tokens
 }
 
 hook global KakEnd .* lsp-exit

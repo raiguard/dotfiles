@@ -32,4 +32,4 @@ if [ -z "$GEOM" ]; then
 fi
 
 FILE=${3:-$(getTargetDirectory)/$(date -Ins).mp4}
-wf-recorder -t -g "$GEOM" -f "$FILE"
+wf-recorder -x yuv420p -g "$GEOM" -f "$FILE"

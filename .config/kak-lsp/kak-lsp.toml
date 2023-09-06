@@ -33,10 +33,18 @@ filetypes = ["go"]
 roots = ["Gopkg.toml", "go.mod", ".git", ".hg"]
 command = "gopls"
 
+[language.go.settings.gopls]
+analyses = { composites = false }
+
 [language.hare]
 filetypes = ["hare"]
 roots = [".git/", "Makefile", "hare.ini"]
 command = "harepls"
+
+[language.java]
+filetypes = ["java"]
+roots = [".git/"]
+command = "jdtls"
 
 [language.json]
 filetypes = ["json"]
@@ -59,16 +67,17 @@ command = "texlab"
 [language.latex.settings.texlab]
 build.args = ["--pdf", "%f"]
 
-# [language.lua]
-# filetypes = ["lua"]
-# roots = [".git/"]
-# command = "/home/rai/dev/personal/luapls/luapls"
-
 [language.lua]
 filetypes = ["lua"]
 roots = [".git/"]
-command = "lua-language-server"
-args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
+command = "/home/rai/dev/personal/luapls/luapls"
+args = ["lsp"]
+
+# [language.lua]
+# filetypes = ["lua"]
+# roots = [".git/"]
+# command = "lua-language-server"
+# args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
 
 [language.lua.settings.Lua]
 diagnostics.disable = ["lowercase-global", "redefined-local"]

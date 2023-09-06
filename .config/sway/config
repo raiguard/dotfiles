@@ -73,10 +73,6 @@ bindsym $mod+Control+$left resize shrink width 30px
 bindsym $mod+Control+$right resize grow width 30px
 bindsym $mod+Control+$up resize shrink height 30px
 
-# Output assignments
-workspace 1 output DP-1
-workspace 4 output DP-2
-
 # Switch to workspace
 bindsym $mod+u workspace 1
 bindsym $mod+i workspace 2
