@@ -21,7 +21,9 @@ cork auto-pairs.kak "https://github.com/alexherbo2/auto-pairs.kak" %{
   enable-auto-pairs
 }
 
-cork kak-ansi "https://github.com/eraserhd/kak-ansi"
+cork kak-ansi "https://github.com/eraserhd/kak-ansi" %{
+  hook global BufSetOption filetype=make ansi-enable
+}
 
 cork kak-fastbuild "https://github.com/raiguard/kak-fastbuild"
 

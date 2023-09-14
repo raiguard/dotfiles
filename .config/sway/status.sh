@@ -36,8 +36,8 @@ while true; do
 
     # GPU
     if [ "$HOSTNAME" = "tantal" ]; then
-        gpubusy=$(cat "/sys/class/drm/card0/device/gpu_busy_percent")
-        gputemp=$(cat "/sys/class/drm/card0/device/hwmon/hwmon5/temp1_input")
+        gpubusy=$(cat "/sys/class/drm/card1/device/gpu_busy_percent")
+        gputemp=$(cat "/sys/class/drm/card1/device/hwmon/hwmon5/temp1_input")
         gputemp=$(expr $gputemp / 1000)
         gpu="<span foreground='$lightred'>$gpubusy%  $gputemp°C</span>  "
     fi

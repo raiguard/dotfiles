@@ -13,5 +13,5 @@ NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHE
 NNN_FIFO='/tmp/nnn.fifo' \
 NNN_PLUG='v:imgview;p:preview-tui' \
 NNN_TERMINAL=foot \
-NNN_TRASH=1 \
 $prog -AHoTv "$@"
+# NNN_TRASH=1 \
