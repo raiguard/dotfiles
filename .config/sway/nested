@@ -1,0 +1,7 @@
+# vim: ft=i3
+
+include ~/.config/sway/common
+
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY SWAYSOCK
+exec systemctl --user restart xdg-desktop-portal.service
+exec systemctl --user restart xdg-desktop-portal-wlr.service

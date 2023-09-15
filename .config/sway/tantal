@@ -14,16 +14,16 @@ mode inhibited {
   bindsym $mod+g mode default
 }
 
-for_window [app_id=wlroots] {
-  gaps inner 0
-  move to workspace 8
-  workspace 8
-  exec killall swaybar
-  exec killall swayidle
-  exec foot
-  border none
-  shadows disable
-  gaps inner 4
-}
+# for_window [app_id=wlroots] {
+#   gaps inner 0
+#   move to workspace 8
+#   workspace 8
+#   exec killall swaybar
+#   exec killall swayidle
+#   exec foot
+#   border none
+#   shadows disable
+#   gaps inner 4
+# }
 
 bindsym $mod+z resize set width 2560 px

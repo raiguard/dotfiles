@@ -1,0 +1,171 @@
+# vim: ft=i3
+
+set $mod Mod4
+
+set $left h
+set $down j
+set $up k
+set $right l
+
+# Work around GTK3 dumbness
+exec_always ~/.config/sway/import-gsettings.sh
+
+### Key bindings
+
+bindsym $mod+Return exec foot
+bindsym $mod+backspace kill
+
+floating_modifier $mod normal
+
+bindsym $mod+Shift+c reload
+
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+
+# Launcher
+bindsym $mod+y exec fuzzel-util-menu
+bindsym $mod+r exec fuzzel
+bindsym $mod+w exec fuzzel-filesearch
+bindsym $mod+q exec fuzzel-power-menu
+
+bindsym $mod+d exec i3-quickterm
+
+# Focus
+bindsym $mod+$down focus down
+bindsym $mod+$left focus left
+bindsym $mod+$right focus right
+bindsym $mod+$up focus up
+bindgesture swipe:3:down focus down
+bindgesture swipe:3:left focus left
+bindgesture swipe:3:right focus right
+bindgesture swipe:3:up focus up
+
+# Movement
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+$up move up
+bindgesture swipe:4:down move down
+bindgesture swipe:4:left move left
+bindgesture swipe:4:right move right
+bindgesture swipe:4:up move up
+
+# Resize
+bindsym $mod+Control+$down resize grow height 30px
+bindsym $mod+Control+$left resize shrink width 30px
+bindsym $mod+Control+$right resize grow width 30px
+bindsym $mod+Control+$up resize shrink height 30px
+
+# Workspaces
+bindsym $mod+u workspace 1
+bindsym $mod+i workspace 2
+bindsym $mod+o workspace 3
+bindsym $mod+p workspace 4
+bindsym $mod+m workspace 5
+bindsym $mod+comma workspace 6
+bindsym $mod+period workspace 7
+bindsym $mod+slash workspace 8
+bindsym $mod+Shift+u move container to workspace 1
+bindsym $mod+Shift+i move container to workspace 2
+bindsym $mod+Shift+o move container to workspace 3
+bindsym $mod+Shift+p move container to workspace 4
+bindsym $mod+Shift+m move container to workspace 5
+bindsym $mod+Shift+comma move container to workspace 6
+bindsym $mod+Shift+period move container to workspace 7
+bindsym $mod+Shift+slash move container to workspace 8
+bindsym $mod+Alt+h move workspace to output left
+bindsym $mod+Alt+j move workspace to output down
+bindsym $mod+Alt+k move workspace to output up
+bindsym $mod+Alt+l move workspace to output right
+
+# Don't wrap around when moving between windows
+focus_wrapping no
+
+bindsym $mod+b splith
+bindsym $mod+v splitv
+
+bindsym $mod+f fullscreen
+
+bindsym $mod+space floating toggle
+
+bindsym $mod+Shift+space focus mode_toggle
+
+bindsym $mod+s sticky toggle
+
+bindsym $mod+a focus parent
+bindgesture pinch:3:outward focus parent
+
+bindsym $mod+t layout toggle split tabbed stacking
+
+bindsym $mod+Shift+minus move scratchpad
+
+bindsym $mod+minus scratchpad show
+
+# Media
+bindsym --locked XF86AudioRaiseVolume exec ~/.config/sway/volume.sh i
+bindsym --locked XF86AudioLowerVolume exec ~/.config/sway/volume.sh d
+bindsym --locked XF86AudioMute exec ~/.config/sway/volume.sh t
+bindsym --locked XF86AudioPlay exec ~/.config/sway/media.sh play-pause
+bindsym --locked XF86AudioNext exec ~/.config/sway/media.sh next
+bindsym --locked XF86AudioPrev exec ~/.config/sway/media.sh previous
+
+# Brightness
+bindsym --locked XF86MonBrightnessUp exec ~/.config/sway/brightness.sh +5%
+bindsym --locked XF86MonBrightnessDown exec ~/.config/sway/brightness.sh 5%-
+
+# Screenshots
+bindsym print exec freeze-screenshot copy area
+bindsym --locked Shift+print exec grimshot --notify copy output
+bindsym Control+print exec grimshot --notify copy active
+bindsym Alt+print exec freeze-screenshot save area
+
+### Looks
+
+default_border pixel 2
+default_floating_border pixel 2
+
+client.focused #56b6c2 #56b6c2 #181a1f #61afef
+client.focused_inactive #70798a #70798a #181a1f #70798a
+client.unfocused #70798a #70798a #181a1f #70798a
+client.urgent #e06c75 #70798a #abb2bf #be5046
+
+font Source Code Pro Medium 8
+title_align center
+
+smart_borders no_gaps
+gaps inner 4
+blur enable
+shadows enable
+corner_radius 4
+
+### Input
+
+input type:keyboard {
+    repeat_delay 300
+    repeat_rate 40
+}
+
+### Bar
+
+set $bg #181a1f
+set $comment #70798a
+set $fg #abb2bf
+set $cyan #56b6c2
+set $red #e06c75
+
+bar {
+    id bar
+    font "Source Code Pro Bold 9"
+    position top
+    status_command ~/.config/sway/status.sh
+    pango_markup enable
+    strip_workspace_name yes
+    icon_theme "Tela-blue-dark"
+    colors {
+        background $bg
+        statusline $fg
+        active_workspace $bg $bg $fg
+        focused_workspace $bg $bg $cyan
+        inactive_workspace $bg $bg $comment
+        urgent_workspace $red $red $bg
+    }
+}
