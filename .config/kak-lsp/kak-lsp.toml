@@ -33,9 +33,6 @@ filetypes = ["go"]
 roots = ["Gopkg.toml", "go.mod", ".git", ".hg"]
 command = "gopls"
 
-[language.go.settings.gopls]
-analyses = { composites = false }
-
 [language.hare]
 filetypes = ["hare"]
 roots = [".git/", "Makefile", "hare.ini"]
@@ -43,8 +40,12 @@ command = "harepls"
 
 [language.java]
 filetypes = ["java"]
-roots = [".git/"]
+roots = [".git/", "Makefile"]
 command = "jdtls"
+
+[language.java.settings]
+# See https://github.dev/eclipse/eclipse.jdt.ls
+"java.format.insertSpaces" = true
 
 [language.json]
 filetypes = ["json"]

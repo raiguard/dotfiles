@@ -1,6 +1,6 @@
 #!/bin/sh
 
 grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') /tmp/freeze-screenshot
-swayimg -s fit -f /tmp/freeze-screenshot -b none &
+swayimg -s real -f /tmp/freeze-screenshot -b none &
 grimshot "$@"
 killall swayimg # We are only using swayimg for this purpose

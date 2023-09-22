@@ -4,8 +4,8 @@ evaluate-commands %sh{
 }
 
 # kak-lsp debugging
-# nop %sh{ rm -f /tmp/kak-lsp.log }
-# set-option global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
+nop %sh{ rm -f /tmp/kak-lsp.log }
+set-option global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
 declare-option bool in_own_factorio_project false
 evaluate-commands %sh{
@@ -16,6 +16,8 @@ evaluate-commands %sh{
 
 # --------------------------------------------------
 # PLUGINS
+
+cork kakoune-ghwiki "https://gitlab.com/Screwtapello/kakoune-ghwiki"
 
 cork auto-pairs.kak "https://github.com/alexherbo2/auto-pairs.kak" %{
   enable-auto-pairs
@@ -204,38 +206,30 @@ hook global ModuleLoaded sway %{
   }
 }
 
-# # Supertab - completion and snippet jumping
-# declare-option bool in_snippet false
-# hook global WinSetOption snippets_placeholder_groups=.* %{ evaluate-commands %sh{
-#   eval set -- "$kak_quoted_opt_snippets_placeholder_groups"
-#   if [ $# = 0 ]; then
-#     printf %s\\n "
-#       set-option window in_snippet false
-#       unmap window insert <tab> '<a-;>: snippets-select-next-placeholders<ret>'
-#     "
-#   else
-#     printf %s\\n "
-#       set-option window in_snippet true
-#       map window insert <tab> '<a-;>: snippets-select-next-placeholders<ret>'
-#     "
-#   fi
-# }}
-# hook global InsertCompletionShow .* %{ evaluate-commands %sh{
-#   if [ "$kak_opt_in_snippet" = false ]; then
-#     printf %s\\n "
-#       map window insert <tab> <c-n>
-#       map window insert <s-tab> <c-p>
-#     "
-#   fi
-# }}
-hook global InsertCompletionShow .* %{
-  map window insert <tab> <c-n>
-  map window insert <s-tab> <c-p>
-}
-hook global InsertCompletionHide .* %{
-  unmap window insert <tab> <c-n>
-  unmap window insert <s-tab> <c-p>
-}
+# Supertab - completion and snippet jumping
+declare-option bool in_snippet false
+hook global WinSetOption snippets_placeholder_groups=.* %{ evaluate-commands %sh{
+  eval set -- "$kak_quoted_opt_snippets_placeholder_groups"
+  if [ $# = 0 ]; then
+    printf %s\\n "
+      set-option window in_snippet false
+      unmap window insert <tab> '<a-;>: snippets-select-next-placeholders<ret>'
+    "
+  else
+    printf %s\\n "
+      set-option window in_snippet true
+      map window insert <tab> '<a-;>: snippets-select-next-placeholders<ret>'
+    "
+  fi
+}}
+hook global InsertCompletionShow .* %{ evaluate-commands %sh{
+  if [ "$kak_opt_in_snippet" = false ]; then
+    printf %s\\n "
+      map window insert <tab> <c-n>
+      map window insert <s-tab> <c-p>
+    "
+  fi
+}}
 
 # --------------------------------------------------
 # FILETYPE HOOKS
@@ -335,8 +329,7 @@ hook global WinSetOption filetype=java %{
   lsp-init
   rainbow-enable-window
 
-  add-highlighter shared/java/code/value regex \b[0-9]*\b 0:value
-  add-highlighter shared/java/code/functioncall regex \b([a-zA-Z0-9]*)\s*\( 1:function
+  hook global BufWritePre .*\.java lsp-formatting-sync
 
   set-option window tabstop 4
   set-option window softtabstop 4
@@ -356,12 +349,8 @@ hook global WinSetOption filetype=latex %{
   add-highlighter window/ruler column 81 Ruler
 
   hook window BufWritePre .* lsp-formatting-sync
-  define-command latex-automake %{
-    hook window BufWritePost .* texlab-build
-  }
-  define-command latex-preview %{
-    evaluate-commands %sh{ echo "pstart 'zathura ${kak_buffile%.tex}.pdf'" }
-  }
+  hook window BufWritePost .* texlab-build
+  evaluate-commands %sh{ echo "pstart 'zathura ${kak_buffile%.tex}.pdf'" }
 
   define-command create-figure %{
     prompt name: %{
@@ -392,17 +381,6 @@ hook global WinSetOption filetype=latex %{
   Partial \bpD\b %{snippets-insert "\partial "}
 }
 
-evaluate-commands %sh{
-  if [ $(basename "$PWD") == "notes" ] || [ $(basename $(dirname "$PWD")) == "homework" ]; then
-    printf "%s\\n" "
-      hook -once global WinDisplay .* %{
-        latex-automake
-        latex-preview
-      }
-    "
-  fi
-}
-
 hook global WinSetOption filetype=lua %{
   lsp-init
   rainbow-enable-window
@@ -413,6 +391,12 @@ hook global WinSetOption filetype=lua %{
   add-highlighter window/emmylua_direct regex "---\s*(@(?:alias|as|class|return|type))\s+([^\n]*)" 1:attribute 2:type
   add-highlighter window/emmylua_labeled regex "---\s*(@(?:alias|cast|field|param))\s+([a-zA-Z0-9_]*) ([^\n]*)" 1:attribute 2:variable 3:type
   add-highlighter window/emmylua_enum_variant regex '---\s*\|\s*("[^\n]*")' 1:string
+
+  set-option -add global snippets Annotation '-`' %{
+    snippets-insert "--- @"
+    # Remove the extra tick inserted by auto-pairs
+    execute-keys d
+  }
 }
 
 hook global WinSetOption filetype=makefile %{
@@ -425,7 +409,8 @@ hook global WinSetOption filetype=python %{
   rainbow-enable-window
 
   set-option window formatcmd "autopep8 -"
-  hook window BufWritePre .* format
+  # hook window BufWritePre .* format
+  add-highlighter shared/python/code/functioncall regex '\b([a-zA-Z0-9_]*)\h*\(' 1:function
 }
 
 hook global WinSetOption filetype=rust %{
@@ -569,7 +554,7 @@ define-command -hidden show-session-info %{
 # Wrap paragraphs
 map global user w ": wrap-paragraph<ret>" -docstring "wrap paragraph"
 define-command wrap-paragraph %{
-  execute-keys "<a-i>p<a-j>|fold -s -w %opt{autowrap_column}<ret>"
+  execute-keys "<a-i>p<a-j>|fold -s -w %opt{autowrap_column}<ret>|sed 's/\s*$//g'<ret><esc>"
 }
 
 # Git
