@@ -5,7 +5,6 @@ include ~/.config/sway/common
 exec mako
 exec swayidle
 exec /usr/bin/polkit-dumb-agent
-exec wlsunset -l 40.3 -L -111.8 -t 2500
 
 ### Keybindings
 
@@ -13,13 +12,6 @@ bindsym $mod+escape exec swaylock
 
 ### Rules
 
-# for_window [title="Blender Preferences"] floating enable
-for_window [title="File Operation Progress"] floating enable
-for_window [app_id="foot.floating"] {
-    floating enable
-    resize set width 60ppt
-    resize set height 80ppt
-}
 for_window [app_id="org.speedcrunch.speedcrunch"] {
     floating enable
     sticky enable
@@ -28,7 +20,6 @@ for_window [app_id="org.speedcrunch.speedcrunch"] {
     scratchpad show
 }
 for_window [app_id="org.qutebrowser.qutebrowser"] inhibit_idle fullscreen
-for_window [app_id="com.obsproject.Studio"] inhibit_idle open
 for_window [app_id="qemu"] inhibit_idle open
 
 ### Other

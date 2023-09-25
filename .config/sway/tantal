@@ -1,11 +1,15 @@
 # vim: ft=i3
 
+# Autostart
+
+exec wlsunset -o DP-2 -l 40.3 -L -111.8 -t 2500
+
 # Input configuration
 
 input type:tablet_tool map_to_output DP-1
 
 # Output configuration
-output DP-3 mode 3440x1440@165Hz bg ~/pictures/wallpaper-dp-1 fill
+output DP-2 mode 3440x1440@143.975Hz bg ~/pictures/wallpaper-dp-1 fill
 output HDMI-A-1 disable mode 3840x2160@120Hz scale 2 adaptive_sync on bg ~/pictures/wallpaper-hdmi-1 fill
 output WL-1 bg ~/pictures/wallpaper-wl-1 fill
 
@@ -14,16 +18,16 @@ mode inhibited {
   bindsym $mod+g mode default
 }
 
-# for_window [app_id=wlroots] {
-#   gaps inner 0
-#   move to workspace 8
-#   workspace 8
-#   exec killall swaybar
-#   exec killall swayidle
-#   exec foot
-#   border none
-#   shadows disable
-#   gaps inner 4
-# }
+for_window [app_id=wlroots] {
+  gaps inner 0
+  move to workspace 8
+  workspace 8
+  exec killall swaybar
+  exec killall swayidle
+  exec foot
+  border none
+  shadows disable
+  gaps inner 0
+}
 
 bindsym $mod+z resize set width 2560 px

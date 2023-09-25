@@ -14,7 +14,7 @@ args = ["start"]
 filetypes = ["c", "cpp"]
 roots = ["compile_commands.json", ".clangd", ".git", ".hg"]
 command = "clangd"
-args = ["--limit-references=0", "--header-insertion=never", "--background-index=0", "--pch-storage=memory"]
+args = ["--limit-references=0", "--header-insertion=never", "--pch-storage=memory"]
 
 [language.css]
 filetypes = ["css"]

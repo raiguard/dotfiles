@@ -169,3 +169,13 @@ bar {
         urgent_workspace $red $red $bg
     }
 }
+
+### Rules
+
+for_window [title="File Operation Progress"] floating enable
+for_window [app_id="foot.floating"] {
+    floating enable
+    resize set width 60ppt
+    resize set height 80ppt
+}
+for_window [app_id="com.obsproject.Studio"] inhibit_idle open
