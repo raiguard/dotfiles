@@ -172,11 +172,16 @@ define-command delete-all-buffers-force -docstring "forcibly delete all buffers"
   done
   }
 }
+define-command write-delete-buffer -docstring "write current buffer then delete it." %{
+  write
+  delete-buffer
+}
 # C for 'close'
 alias global c delete-buffer
 alias global c! delete-buffer!
 alias global ca delete-all-buffers
 alias global ca! delete-all-buffers-force
+alias global wc write-delete-buffer
 
 # Remove trailing whitespace on save
 hook -group auto-trim-whitespace global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
