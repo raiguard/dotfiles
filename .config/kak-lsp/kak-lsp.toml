@@ -84,6 +84,7 @@ args = ["lsp"]
 diagnostics.disable = ["lowercase-global", "redefined-local"]
 diagnostics.severity = { unused-local = "Error", undefined-global = "Error", undefined-field = "Error" }
 hover.expandAlias = false
+hover.previewFields = 0
 semantic.enable = false
 telemetry.enable = false
 workspace.userThirdParty = ["/home/rai/dev/luals"]

@@ -486,6 +486,9 @@ map global goto "b" '<esc>:prompt -buffer-completion buffer: %{ buffer %val{text
 # Pick file with NNN
 map global normal <minus> ':terminal-floating nnn-pick "%val{buffile}" "%val{client}" "%val{session}"<ret>'
 
+# Pipe primary selection to command and echo output to statusline
+map global normal <a-$> ':prompt -shell-completion echo-pipe: %{ echo %sh{ printf "%s" "$kak_selection" | $kak_text }}<ret>'
+
 # Search case-insensitive by default
 map global normal "/" "/(?i)"
 map global normal "?" "?(?i)"
