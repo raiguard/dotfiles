@@ -183,3 +183,4 @@ for_window [app_id="foot.floating"] {
     resize set height 80ppt
 }
 for_window [app_id="com.obsproject.Studio"] inhibit_idle open
+for_window [title="xeyes"] floating enable

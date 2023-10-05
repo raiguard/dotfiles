@@ -14,7 +14,7 @@ args = ["start"]
 filetypes = ["c", "cpp"]
 roots = ["compile_commands.json", ".clangd", ".git", ".hg"]
 command = "clangd"
-args = ["--limit-references=0", "--header-insertion=never", "--pch-storage=memory"]
+args = ["-j", "14", "--limit-references=0", "--header-insertion=never", "--pch-storage=memory"]
 
 [language.css]
 filetypes = ["css"]
@@ -68,17 +68,17 @@ command = "texlab"
 [language.latex.settings.texlab]
 build.args = ["--pdf", "%f"]
 
-[language.lua]
-filetypes = ["lua"]
-roots = [".git/"]
-command = "/home/rai/dev/personal/luapls/luapls"
-args = ["lsp"]
-
 # [language.lua]
 # filetypes = ["lua"]
 # roots = [".git/"]
-# command = "lua-language-server"
-# args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
+# command = "/home/rai/dev/personal/luapls/luapls"
+# args = ["lsp"]
+
+[language.lua]
+filetypes = ["lua"]
+roots = [".git/"]
+command = "lua-language-server"
+args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
 
 [language.lua.settings.Lua]
 diagnostics.disable = ["lowercase-global", "redefined-local"]

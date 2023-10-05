@@ -393,7 +393,7 @@ hook global WinSetOption filetype=lua %{
   set-option window formatcmd "stylua -"
 
   # Highlight EmmyLua annotations
-  add-highlighter window/emmylua_direct regex "---\s*(@(?:alias|as|class|return|type))\s+([^\n]*)" 1:attribute 2:type
+  add-highlighter window/emmylua_direct regex "---\s*(@(?:alias|as|class|enum|generic|return|type))\s+([^\n]*)" 1:attribute 2:type
   add-highlighter window/emmylua_labeled regex "---\s*(@(?:alias|cast|field|param))\s+([a-zA-Z0-9_]*) ([^\n]*)" 1:attribute 2:variable 3:type
   add-highlighter window/emmylua_enum_variant regex '---\s*\|\s*("[^\n]*")' 1:string
 
@@ -688,20 +688,40 @@ hook global WinDisplay .* %{
 
 set-option global modelinefmt '%opt{lsp_modeline_message_requests} %opt{lsp_modeline_progress} {+r@Error}%opt{gdb_indicator}{StatusLine}{string}%opt{modeline_git_branch}{type}%sh{ [ -n "$kak_opt_filetype" ] && echo "$kak_opt_filetype " }{default}%val{bufname}{{context_info}}{default} {{mode_info}} {meta}%val{cursor_line}:%val{cursor_char_column}'
 
+# --------------------------------------------------
 # OTHER
 
-# Load local configuration
-evaluate-commands %sh{
-  if [ -f ".kakrc" ]; then
-    echo "source ./.kakrc"
-  fi
-}
+# Factorio
+declare-option str frun_pid
+define-command -params .. \
+    -docstring %{
+        frun [<arguments>]: frun utility wrapper
+        All the optional arguments are forwarded to the frun utility
+     } frun %{ evaluate-commands %sh{
+     output=$(mktemp -d "${TMPDIR:-/tmp}"/kak.XXXXXXXX)/fifo
+     mkfifo ${output}
+     ( frun "$@" > ${output} 2>&1 & ) > /dev/null 2>&1 < /dev/null
+
+     printf %s\\n "evaluate-commands -try-client '$kak_opt_toolsclient' %{
+               edit! -fifo ${output} -scroll *frun*
+               set-option buffer filetype make
+               hook -always -once buffer BufCloseFifo .* %{ nop %sh{ rm -r $(dirname ${output}) } }
+               set-option global frun_pid $$
+           }"
+}}
 
 # Quickly test faces
 declare-option range-specs test_ranges
 define-command add-test-face -params 2 %{
   set-option -add window test_ranges "%val{selection_desc}|%arg{1}"
   add-highlighter -override window/test_ranges ranges test_ranges
+}
+
+# Load local configuration
+evaluate-commands %sh{
+  if [ -f ".kakrc" ]; then
+    echo "source ./.kakrc"
+  fi
 }
 
 # # EXPERIMENT
