@@ -211,30 +211,39 @@ hook global ModuleLoaded sway %{
   }
 }
 
-# Supertab - completion and snippet jumping
-declare-option bool in_snippet false
-hook global WinSetOption snippets_placeholder_groups=.* %{ evaluate-commands %sh{
-  eval set -- "$kak_quoted_opt_snippets_placeholder_groups"
-  if [ $# = 0 ]; then
-    printf %s\\n "
-      set-option window in_snippet false
-      unmap window insert <tab> '<a-;>: snippets-select-next-placeholders<ret>'
-    "
-  else
-    printf %s\\n "
-      set-option window in_snippet true
-      map window insert <tab> '<a-;>: snippets-select-next-placeholders<ret>'
-    "
-  fi
-}}
-hook global InsertCompletionShow .* %{ evaluate-commands %sh{
-  if [ "$kak_opt_in_snippet" = false ]; then
-    printf %s\\n "
-      map window insert <tab> <c-n>
-      map window insert <s-tab> <c-p>
-    "
-  fi
-}}
+# # Supertab - completion and snippet jumping
+# declare-option bool in_snippet false
+# hook global WinSetOption snippets_placeholder_groups=.* %{ evaluate-commands %sh{
+#   eval set -- "$kak_quoted_opt_snippets_placeholder_groups"
+#   if [ $# = 0 ]; then
+#     printf %s\\n "
+#       set-option window in_snippet false
+#       unmap window insert <tab> '<a-;>: snippets-select-next-placeholders<ret>'
+#     "
+#   else
+#     printf %s\\n "
+#       set-option window in_snippet true
+#       map window insert <tab> '<a-;>: snippets-select-next-placeholders<ret>'
+#     "
+#   fi
+# }}
+# hook global InsertCompletionShow .* %{ evaluate-commands %sh{
+#   if [ "$kak_opt_in_snippet" = false ]; then
+#     printf %s\\n "
+#       map window insert <tab> <c-n>
+#       map window insert <s-tab> <c-p>
+#     "
+#   fi
+# }}
+
+hook global InsertCompletionShow .* %{
+  map window insert <tab> <c-n>
+  map window insert <s-tab> <c-p>
+}
+hook global InsertCompletionHide .* %{
+  unmap window insert <tab> <c-n>
+  unmap window insert <s-tab> <c-p>
+}
 
 # --------------------------------------------------
 # FILETYPE HOOKS
@@ -339,6 +348,8 @@ hook global WinSetOption filetype=java %{
   set-option window tabstop 4
   set-option window softtabstop 4
   set-option window indentwidth 4
+
+  add-highlighter -override shared/java/code/operator regex (=|==|&&|\|\||\+|-|/|\*|\+=|-=|\*=|/=|!|<=|>=|<|>) 1:operator
 }
 
 hook global WinSetOption filetype=json %{
@@ -412,6 +423,10 @@ hook global WinSetOption filetype=makefile %{
 hook global WinSetOption filetype=python %{
   lsp-init
   rainbow-enable-window
+
+  set-option window tabstop 4
+  set-option window softtabstop 4
+  set-option window indentwidth 4
 
   set-option window formatcmd "autopep8 -"
   # hook window BufWritePre .* format
