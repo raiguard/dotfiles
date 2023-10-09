@@ -183,6 +183,11 @@ alias global ca delete-all-buffers
 alias global ca! delete-all-buffers-force
 alias global wc write-delete-buffer
 
+# Convenient wrap highlighter
+define-command addwrap %{
+  add-highlighter window/wrap wrap -word -indent
+}
+
 # Remove trailing whitespace on save
 hook -group auto-trim-whitespace global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
 
