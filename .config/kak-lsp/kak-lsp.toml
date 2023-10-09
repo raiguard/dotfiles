@@ -89,6 +89,11 @@ semantic.enable = false
 telemetry.enable = false
 workspace.userThirdParty = ["/home/rai/dev/luals"]
 
+[language.markdown]
+filetypes = ["markdown"]
+roots = [".kakrc"]
+command = "marksman"
+
 [language.python]
 filetypes = ["python"]
 roots = ["requirements.txt", "setup.py", ".git", ".hg"]

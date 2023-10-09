@@ -420,6 +420,13 @@ hook global WinSetOption filetype=makefile %{
   set-option window indentwidth 0
 }
 
+hook global WinSetOption filetype=markdown %{
+  # lsp-init
+  rainbow-enable-window
+  # add-highlighter shared/markdown/inline/equation region -match-capture \$+ \$+ fill meta
+  add-highlighter window/date regex ^\h*>!.*?$ 0:type
+}
+
 hook global WinSetOption filetype=python %{
   lsp-init
   rainbow-enable-window
@@ -623,12 +630,14 @@ map global previous-location m ":lsp-previous-location *make*<ret>" -docstring "
 map global previous-location p ":lsp-previous-location *spell*<ret>" -docstring "spell"
 
 # IDE
-
 declare-user-mode ide
 map global user i ":enter-user-mode ide<ret>"
 map global ide t ':set-option global toolsclient %val{client}<ret>' -docstring "set toolsclient"
 map global ide j ':set-option global jumpclient %val{client}<ret>' -docstring "set jumpclient"
 map global ide d ':set-option global docsclient %val{client}<ret>' -docstring "set docsclient"
+
+# Other
+map global user e ":edit -scratch<ret>" -docstring "scratch buffer"
 
 # --------------------------------------------------
 # LSP
