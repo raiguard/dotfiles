@@ -4,83 +4,83 @@ verbosity = 2
 
 # LANGUAGES
 
-[language.bash]
+[language_server.bash-language-server]
 filetypes = ["sh"]
 roots = [".git", ".hg"]
 command = "bash-language-server"
 args = ["start"]
 
-[language.c_cpp]
+[language_server.clangd]
 filetypes = ["c", "cpp"]
 roots = ["compile_commands.json", ".clangd", ".git", ".hg"]
 command = "clangd"
 args = ["-j", "14", "--limit-references=0", "--header-insertion=never", "--pch-storage=memory"]
 
-[language.css]
-filetypes = ["css"]
+[language_server.vscode-css-languageserver]
+filetypes = ["css", "scss"]
 roots = ["package.json", ".git", ".hg"]
 command = "vscode-css-languageserver"
 args = ["--stdio"]
 
-[language.factorio-changelog]
-filetypes = ["factorio-changelog"]
+[language_server.fmtk]
+filetypes = ["factorio-changelog", "lua", "conf"]
 roots = ["changelog.txt"]
 command = "fmtk"
 args = ["lsp", "--stdio"]
 
-[language.go]
+[language_server.gopls]
 filetypes = ["go"]
 roots = ["Gopkg.toml", "go.mod", ".git", ".hg"]
 command = "gopls"
 
-[language.hare]
+[language_server.harepls]
 filetypes = ["hare"]
 roots = [".git/", "Makefile", "hare.ini"]
 command = "harepls"
 
-[language.java]
+[language_server.jdtls]
 filetypes = ["java"]
 roots = [".git/", "Makefile"]
 command = "jdtls"
 
-[language.java.settings]
+[language_server.jdtls.settings]
 # See https://github.dev/eclipse/eclipse.jdt.ls
 "java.format.insertSpaces" = true
 
-[language.json]
+[language_server.vscode-json-languageserver]
 filetypes = ["json"]
 roots = ["info.json", "package.json"]
 command = "vscode-json-languageserver"
 args = ["--stdio"]
 
-[language.json.settings.json]
+[language_server.vscode-json-languageserver.settings.json]
 format.enable = true
 
-[[language.json.settings.json.schemas]]
+[[language_server.vscode-json-languageserver.settings.json.schemas]]
 fileMatch = ["info.json"]
 url = "file:///usr/lib/node_modules/factoriomod-debug/schema/modinfo.json"
 
-[language.latex]
+[language_server.texlab]
 filetypes = ["tex", "latex"]
 roots = [".git/"]
 command = "texlab"
 
-[language.latex.settings.texlab]
+[language_server.texlab.settings.texlab]
 build.args = ["--pdf", "%f"]
 
-# [language.lua]
-# filetypes = ["lua"]
-# roots = [".git/"]
-# command = "/home/rai/dev/personal/luapls/luapls"
-# args = ["lsp"]
+[language_server.luapls]
+filetypes = ["lua"]
+roots = [".git/"]
+command = "/home/rai/dev/personal/luapls/luapls"
+args = ["lsp"]
 
-[language.lua]
+[language_server.luals]
 filetypes = ["lua"]
 roots = [".git/"]
 command = "lua-language-server"
 args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
 
-[language.lua.settings.Lua]
+[language_server.luals.settings.Lua]
 diagnostics.disable = ["lowercase-global", "redefined-local"]
 diagnostics.severity = { unused-local = "Error", undefined-global = "Error", undefined-field = "Error" }
 hover.expandAlias = false
@@ -89,38 +89,35 @@ semantic.enable = false
 telemetry.enable = false
 workspace.userThirdParty = ["/home/rai/dev/luals"]
 
-[language.markdown]
+[language_server.marksman]
 filetypes = ["markdown"]
 roots = [".kakrc"]
 command = "marksman"
 
-[language.python]
+[language_server.pylsp]
 filetypes = ["python"]
 roots = ["requirements.txt", "setup.py", ".git", ".hg"]
 command = "pylsp"
 
-[language.rust]
+[language_server.pylsp.settings.python]
+plugins.pycodestyle.enabled = false
+
+[language_server.rust-analyzer]
 filetypes = ["rust"]
 roots = ["Cargo.toml"]
 command = "rust-analyzer"
 
-[language.rust.settings.rust-analyzer]
+[language_server.rust-analyzer.settings.rust-analyzer]
 checkOnSave.command = "clippy"
 
-[language.scss]
-filetypes = ["scss"]
-roots = ["package.json", ".git", ".hg"]
-command = "vscode-css-languageserver"
-args = ["--stdio"]
-
-[language.tsx]
+[language_server.typescript-language-server]
 filetypes = ["typescript"]
 roots = ["package.json"]
 offset_encoding = "utf-8"
 command = "typescript-language-server"
 args = ['--stdio']
 
-[language.zig]
+[language_server.zls]
 filetypes = ["zig"]
 roots = ["build.zig"]
 command = "zls"
