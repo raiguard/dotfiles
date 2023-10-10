@@ -669,6 +669,7 @@ define-command lsp-init -docstring "Enable LSP with default settings" %{
 
   echo -debug "Enabling LSP for filetype %opt{filetype}"
   lsp-enable-window
+  lsp-auto-signature-help-enable
   set-option window lsp_enabled true
 
   # hook -group lsp window NormalIdle .* lsp-semantic-tokens
