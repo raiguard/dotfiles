@@ -11,6 +11,7 @@ declare-option bool in_own_factorio_project false
 evaluate-commands %sh{
   if [ -f "info.json" ] && [ $(jq -r ".author" < info.json) = "raiguard" ]; then
     echo "hook global BufWritePre .*\.lua format"
+    echo "hook global WinSetOption filetype=conf lsp-init"
   fi
 }
 

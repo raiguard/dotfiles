@@ -1,5 +1,6 @@
 # GENERAL
 
+snippet_support = true
 verbosity = 2
 
 # LANGUAGES
@@ -24,7 +25,7 @@ args = ["--stdio"]
 
 [language_server.fmtk]
 filetypes = ["factorio-changelog", "lua", "conf"]
-roots = ["changelog.txt"]
+roots = ["info.json"]
 command = "fmtk"
 args = ["lsp", "--stdio"]
 
