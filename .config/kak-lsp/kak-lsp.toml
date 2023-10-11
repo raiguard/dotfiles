@@ -23,7 +23,7 @@ command = "vscode-css-languageserver"
 args = ["--stdio"]
 
 [language_server.fmtk]
-filetypes = ["factorio-changelog", "lua", "conf"]
+filetypes = ["factorio-changelog", "factorio-locale", "lua"]
 roots = ["info.json"]
 command = "fmtk"
 args = ["lsp", "--stdio"]

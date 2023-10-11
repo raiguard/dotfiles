@@ -4,14 +4,13 @@ evaluate-commands %sh{
 }
 
 # kak-lsp debugging
-nop %sh{ rm -f /tmp/kak-lsp.log }
-set-option global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
+# nop %sh{ rm -f /tmp/kak-lsp.log }
+# set-option global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
 declare-option bool in_own_factorio_project false
 evaluate-commands %sh{
   if [ -f "info.json" ] && [ $(jq -r ".author" < info.json) = "raiguard" ]; then
     echo "hook global BufWritePre .*\.lua format"
-    echo "hook global WinSetOption filetype=conf lsp-init"
   fi
 }
 
@@ -315,6 +314,19 @@ hook global WinSetOption filetype=factorio-changelog %{
   add-highlighter window/changelog_keyword regex ^\s*(Balancing|Bugfixes|Changes|Features|Gui|Info|Optimizations): 1:type
   add-highlighter window/changelog_separator regex ^-+$ 0:keyword
   add-highlighter window/changelog_version regex ^(Version):\s(\d+\.\d+\.\d+)$ 1:type 2:value
+}
+
+hook global WinCreate (.*locale/.*/.*\.cfg) %{
+  set-option buffer filetype factorio-locale
+}
+hook global WinSetOption filetype=factorio-locale %{
+  lsp-init
+  # Highlighters
+  require-module conf
+  add-highlighter window/conf ref conf
+  add-highlighter window/locale_macro regex __[^\n]*?__ 0:meta
+  add-highlighter window/locale_rich_text regex \[(achievement|armor|color|entity|fluid|font|gps|item|item-group|recipe|special-item|technology|tile|tooltip|train|train-stop|virtual-signal)=.*?\] 0:function
+  add-highlighter window/locale_rich_text_close regex \[/(achievement|armor|color|entity|fluid|font|gps|item|item-group|recipe|special-item|technology|tile|tooltip|train|train-stop|virtual-signal)\] 0:function
 }
 
 hook global WinSetOption filetype=(git-commit|mail) %{
