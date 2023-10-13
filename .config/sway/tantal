@@ -30,4 +30,8 @@ for_window [app_id=wlroots] {
   gaps inner 0
 }
 
+for_window [app_id="foot.gdb"] {
+  resize set height 25ppt
+}
+
 bindsym $mod+z resize set width 2560 px

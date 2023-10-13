@@ -96,8 +96,12 @@ cork kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
     gdb-enable-autojump
   }
   define-command custom-gdb-session-new %{
+    nop %sh{ swaymsg split vertical }
+    set-option window foot_app_id "foot.gdb"
     gdb-session-new
+    set-option window foot_app_id "foot"
     gdb-enable-autojump
+    # nop %sh{ swaymsg resize set height 500px }
     trigger-user-hook GDBPostInit
   }
   map global normal <F5> ":custom-gdb-session-new<ret>" -docstring "new GDB session"
@@ -292,6 +296,14 @@ hook global WinSetOption filetype=(c|cpp) %{
   add-highlighter -override "shared/%opt{filetype}/code/operators" regex (\+|-|\*|&|=|\\|\?|%|\^|\|-|!|\||->|<|>|\^|/|~|\[|\]) 0:operator
   add-highlighter -override "shared/%opt{filetype}/code/function_call" regex \b([a-zA-Z0-9_]*)\( 1:function
   add-highlighter -override "shared/%opt{filetype}/code/constant" regex \b([A-Z0-9_]*)\b 1:value
+
+}
+
+# GNU STL has a really stupid indentation format
+hook global WinCreate /usr/include/c\+\+/.* %{
+  set-option window tabstop 8
+  set-option window softabstop 4
+  set-option window indentwidth 4
 }
 
 hook global WinCreate (.*/|^)changelog\.txt %{
