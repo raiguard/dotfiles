@@ -22,8 +22,14 @@ roots = ["package.json", ".git", ".hg"]
 command = "vscode-css-languageserver"
 args = ["--stdio"]
 
-[language_server.fmtk]
-filetypes = ["factorio-changelog", "factorio-locale", "lua"]
+[language_server.fmtk-locale]
+filetypes = ["factorio-locale", "lua"]
+roots = ["info.json"]
+command = "fmtk"
+args = ["lsp", "--stdio"]
+
+[language_server.fmtk-changelog]
+filetypes = ["factorio-changelog", "lua"]
 roots = ["info.json"]
 command = "fmtk"
 args = ["lsp", "--stdio"]

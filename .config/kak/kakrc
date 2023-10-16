@@ -769,7 +769,6 @@ set-option global modelinefmt '%opt{lsp_modeline_message_requests} %opt{lsp_mode
 # OTHER
 
 # Factorio
-declare-option str frun_pid
 define-command -params .. \
     -docstring %{
         frun [<arguments>]: frun utility wrapper
@@ -783,7 +782,23 @@ define-command -params .. \
                edit! -fifo ${output} -scroll *frun*
                set-option buffer filetype make
                hook -always -once buffer BufCloseFifo .* %{ nop %sh{ rm -r $(dirname ${output}) } }
-               set-option global frun_pid $$
+           }"
+}}
+
+# Haredoc
+define-command -params .. \
+    -docstring %{
+        haredoc [<arguments>]: frun utility wrapper
+        All the optional arguments are forwarded to the haredoc utility
+     } haredoc %{ evaluate-commands %sh{
+     output=$(mktemp -d "${TMPDIR:-/tmp}"/kak.XXXXXXXX)/fifo
+     mkfifo ${output}
+     ( haredoc -F tty "$@" > ${output} 2>&1 & ) > /dev/null 2>&1 < /dev/null
+
+     printf %s\\n "evaluate-commands -try-client '$kak_opt_docsclient' %{
+               edit! -fifo ${output} -scroll *haredoc*
+               set-option buffer filetype make
+               hook -always -once buffer BufCloseFifo .* %{ nop %sh{ rm -r $(dirname ${output}) } }
            }"
 }}
 
