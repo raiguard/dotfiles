@@ -7,7 +7,6 @@ evaluate-commands %sh{
 # nop %sh{ rm -f /tmp/kak-lsp.log }
 # set-option global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
-declare-option bool in_own_factorio_project false
 evaluate-commands %sh{
   if [ -f "info.json" ] && [ $(jq -r ".author" < info.json) = "raiguard" ]; then
     echo "hook global BufWritePre .*\.lua format"
@@ -297,6 +296,25 @@ hook global WinSetOption filetype=(c|cpp) %{
   add-highlighter -override "shared/%opt{filetype}/code/function_call" regex \b([a-zA-Z0-9_]*)\( 1:function
   add-highlighter -override "shared/%opt{filetype}/code/constant" regex \b([A-Z0-9_]*)\b 1:value
 
+  # Factorio doc comments
+
+  remove-highlighter "shared/%opt{filetype}/line_comment"
+  add-highlighter "shared/%opt{filetype}/line_comment" region //[^\?] (?<!\\)(?=\n) fill comment
+
+  require-module markdown
+
+  add-highlighter "shared/%opt{filetype}/factorio_documentation" region //\? (?<!\\)(?=\n) regions
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/text" default-region group
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/text/" ref markdown
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/text/comment_prefix" regex //\? 0:meta
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/text/tag" regex \$[a-z_]+ 0:function
+
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag" region -recurse \$[a-z_]+\( \$[a-z_]+\( \) group
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/variable" regex [a-zA-Z0-9_:\.-]+ 0:type
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/tag" regex \$[a-z_]+ 0:function
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/property" regex (\$(|param|return|raises|subclass|property))\( 1:keyword
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/value" regex \b(\d+|true|false)\b 1:value
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/string" regex '".*?"' 0:string
 }
 
 # GNU STL has a really stupid indentation format
@@ -455,6 +473,10 @@ hook global WinSetOption filetype=markdown %{
   rainbow-enable-window
   # add-highlighter shared/markdown/inline/equation region -match-capture \$+ \$+ fill meta
   add-highlighter window/date regex ^\h*>!.*?$ 0:type
+
+  define-command insert-date %{
+    execute-keys -draft 'i>! <esc>!date "+%a %b %-d %Y"<ret>'
+  }
 }
 
 hook global WinSetOption filetype=python %{
