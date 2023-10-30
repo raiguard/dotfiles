@@ -51,7 +51,7 @@ eval "$(fasd --init posix-hook posix-alias)"
 # fasd only adds to $PS1, but yash uses $YASH_PS1 when not in posix mode
 YASH_PS1='$(_fasd_ps1_func)'$YASH_PS1
 
-if [ "$TERM" == "foot" ]; then
+if [ "$TERM" == "foot-ext-underline" ]; then
     # insert special escape codes for foot terminal
     foot_escs() {
         # update window title

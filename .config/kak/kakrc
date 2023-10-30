@@ -785,6 +785,21 @@ define-command -params .. \
            }"
 }}
 
+define-command -params .. \
+    -docstring %{
+        fmm [<arguments>]: fmm utility wrapper
+        All the optional arguments are forwarded to the fmm utility
+     } fmm %{ evaluate-commands %sh{
+     output=$(mktemp -d "${TMPDIR:-/tmp}"/kak.XXXXXXXX)/fifo
+     mkfifo ${output}
+     ( fmm "$@" > ${output} 2>&1 & ) > /dev/null 2>&1 < /dev/null
+
+     printf %s\\n "evaluate-commands -try-client '$kak_opt_toolsclient' %{
+               edit! -fifo ${output} -scroll *fmm*
+               hook -always -once buffer BufCloseFifo .* %{ nop %sh{ rm -r $(dirname ${output}) } }
+           }"
+}}
+
 # Haredoc
 define-command -params .. \
     -docstring %{
