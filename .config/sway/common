@@ -137,7 +137,8 @@ title_align center
 
 smart_borders no_gaps
 gaps inner 4
-blur enable
+
+# SwayFX
 shadows enable
 corner_radius 4
 
