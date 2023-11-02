@@ -94,16 +94,16 @@ cork kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
     osc-yank "new-ui mi3 %opt{gdb_dir}/pty"
     gdb-enable-autojump
   }
-  define-command custom-gdb-session-new %{
+  define-command -params .. custom-gdb-session-new %{
     nop %sh{ swaymsg split vertical }
     # set-option window foot_app_id "foot.gdb"
-    gdb-session-new
+    gdb-session-new %arg{@}
     # set-option window foot_app_id "foot"
     gdb-enable-autojump
     # nop %sh{ swaymsg resize set height 500px }
     trigger-user-hook GDBPostInit
   }
-  map global normal <F5> ":custom-gdb-session-new<ret>" -docstring "new GDB session"
+  map global normal <F5> ':prompt -menu -shell-script-candidates %{ fd --type f --hidden ".*" bin } file: %{ custom-gdb-session-new %val{text} }<ret>' -docstring "new GDB session"
   map global normal <s-F5> ":custom-gdb-session-connect<ret>" -docstring "connect to GDB session"
   map global normal <F9> ":gdb-toggle-breakpoint<ret>" -docstring "GDB toggle breakpoint"
   map global normal <F10> ":gdb-next<ret>" -docstring "GDB next"
