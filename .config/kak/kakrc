@@ -96,9 +96,9 @@ cork kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
   }
   define-command custom-gdb-session-new %{
     nop %sh{ swaymsg split vertical }
-    set-option window foot_app_id "foot.gdb"
+    # set-option window foot_app_id "foot.gdb"
     gdb-session-new
-    set-option window foot_app_id "foot"
+    # set-option window foot_app_id "foot"
     gdb-enable-autojump
     # nop %sh{ swaymsg resize set height 500px }
     trigger-user-hook GDBPostInit
@@ -216,6 +216,12 @@ hook global ModuleLoaded sway %{
   define-command -params .. -command-completion splitv %{
     nop %sh{ swaymsg splitv }
     new %arg{@}
+  }
+}
+
+hook global ModuleLoaded tmux %{
+  define-command -params .. terminal-floating %{
+    tmux-terminal-impl 'display-popup -E' %arg{@}
   }
 }
 
@@ -551,8 +557,8 @@ map global normal "<a-#>" ":comment-block<ret>"
 # Go to file (basic fuzzy finder)
 map global goto f '<esc>:prompt -shell-script-candidates %{ fd --type f --hidden } file: %{ edit %val{text} }<ret>' -docstring "file"
 # Or with fzf
-map global user f ':terminal-floating fzf-pick "%val{client}" "%val{session}"<ret>' -docstring "pick file"
-map global user / ':terminal-floating fzf-search "%val{client}" "%val{session}"<ret>' -docstring "fuzzy search"
+map global user f ':tmux-terminal-window fzf-pick "%val{client}" "%val{session}"<ret>' -docstring "pick file"
+map global user / ':tmux-terminal-window fzf-search "%val{client}" "%val{session}"<ret>' -docstring "fuzzy search"
 
 # Go to buffer
 map global goto "b" '<esc>:prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
@@ -819,10 +825,11 @@ define-command -params .. \
 
 # Quickly test faces
 declare-option range-specs test_ranges
-define-command add-test-face -params 2 %{
+define-command add-test-face -params 1 %{
   set-option -add window test_ranges "%val{selection_desc}|%arg{1}"
   add-highlighter -override window/test_ranges ranges test_ranges
 }
+alias global tface add-test-face
 
 # Load local configuration
 evaluate-commands %sh{

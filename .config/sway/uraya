@@ -6,8 +6,9 @@ exec pactl load-module module-switch-on-connect
 input type:touchpad {
     natural_scroll enabled
     tap enabled
+    dwt enabled
 }
-input type:pointer pointer_accel 0
+input type:pointer pointer_accel -0.6
 input type:tablet_tool map_to_output eDP-1
 
 # Output configuration
