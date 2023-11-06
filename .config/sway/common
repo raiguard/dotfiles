@@ -139,8 +139,8 @@ smart_borders no_gaps
 gaps inner 4
 
 # SwayFX
-shadows enable
-corner_radius 4
+# shadows enable
+# corner_radius 4
 
 ### Input
 
