@@ -41,7 +41,7 @@ git_branch() {
 }
 YASH_PS1=$usercolor'$(whoami)'$hostcolor'@$(uname -n)\fd. '\
 '$(echo "$PWD" | sed "s/\/home\/rai/~/")'\
-'\fc.$(git_branch)\fd. $ '
+'\fc.$(git_branch)\fd.\n$ '
 unset hostcolor usercolor
 # color predictions as dim
 PS1P='\fi.'
