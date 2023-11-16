@@ -16,6 +16,10 @@ evaluate-commands %sh{
 # --------------------------------------------------
 # PLUGINS
 
+cork fzf.kak "https://github.com/andreyorst/fzf.kak" %{
+  set-option global fzf_file_preview false
+}
+
 cork kakoune-ghwiki "https://gitlab.com/Screwtapello/kakoune-ghwiki"
 
 cork auto-pairs.kak "https://github.com/alexherbo2/auto-pairs.kak" %{
@@ -33,10 +37,10 @@ cork kak-harpoon "https://github.com/raiguard/kak-harpoon" %{
 }
 
 cork kak-mark "https://github.com/raiguard/kak-mark" %{
-  set-face global MarkedPrimaryCursor black,magenta
-  set-face global MarkedPrimarySelection black,magenta
-  set-face global MarkedSecondaryCursor MarkedPrimaryCursor
-  set-face global MarkedSecondarySelection MarkedPrimarySelection
+  set-face global MarkedPrimaryCursor black,magenta+F
+  set-face global MarkedPrimarySelection black,magenta+F
+  set-face global MarkedSecondaryCursor MarkedPrimaryCursor+F
+  set-face global MarkedSecondarySelection MarkedPrimarySelection+F
 }
 
 cork kak-mirror "https://github.com/raiguard/kak-mirror" %{
@@ -95,7 +99,7 @@ cork kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
     gdb-enable-autojump
   }
   define-command -params .. custom-gdb-session-new %{
-    nop %sh{ swaymsg split vertical }
+    # nop %sh{ swaymsg split vertical }
     # set-option window foot_app_id "foot.gdb"
     gdb-session-new %arg{@}
     # set-option window foot_app_id "foot"
@@ -134,6 +138,11 @@ cork smarttab.kak "https://github.com/andreyorst/smarttab.kak"
 
 # Color scheme
 colorscheme one-darker-16
+# Tmux does not display these correctly if they use ANSI color names
+set-face global DiagnosticError ,,rgb:e06c75+c
+set-face global DiagnosticWarning ,,rgb:e5c07b+c
+set-face global DiagnosticInfo ,,rgb:61afef+c
+set-face global DiagnosticHint ,,rgb:ffffff+c
 
 trigger-user-hook ColorschemeLoaded
 set-face global Ruler StatusLine
@@ -217,11 +226,15 @@ hook global ModuleLoaded sway %{
     nop %sh{ swaymsg splitv }
     new %arg{@}
   }
+  alias global terminal-overlay terminal-floating
 }
 
 hook global ModuleLoaded tmux %{
   define-command -params .. terminal-floating %{
     tmux-terminal-impl 'display-popup -E' %arg{@}
+  }
+  define-command -params .. terminal-overlay %{
+    tmux-terminal-window %arg{@}
   }
 }
 
@@ -489,9 +502,9 @@ hook global WinSetOption filetype=python %{
   lsp-init
   rainbow-enable-window
 
-  set-option window tabstop 4
-  set-option window softtabstop 4
-  set-option window indentwidth 4
+  set-option window tabstop 2
+  set-option window softtabstop 2
+  set-option window indentwidth 2
 
   set-option window formatcmd "autopep8 -"
   # hook window BufWritePre .* format
@@ -557,14 +570,14 @@ map global normal "<a-#>" ":comment-block<ret>"
 # Go to file (basic fuzzy finder)
 map global goto f '<esc>:prompt -shell-script-candidates %{ fd --type f --hidden } file: %{ edit %val{text} }<ret>' -docstring "file"
 # Or with fzf
-map global user f ':tmux-terminal-window fzf-pick "%val{client}" "%val{session}"<ret>' -docstring "pick file"
-map global user / ':tmux-terminal-window fzf-search "%val{client}" "%val{session}"<ret>' -docstring "fuzzy search"
+map global user f ':terminal-overlay fzf-pick "%val{client}" "%val{session}"<ret>' -docstring "pick file"
+map global user / ':terminal-overlay fzf-search "%val{client}" "%val{session}"<ret>' -docstring "fuzzy search"
 
 # Go to buffer
 map global goto "b" '<esc>:prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
 
 # Pick file with NNN
-map global normal <minus> ':terminal-floating nnn-pick "%val{buffile}" "%val{client}" "%val{session}"<ret>'
+map global normal <minus> ':terminal-overlay nnn-pick "%val{buffile}" "%val{client}" "%val{session}"<ret>'
 
 # Pipe primary selection to command and echo output to statusline
 map global normal <a-$> ':prompt -shell-completion echo-pipe: %{ echo %sh{ printf "%s" "$kak_selection" | $kak_text }}<ret>'
@@ -651,7 +664,7 @@ map global user g ":enter-user-mode git<ret>" -docstring "git..."
 map global git b ":git blame<ret>" -docstring "blame"
 map global git B ":git hide-blame<ret>" -docstring "hide blame"
 map global git d ":git diff<ret>" -docstring "diff"
-map global git g ":terminal-floating lazygit<ret>" -docstring "lazygit"
+map global git g ":terminal-overlay lazygit -p %sh{echo $PWD}<ret>" -docstring "lazygit"
 map global git f ":lazygit-current-file<ret>" -docstring "file history"
 define-command lazygit-current-file %{
   terminal-floating lazygit -f %val{buffile}
@@ -862,3 +875,7 @@ evaluate-commands %sh{
 #   done
 #   echo $output
 # }}
+
+define-command run-selected-commands %{
+  evaluate-commands -itersel -draft %exp{ %val{selection} }
+}
