@@ -30,6 +30,6 @@ export SDL_VIDEODRIVER=wayland,X11
 
 # Launch desktop
 [ "$(tty)" = "/dev/tty1" ] && exec sway
-[ "$(tty)" = "/dev/tty2" ] && startx /usr/bin/i3
+[ "$(tty)" = "/dev/tty2" ] && exec startx
 
 # vim: ft=sh

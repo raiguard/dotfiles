@@ -11,7 +11,7 @@ set $right l
 
 exec dunst
 exec --no-startup-id nitrogen --restore
-exec setxkbmap -layout us -option caps:escape
+exec setxkbmap -layout us -option caps:escape -option grab:break_actions
 exec /usr/bin/polkit-dumb-agent
 exec xrandr --output DisplayPort-0 --primary --output DisplayPort-1 --left-of DisplayPort-0 --output HDMI-A-0 --off
 exec xset r rate 200
@@ -39,6 +39,8 @@ bindsym $mod+Shift+e exec i3nag -t warning -m 'You pressed the exit shortcut. Do
 bindsym $mod+r exec rofi -show drun
 # bindsym $mod+w exec fuzzel-filesearch
 # bindsym $mod+q exec fuzzel-power-menu
+
+bindsym $mod+g exec xdotool key XF86Ungrab
 
 # Move your focus around
 bindsym $mod+$left focus left
@@ -152,7 +154,6 @@ smart_borders on
 
 ### Rules
 
-assign [class="factorio"] 3
 assign [class="discord"] 4
 assign [class="obs"] 4
 
