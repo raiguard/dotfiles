@@ -66,15 +66,23 @@
             "active": true
         },
         {
-            "name": "1.1.x",
-            "factorioPath": "${env:FACTORIO}/1.1.x/bin/Releasex64GCC/factorio-run",
+            "name": "1.1.x (debug)",
+            "factorioPath": "${env:FACTORIO}/1.1.x/bin/Debugx64Clang/factorio-run",
+            "docsPath": "${env:FACTORIO}/1.1.x/scripts/lua_doc/doc-files/runtime-api.json",
+            "active": true
+        },
+        {
+            "name": "1.1.x (release)",
+            "factorioPath": "${env:FACTORIO}/1.1.x/bin/Releasex64Clang/factorio-run",
+            "docsPath": "${env:FACTORIO}/1.1.x/scripts/lua_doc/doc-files/runtime-api.json",
             "active": true
         },
         {
             "name": "master",
-            "factorioPath": "${env:FACTORIO}/master/bin/Releasex64GCC/factorio-run",
+            "factorioPath": "${env:FACTORIO}/master/bin/Releasex64Clang/factorio-run",
+            "docsPath": "${env:FACTORIO}/master/scripts/lua_doc/doc-files/runtime-api.json",
             "active": true
-        },
+        }
     ],
     "git.autofetch": true,
     "git.confirmSync": false,
