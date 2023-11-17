@@ -38,6 +38,9 @@ for_window [title="SpeedCrunch"] {
   floating enable
   move position 1152 689
 }
+for_window [title="tk"] {
+  floating enable
+}
 
 assign [app_id="factorio"] workspace 3
 assign [app_id="factorio-run"] workspace 3

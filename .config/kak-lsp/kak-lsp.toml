@@ -104,9 +104,10 @@ command = "marksman"
 filetypes = ["python"]
 roots = ["requirements.txt", "setup.py", ".git", ".hg"]
 command = "pylsp"
+settings_section = "_"
 
-[language_server.pylsp.settings.pyls]
-plugins.pycodestyle.enabled = false
+[language_server.pylsp.settings._]
+pylsp.plugins.pycodestyle.enabled = false
 
 [language_server.rust-analyzer]
 filetypes = ["rust"]
