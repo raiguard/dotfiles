@@ -37,10 +37,10 @@ cork kak-harpoon "https://github.com/raiguard/kak-harpoon" %{
 }
 
 cork kak-mark "https://github.com/raiguard/kak-mark" %{
-  set-face global MarkedPrimaryCursor black,magenta+F
-  set-face global MarkedPrimarySelection black,magenta+F
-  set-face global MarkedSecondaryCursor MarkedPrimaryCursor+F
-  set-face global MarkedSecondarySelection MarkedPrimarySelection+F
+  set-face global MarkedPrimaryCursor ,,magenta+ua
+  set-face global MarkedPrimarySelection ,,magenta+ua
+  set-face global MarkedSecondaryCursor ,,cyan+ua
+  set-face global MarkedSecondarySelection ,,cyan+ua
 }
 
 cork kak-mirror "https://github.com/raiguard/kak-mirror" %{
@@ -151,7 +151,7 @@ add-highlighter global/ number-lines -relative -separator " " -hlcursor
 add-highlighter global/ show-matching
 
 # UI settings
-set-option global ui_options terminal_assistant=off terminal_set_title=false
+set-option global ui_options terminal_assistant=off terminal_set_title=false terminal_info_max_width=100 terminal_info_inline_borders=true
 set-option global startup_info_version 10000000000000 # Don't show changelog
 set-option global scrolloff 5,5
 
@@ -715,6 +715,7 @@ map global user e ":edit -scratch<ret>" -docstring "scratch buffer"
 
 set-option global lsp_auto_highlight_references true
 set-option global lsp_hover_max_lines 1000
+set-option global lsp_hover_anchor true
 
 define-command lsp-restart -docstring "Restart kak-lsp session" %{ lsp-stop; lsp-start }
 
@@ -731,6 +732,7 @@ define-command lsp-init -docstring "Enable LSP with default settings" %{
   map window goto r "<esc><c-s>:lsp-references<ret>"
   map window goto y "<esc><c-s>:lsp-type-definition<ret>"
   lsp-inlay-diagnostics-enable window
+  lsp-auto-signature-help-enable
 
   echo -debug "Enabling LSP for filetype %opt{filetype}"
   lsp-enable-window
