@@ -6,7 +6,6 @@ border-size=2
 margin=4
 padding=5,8
 progress-color=#373c47
-border-radius=4
 
 # No urgency
 text-color=#98c379
