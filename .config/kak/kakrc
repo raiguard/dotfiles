@@ -732,11 +732,10 @@ define-command lsp-init -docstring "Enable LSP with default settings" %{
   map window goto r "<esc><c-s>:lsp-references<ret>"
   map window goto y "<esc><c-s>:lsp-type-definition<ret>"
   lsp-inlay-diagnostics-enable window
-  lsp-auto-signature-help-enable
+  # lsp-auto-signature-help-enable
 
   echo -debug "Enabling LSP for filetype %opt{filetype}"
   lsp-enable-window
-  # lsp-auto-signature-help-enable
   set-option window lsp_enabled true
 
   # hook -group lsp window NormalIdle .* lsp-semantic-tokens
