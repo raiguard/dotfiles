@@ -14,10 +14,15 @@ fi
 
 # Don't do stuff if any flags were passed to kak
 case "$1" in
+  -L)
+    shift
+    $kak "$@"
+    exit
+    ;;
   -*)
     $kak "$@"
     exit
-  ;;
+    ;;
 esac
 
 # Change filename to absolute path
