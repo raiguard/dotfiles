@@ -142,7 +142,7 @@ colorscheme one-darker-16
 set-face global DiagnosticError ,,rgb:e06c75+c
 set-face global DiagnosticWarning ,,rgb:e5c07b+c
 set-face global DiagnosticInfo ,,rgb:61afef+c
-set-face global DiagnosticHint ,,rgb:ffffff+c
+set-face global DiagnosticHint ,,rgb:98c379+c
 
 trigger-user-hook ColorschemeLoaded
 set-face global Ruler StatusLine
@@ -170,7 +170,11 @@ define-command delete-all-buffers -docstring "delete all buffers" %{
   evaluate-commands %sh{
   eval "set -- $kak_quoted_buflist"
   while [ $# -gt 0 ]; do
-    echo "try %{ delete-buffer '$1' } catch %{ echo -markup '{Error}Not all buffers were closed' }"
+    firstchar=$(echo "$1" | cut -c 1)
+    # Don't delete scratch buffers
+    if [ "$firstchar" != "*" ]; then
+      echo "try %{ delete-buffer '$1' } catch %{ echo -markup '{Error}Not all buffers were closed' }"
+    fi
     shift
   done
   }
@@ -306,10 +310,24 @@ hook global WinSetOption filetype=(fish|i3|kak|sh|toml|fastbuild) %{
 
 hook global WinSetOption filetype=(c|cpp) %{
   lsp-init
-  rainbow-enable-window
-
   map global user a ":clangd-switch-source-header<ret>"
+}
 
+# GNU STL has a really stupid indentation format
+hook global WinCreate /usr/include/c\+\+/.* %{
+  set-option window tabstop 8
+  set-option window softabstop 4
+  set-option window indentwidth 4
+}
+
+source ~/dev/personal/kak-cpp2/cpp2.kak
+hook global WinSetOption filetype=cpp2 %{
+  require-module c-family
+  set-option buffer filetype cpp2
+}
+
+hook global WinSetOption filetype=(c|cpp|cpp2) %{
+  rainbow-enable-window
   # Better highlighting
   add-highlighter -override "shared/%opt{filetype}/code/operators" regex (\+|-|\*|&|=|\\|\?|%|\^|\|-|!|\||->|<|>|\^|/|~|\[|\]) 0:operator
   add-highlighter -override "shared/%opt{filetype}/code/function_call" regex \b([a-zA-Z0-9_]*)\( 1:function
@@ -334,13 +352,6 @@ hook global WinSetOption filetype=(c|cpp) %{
   add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/property" regex (\$(|param|return|raises|subclass|property))\( 1:keyword
   add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/value" regex \b(\d+|true|false)\b 1:value
   add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/string" regex '".*?"' 0:string
-}
-
-# GNU STL has a really stupid indentation format
-hook global WinCreate /usr/include/c\+\+/.* %{
-  set-option window tabstop 8
-  set-option window softabstop 4
-  set-option window indentwidth 4
 }
 
 hook global WinCreate (.*/|^)changelog\.txt %{
@@ -502,13 +513,13 @@ hook global WinSetOption filetype=python %{
   lsp-init
   rainbow-enable-window
 
-  set-option window tabstop 2
-  set-option window softtabstop 2
-  set-option window indentwidth 2
-
   set-option window formatcmd "autopep8 -"
   # hook window BufWritePre .* format
-  add-highlighter shared/python/code/functioncall regex '\b([a-zA-Z0-9_]*)\h*\(' 1:function
+  add-highlighter -override shared/python/code/functioncall regex '\b([a-zA-Z0-9_]*)\h*\(' 1:function
+
+  set-option window tabstop 4
+  set-option window softtabstop 4
+  set-option window indentwidth 4
 }
 
 hook global WinSetOption filetype=rust %{
@@ -518,6 +529,10 @@ hook global WinSetOption filetype=rust %{
 
   # Format on save
   hook window BufWritePre .* lsp-formatting-sync
+
+  set-option window tabstop 4
+  set-option window softtabstop 4
+  set-option window indentwidth 4
 }
 
 # TODO: Create a kak plugin for this filetype

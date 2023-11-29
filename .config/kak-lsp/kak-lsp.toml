@@ -1,6 +1,7 @@
 # GENERAL
 
 verbosity = 2
+snippet_support = false
 
 # LANGUAGES
 
