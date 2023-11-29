@@ -2,6 +2,7 @@
 
 # Autostart
 
+exec swayidle
 exec wlsunset -o DP-2 -l 40.3 -L -111.8 -t 2500
 
 # Input configuration
@@ -22,12 +23,11 @@ for_window [app_id=wlroots] {
   gaps inner 0
   move to workspace 8
   workspace 8
-  exec killall swaybar
-  exec killall swayidle
   exec foot
   border none
   shadows disable
   gaps inner 0
+  inhibit_idle open
 }
 
 for_window [app_id="foot.gdb"] {

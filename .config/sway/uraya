@@ -1,6 +1,7 @@
 # Autostart
 exec inkscape-figures watch
 exec pactl load-module module-switch-on-connect
+exec swayidle
 
 # Input configuration
 input type:touchpad {
