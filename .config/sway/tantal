@@ -23,6 +23,7 @@ for_window [app_id=wlroots] {
   gaps inner 0
   move to workspace 8
   workspace 8
+  exec killall swaybar
   exec foot
   border none
   shadows disable
