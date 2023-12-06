@@ -7,7 +7,8 @@ exec wlsunset -o DP-2 -l 40.3 -L -111.8 -t 2500
 
 # Input configuration
 
-input type:tablet_tool map_to_output DP-1
+# input type:tablet_tool map_to_output DP-2
+input type:tablet_tool map_to_region 440 0 2560 1440
 
 # Output configuration
 output DP-2 mode 3440x1440@143.975Hz bg ~/pictures/wallpaper-dp-1 fill
