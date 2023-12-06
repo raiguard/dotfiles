@@ -322,6 +322,8 @@ hook global WinCreate /usr/include/c\+\+/.* %{
 }
 
 hook global WinSetOption filetype=(c|cpp|cpp2) %{
+  # XXX: For some reason, kak-rainbower falls over in certain files with rgb faces
+  set-option window rainbow_colors yellow magenta blue
   rainbow-enable-window
   # Better highlighting
   add-highlighter -override "shared/%opt{filetype}/code/operators" regex (\+|-|\*|&|=|\\|\?|%|\^|\|-|!|\||->|<|>|\^|/|~|\[|\]) 0:operator
