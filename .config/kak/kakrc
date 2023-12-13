@@ -16,9 +16,9 @@ evaluate-commands %sh{
 # --------------------------------------------------
 # PLUGINS
 
-cork fzf.kak "https://github.com/andreyorst/fzf.kak" %{
-  set-option global fzf_file_preview false
-}
+# cork fzf.kak "https://github.com/andreyorst/fzf.kak" %{
+#   set-option global fzf_file_preview false
+# }
 
 cork kakoune-ghwiki "https://gitlab.com/Screwtapello/kakoune-ghwiki"
 
@@ -52,12 +52,12 @@ cork kak-move-lines "https://github.com/raiguard/kak-move-lines" %{
   map global normal <c-a-k> ':move-lines-up %val{count}<ret>'
 }
 
-# cork kak-live-grep "https://github.com/raiguard/kak-live-grep" %{
-#   map global user / ": live-grep<ret>" -docstring "live grep"
-#   hook global User ColorschemeLoaded %{
-#     set-face global LiveGrepMatch ,,bright-yellow+u
-#   }
-# }
+cork kak-live-grep "https://github.com/raiguard/kak-live-grep" %{
+  map global user ? ": live-grep<ret>" -docstring "live grep"
+  hook global User ColorschemeLoaded %{
+    set-face global LiveGrepMatch ",,rgb:%opt{lightorange}+u"
+  }
+}
 
 cork kak-rainbower "https://github.com/crizan/kak-rainbower" %{
   set-option global rainbow_mode 0
@@ -140,12 +140,16 @@ cork quickscope.kak "https://git.sr.ht/~voroskoi/quickscope.kak" %{
   map global normal <a-T> ': quickscope-a-T<ret>'
 }
 
+# source ~/dev/personal/kak-grep-dfs/grep-dfs.kak
+
 # --------------------------------------------------
 # GENERAL
 
 # Color scheme
 colorscheme one-darker
 trigger-user-hook ColorschemeLoaded
+# XXX: For some reason, kak-rainbower falls over in certain files with rgb faces
+set-option global rainbow_colors yellow magenta blue
 set-face global Ruler StatusLine
 # Highlighters
 add-highlighter global/ number-lines -relative -separator " " -hlcursor
@@ -322,8 +326,6 @@ hook global WinCreate /usr/include/c\+\+/.* %{
 }
 
 hook global WinSetOption filetype=(c|cpp|cpp2) %{
-  # XXX: For some reason, kak-rainbower falls over in certain files with rgb faces
-  set-option window rainbow_colors yellow magenta blue
   rainbow-enable-window
   # Better highlighting
   add-highlighter -override "shared/%opt{filetype}/code/operators" regex (\+|-|\*|&|=|\\|\?|%|\^|\|-|!|\||->|<|>|\^|/|~|\[|\]) 0:operator

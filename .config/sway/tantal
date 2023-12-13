@@ -4,6 +4,7 @@
 
 exec swayidle
 exec wlsunset -o DP-2 -l 40.3 -L -111.8 -t 2500
+exec /usr/bin/polkit-dumb-agent
 
 # Input configuration
 

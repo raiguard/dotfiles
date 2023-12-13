@@ -2,6 +2,7 @@
 exec inkscape-figures watch
 exec pactl load-module module-switch-on-connect
 exec swayidle
+exec /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
 
 # Input configuration
 input type:touchpad {
