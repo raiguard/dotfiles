@@ -28,6 +28,7 @@ cork auto-pairs.kak "https://github.com/alexherbo2/auto-pairs.kak" %{
 
 cork kak-ansi "https://github.com/eraserhd/kak-ansi" %{
   hook global BufSetOption filetype=make ansi-enable
+  hook global BufCreate \*frun\* ansi-enable
 }
 
 cork kak-fastbuild "https://github.com/raiguard/kak-fastbuild"
@@ -53,7 +54,7 @@ cork kak-move-lines "https://github.com/raiguard/kak-move-lines" %{
 }
 
 cork kak-live-grep "https://github.com/raiguard/kak-live-grep" %{
-  map global user ? ": live-grep<ret>" -docstring "live grep"
+  map global user / ": live-grep<ret>" -docstring "live grep"
   hook global User ColorschemeLoaded %{
     set-face global LiveGrepMatch ",,rgb:%opt{lightorange}+u"
   }
@@ -165,6 +166,9 @@ set-option global autoreload yes
 
 # Use ripgrep instead of grep
 set-option global grepcmd 'rg -Hn --no-heading --sort path --vimgrep'
+
+# More lenient make errors
+set-option global make_error_pattern "^\h*(?:\w:)?([^:\n]+):(\d+):(?:(\d+):)? (?:fatal )?(error|warning|info|hint|note):([^\n]+)?"
 
 # Conveniently edit config
 define-command edit-kakrc %{ e ~/.config/kak/kakrc }
@@ -585,7 +589,7 @@ map global normal "<a-#>" ":comment-block<ret>"
 map global goto f '<esc>:prompt -shell-script-candidates %{ fd --type f --hidden } file: %{ edit %val{text} }<ret>' -docstring "file"
 # Or with fzf
 map global user f ':terminal-overlay fzf-pick "%val{client}" "%val{session}"<ret>' -docstring "pick file"
-map global user / ':terminal-overlay fzf-search "%val{client}" "%val{session}"<ret>' -docstring "fuzzy search"
+# map global user / ':terminal-overlay fzf-search "%val{client}" "%val{session}"<ret>' -docstring "fuzzy search"
 
 # Go to buffer
 map global goto "b" '<esc>:prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
