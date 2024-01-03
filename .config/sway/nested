@@ -7,3 +7,6 @@ exec systemctl --user restart xdg-desktop-portal.service
 exec systemctl --user restart xdg-desktop-portal-wlr.service
 
 output WL-1 bg ~/pictures/wallpaper-wl-1 fill
+
+for_window [app_id=factorio] move to workspace 3
+for_window [class=factorio] move to workspace 3

@@ -3,16 +3,16 @@
 # Autostart
 
 exec swayidle
-exec wlsunset -o DP-2 -l 40.3 -L -111.8 -t 2500
+exec wlsunset -o DP-1 -l 40.3 -L -111.8 -t 2500
 exec /usr/bin/polkit-dumb-agent
 
 # Input configuration
 
-# input type:tablet_tool map_to_output DP-2
+# input type:tablet_tool map_to_output DP-1
 input type:tablet_tool map_to_region 440 0 2560 1440
 
 # Output configuration
-output DP-2 mode 3440x1440@143.975Hz bg ~/pictures/wallpaper-dp-1 fill
+output DP-1 mode 3440x1440@143.975Hz bg ~/pictures/wallpaper-dp-1 fill
 output HDMI-A-1 disable mode 3840x2160@120Hz scale 2 adaptive_sync on bg ~/pictures/wallpaper-hdmi-1 fill
 output WL-1 bg ~/pictures/wallpaper-wl-1 fill
 
@@ -32,6 +32,11 @@ for_window [app_id=wlroots] {
   gaps inner 0
   inhibit_idle open
 }
+
+# for_window [app_id=factorio] {
+#   border none
+#   floating enable
+# }
 
 for_window [app_id="foot.gdb"] {
   resize set height 25ppt

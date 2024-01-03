@@ -149,8 +149,6 @@ cork quickscope.kak "https://git.sr.ht/~voroskoi/quickscope.kak" %{
 # Color scheme
 colorscheme one-darker
 trigger-user-hook ColorschemeLoaded
-# XXX: For some reason, kak-rainbower falls over in certain files with rgb faces
-set-option global rainbow_colors yellow magenta blue
 set-face global Ruler StatusLine
 # Highlighters
 add-highlighter global/ number-lines -relative -separator " " -hlcursor
