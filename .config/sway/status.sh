@@ -9,6 +9,8 @@ blue="#61afef"
 magenta="#c678dd"
 cyan="#56b6c2"
 
+hwmon=$(find /sys/class/drm/card1/device/hwmon -type d -name hwmon[0-9])
+
 while true; do
     # CPU info
     cpuusage=$(mpstat 1 1 | awk '/M  all/ { printf "%.1f%%", 100 - $13 }')
@@ -37,7 +39,7 @@ while true; do
     # GPU
     if [ "$HOSTNAME" = "tantal" ]; then
         gpubusy=$(cat "/sys/class/drm/card1/device/gpu_busy_percent")
-        gputemp=$(cat "/sys/class/drm/card1/device/hwmon/hwmon6/temp1_input")
+        gputemp=$(cat "$hwmon/temp1_input")
         gputemp=$(expr $gputemp / 1000)
         gpu="<span foreground='$lightred'>$gpubusy%  $gputemp°C</span>  "
     fi
