@@ -30,5 +30,6 @@ export MOZ_ENABLE_WAYLAND=1
 # Launch desktop
 [ "$(tty)" = "/dev/tty1" ] && exec sway
 [ "$(tty)" = "/dev/tty2" ] && exec startx
+[ "$(tty)" = "/dev/tty3" ] && exec Hyprland
 
 # vim: ft=sh

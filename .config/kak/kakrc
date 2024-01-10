@@ -584,7 +584,7 @@ map global normal "#" ":comment-line<ret>"
 map global normal "<a-#>" ":comment-block<ret>"
 
 # Go to file (basic fuzzy finder)
-map global goto f '<esc>:prompt -shell-script-candidates %{ fd --type f --hidden } file: %{ edit %val{text} }<ret>' -docstring "file"
+map global goto f '<esc>:prompt -shell-script-candidates %{ fd --type f } file: %{ edit %val{text} }<ret>' -docstring "file"
 # Or with fzf
 map global user f ':terminal-overlay fzf-pick "%val{client}" "%val{session}"<ret>' -docstring "pick file"
 # map global user / ':terminal-overlay fzf-search "%val{client}" "%val{session}"<ret>' -docstring "fuzzy search"
@@ -689,6 +689,26 @@ map global git l ":lazygit-current-line<ret>" -docstring "line history"
 define-command lazygit-current-line %{
   terminal-floating lazygit -f "-L%val{cursor_line},+1:%val{buffile}"
 }
+map global git u ":git-open-on-github<ret>"
+define-command git-open-on-github %{
+  nop %sh{ gh browse "$kak_bufname:$kak_cursor_line" & }
+}
+
+define-command -override my-conflict-1 -docstring "choose the first side of a conflict hunk" %{
+    evaluate-commands -draft %{
+        execute-keys <a-l>l<a-/>^<lt>{4}<ret>xd
+        execute-keys h/^={4}|^\|{4}<ret>
+        execute-keys ?^>{4}<ret>xd
+    }
+}
+define-command -override my-conflict-2 -docstring "choose the second side of a conflict hunk" %{
+    evaluate-commands -draft %{
+        execute-keys <a-l>l<a-/>^<lt>{4}<ret>
+        execute-keys ?^={4}<ret>xd
+        execute-keys />{4}<ret>xd
+    }
+}
+map global object m %{c^[<lt>=|]{4\,}[^\n]*\n,^[<gt>=|]{4\,}[^\n]*\n<ret>} -docstring 'conflict markers'
 
 # Spell
 declare-user-mode spell
