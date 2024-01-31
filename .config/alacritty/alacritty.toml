@@ -1,0 +1,38 @@
+shell = "tmux"
+
+[font]
+normal = { family = "Source Code Pro", style = "Semibold" }
+
+[colors.primary]
+foreground = "#abb2bf" # white
+background = "#181a1f" # black
+
+[colors.normal]
+black   = "#282c34"
+red     = "#e06c75"
+green   = "#98c379"
+yellow  = "#e5c07b"
+blue    = "#61afef"
+magenta = "#c678dd"
+cyan    = "#56b6c2"
+white   = "#abb2bf"
+
+[colors.bright]
+black   = "#70798a"
+red     = "#e06c75"
+green   = "#98c379"
+yellow  = "#d19a66"
+blue    = "#61afef"
+magenta = "#c678dd"
+cyan    = "#56b6c2"
+white   = "#ffffff"
+
+[colors.dim]
+red     = "#7c434a"
+green   = "#586e4c"
+yellow  = "#7e6d4d"
+blue    = "#3c6487"
+magenta = "#6f497e"
+cyan    = "#376870"
+white   = "#61666f"
+
