@@ -28,7 +28,10 @@ export MOZ_ENABLE_WAYLAND=1
 [ "$(uname -n)" = "uraya" ] && export SDL_VIDEODRIVER=wayland
 
 # Launch desktop
-[ "$(tty)" = "/dev/tty1" ] && exec sway
+if [ "$(tty)" = "/dev/tty1" ]; then
+  export XDG_CURRENT_DESKTOP=sway
+  exec sway
+fi
 [ "$(tty)" = "/dev/tty2" ] && exec startx
 [ "$(tty)" = "/dev/tty3" ] && exec Hyprland
 
