@@ -88,18 +88,21 @@ cork kakoune-focus "https://github.com/caksoylar/kakoune-focus" %{
 }
 
 cork kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
+  define-command tmux-gdb -params 1.. %{
+    tmux-terminal-impl 'split-window -v -l 25%' %arg{@}
+  }
   define-command custom-gdb-session-connect %{
+    alias window terminal tmux-gdb
     gdb-session-connect
+    unalias window terminal
     osc-yank "new-ui mi3 %opt{gdb_dir}/pty"
     gdb-enable-autojump
   }
-  define-command -params .. custom-gdb-session-new %{
-    # nop %sh{ swaymsg split vertical }
-    # set-option window foot_app_id "foot.gdb"
+  define-command -override -params .. custom-gdb-session-new %{
+    alias window terminal tmux-gdb
     gdb-session-new %arg{@}
-    # set-option window foot_app_id "foot"
+    unalias window terminal
     gdb-enable-autojump
-    # nop %sh{ swaymsg resize set height 500px }
     trigger-user-hook GDBPostInit
   }
   map global normal <F5> ':prompt -menu -shell-script-candidates %{ fd --type f --hidden ".*" bin } file: %{ custom-gdb-session-new %val{text} }<ret>' -docstring "new GDB session"
@@ -755,7 +758,7 @@ set-option global lsp_hover_anchor true
 
 define-command lsp-restart -docstring "Restart kak-lsp session" %{ lsp-stop; lsp-start }
 
-define-command lsp-init -docstring "Enable LSP with default settings" %{
+define-command -override lsp-init -docstring "Enable LSP with default settings" %{
   map window goto m "<esc><c-s>:lsp-implementation<ret>" -docstring "implementations"
   map window user l ":enter-user-mode lsp<ret>" -docstring "lsp..."
   map window normal <c-h> ":lsp-hover<ret>"
@@ -769,6 +772,7 @@ define-command lsp-init -docstring "Enable LSP with default settings" %{
   map window goto y "<esc><c-s>:lsp-type-definition<ret>"
   lsp-inlay-diagnostics-enable window
   # lsp-auto-signature-help-enable
+  # lsp-sticky-contexts-enable window
 
   echo -debug "Enabling LSP for filetype %opt{filetype}"
   lsp-enable-window
