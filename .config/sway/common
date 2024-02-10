@@ -9,7 +9,7 @@ set $right l
 
 ### Key bindings
 
-bindsym $mod+Return exec foot
+bindsym $mod+Return exec alacritty
 bindsym $mod+backspace kill
 
 floating_modifier $mod normal

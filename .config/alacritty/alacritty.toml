@@ -1,7 +1,8 @@
 shell = "tmux"
 
 [font]
-normal = { family = "Source Code Pro", style = "Semibold" }
+normal = { family = "SauceCodePro Nerd Font", style = "Semibold" }
+size = 10
 
 [colors.primary]
 foreground = "#abb2bf" # white
