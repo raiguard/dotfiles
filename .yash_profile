@@ -23,8 +23,9 @@ export MOZ_ENABLE_WAYLAND=1
 [ -f ~/.env ] && . ~/.env
 
 # PC-specific configuration
-file=~/.yash_profile_$(uname -n)
-[[ -f $file ]] && . $file
+if [ -f "~/.yash_profile_$(uname -n)" ]; then
+  . "~/.yash_profile_$(uname -n)"
+fi
 
 # Launch desktop
 if [ "$(tty)" = "/dev/tty1" ]; then

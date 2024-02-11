@@ -76,5 +76,6 @@ alias lg=lazygit
 alias ipconfig="nmcli dev show wlan0 | grep IP4"
 
 # PC-specific configuration
-file=~/.yashrc_$(uname -n)
-[[ -f $file ]] && . $file
+if [ -f "~/.yashrc_$(uname -n)" ]; then
+  . "~/.yashrc_$(uname -n)"
+fi
