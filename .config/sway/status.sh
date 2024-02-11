@@ -28,8 +28,7 @@ while true; do
     ram="<span foreground='$cyan'>${used}GB</span>  "
 
     # Network
-    # FIXME: This only works for wireless connections
-    ssid=$(iwconfig | grep ESSID | awk -F '"' '{ print $2 }')
+    ssid=$(nmcli connection show --active | grep wifi | cut -f 1 -d " ")
     if [ -n "$ssid" ]; then
         network="<span foreground='$blue'>$ssid</span>  "
     else
