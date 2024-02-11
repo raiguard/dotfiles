@@ -1,0 +1,4 @@
+# Prefer Wayland to avoid Xwayland scaling blurriness
+export SDL_VIDEODRIVER=wayland
+
+# vim: ft=sh

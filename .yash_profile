@@ -3,11 +3,8 @@ export PATH="$HOME/bin/$(uname -n):$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$
 
 export EDITOR="kak"
 export PAGER="less"
-export TERMINAL="foot"
 
-export FACTORIO="$HOME/dev/factorio"
-export FACTORIO_DEFAULT="$HOME/dev/factorio/experimental"
-export FACTORIO_PATH="$FACTORIO_DEFAULT"
+export FACTORIO_PATH="$HOME/games/factorio"
 export FACTORIO_COMPILER="Clang"
 
 # QT theme
@@ -25,7 +22,9 @@ export MOZ_ENABLE_WAYLAND=1
 # Local environment configuration
 [ -f ~/.env ] && . ~/.env
 
-[ "$(uname -n)" = "uraya" ] && export SDL_VIDEODRIVER=wayland
+# PC-specific configuration
+file=~/.yash_profile_$(uname -n)
+[[ -f $file ]] && . $file
 
 # Launch desktop
 if [ "$(tty)" = "/dev/tty1" ]; then
