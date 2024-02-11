@@ -37,3 +37,8 @@ magenta = "#6f497e"
 cyan    = "#376870"
 white   = "#61666f"
 
+[mouse]
+hide_when_typing = true
+
+[window]
+dynamic_padding = true
