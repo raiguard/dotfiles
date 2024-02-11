@@ -3,7 +3,8 @@
 ```
 git clone --bare https://github.com/raiguard/dotfiles ~/.dotfiles
 git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout
-dgit config status.showUntrackedFiles no
+git --git-dir=$HOME/.dotfiles --work-tree=$HOME config status.showUntrackedFiles no
 ```
 
-Then dotfiles can be managed with the `dgit` command.
+Install [yash](https://magicant.github.io/yash/) shell and `chsh` to
+`/bin/yash`. Dotfiles can then be managed with the `dgit` command.
