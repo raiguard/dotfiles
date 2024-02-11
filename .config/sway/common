@@ -157,12 +157,11 @@ set $red #e06c75
 
 bar {
     id bar
-    font "SauceCodePro Nerd Font Bold 9"
+    font "Source Code Pro Bold 9"
     position top
     status_command ~/.config/sway/status.sh
     pango_markup enable
     strip_workspace_name yes
-    icon_theme "Tela-blue-dark"
     colors {
         background $bg
         statusline $fg
