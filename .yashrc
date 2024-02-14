@@ -39,17 +39,15 @@ git_branch() {
         echo " ($branch)"
     fi
 }
-YASH_PS1=$usercolor'$(whoami)'$hostcolor'@$(uname -n)\fd. '\
+PS1=$usercolor'$(whoami)'$hostcolor'@$(uname -n)\fd. '\
 '$(echo "$PWD" | sed "s/\/home\/rai/~/")'\
 '\fc.$(git_branch)\fd.\n$ '
 unset hostcolor usercolor
 # color predictions as dim
 PS1P='\fi.'
 
-# enable fasd integration
-eval "$(fasd --init posix-hook posix-alias)"
-# fasd only adds to $PS1, but yash uses $YASH_PS1 when not in posix mode
-YASH_PS1='$(_fasd_ps1_func)'$YASH_PS1
+# enable zoxide integration
+eval "$(zoxide init posix --hook prompt)"
 
 # aliases
 alias dmenu="fuzzel -d"
