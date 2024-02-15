@@ -20,6 +20,7 @@ bindkey --vi-insert '\^W' backward-delete-viword
 bindkey --vi-insert '\^Y' put-left
 bindkey --vi-insert '\N' complete-next-column
 bindkey --vi-insert '\P' complete-prev-column
+bindkey --vi-insert '\^L' clear-and-redraw-all
 bindkey --vi-command '\^N' beginning-search-forward
 bindkey --vi-command '\^P' beginning-search-backward
 
