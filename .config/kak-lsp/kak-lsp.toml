@@ -91,7 +91,7 @@ build.args = ["--pdf", "%f"]
 
 [language_server.luals]
 filetypes = ["lua"]
-roots = [".editorconfig", ".kakrc", ".git/"]
+roots = [".git/", ".luarc.json", ".editorconfig", ".kakrc"]
 command = "lua-language-server"
 args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
 
