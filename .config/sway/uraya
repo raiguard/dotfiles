@@ -15,7 +15,7 @@ input type:pointer pointer_accel -0.6
 input type:tablet_tool map_to_output eDP-1
 
 # Output configuration
-output eDP-1 scale 1.25
+output eDP-1 scale 1.3
 output * bg ~/pictures/wallpaper fill
 
 smart_borders no_gaps
