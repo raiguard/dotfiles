@@ -133,18 +133,18 @@ bundle pmanage.kak "https://github.com/andreyorst/pmanage.kak"
 
 bundle smarttab.kak "https://github.com/andreyorst/smarttab.kak"
 
-bundle quickscope.kak "https://git.sr.ht/~voroskoi/quickscope.kak" %{
-  require-module quickscope
-  # set-option global quickscope_user_mode '.*' # '.^' to disable (default)
-  map global normal <f> ': quickscope-f<ret>'
-  map global normal <a-f> ': quickscope-a-f<ret>'
-  map global normal <t> ': quickscope-t<ret>'
-  map global normal <a-t> ': quickscope-a-t<ret>'
-  map global normal <F> ': quickscope-F<ret>'
-  map global normal <a-F> ': quickscope-a-F<ret>'
-  map global normal <T> ': quickscope-T<ret>'
-  map global normal <a-T> ': quickscope-a-T<ret>'
-}
+# bundle quickscope.kak "https://git.sr.ht/~voroskoi/quickscope.kak" %{
+#   require-module quickscope
+#   # set-option global quickscope_user_mode '.*' # '.^' to disable (default)
+#   map global normal <f> ': quickscope-f<ret>'
+#   map global normal <a-f> ': quickscope-a-f<ret>'
+#   map global normal <t> ': quickscope-t<ret>'
+#   map global normal <a-t> ': quickscope-a-t<ret>'
+#   map global normal <F> ': quickscope-F<ret>'
+#   map global normal <a-F> ': quickscope-a-F<ret>'
+#   map global normal <T> ': quickscope-T<ret>'
+#   map global normal <a-T> ': quickscope-a-T<ret>'
+# }
 
 # source ~/dev/personal/kak-grep-dfs/grep-dfs.kak
 
@@ -154,6 +154,7 @@ bundle quickscope.kak "https://git.sr.ht/~voroskoi/quickscope.kak" %{
 # Color scheme
 colorscheme one-darker
 trigger-user-hook ColorschemeLoaded
+set-face global Ruler ",rgb:%opt{subbg}"
 # Highlighters
 add-highlighter global/ number-lines -relative -separator " " -hlcursor
 add-highlighter global/ show-matching

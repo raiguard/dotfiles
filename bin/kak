@@ -1,9 +1,9 @@
 #!/bin/sh
 
 if [ -f "/usr/local/bin/kak" ]; then
-  kak="/usr/local/bin/kak"
+  kak="exec /usr/local/bin/kak"
 else
-  kak="/usr/bin/kak"
+  kak="exec /usr/bin/kak"
 fi
 
 # Don't do stuff if we are being piped into

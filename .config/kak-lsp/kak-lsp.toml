@@ -5,12 +5,6 @@ snippet_support = false
 
 # LANGUAGES
 
-[language_server.bash-language-server]
-filetypes = ["sh"]
-roots = [".git", ".hg"]
-command = "bash-language-server"
-args = ["start"]
-
 [language_server.clangd]
 filetypes = ["c", "cpp"]
 roots = ["compile_commands.json", ".clangd", ".git", ".hg"]
