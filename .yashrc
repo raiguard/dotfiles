@@ -37,8 +37,11 @@ esac
 HISTFILE=~/.yash_history HISTSIZE=5000
 
 # prompt
+hostname=$(uname -n)
 if [ -n "${SSH_CONNECTION-}" ]; then
   hostcolor='\fy.'     # yellow hostname for SSH remote
+elif [ "${hostname#*.}" != "$hostname" ]; then
+  hostcolor='\fb.'     # blue hostname for distrobox
 else
   hostcolor='\fg.'     # green hostname for local
 fi
@@ -56,7 +59,7 @@ git_branch() {
 PS1=$usercolor'$(whoami)'$hostcolor'@$(uname -n)\fd. '\
 '$(echo "$PWD" | sed "s/\/home\/rai/~/")'\
 '\fc.$(git_branch)\fd.\n$ '
-unset hostcolor usercolor
+unset hostcolor usercolor hostname
 # color predictions as dim
 PS1P='\fi.'
 
