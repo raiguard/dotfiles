@@ -321,7 +321,7 @@ hook global WinSetOption filetype=(fish|i3|kak|sh|toml|fastbuild) %{
   rainbow-enable-window
 }
 
-hook global WinSetOption filetype=(c|cpp) %{
+hook global WinSetOption filetype=(cpp) %{
   lsp-init
   map global user a ":clangd-switch-source-header<ret>"
 }
@@ -687,6 +687,7 @@ map global git b ":git blame<ret>" -docstring "blame"
 map global git B ":git hide-blame<ret>" -docstring "hide blame"
 map global git d ":git diff<ret>" -docstring "diff"
 map global git g ":terminal-overlay lazygit -p %sh{echo $PWD}<ret>" -docstring "lazygit"
+map global git u ":terminal-overlay gitu<ret>" -docstring "gitu"
 map global git f ":lazygit-current-file<ret>" -docstring "file history"
 define-command lazygit-current-file %{
   terminal-floating lazygit -f %val{buffile}
@@ -695,7 +696,7 @@ map global git l ":lazygit-current-line<ret>" -docstring "line history"
 define-command lazygit-current-line %{
   terminal-floating lazygit -f "-L%val{cursor_line},+1:%val{buffile}"
 }
-map global git u ":git-open-on-github<ret>"
+map global git o ":git-open-on-github<ret>" -docstring "open on GitHub"
 define-command git-open-on-github %{
   nop %sh{ gh browse "$kak_bufname:$kak_cursor_line" & }
 }

@@ -74,7 +74,7 @@ alias sk="sudoedit"
 alias dlg="lazygit --work-tree $HOME --git-dir $HOME/.dotfiles"
 alias dgit="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias lg=lazygit
-alias ipconfig="nmcli dev show wlan0 | grep IP4"
+alias ipconfig="nmcli dev show wlp170s0 | grep IP4"
 
 # PC-specific configuration
 if [ -f "~/.yashrc_$(uname -n)" ]; then
