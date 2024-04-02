@@ -763,6 +763,8 @@ set-option global lsp_hover_anchor true
 define-command lsp-restart -docstring "Restart kak-lsp session" %{ lsp-stop; lsp-start }
 
 define-command -override lsp-init -docstring "Enable LSP with default settings" %{
+  add-highlighter -override window/ show-whitespaces -tab ' ' -tabpad ' ' -spc ' ' -lf ' ' -nbsp ' '
+
   map window goto m "<esc><c-s>:lsp-implementation<ret>" -docstring "implementations"
   map window user l ":enter-user-mode lsp<ret>" -docstring "lsp..."
   map window normal <c-h> ":lsp-hover<ret>"
