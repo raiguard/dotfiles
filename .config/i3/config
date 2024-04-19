@@ -19,7 +19,7 @@ exec xset r rate 200
 ### Key bindings
 
 # Start a terminal
-bindsym $mod+Return exec kitty
+bindsym $mod+Return exec alacritty
 
 # Kill focused window
 bindsym $mod+BackSpace kill
@@ -129,7 +129,7 @@ bindsym XF86MonBrightnessUp exec ~/.config/i3/brightness.sh +5%
 bindsym XF86MonBrightnessDown exec ~/.config/i3/brightness.sh 5%-
 
 # # Screenshots
-# bindsym print exec freeze-screenshot copy
+bindsym print exec flameshot gui
 # # Focused  monitor
 # bindsym Shift+print exec grimshot --notify copy output
 # # Focused  window
