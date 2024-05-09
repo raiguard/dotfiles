@@ -1,12 +1,6 @@
-# Requires swaylock-effects
-
-clock
-
 show-failed-attempts
 
 image=~/pictures/lockscreen
-effect-blur=3x3
-effect-vignette=0.7:0.7
 
 indicator-idle-visible
 indicator-radius=85
@@ -32,3 +26,8 @@ ring-wrong-color=00000000
 separator-color=00000000
 
 text-color=000000
+
+# Swaylock-effects
+clock
+effect-blur=3x3
+effect-vignette=0.7:0.7
