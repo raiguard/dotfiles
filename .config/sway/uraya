@@ -3,7 +3,7 @@ exec inkscape-figures watch
 exec pactl load-module module-switch-on-connect
 exec swayidle
 exec wlsunset -l 40.3 -L -111.8 -t 2500
-exec /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
+exec /usr/libexec/polkit-gnome-authentication-agent-1
 
 # Input configuration
 input type:touchpad {
@@ -15,7 +15,7 @@ input type:pointer pointer_accel -0.6
 input type:tablet_tool map_to_output eDP-1
 
 # Output configuration
-output eDP-1 scale 1.3
+output eDP-1 scale 1.1
 output * bg ~/pictures/wallpaper fill
 
 smart_borders no_gaps

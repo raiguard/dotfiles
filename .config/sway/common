@@ -115,6 +115,7 @@ bindsym print exec grimshot --notify copy area
 bindsym --locked Shift+print exec grimshot --notify copy output
 bindsym Control+print exec grimshot --notify copy active
 bindsym Alt+print exec grimshot --notify save area
+bindsym Alt+Shift+print exec grimshot --notify save output
 
 # Presentation
 bindsym $mod+print exec wl-present mirror
@@ -157,11 +158,10 @@ set $red #e06c75
 
 bar {
     id bar
-    font "Source Code Pro Bold 9"
+    font "SauceCodePro Nerd Font Bold 9"
     position top
     status_command ~/.config/sway/status.sh
     pango_markup enable
-    strip_workspace_name yes
     colors {
         background $bg
         statusline $fg
