@@ -1,0 +1,3 @@
+#!/bin/sh
+
+swaymsg output DP-2 mode 3440x1440@143.975Hz
