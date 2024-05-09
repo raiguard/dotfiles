@@ -324,6 +324,7 @@ hook global WinSetOption filetype=(fish|i3|kak|sh|toml|fastbuild) %{
 hook global WinSetOption filetype=(cpp) %{
   lsp-init
   map global user a ":clangd-switch-source-header<ret>"
+  add-highlighter window/show-whitespaces show-whitespaces -tab ' ' -tabpad ' ' -spc ' ' -lf ' ' -nbsp ' '
 }
 
 # GNU STL has a really stupid indentation format
@@ -633,7 +634,7 @@ define-command -hidden osc-yank -params .. \
       copy=$(printf '%s\n%s' "$copy" "$sel")
     done
     encoded=$(printf %s "$copy" | base64 | tr -d '\n')
-    printf "\e]52;;%s\e\\" "$encoded" >"/proc/$kak_client_pid/fd/0"
+    printf "\e]52;c;%s\a" "$encoded" > "$(tmux display-message -p '#{client_tty}')"
   }
 }
 

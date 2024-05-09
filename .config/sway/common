@@ -111,10 +111,10 @@ bindsym --locked XF86MonBrightnessUp exec ~/.config/sway/brightness.sh +5%
 bindsym --locked XF86MonBrightnessDown exec ~/.config/sway/brightness.sh 5%-
 
 # Screenshots
-bindsym print exec freeze-screenshot copy area
+bindsym print exec grimshot --notify copy area
 bindsym --locked Shift+print exec grimshot --notify copy output
 bindsym Control+print exec grimshot --notify copy active
-bindsym Alt+print exec freeze-screenshot save area
+bindsym Alt+print exec grimshot --notify save area
 
 # Presentation
 bindsym $mod+print exec wl-present mirror

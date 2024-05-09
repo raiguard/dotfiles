@@ -13,7 +13,6 @@ bindsym $mod+escape exec swaylock
 for_window [app_id="org.speedcrunch.speedcrunch"] {
     floating enable
     sticky enable
-    move position 1427 701
     move scratchpad
     scratchpad show
 }

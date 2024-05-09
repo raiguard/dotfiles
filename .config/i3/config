@@ -13,7 +13,7 @@ exec dunst
 exec --no-startup-id nitrogen --restore
 exec setxkbmap -layout us -option caps:escape -option grab:break_actions
 exec /usr/bin/polkit-dumb-agent
-exec xrandr --output DisplayPort-0 --primary --output DisplayPort-1 --left-of DisplayPort-0 --output HDMI-A-0 --off
+exec xrandr --output DisplayPort-1 --primary -r 144 --output HDMI-A-0 --off
 exec xset r rate 200
 
 ### Key bindings

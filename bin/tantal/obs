@@ -4,10 +4,10 @@ pactl load-module module-null-sink sink_name=chat sink_properties=device.descrip
 pactl load-module module-null-sink sink_name=desktop sink_properties=device.description='Desktop'
 pactl load-module module-null-sink sink_name=music sink_properties=device.description='Music'
 
-spotify_id=$(pactl -f json list sink-inputs | jq -r '.[] | select(.properties["application.name"]=="spotify") | .index')
-if [ -n "$spotify_id" ]; then
-  pactl move-sink-input $spotify_id music
-fi
+# spotify_id=$(pactl -f json list sink-inputs | jq -r '.[] | select(.properties["application.name"]=="spotify") | .index')
+# if [ -n "$spotify_id" ]; then
+#   pactl move-sink-input $spotify_id music
+# fi
 
 /usr/bin/obs "$@"
 

@@ -11,7 +11,7 @@ exec /usr/bin/lxpolkit
 
 input type:tablet_tool map_to_output DP-2
 # input type:tablet_tool map_to_region 440 0 2560 1440
-input type:tablet_tool map_from_region 0.0x0.0 1.0x0.68
+# input type:tablet_tool map_from_region 0.0x0.0 1.0x0.68
 
 # Output configuration
 output * bg ~/pictures/wallpaper fill
