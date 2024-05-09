@@ -26,13 +26,13 @@ default-timeout=10000
 text-color=#e06c75
 border-color=#e06c75
 default-timeout=0
-on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/suspend-error.oga
+on-notify=exec mpv --volume=50 /usr/share/sounds/freedesktop/stereo/suspend-error.oga
 
 # Do-not-disturb
 # Hide most notifications, but continue to show system notifications
 
 [urgency=normal category=compilation]
-on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/complete.oga
+on-notify=exec mpv --volume=50 /usr/share/sounds/freedesktop/stereo/complete.oga
 
 [urgency=critical category=compilation]
 default-timeout=10000
