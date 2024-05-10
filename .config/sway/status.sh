@@ -1,13 +1,12 @@
 #!/bin/sh
 
-lightred="#e06c75"
-# darkred="#be5046"
-green="#98c379"
-# lightorange="#e5c07b"
-darkorange="#d19a66"
-blue="#61afef"
-magenta="#c678dd"
-cyan="#56b6c2"
+red="#f7768e"
+green="#9ece6a"
+yellow="#e0af68"
+orange="#ff9e64"
+blue="#7aa2f7"
+magenta="#bb9af7"
+cyan="#7dcfff"
 
 hwmon=$(find /sys/class/drm/card1/device/hwmon -type d -name hwmon[0-9])
 

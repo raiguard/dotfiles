@@ -5,7 +5,7 @@ gui:
     selectedLineFgColor:
       - default
     selectedLineBgColor:
-      - '#2a3f53'
+      - '#2d3751'
     selectedRangeBgColor:
       - reverse
 

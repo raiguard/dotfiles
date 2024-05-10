@@ -150,15 +150,21 @@ input type:keyboard {
 
 ### Bar
 
-set $bg #181a1f
-set $comment #70798a
-set $fg #abb2bf
-set $cyan #56b6c2
-set $red #e06c75
+set $fg #c0caf5
+set $bg #1a1b26
+set $subbg #1f2335
+set $red #f7768e
+set $green #9ece6a
+set $yellow #e0af68
+set $orange #ff9e64
+set $blue #7aa2f7
+set $magenta #bb9af7
+set $cyan #7dcfff
+set $comment #565f89
 
 bar {
     id bar
-    font "SauceCodePro Nerd Font Bold 9"
+    font "SauceCodePro Nerd Font Semibold 8.5"
     position top
     status_command ~/.config/sway/status.sh
     pango_markup enable
