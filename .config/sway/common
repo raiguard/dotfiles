@@ -164,7 +164,7 @@ input type:keyboard {
 
 bar {
     id bar
-    font "SauceCodePro Nerd Font Semibold 8.5"
+    font "SauceCodePro Nerd Font Bold 9"
     position top
     status_command ~/.config/sway/status.sh
     pango_markup enable

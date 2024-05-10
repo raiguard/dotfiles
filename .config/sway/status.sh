@@ -39,12 +39,12 @@ while true; do
         gpubusy=$(cat "/sys/class/drm/card1/device/gpu_busy_percent")
         gputemp=$(cat "$hwmon/temp1_input")
         gputemp=$(expr $gputemp / 1000)
-        gpu="<span foreground='$lightred'>$gpubusy%  $gputemp°C</span>  "
+        gpu="<span foreground='$red'>$gpubusy%  $gputemp°C</span>  "
     fi
 
     # Do-not-disturb
     if $(makoctl mode | grep -q "do-not-disturb"); then
-        dnd="<span foreground='$darkorange'>DND</span>  "
+        dnd="<span foreground='$orange'>DND</span>  "
     fi
 
     # Battery info
@@ -58,7 +58,7 @@ while true; do
             tablet_charge=$(echo "$tablet_info" | grep percentage \
                 | awk '{ print $2 }' | sed "s/%//")
             if [ "$tablet_charge" -lt 21 ]; then
-                tablet_color=$lightred
+                tablet_color=$red
             fi
             tablet_status=$(echo "$tablet_info" | grep "power supply" \
                 | awk '/yes/ { print "+" }')
@@ -72,7 +72,7 @@ while true; do
             | awk '/Charging/ { print "+" }')
         bat_charge=$(cat /sys/class/power_supply/BAT1/capacity)
         if [ "$bat_charge" -lt 21 ]; then
-            bat_color=$lightred
+            bat_color=$red
         fi
         # Wattage
         bat_wattage=$(echo - | awk "{printf \"%.1f\", \
