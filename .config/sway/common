@@ -123,13 +123,25 @@ bindsym $mod+shift+print exec wl-present toggle-freeze
 
 ### Looks
 
+set $fg #c0caf5
+set $bg #1a1b26
+set $subbg #1f2335
+set $red #f7768e
+set $green #9ece6a
+set $yellow #e0af68
+set $orange #ff9e64
+set $blue #7aa2f7
+set $magenta #bb9af7
+set $cyan #7dcfff
+set $comment #565f89
+
 default_border pixel 2
 default_floating_border pixel 2
 
-client.focused #56b6c2 #56b6c2 #181a1f #61afef
-client.focused_inactive #70798a #70798a #181a1f #70798a
-client.unfocused #70798a #70798a #181a1f #70798a
-client.urgent #e06c75 #70798a #abb2bf #be5046
+client.focused $cyan $cyan $bg $yellow
+# client.focused_inactive #70798a #70798a #181a1f
+client.unfocused $comment $comment $fg
+client.urgent $red $red $bg
 
 font Source Code Pro Medium 8
 title_align center
@@ -149,18 +161,6 @@ input type:keyboard {
 }
 
 ### Bar
-
-set $fg #c0caf5
-set $bg #1a1b26
-set $subbg #1f2335
-set $red #f7768e
-set $green #9ece6a
-set $yellow #e0af68
-set $orange #ff9e64
-set $blue #7aa2f7
-set $magenta #bb9af7
-set $cyan #7dcfff
-set $comment #565f89
 
 bar {
     id bar

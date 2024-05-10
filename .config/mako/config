@@ -1,30 +1,27 @@
 # kak: filetype=ini
 
-font=Noto Sans Medium 10
-background-color=#272b33
+font=Noto Sans 10
+background-color=#1f2335
 border-size=2
 margin=4
 padding=5,8
-progress-color=#373c47
+progress-color=#1f1b26
 
 # No urgency
-text-color=#98c379
-border-color=#98c379
+text-color=#c0caf5
+border-color=#7aa2f7
 default-timeout=10000
 
 [urgency=low]
-text-color=#98c379
-border-color=#98c379
+border-color=#7aa2f7
 default-timeout=10000
 
 [urgency=normal]
-text-color=#61afef
-border-color=#61afef
+border-color=#9ece6a
 default-timeout=10000
 
 [urgency=critical]
-text-color=#e06c75
-border-color=#e06c75
+border-color=#f7768e
 default-timeout=0
 on-notify=exec mpv --volume=50 /usr/share/sounds/freedesktop/stereo/suspend-error.oga
 

@@ -1,7 +1,7 @@
 shell = "tmux"
 
 [font]
-normal = { family = "SauceCodePro Nerd Font" }
+normal = { family = "SauceCodePro Nerd Font", style = "Medium" }
 size = 10
 
 [mouse]
