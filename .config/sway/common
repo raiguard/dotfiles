@@ -107,8 +107,8 @@ bindsym --locked XF86AudioNext exec ~/.config/sway/media.sh next
 bindsym --locked XF86AudioPrev exec ~/.config/sway/media.sh previous
 
 # Brightness
-bindsym --locked XF86MonBrightnessUp exec ~/.config/sway/brightness.sh +5%
-bindsym --locked XF86MonBrightnessDown exec ~/.config/sway/brightness.sh 5%-
+bindsym --locked XF86MonBrightnessUp exec ~/.config/sway/brightness.sh -A 5
+bindsym --locked XF86MonBrightnessDown exec ~/.config/sway/brightness.sh -U 5
 
 # Screenshots
 bindsym print exec grimshot --notify copy area
