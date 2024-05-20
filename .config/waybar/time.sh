@@ -5,4 +5,4 @@ if [ $(date +%Z) != "CEST" ]; then
   prague="$(TZ=Europe/Prague date +'%-H:%M %Z') "
 fi
 local=$(date +"%-H:%M %Z")
-echo "$prague$local"
+echo "$date $prague$local"
