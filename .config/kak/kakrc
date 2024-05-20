@@ -58,7 +58,7 @@ bundle kak-move-lines "https://github.com/raiguard/kak-move-lines" %{
 bundle kak-live-grep "https://github.com/raiguard/kak-live-grep" %{
   map global user / ": live-grep<ret>" -docstring "live grep"
   hook global User ColorschemeLoaded %{
-    set-face global LiveGrepMatch ",,rgb:%opt{lightorange}+u"
+    set-face global LiveGrepMatch ",,rgb:%opt{orange}+u"
   }
 }
 
@@ -75,7 +75,7 @@ bundle kak-replace-mode "https://github.com/raiguard/kak-replace-mode" %{
 #   require-module fandt
 #   hook global User ColorschemeLoaded %{
 #     hook global ModeChange push:.*:next-key\[user.fandt\] %{
-#       set-face window PrimaryCursor "rgb:%opt{bg},rgb:%opt{lightorange}"
+#       set-face window PrimaryCursor "rgb:%opt{bg},rgb:%opt{orange}"
 #       set-face window SecondaryCursor PrimaryCursor
 #     }
 #     hook global ModeChange pop:next-key\[user.fandt\]:.* %{

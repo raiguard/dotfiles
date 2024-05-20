@@ -1,0 +1,55 @@
+{
+  "modules-left": [
+    "sway/workspaces",
+    "sway/mode",
+  ],
+  "modules-center": [
+    "sway/window",
+  ],
+  "modules-right": [
+    "cpu",
+    "temperature",
+    "memory",
+    "battery",
+    "network",
+    "custom/weather",
+    "custom/time",
+    "tray",
+  ],
+  "cpu": {
+    "format": "{load}%",
+    "interval": 2,
+  },
+  "temperature": {
+    "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
+    "interval": 2,
+  },
+  "memory": {
+    "format": "{used} GB",
+    "interval": 2,
+  },
+  "network": {
+    "format-wifi": "{essid}",
+  },
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15,
+    },
+    "format": "{capacity}%",
+    "format-charging": "+{capacity}%",
+    "format-plugged": "={capacity}%",
+    "interval": 2,
+  },
+  "custom/weather": {
+    "format": "{}°",
+    "tooltip": true,
+    "interval": 3600,
+    "exec": "wttrbar --fahrenheit",
+    "return-type": "json",
+  },
+  "custom/time": {
+    "exec": "~/.config/waybar/time.sh",
+    "interval": 60,
+  },
+}

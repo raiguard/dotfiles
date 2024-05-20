@@ -1,0 +1,64 @@
+@import url("./colors.css");
+
+* {
+  font-size: 9pt;
+  font-weight: 600;
+}
+
+window#waybar {
+  background: @background;
+  font-family: SauceCodePro Nerd Font;
+}
+
+tooltip {
+  background: @background-light;
+  color: @foreground;
+  font-family: Source Sans Pro;
+}
+
+#workspaces,
+#window,
+#cpu,
+#temperature,
+#memory,
+#battery,
+#network,
+#custom-weather,
+#custom-time,
+#tray {
+  color: @foreground;
+  padding: 0 5pt;
+}
+
+#workspaces button {
+  color: @comment;
+  padding: 0 1pt;
+}
+
+#workspaces button.focused {
+  color: @cyan;
+}
+
+#cpu, #temperature {
+  color: @magenta;
+}
+
+#memory {
+  color: @cyan;
+}
+
+#battery {
+  color: @green;
+}
+
+#battery.warning {
+  color: @red;
+}
+
+#network {
+  color: @blue;
+}
+
+#custom-weather {
+  color: @yellow;
+}

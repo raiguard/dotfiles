@@ -139,11 +139,10 @@ default_border pixel 2
 default_floating_border pixel 2
 
 client.focused $cyan $cyan $bg $yellow
-# client.focused_inactive #70798a #70798a #181a1f
 client.unfocused $comment $comment $fg
 client.urgent $red $red $bg
 
-font Source Code Pro Medium 8
+font SauceCodePro Nerd Font Medium 9
 title_align center
 
 smart_borders no_gaps
@@ -156,26 +155,29 @@ gaps inner 4
 ### Input
 
 input type:keyboard {
-    repeat_delay 300
-    repeat_rate 40
+  repeat_delay 300
+  repeat_rate 40
 }
 
 ### Bar
 
+# bar {
+#   id bar
+#   font "SauceCodePro Nerd Font Bold 9"
+#   position top
+#   status_command ~/.config/sway/status.sh
+#   pango_markup enable
+#   colors {
+#     background $bg
+#     statusline $fg
+#     active_workspace $bg $bg $fg
+#     focused_workspace $bg $bg $cyan
+#     inactive_workspace $bg $bg $comment
+#     urgent_workspace $red $red $bg
+#   }
+# }
 bar {
-    id bar
-    font "SauceCodePro Nerd Font Bold 9"
-    position top
-    status_command ~/.config/sway/status.sh
-    pango_markup enable
-    colors {
-        background $bg
-        statusline $fg
-        active_workspace $bg $bg $fg
-        focused_workspace $bg $bg $cyan
-        inactive_workspace $bg $bg $comment
-        urgent_workspace $red $red $bg
-    }
+  swaybar_command waybar
 }
 
 ### Rules
