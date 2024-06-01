@@ -7,7 +7,7 @@
 
 window#waybar {
   background: @background;
-  font-family: SauceCodePro Nerd Font;
+  font-family: JetBrains Mono;
 }
 
 tooltip {
