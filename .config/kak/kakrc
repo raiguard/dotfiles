@@ -219,7 +219,7 @@ map global goto f '<esc>:prompt -shell-script-candidates %{ fd --type f } file: 
 map global goto "b" '<esc>:prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
 
 # Pick file with NNN
-map global normal <minus> ':terminal-overlay nnn-pick "%val{buffile}" "%val{client}" "%val{session}"<ret>'
+map global normal <minus> ':terminal-overlay "%val{config}/nnn-pick.sh" "%val{buffile}" "%val{client}" "%val{session}"<ret>'
 
 # Pipe primary selection to command and echo output to statusline
 map global normal <a-$> ':prompt -shell-completion echo-pipe: %{ echo %sh{ printf "%s" "$kak_selection" | $kak_text }}<ret>'
