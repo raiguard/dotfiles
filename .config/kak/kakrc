@@ -272,6 +272,13 @@ map global insert <c-w> "<a-;>h<a-;>B<a-;>d"
 
 map global user n ':new edit %val{bufname}<ret>' -docstring "new window"
 
+# Git
+map global user g ":terminal-overlay lazygit<ret>" -docstring "open lazygit"
+map global user G ":git-open-on-github<ret>" -docstring "open file on GitHub"
+define-command git-open-on-github %{
+  nop %sh{ gh browse "$kak_bufname:$kak_cursor_line" & }
+}
+
 # Sort
 declare-user-mode sort
 map global user s ":enter-user-mode sort<ret>" -docstring "sort..."
@@ -297,14 +304,6 @@ define-command -hidden show-session-info %{
 map global user w ":wrap-paragraph<ret>" -docstring "wrap paragraph"
 define-command wrap-paragraph %{
   execute-keys "<a-i>p<a-j>|fold -s -w %opt{autowrap_column}<ret>|sed 's/\s*$//g'<ret><esc>"
-}
-
-# Git
-declare-user-mode git
-map global user g ":terminal-overlay lazygit<ret>" -docstring "open lazygit"
-map global user G ":git-open-on-github<ret>" -docstring "open file on GitHub"
-define-command git-open-on-github %{
-  nop %sh{ gh browse "$kak_bufname:$kak_cursor_line" & }
 }
 
 # Navigation
