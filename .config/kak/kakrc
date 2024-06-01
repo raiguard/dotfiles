@@ -365,6 +365,7 @@ hook global WinSetOption filetype=(c|cpp) %{
 
   add-highlighter "shared/%opt{filetype}/factorio_documentation" region //\? (?<!\\)(?=\n) regions
   add-highlighter "shared/%opt{filetype}/factorio_documentation/text" default-region group
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/text/" fill comment
   add-highlighter "shared/%opt{filetype}/factorio_documentation/text/" ref markdown
   add-highlighter "shared/%opt{filetype}/factorio_documentation/text/comment_prefix" regex //\? 0:meta
   add-highlighter "shared/%opt{filetype}/factorio_documentation/text/tag" regex \$[a-z_]+ 0:function
