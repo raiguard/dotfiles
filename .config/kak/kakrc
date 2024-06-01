@@ -1,28 +1,8 @@
-source "%val{config}/bundle/kak-bundle/rc/kak-bundle.kak"
-bundle-noload kak-bundle https://github.com/jdugan6240/kak-bundle
-
-evaluate-commands %sh{
-  kak-lsp --kakoune -s $kak_session
-}
-
-# kak-lsp debugging
-# nop %sh{ rm -f /tmp/kak-lsp.log }
-# set-option global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
-
-evaluate-commands %sh{
-  if [ -f "info.json" ] && [ $(jq -r ".author" < info.json) = "raiguard" ]; then
-    echo "hook global BufWritePre .*\.lua format"
-  fi
-}
-
 # --------------------------------------------------
 # PLUGINS
 
-# bundle fzf.kak "https://github.com/andreyorst/fzf.kak" %{
-#   set-option global fzf_file_preview false
-# }
-
-bundle kakoune-ghwiki "https://gitlab.com/Screwtapello/kakoune-ghwiki"
+source "%val{config}/bundle/kak-bundle/rc/kak-bundle.kak"
+bundle-noload kak-bundle https://github.com/jdugan6240/kak-bundle
 
 bundle auto-pairs.kak "https://github.com/alexherbo2/auto-pairs.kak" %{
   enable-auto-pairs
@@ -47,7 +27,7 @@ bundle kak-mark "https://github.com/raiguard/kak-mark" %{
 }
 
 bundle kak-mirror "https://github.com/raiguard/kak-mirror" %{
-  map global normal "'" ': enter-user-mode -lock mirror<ret>' -docstring 'mirror lock'
+  map global normal "'" ':enter-user-mode -lock mirror<ret>' -docstring 'mirror lock'
 }
 
 bundle kak-move-lines "https://github.com/raiguard/kak-move-lines" %{
@@ -56,37 +36,63 @@ bundle kak-move-lines "https://github.com/raiguard/kak-move-lines" %{
 }
 
 bundle kak-live-grep "https://github.com/raiguard/kak-live-grep" %{
-  map global user / ": live-grep<ret>" -docstring "live grep"
-  hook global User ColorschemeLoaded %{
-    set-face global LiveGrepMatch ",,rgb:%opt{orange}+u"
+  map global user / ":live-grep<ret>" -docstring "live grep"
+  set-face global LiveGrepMatch ",,rgb:%opt{orange}+u"
+}
+
+bundle kak-lsp "https://github.com/kak-lsp/kak-lsp" %{
+  set-option global lsp_auto_highlight_references true
+  set-option global lsp_hover_max_lines 1000
+  set-option global lsp_hover_anchor true
+
+  hook global KakEnd .* lsp-exit
+
+  map global normal <c-h> ":lsp-hover<ret>"
+  map global normal <c-a-h> ":lsp-hover-buffer<ret>"
+  map global normal <c-a> ":lsp-code-actions<ret>"
+  map global normal <c-r> ":lsp-rename-prompt<ret>"
+  map global normal <c-e> ":lsp-diagnostics<ret>"
+
+  map global goto m "<esc><c-s>:lsp-implementation<ret>" -docstring "implementations"
+
+  map global user l ":enter-user-mode lsp<ret>" -docstring "lsp..."
+  map global lsp m ":lsp-show-message-request-next<ret>"
+
+  lsp-inlay-diagnostics-enable global
+
+  lsp-enable
+
+  # Custom status line
+  declare-option -hidden str lsp_modeline_progress ""
+  define-command -hidden -params 6 -override lsp-handle-progress %{
+    set-option global lsp_modeline_progress %sh{
+      if ! "$6"; then
+        echo "$2${5:+" ($5%)"}${4:+": $4"}"
+      fi
+    }
   }
 }
+bundle-install-hook kak-lsp %{ cargo install --locked --force --path . }
 
 bundle kak-rainbower "https://github.com/crizan/kak-rainbower" %{
   set-option global rainbow_mode 0
   set-option global rainbow_check_templates Y
+
+  hook global WinCreate .* %{
+    rainbow-enable-window
+  }
 }
 
 bundle kak-replace-mode "https://github.com/raiguard/kak-replace-mode" %{
   map global normal <a-r> ":enter-replace-mode<ret>"
 }
 
-# bundle kakoune-fandt "https://github.com/listentolist/kakoune-fandt" %{
-#   require-module fandt
-#   hook global User ColorschemeLoaded %{
-#     hook global ModeChange push:.*:next-key\[user.fandt\] %{
-#       set-face window PrimaryCursor "rgb:%opt{bg},rgb:%opt{orange}"
-#       set-face window SecondaryCursor PrimaryCursor
-#     }
-#     hook global ModeChange pop:next-key\[user.fandt\]:.* %{
-#       unset-face window PrimaryCursor
-#       unset-face window SecondaryCursor
-#     }
-#   }
-# }
+bundle kakoune-buffer-manager "https://github.com/theowenyoung/kakoune-buffer-manager/" %{
+  map global user b ":buffer-manager<ret>" -docstring "manage buffers"
+}
 
 bundle kakoune-focus "https://github.com/caksoylar/kakoune-focus" %{
-  map global user <space> ': focus-toggle<ret>' -docstring "toggle selections focus"
+  map global user <space> ':focus-toggle<ret>' -docstring "toggle selections focus"
 }
 
 bundle kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
@@ -115,7 +121,6 @@ bundle kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
   map global normal <F12> ":gdb-continue<ret>" -docstring "GDB continue"
 }
 
-bundle grep-expand "https://github.com/JacobTravers/grep-expand.kak"
 
 bundle kakoune-grep-write "https://github.com/JacobTravers/kakoune-grep-write" %{
   hook global WinSetOption filetype=(grep|lsp-goto) %{
@@ -123,30 +128,20 @@ bundle kakoune-grep-write "https://github.com/JacobTravers/kakoune-grep-write" %
   }
 }
 
-bundle kakoune-snippets "https://github.com/CharlesGueunet/kakoune-snippets"
-
 bundle kakoune-sort-selections "https://github.com/occivink/kakoune-sort-selections"
 
 bundle kakoune-state-save "https://gitlab.com/Screwtapello/kakoune-state-save"
 
-bundle pmanage.kak "https://github.com/andreyorst/pmanage.kak"
+bundle grep-expand.kak "https://github.com/JacobTravers/grep-expand.kak"
 
-bundle smarttab.kak "https://github.com/andreyorst/smarttab.kak"
-
-# bundle quickscope.kak "https://git.sr.ht/~voroskoi/quickscope.kak" %{
-#   require-module quickscope
-#   # set-option global quickscope_user_mode '.*' # '.^' to disable (default)
-#   map global normal <f> ': quickscope-f<ret>'
-#   map global normal <a-f> ': quickscope-a-f<ret>'
-#   map global normal <t> ': quickscope-t<ret>'
-#   map global normal <a-t> ': quickscope-a-t<ret>'
-#   map global normal <F> ': quickscope-F<ret>'
-#   map global normal <a-F> ': quickscope-a-F<ret>'
-#   map global normal <T> ': quickscope-T<ret>'
-#   map global normal <a-T> ': quickscope-a-T<ret>'
-# }
-
-# source ~/dev/personal/kak-grep-dfs/grep-dfs.kak
+bundle smarttab.kak "https://github.com/andreyorst/smarttab.kak" %{
+  hook global BufCreate .* %{
+    expandtab
+    set-option buffer tabstop 2
+    set-option buffer softtabstop 2
+    set-option buffer indentwidth 2
+  }
+}
 
 # --------------------------------------------------
 # GENERAL
@@ -154,10 +149,11 @@ bundle smarttab.kak "https://github.com/andreyorst/smarttab.kak"
 # Color scheme
 colorscheme tokyo-night
 trigger-user-hook ColorschemeLoaded
-set-face global Ruler ",rgb:%opt{subbg}"
-# Highlighters
+
+# General highlighters
 add-highlighter global/ number-lines -relative -separator " " -hlcursor
 add-highlighter global/ show-matching
+add-highlighter global/ line '%val{cursor_line}' ",rgb:%opt{subbg}"
 
 # UI settings
 set-option global ui_options terminal_assistant=off terminal_set_title=false terminal_info_max_width=100 terminal_info_inline_borders=true
@@ -177,40 +173,6 @@ set-option global make_error_pattern "^\h*(?:\w:)?([^:\n]+):(\d+):(?:(\d+):)? (?
 define-command edit-kakrc %{ e ~/.config/kak/kakrc }
 define-command edit-lsp %{ e ~/.config/kak-lsp/kak-lsp.toml }
 
-# Conveniently close all buffers
-define-command delete-all-buffers -docstring "delete all buffers" %{
-  evaluate-commands %sh{
-  eval "set -- $kak_quoted_buflist"
-  while [ $# -gt 0 ]; do
-    firstchar=$(echo "$1" | cut -c 1)
-    # Don't delete scratch buffers
-    if [ "$firstchar" != "*" ]; then
-      echo "try %{ delete-buffer '$1' } catch %{ echo -markup '{Error}Not all buffers were closed' }"
-    fi
-    shift
-  done
-  }
-}
-define-command delete-all-buffers-force -docstring "forcibly delete all buffers" %{
-  evaluate-commands %sh{
-  eval "set -- $kak_quoted_buflist"
-  while [ $# -gt 0 ]; do
-    echo "try %{ delete-buffer! '$1' } catch %{ echo -markup '{Error}Not all buffers were closed' }"
-    shift
-  done
-  }
-}
-define-command write-delete-buffer -docstring "write current buffer then delete it." %{
-  write
-  delete-buffer
-}
-# C for 'close'
-alias global c delete-buffer
-alias global c! delete-buffer!
-alias global ca delete-all-buffers
-alias global ca! delete-all-buffers-force
-alias global wc write-delete-buffer
-
 # Convenient wrap highlighter
 define-command addwrap %{
   add-highlighter window/wrap wrap -word -indent
@@ -222,29 +184,7 @@ hook -group auto-trim-whitespace global BufWritePre .* %{ try %{ execute-keys -d
 # Automatically parse modelines
 hook global BufOpenFile .* modeline-parse
 
-# Add extra sway commands
-hook global ModuleLoaded sway %{
-  declare-option str foot_app_id foot
-  set-option global termcmd "foot -a %opt{foot_app_id} sh -c"
-  hook global WinSetOption foot_app_id=.* %{
-    set-option window termcmd "foot -a %opt{foot_app_id} sh -c"
-  }
-  define-command -params .. terminal-floating %{
-    set-option window foot_app_id "foot.floating"
-    terminal %arg{@}
-    set-option window foot_app_id foot
-  }
-  define-command -params .. -command-completion splith %{
-    nop %sh{ swaymsg splith }
-    new %arg{@}
-  }
-  define-command -params .. -command-completion splitv %{
-    nop %sh{ swaymsg splitv }
-    new %arg{@}
-  }
-  alias global terminal-overlay terminal-floating
-}
-
+# Add extra tmux commands
 hook global ModuleLoaded tmux %{
   alias global terminal tmux-terminal-horizontal
   define-command -params .. terminal-floating %{
@@ -253,336 +193,18 @@ hook global ModuleLoaded tmux %{
   define-command -params .. terminal-overlay %{
     tmux-terminal-window %arg{@}
   }
-}
-
-# # Supertab - completion and snippet jumping
-# declare-option bool in_snippet false
-# hook global WinSetOption snippets_placeholder_groups=.* %{ evaluate-commands %sh{
-#   eval set -- "$kak_quoted_opt_snippets_placeholder_groups"
-#   if [ $# = 0 ]; then
-#     printf %s\\n "
-#       set-option window in_snippet false
-#       unmap window insert <tab> '<a-;>: snippets-select-next-placeholders<ret>'
-#     "
-#   else
-#     printf %s\\n "
-#       set-option window in_snippet true
-#       map window insert <tab> '<a-;>: snippets-select-next-placeholders<ret>'
-#     "
-#   fi
-# }}
-# hook global InsertCompletionShow .* %{ evaluate-commands %sh{
-#   if [ "$kak_opt_in_snippet" = false ]; then
-#     printf %s\\n "
-#       map window insert <tab> <c-n>
-#       map window insert <s-tab> <c-p>
-#     "
-#   fi
-# }}
-
-# hook global InsertCompletionShow .* %{
-#   map window insert <tab> <c-n>
-#   map window insert <s-tab> <c-p>
-# }
-# hook global InsertCompletionHide .* %{
-#   unmap window insert <tab> <c-n>
-#   unmap window insert <s-tab> <c-p>
-# }
-
-# --------------------------------------------------
-# FILETYPE HOOKS
-
-# Default window settings
-hook global WinCreate .* %{
-  expandtab
-  set-option window tabstop 2
-  set-option window softtabstop 2
-  set-option window indentwidth 2
-
-  # Show and automatically update git diff on write
-  evaluate-commands %sh{
-    branch=$(git -C "${kak_buffile%/*}" rev-parse --abbrev-ref HEAD 2>/dev/null)
-    if [ -n "$branch" ]; then
-      printf %s\\n "
-        git show-diff
-        hook window BufWritePost .* %{ git update-diff }
-        hook window BufReload .* %{ git update-diff }
-      "
-    fi
+  define-command splitv %{
+    alias local terminal tmux-terminal-vertical
+    new
   }
-}
-
-# Generic
-hook global WinSetOption filetype=(css|go|scss|zig) %{
-  lsp-init
-  rainbow-enable-window
-}
-hook global WinSetOption filetype=(fish|i3|kak|sh|toml|fastbuild) %{
-  rainbow-enable-window
-}
-
-hook global WinSetOption filetype=(cpp) %{
-  lsp-init
-  map global user a ":clangd-switch-source-header<ret>"
-  add-highlighter window/show-whitespaces show-whitespaces -tab ' ' -tabpad ' ' -spc ' ' -lf ' ' -nbsp ' '
-}
-
-# GNU STL has a really stupid indentation format
-hook global WinCreate /usr/include/c\+\+/.* %{
-  set-option window tabstop 8
-  set-option window softabstop 4
-  set-option window indentwidth 4
-}
-
-hook global WinSetOption filetype=(c|cpp|cpp2) %{
-  rainbow-enable-window
-  # Better highlighting
-  add-highlighter -override "shared/%opt{filetype}/code/operators" regex (\+|-|\*|&|=|\\|\?|%|\^|\|-|!|\||->|<|>|\^|/|~|\[|\]) 0:operator
-  add-highlighter -override "shared/%opt{filetype}/code/function_call" regex \b([a-zA-Z0-9_]*)\( 1:function
-  add-highlighter -override "shared/%opt{filetype}/code/constant" regex \b([A-Z0-9_]*)\b 1:value
-
-  # Factorio doc comments
-
-  remove-highlighter "shared/%opt{filetype}/line_comment"
-  add-highlighter "shared/%opt{filetype}/line_comment" region //[^\?] (?<!\\)(?=\n) fill comment
-
-  require-module markdown
-
-  add-highlighter "shared/%opt{filetype}/factorio_documentation" region //\? (?<!\\)(?=\n) regions
-  add-highlighter "shared/%opt{filetype}/factorio_documentation/text" default-region group
-  add-highlighter "shared/%opt{filetype}/factorio_documentation/text/" ref markdown
-  add-highlighter "shared/%opt{filetype}/factorio_documentation/text/comment_prefix" regex //\? 0:meta
-  add-highlighter "shared/%opt{filetype}/factorio_documentation/text/tag" regex \$[a-z_]+ 0:function
-
-  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag" region -recurse \$[a-z_]+\( \$[a-z_]+\( \) group
-  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/variable" regex [a-zA-Z0-9_:\.-]+ 0:type
-  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/tag" regex \$[a-z_]+ 0:function
-  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/property" regex (\$(|param|return|raises|subclass|property))\( 1:keyword
-  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/value" regex \b(\d+|true|false)\b 1:value
-  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/string" regex '".*?"' 0:string
-}
-
-hook global WinCreate (.*/|^)changelog\.txt %{
-  try %{
-    execute-keys -draft ggxs---------------------------------------------------------------------------------------------------<ret>
-    set-option window filetype factorio-changelog
+  define-command splith %{
+    alias local terminal tmux-terminal-horizontal
+    new
   }
-  evaluate-commands %sh{
-    # Factorio mods will have an info.json in the same directory
-    if [ -f "${kak_hook_param_capture_1}info.json" ] || [ "$kak_hook_param" = "data/changelog.txt" ]; then
-      echo "set-option buffer filetype factorio-changelog"
-    fi
-  }
-}
-hook global WinSetOption filetype=factorio-changelog %{
-  lsp-init
-  # Highlighters
-  add-highlighter window/changelog_date regex ^(Date):\s(.*?)$ 1:type 2:function
-  add-highlighter window/changelog_entry regex ^(\s\s)*(-)\s(.*?)$ 2:value 3:string
-  add-highlighter window/changelog_keyword regex ^\s*(Balancing|Bugfixes|Changes|Features|Gui|Info|Optimizations): 1:type
-  add-highlighter window/changelog_separator regex ^-+$ 0:keyword
-  add-highlighter window/changelog_version regex ^(Version):\s(\d+\.\d+\.\d+)$ 1:type 2:value
-}
-
-hook global WinCreate (.*locale/.*/.*\.cfg) %{
-  set-option buffer filetype factorio-locale
-}
-hook global WinSetOption filetype=factorio-locale %{
-  lsp-init
-  # Highlighters
-  require-module conf
-  add-highlighter window/conf ref conf
-  add-highlighter window/locale_macro regex __[^\n]*?__ 0:meta
-  add-highlighter window/locale_rich_text regex \[(achievement|armor|color|entity|fluid|font|gps|item|item-group|recipe|special-item|technology|tile|tooltip|train|train-stop|virtual-signal)=.*?\] 0:function
-  add-highlighter window/locale_rich_text_close regex \[/(achievement|armor|color|entity|fluid|font|gps|item|item-group|recipe|special-item|technology|tile|tooltip|train|train-stop|virtual-signal)\] 0:function
-}
-
-hook global WinSetOption filetype=(git-commit|mail) %{
-  set-option window autowrap_column 72
-  set-option window autowrap_format_paragraph true
-  autowrap-enable
-}
-
-hook global WinSetOption filetype=go %{
-  noexpandtab
-  set-option window indentwidth 0
-  add-highlighter window/ column 81 Ruler
-
-  hook window BufWritePre .* lsp-formatting-sync
-
-  map window user a :go-alternative-file<ret> -docstring "alternative file"
-}
-
-hook global WinSetOption filetype=hare %{
-  # lsp-init
-  rainbow-enable-window
-
-  noexpandtab
-  set-option window tabstop 8
-  set-option window softtabstop 0
-  set-option window indentwidth 0
-
-  add-highlighter window/ruler column 81 Ruler
-}
-
-hook global WinSetOption filetype=java %{
-  lsp-init
-  rainbow-enable-window
-
-  hook global BufWritePre .*\.java lsp-formatting-sync
-
-  set-option window tabstop 4
-  set-option window softtabstop 4
-  set-option window indentwidth 4
-
-  add-highlighter -override shared/java/code/operator regex (=|==|&&|\|\||\+|-|/|\*|\+=|-=|\*=|/=|!|<=|>=|<|>) 1:operator
-}
-
-hook global WinSetOption filetype=json %{
-  lsp-init
-  rainbow-enable-window
-  set-option window formatcmd 'jq .'
-}
-
-hook global WinSetOption filetype=latex %{
-  lsp-init
-  rainbow-enable-window
-
-  add-highlighter window/ruler column 81 Ruler
-
-  hook window BufWritePre .* lsp-formatting-sync
-  hook window BufWritePost .* texlab-build
-  evaluate-commands %sh{ echo "pstart 'zathura ${kak_buffile%.tex}.pdf'" }
-
-  define-command create-figure %{
-    prompt name: %{
-      set-register f %sh{
-        inkscape-figures create "$kak_text" "$(dirname $kak_buffile)/figures"
-      }
-      execute-keys '"fR"zZ'
-      execute-keys '2<a-f>{lt}'
-      nop %sh{
-        ( inkscape "$(dirname $kak_buffile)/figures/$kak_selection.svg" 2>&1 & ) > /dev/null 2>&1 < /dev/null
-      }
-      execute-keys '"zz'
-    }
-  }
-
-  define-command edit-figures %{ nop %sh{
-    ( inkscape-figures edit "$(dirname $kak_buffile)/figures" 2>&1 & ) > /dev/null 2>&1 < /dev/null
-  }}
-
-  declare-user-mode figures
-  map global user f ": enter-user-mode figures<ret>" -docstring "figures..."
-  map global figures c ": create-figure<ret>" -docstring "create"
-  map global figures e ": edit-figures<ret>" -docstring "edit"
-
-  set-option -add global snippets \
-  Fraction // %{snippets-insert "\frac{$1}{$2} $3"} \
-  Sum \bsm\s %{snippets-insert "\sum{$1 \to $2} $3"} \
-  Partial \bpD\b %{snippets-insert "\partial "}
-}
-
-hook global WinSetOption filetype=lua %{
-  lsp-init
-  rainbow-enable-window
-
-  set-option window formatcmd "stylua -"
-
-  # Highlight EmmyLua annotations
-  add-highlighter window/emmylua_direct regex "---\s*(@(?:alias|as|class|enum|generic|return|type))\s+([^\n]*)" 1:attribute 2:type
-  add-highlighter window/emmylua_labeled regex "---\s*(@(?:alias|cast|field|param))\s+([a-zA-Z0-9_]*) ([^\n]*)" 1:attribute 2:variable 3:type
-  add-highlighter window/emmylua_enum_variant regex '---\s*\|\s*("[^\n]*")' 1:string
-
-  set-option -add global snippets Annotation '-`' %{
-    snippets-insert "--- @"
-    # Remove the extra tick inserted by auto-pairs
-    execute-keys d
-  }
-}
-
-hook global WinSetOption filetype=makefile %{
-  noexpandtab
-  set-option window indentwidth 0
-}
-
-hook global WinSetOption filetype=markdown %{
-  # lsp-init
-  rainbow-enable-window
-  # add-highlighter shared/markdown/inline/equation region -match-capture \$+ \$+ fill meta
-  add-highlighter window/date regex ^\h*>!.*?$ 0:type
-
-  define-command insert-date %{
-    execute-keys -draft 'i>! <esc>!date "+%a %b %-d %Y"<ret>'
-  }
-}
-
-hook global WinSetOption filetype=python %{
-  lsp-init
-  rainbow-enable-window
-
-  set-option window formatcmd "autopep8 -"
-  # hook window BufWritePre .* format
-  add-highlighter -override shared/python/code/functioncall regex '\b([a-zA-Z0-9_]*)\h*\(' 1:function
-
-  set-option window tabstop 4
-  set-option window softtabstop 4
-  set-option window indentwidth 4
-}
-
-hook global WinSetOption filetype=rust %{
-  lsp-init
-  rainbow-enable-window
-  lsp-inlay-hints-enable window
-
-  # Format on save
-  hook window BufWritePre .* lsp-formatting-sync
-
-  set-option window tabstop 4
-  set-option window softtabstop 4
-  set-option window indentwidth 4
-}
-
-# TODO: Create a kak plugin for this filetype
-hook global BufCreate .+\.scd %{
-  set-option buffer filetype scdoc
-}
-hook global WinSetOption filetype=scdoc %{
-  noexpandtab
-  autowrap-enable
-  set-option window autowrap_format_paragraph true
-
-  # Highlighting
-  add-highlighter window/scdoc_header regex "^##?\s*.*?$" 0:+b
-  add-highlighter window/scdoc_bold regex "\*.*?\*" 0:+b
-  add-highlighter window/scdoc_underline regex "\b_.*?_\b" 0:+u
-}
-
-hook global WinSetOption filetype=typescript %{
-  lsp-init
-  rainbow-enable-window
-
-  # Format on save
-  hook window BufWritePre .* lsp-formatting-sync
-}
-
-hook global WinSetOption filetype=yaml %{
-  rainbow-enable-window
-}
-
-hook global WinSetOption filetype=zig %{
-  set-option window tabstop 4
-  set-option window softtabstop 4
-  set-option window indentwidth 4
-}
-
-hook global ModuleLoaded zig %{
-  add-highlighter shared/zig/code/function_call regex \b([a-zA-Z0-9]+)\( 1:function
-  add-highlighter shared/zig/code/builtin_function regex (@[a-zA-Z0-9]+)\( 1:builtin
 }
 
 # --------------------------------------------------
-# GENERAL MAPPINGS
+# MAPPINGS
 
 # NORMAL
 
@@ -592,9 +214,6 @@ map global normal "<a-#>" ":comment-block<ret>"
 
 # Go to file (basic fuzzy finder)
 map global goto f '<esc>:prompt -shell-script-candidates %{ fd --type f } file: %{ edit %val{text} }<ret>' -docstring "file"
-# Or with fzf
-map global user f ':terminal-overlay fzf-pick "%val{client}" "%val{session}"<ret>' -docstring "pick file"
-# map global user / ':terminal-overlay fzf-search "%val{client}" "%val{session}"<ret>' -docstring "fuzzy search"
 
 # Go to buffer
 map global goto "b" '<esc>:prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
@@ -642,13 +261,10 @@ define-command -hidden osc-yank -params .. \
 map global normal <c-o> <c-o>vv
 map global normal <c-i> <c-i>vv
 
-# Convenient popup terminal
-map global normal '<c-;>' ':terminal-floating %sh{ echo "$SHELL" }<ret>'
-
 # INSERT
 
 # Delete words in insert mode
-map global insert <c-w> "<esc>hBdi"
+map global insert <c-w> "<a-;>h<a-;>B<a-;>d"
 
 # USER
 
@@ -669,14 +285,14 @@ define-command show-tab-info %{
 softtabstop: %opt{softtabstop}
 indentwidth: %opt{indentwidth}"
 }
-map global toggle s ': show-session-info<ret>' -docstring "session info"
+map global toggle s ':show-session-info<ret>' -docstring "session info"
 define-command -hidden show-session-info %{
   info -title "session info" "%val{client}/%val{session}
 %sh{pwd}"
 }
 
 # Wrap paragraphs
-map global user w ": wrap-paragraph<ret>" -docstring "wrap paragraph"
+map global user w ":wrap-paragraph<ret>" -docstring "wrap paragraph"
 define-command wrap-paragraph %{
   execute-keys "<a-i>p<a-j>|fold -s -w %opt{autowrap_column}<ret>|sed 's/\s*$//g'<ret><esc>"
 }
@@ -691,41 +307,12 @@ map global git g ":terminal-overlay lazygit -p %sh{echo $PWD}<ret>" -docstring "
 map global git u ":terminal-overlay gitu<ret>" -docstring "gitu"
 map global git f ":lazygit-current-file<ret>" -docstring "file history"
 define-command lazygit-current-file %{
-  terminal-floating lazygit -f %val{buffile}
-}
-map global git l ":lazygit-current-line<ret>" -docstring "line history"
-define-command lazygit-current-line %{
-  terminal-floating lazygit -f "-L%val{cursor_line},+1:%val{buffile}"
+  terminal-overlay lazygit -f %val{buffile}
 }
 map global git o ":git-open-on-github<ret>" -docstring "open on GitHub"
 define-command git-open-on-github %{
   nop %sh{ gh browse "$kak_bufname:$kak_cursor_line" & }
 }
-
-define-command -override my-conflict-1 -docstring "choose the first side of a conflict hunk" %{
-    evaluate-commands -draft %{
-        execute-keys <a-l>l<a-/>^<lt>{4}<ret>xd
-        execute-keys h/^={4}|^\|{4}<ret>
-        execute-keys ?^>{4}<ret>xd
-    }
-}
-define-command -override my-conflict-2 -docstring "choose the second side of a conflict hunk" %{
-    evaluate-commands -draft %{
-        execute-keys <a-l>l<a-/>^<lt>{4}<ret>
-        execute-keys ?^={4}<ret>xd
-        execute-keys />{4}<ret>xd
-    }
-}
-map global object m %{c^[<lt>=|]{4\,}[^\n]*\n,^[<gt>=|]{4\,}[^\n]*\n<ret>} -docstring 'conflict markers'
-
-# Spell
-declare-user-mode spell
-map global user p ":enter-user-mode spell<ret>" -docstring "spell..."
-map global spell a ":spell-add<ret>" -docstring "add"
-map global spell c ":spell-clear<ret>" -docstring "clear"
-map global spell p ":spell<ret>" -docstring "spell"
-map global spell r ":spell-replace<ret>" -docstring "replace"
-map global spell ] ":spell-next<ret>" -docstring "next"
 
 # Navigation
 declare-user-mode next-location
@@ -755,57 +342,187 @@ map global ide d ':set-option global docsclient %val{client}<ret>' -docstring "s
 map global user e ":edit -scratch<ret>" -docstring "scratch buffer"
 
 # --------------------------------------------------
-# LSP
+# FILETYPE HOOKS
 
-set-option global lsp_auto_highlight_references true
-set-option global lsp_hover_max_lines 1000
-set-option global lsp_hover_anchor true
-
-define-command lsp-restart -docstring "Restart kak-lsp session" %{ lsp-stop; lsp-start }
-
-define-command -override lsp-init -docstring "Enable LSP with default settings" %{
-  add-highlighter -override window/ show-whitespaces -tab ' ' -tabpad ' ' -spc ' ' -lf ' ' -nbsp ' '
-
-  map window goto m "<esc><c-s>:lsp-implementation<ret>" -docstring "implementations"
-  map window user l ":enter-user-mode lsp<ret>" -docstring "lsp..."
-  map window normal <c-h> ":lsp-hover<ret>"
-  map window normal <c-a-h> ":lsp-hover-buffer<ret>"
-  map window normal <c-a> ":lsp-code-actions<ret>"
-  map window normal <c-r> ":lsp-rename-prompt<ret>"
-  map window normal <c-e> ":lsp-diagnostics<ret>"
-  map global lsp m ":lsp-show-message-request-next<ret>"
-  map window goto d "<esc><c-s>:lsp-definition<ret>"
-  map window goto r "<esc><c-s>:lsp-references<ret>"
-  map window goto y "<esc><c-s>:lsp-type-definition<ret>"
-  lsp-inlay-diagnostics-enable window
-  # lsp-auto-signature-help-enable
-  # lsp-sticky-contexts-enable window
-
-  echo -debug "Enabling LSP for filetype %opt{filetype}"
-  lsp-enable-window
-  set-option window lsp_enabled true
-
-  # hook -group lsp window NormalIdle .* lsp-semantic-tokens
-  # hook -group lsp window InsertKey .* lsp-semantic-tokens
-  # hook -group lsp window BufReload .* lsp-semantic-tokens
-}
-
-hook global KakEnd .* lsp-exit
-
-# Custom status line
-
-declare-option bool lsp_enabled false
-declare-option -hidden str lsp_modeline_progress ""
-define-command -hidden -params 6 -override lsp-handle-progress %{
-  set-option global lsp_modeline_progress %sh{
-    if ! "$6"; then
-      echo "$2${5:+" ($5%)"}${4:+": $4"}"
+# Default window settings
+hook global WinCreate .* %{
+  # Show and automatically update git diff on write
+  evaluate-commands %sh{
+    branch=$(git -C "${kak_buffile%/*}" rev-parse --abbrev-ref HEAD 2>/dev/null)
+    if [ -n "$branch" ]; then
+      printf %s\\n "
+        git show-diff
+        hook window BufWritePost .* %{ git update-diff }
+        hook window BufReload .* %{ git update-diff }
+      "
     fi
   }
 }
 
+hook global WinSetOption filetype=(c|cpp) %{
+  map global user a ":clangd-switch-source-header<ret>"
+
+  # Better highlighting
+  add-highlighter -override "shared/%opt{filetype}/code/operators" regex (\+|-|\*|&|=|\\|\?|%|\^|\|-|!|\||->|<|>|\^|/|~|\[|\]) 0:operator
+  add-highlighter -override "shared/%opt{filetype}/code/function_call" regex \b([a-zA-Z0-9_]*)\( 1:function
+  add-highlighter -override "shared/%opt{filetype}/code/constant" regex \b([A-Z0-9_]*)\b 1:value
+
+  # Factorio doc comments
+
+  remove-highlighter "shared/%opt{filetype}/line_comment"
+  add-highlighter "shared/%opt{filetype}/line_comment" region //[^\?] (?<!\\)(?=\n) fill comment
+
+  require-module markdown
+
+  add-highlighter "shared/%opt{filetype}/factorio_documentation" region //\? (?<!\\)(?=\n) regions
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/text" default-region group
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/text/" ref markdown
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/text/comment_prefix" regex //\? 0:meta
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/text/tag" regex \$[a-z_]+ 0:function
+
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag" region -recurse \$[a-z_]+\( \$[a-z_]+\( \) group
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/variable" regex [a-zA-Z0-9_:\.-]+ 0:type
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/tag" regex \$[a-z_]+ 0:function
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/property" regex (\$(|param|return|raises|subclass|property))\( 1:keyword
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/value" regex \b(\d+|true|false)\b 1:value
+  add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/string" regex '".*?"' 0:string
+}
+# GNU STL has a really stupid indentation format
+hook global WinCreate /usr/include/c\+\+/.* %{
+  set-option window tabstop 8
+  set-option window softabstop 4
+  set-option window indentwidth 4
+}
+
+hook global WinCreate changelog\.txt %{
+  try %{
+    execute-keys -draft ggxs---------------------------------------------------------------------------------------------------<ret>
+    set-option window filetype factorio-changelog
+  }
+}
+hook global WinSetOption filetype=factorio-changelog %{
+  add-highlighter window/changelog_date regex ^(Date):\s(.*?)$ 1:type 2:function
+  add-highlighter window/changelog_entry regex ^(\s\s)*(-)\s(.*?)$ 2:value 3:string
+  add-highlighter window/changelog_keyword regex ^\s*(Balancing|Bugfixes|Changes|Features|Gui|Info|Optimizations): 1:type
+  add-highlighter window/changelog_separator regex ^-+$ 0:keyword
+  add-highlighter window/changelog_version regex ^(Version):\s(\d+\.\d+\.\d+)$ 1:type 2:value
+}
+
+hook global WinCreate (.*locale/.*/.*\.cfg) %{
+  set-option buffer filetype factorio-locale
+}
+hook global WinSetOption filetype=factorio-locale %{
+  require-module conf
+  add-highlighter window/conf ref conf
+  add-highlighter window/locale_macro regex __[^\n]*?__ 0:meta
+  add-highlighter window/locale_rich_text regex \[(achievement|armor|color|entity|fluid|font|gps|item|item-group|recipe|special-item|technology|tile|tooltip|train|train-stop|virtual-signal)=.*?\] 0:function
+  add-highlighter window/locale_rich_text_close regex \[/(achievement|armor|color|entity|fluid|font|gps|item|item-group|recipe|special-item|technology|tile|tooltip|train|train-stop|virtual-signal)\] 0:function
+}
+
+hook global WinSetOption filetype=(git-commit|mail) %{
+  set-option window autowrap_column 72
+  set-option window autowrap_format_paragraph true
+  autowrap-enable
+}
+
+hook global WinSetOption filetype=go %{
+  noexpandtab
+  set-option window indentwidth 0
+
+  hook window BufWritePre .* lsp-formatting-sync
+
+  map window user a :go-alternative-file<ret> -docstring "alternative file"
+}
+
+hook global WinSetOption filetype=hare %{
+  noexpandtab
+  set-option window tabstop 8
+  set-option window softtabstop 0
+  set-option window indentwidth 0
+}
+
+hook global WinSetOption filetype=java %{
+  set-option window tabstop 4
+  set-option window softtabstop 4
+  set-option window indentwidth 4
+
+  hook global BufWritePre .*\.java lsp-formatting-sync
+
+  add-highlighter -override shared/java/code/operator regex (=|==|&&|\|\||\+|-|/|\*|\+=|-=|\*=|/=|!|<=|>=|<|>) 1:operator
+}
+
+hook global WinSetOption filetype=json %{
+  set-option window formatcmd 'jq .'
+}
+
+hook global WinSetOption filetype=lua %{
+  set-option window formatcmd "stylua -"
+
+  # Highlight EmmyLua annotations
+  add-highlighter window/emmylua_direct regex "---\s*(@(?:alias|as|class|enum|generic|return|type))\s+([^\n]*)" 1:attribute 2:type
+  add-highlighter window/emmylua_labeled regex "---\s*(@(?:alias|cast|field|param))\s+([a-zA-Z0-9_]*) ([^\n]*)" 1:attribute 2:variable 3:type
+  add-highlighter window/emmylua_enum_variant regex '---\s*\|\s*("[^\n]*")' 1:string
+
+  # Only auto-format if it is our own Factorio project
+  evaluate-commands %sh{
+    if [ -f "info.json" ] && [ $(jq -r ".author" < info.json) = "raiguard" ]; then
+      echo "hook global BufWritePre .*\.lua format"
+    fi
+  }
+}
+
+hook global WinSetOption filetype=makefile %{
+  noexpandtab
+  set-option window indentwidth 0
+}
+
+hook global WinSetOption filetype=python %{
+  set-option window tabstop 4
+  set-option window softtabstop 4
+  set-option window indentwidth 4
+
+  set-option window formatcmd "autopep8 -"
+
+  add-highlighter -override shared/python/code/functioncall regex '\b([a-zA-Z0-9_]*)\h*\(' 1:function
+}
+
+hook global WinSetOption filetype=rust %{
+  lsp-inlay-hints-enable window
+
+  set-option window tabstop 4
+  set-option window softtabstop 4
+  set-option window indentwidth 4
+
+  hook window BufWritePre .* lsp-formatting-sync
+}
+
+# TODO: Create a kak plugin for this filetype
+hook global BufCreate .+\.scd %{
+  set-option buffer filetype scdoc
+}
+hook global WinSetOption filetype=scdoc %{
+  noexpandtab
+
+  set-option window autowrap_format_paragraph true
+  autowrap-enable
+
+  add-highlighter window/scdoc_header regex "^##?\s*.*?$" 0:+b
+  add-highlighter window/scdoc_bold regex "\*.*?\*" 0:+b
+  add-highlighter window/scdoc_underline regex "\b_.*?_\b" 0:+u
+}
+
+hook global WinSetOption filetype=zig %{
+  set-option window tabstop 4
+  set-option window softtabstop 4
+  set-option window indentwidth 4
+}
+hook global ModuleLoaded zig %{
+  add-highlighter shared/zig/code/function_call regex \b([a-zA-Z0-9]+)\( 1:function
+  add-highlighter shared/zig/code/builtin_function regex (@[a-zA-Z0-9]+)\( 1:builtin
+}
+
 # --------------------------------------------------
-# TODO
+# TODO Mode
 
 # Highlight TODO and other related comment tags
 hook global WinSetOption comment_line=(.*) %{
@@ -814,7 +531,7 @@ hook global WinSetOption comment_line=(.*) %{
   add-highlighter -override window/note regex "\Q%val{hook_param_capture_1}\E\h*(NOTE:)[^\n]*" 1:function
 }
 # Show list of TODOs in the current project
-map global toggle t ": grep '(BUG|FIXME|TODO|TEMPORARY)( raiguard)?:'<ret>" -docstring "TODOs"
+map global toggle t ":grep '(BUG|FIXME|TODO|TEMPORARY)( raiguard)?:'<ret>" -docstring "TODOs"
 
 # --------------------------------------------------
 # MODELINE
@@ -851,7 +568,6 @@ define-command -params .. \
                hook -always -once buffer BufCloseFifo .* %{ nop %sh{ rm -r $(dirname ${output}) } }
            }"
 }}
-
 define-command -params .. \
     -docstring %{
         fmm [<arguments>]: fmm utility wrapper
@@ -867,23 +583,6 @@ define-command -params .. \
            }"
 }}
 
-# Haredoc
-define-command -params .. \
-    -docstring %{
-        haredoc [<arguments>]: frun utility wrapper
-        All the optional arguments are forwarded to the haredoc utility
-     } haredoc %{ evaluate-commands %sh{
-     output=$(mktemp -d "${TMPDIR:-/tmp}"/kak.XXXXXXXX)/fifo
-     mkfifo ${output}
-     ( haredoc -F tty "$@" > ${output} 2>&1 & ) > /dev/null 2>&1 < /dev/null
-
-     printf %s\\n "evaluate-commands -try-client '$kak_opt_docsclient' %{
-               edit! -fifo ${output} -scroll *haredoc*
-               set-option buffer filetype make
-               hook -always -once buffer BufCloseFifo .* %{ nop %sh{ rm -r $(dirname ${output}) } }
-           }"
-}}
-
 # Quickly test faces
 declare-option range-specs test_ranges
 define-command add-test-face -params 1 %{
@@ -892,38 +591,13 @@ define-command add-test-face -params 1 %{
 }
 alias global tface add-test-face
 
+define-command run-selected-commands %{
+  evaluate-commands -itersel -draft %exp{ %val{selection} }
+}
+
 # Load local configuration
 evaluate-commands %sh{
   if [ -f ".kakrc" ]; then
     echo "source ./.kakrc"
   fi
-}
-
-# # EXPERIMENT
-# # Always show a "symbol outline" on the left and synchronously keep it updated with the current viewport
-
-# declare-option str-list lsp_symbols_outline "{attribute}󰏗 {type}MyObject::method1" "{operator}# {Default}MyObject::field1"
-# declare-option line-specs lsp_symbols_outline_line_specs
-# hook global WinCreate .* %{
-#   add-highlighter window/lsp_symbols_outline flag-lines Default lsp_symbols_outline_line_specs
-#   hook window BufWritePost .* update-lsp-symbols-outline
-#   hook window RawKey .* update-lsp-symbols-outline
-#   hook window WinDisplay .* update-lsp-symbols-outline
-#   hook window WinResize .* update-lsp-symbols-outline
-# }
-
-# define-command update-lsp-symbols-outline %{ evaluate-commands %sh{
-#   start_line=$(awk '{ print $1+1 }' <<< $kak_window_range)
-#   eval set -- "$kak_quoted_opt_lsp_symbols_outline"
-#   output="set-option window lsp_symbols_outline_line_specs $kak_timestamp"
-#   while [ $# -gt 0 ]; do
-#     output="$output %{$start_line|$1}"
-#     shift
-#     start_line=$((start_line+1))
-#   done
-#   echo $output
-# }}
-
-define-command run-selected-commands %{
-  evaluate-commands -itersel -draft %exp{ %val{selection} }
 }
