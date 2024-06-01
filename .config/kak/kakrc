@@ -60,8 +60,6 @@ bundle kak-lsp "https://github.com/kak-lsp/kak-lsp" %{
 
   lsp-inlay-diagnostics-enable global
 
-  lsp-enable
-
   # Custom status line
   declare-option -hidden str lsp_modeline_progress ""
   define-command -hidden -params 6 -override lsp-handle-progress %{
@@ -159,6 +157,10 @@ add-highlighter global/ line '%val{cursor_line}' ",rgb:%opt{subbg}"
 set-option global ui_options terminal_assistant=off terminal_set_title=false terminal_info_max_width=100 terminal_info_inline_borders=true
 set-option global startup_info_version 10000000000000 # Don't show changelog
 set-option global scrolloff 5,5
+
+# Enable LSP
+# This has to be after general highlighters so that line numbers appear closest to the buffer contents
+lsp-enable
 
 # Auto-reload please
 set-option global autoreload yes

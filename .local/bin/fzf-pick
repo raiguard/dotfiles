@@ -1,7 +1,0 @@
-#!/bin/sh
-
-kak_client=$1 kak_session=$2
-filename=$(fzf)
-if [ -n "$filename" ]; then
-    echo "evaluate-commands -client $kak_client 'edit \"$filename\"'" | kak -p $kak_session
-fi

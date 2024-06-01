@@ -60,13 +60,6 @@ if $(echo "$sessions" | grep -q "(dead)"); then
   sessions="$($kak -l)"
 fi
 
-# Fuzzy-find filename if it was not provided
-# TODO: Integrate with kak-harpoon somehow
-if [ -z "$1" ]; then
-  set -- $(fzf)
-fi
-
-# TODO: Convenient way to connect to last session?
 if [ -z "$session" ]; then
   $kak "$@"
   exit
