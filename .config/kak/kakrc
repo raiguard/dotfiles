@@ -301,17 +301,8 @@ define-command wrap-paragraph %{
 
 # Git
 declare-user-mode git
-map global user g ":enter-user-mode git<ret>" -docstring "git..."
-map global git b ":git blame<ret>" -docstring "blame"
-map global git B ":git hide-blame<ret>" -docstring "hide blame"
-map global git d ":git diff<ret>" -docstring "diff"
-map global git g ":terminal-overlay lazygit -p %sh{echo $PWD}<ret>" -docstring "lazygit"
-map global git u ":terminal-overlay gitu<ret>" -docstring "gitu"
-map global git f ":lazygit-current-file<ret>" -docstring "file history"
-define-command lazygit-current-file %{
-  terminal-overlay lazygit -f %val{buffile}
-}
-map global git o ":git-open-on-github<ret>" -docstring "open on GitHub"
+map global user g ":terminal-overlay lazygit<ret>" -docstring "open lazygit"
+map global user G ":git-open-on-github<ret>" -docstring "open file on GitHub"
 define-command git-open-on-github %{
   nop %sh{ gh browse "$kak_bufname:$kak_cursor_line" & }
 }
@@ -335,7 +326,7 @@ map global previous-location p ":lsp-previous-location *spell*<ret>" -docstring 
 
 # IDE
 declare-user-mode ide
-map global user i ":enter-user-mode ide<ret>"
+map global user i ":enter-user-mode ide<ret>" -docstring "ide..."
 map global ide t ':set-option global toolsclient %val{client}<ret>' -docstring "set toolsclient"
 map global ide j ':set-option global jumpclient %val{client}<ret>' -docstring "set jumpclient"
 map global ide d ':set-option global docsclient %val{client}<ret>' -docstring "set docsclient"

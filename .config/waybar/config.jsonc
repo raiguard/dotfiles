@@ -17,7 +17,7 @@
     "tray",
   ],
   "cpu": {
-    "format": "{load}%",
+    "format": "{usage}%",
     "interval": 2,
   },
   "temperature": {

@@ -9,7 +9,7 @@ snippet_support = false
 filetypes = ["c", "cpp"]
 roots = ["compile_commands.json", ".clangd", ".git", ".hg"]
 command = "clangd"
-args = ["-j", "14", "--limit-references=0", "--header-insertion=never", "--pch-storage=memory"]
+args = ["-j", "8", "--limit-references=0", "--header-insertion=never", "--pch-storage=memory"]
 
 [language_server.vscode-css-languageserver]
 filetypes = ["css", "scss"]
