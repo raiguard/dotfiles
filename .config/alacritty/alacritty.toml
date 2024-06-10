@@ -1,4 +1,4 @@
-shell = "tmux"
+shell = "yash"
 
 [font]
 normal = { family = "Jetbrains Mono", style = "Medium" }

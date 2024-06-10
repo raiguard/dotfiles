@@ -107,9 +107,3 @@ set-face global InfoDiagnosticWarning InlayDiagnosticWarning
 
 # kak-rainbower
 try %{ set-option global rainbow_colors "rgb:%opt{yellow}" "rgb:%opt{magenta}" "rgb:%opt{blue}" }
-
-# For backwards compatibility
-define-command -override -hidden one-enable-fancy-underlines %{
-    echo -debug "one-enable-fancy-underlines is deprecated - curly underlines are enabled by default"
-}
-

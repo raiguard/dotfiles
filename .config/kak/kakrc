@@ -85,10 +85,6 @@ bundle kak-replace-mode "https://github.com/raiguard/kak-replace-mode" %{
   map global normal <a-r> ":enter-replace-mode<ret>"
 }
 
-bundle kakoune-buffer-manager "https://github.com/theowenyoung/kakoune-buffer-manager/" %{
-  map global user b ":buffer-manager<ret>" -docstring "manage buffers"
-}
-
 bundle kakoune-focus "https://github.com/caksoylar/kakoune-focus" %{
   map global user <space> ':focus-toggle<ret>' -docstring "toggle selections focus"
 }
@@ -169,7 +165,7 @@ set-option global autoreload yes
 set-option global grepcmd 'rg -Hn --no-heading --sort path --vimgrep'
 
 # More lenient make errors
-set-option global make_error_pattern "^\h*(?:\w:)?([^:\n]+):(\d+):(?:(\d+):)? (?:fatal )?(error|warning|info|hint|note):([^\n]+)?"
+set-option global make_error_pattern "^\h*(?:\w:)?([^:\n]+):(\d+):(?:(\d+):)? (?:fatal )?(?:(error|warning|info|hint|note):)?([^\n]+)?"
 
 # Conveniently edit config
 define-command edit-kakrc %{ e ~/.config/kak/kakrc }
@@ -216,6 +212,9 @@ map global normal "<a-#>" ":comment-block<ret>"
 
 # Go to file (basic fuzzy finder)
 map global user f '<esc>:prompt -shell-script-candidates %{ fd --type f } file: %{ edit %val{text} }<ret>' -docstring "file"
+
+# Go to buffer
+map global user b '<esc>:prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
 
 # Pick a file with NNN
 map global normal <minus> ':terminal-overlay "%val{config}/nnn-pick.sh" "%val{buffile}" "%val{client}" "%val{session}"<ret>'
@@ -269,13 +268,6 @@ map global insert <c-w> "<a-;>h<a-;>B<a-;>d"
 
 map global user n ':new edit %val{bufname}<ret>' -docstring "new window"
 
-# Git
-map global user g ":terminal-overlay lazygit<ret>" -docstring "open lazygit"
-map global user G ":git-open-on-github<ret>" -docstring "open file on GitHub"
-define-command git-open-on-github %{
-  nop %sh{ gh browse "$kak_bufname:$kak_cursor_line" & }
-}
-
 # Sort
 declare-user-mode sort
 map global user s ":enter-user-mode sort<ret>" -docstring "sort..."
@@ -295,6 +287,22 @@ map global toggle s ':show-session-info<ret>' -docstring "session info"
 define-command -hidden show-session-info %{
   info -title "session info" "%val{client}/%val{session}
 %sh{pwd}"
+}
+
+# Git
+declare-user-mode git
+map global user g ":enter-user-mode git<ret>" -docstring "git..."
+map global git b ":git blame<ret>" -docstring "blame"
+map global git d ":git diff<ret>" -docstring "diff"
+map global git g ":terminal-overlay lazygit -p %sh{echo $PWD}<ret>" -docstring "lazygit"
+map global git u ":terminal-overlay gitu<ret>" -docstring "gitu"
+map global git f ":lazygit-current-file<ret>" -docstring "file history"
+define-command lazygit-current-file %{
+  terminal-overlay lazygit -f %val{buffile}
+}
+map global git o ":git-open-on-github<ret>" -docstring "open on GitHub"
+define-command git-open-on-github %{
+  nop %sh{ gh browse "$kak_bufname:$kak_cursor_line" & }
 }
 
 # Wrap paragraphs
@@ -542,36 +550,17 @@ set-option global modelinefmt '%opt{lsp_modeline_message_requests} %opt{lsp_mode
 # --------------------------------------------------
 # OTHER
 
-# Factorio
-define-command -params .. \
-    -docstring %{
-        frun [<arguments>]: frun utility wrapper
-        All the optional arguments are forwarded to the frun utility
-     } frun %{ evaluate-commands %sh{
-     output=$(mktemp -d "${TMPDIR:-/tmp}"/kak.XXXXXXXX)/fifo
-     mkfifo ${output}
-     ( frun "$@" > ${output} 2>&1 & ) > /dev/null 2>&1 < /dev/null
-
-     printf %s\\n "evaluate-commands -try-client '$kak_opt_toolsclient' %{
-               edit! -fifo ${output} -scroll *frun*
-               set-option buffer filetype grep
-               hook -always -once buffer BufCloseFifo .* %{ nop %sh{ rm -r $(dirname ${output}) } }
-           }"
-}}
-define-command -params .. \
-    -docstring %{
-        fmm [<arguments>]: fmm utility wrapper
-        All the optional arguments are forwarded to the fmm utility
-     } fmm %{ evaluate-commands %sh{
-     output=$(mktemp -d "${TMPDIR:-/tmp}"/kak.XXXXXXXX)/fifo
-     mkfifo ${output}
-     ( fmm "$@" > ${output} 2>&1 & ) > /dev/null 2>&1 < /dev/null
-
-     printf %s\\n "evaluate-commands -try-client '$kak_opt_toolsclient' %{
-               edit! -fifo ${output} -scroll *fmm*
-               hook -always -once buffer BufCloseFifo .* %{ nop %sh{ rm -r $(dirname ${output}) } }
-           }"
-}}
+# Wrapper commands
+define-command -params .. -docstring "fmake [<arguments>]: fmake utility wrapper" fmake %{
+  fifo -name *fmake* -scroll -- fmake %arg{@}
+  set-option buffer filetype make
+  set-option buffer jump_current_line 0
+}
+define-command -params .. -docstring "frun [<arguments>]: frun utility wrapper" frun %{
+  fifo -name *frun* -scroll -- frun %arg{@}
+  set-option buffer filetype grep
+  set-option buffer jump_current_line 0
+}
 
 # Quickly test faces
 declare-option range-specs test_ranges
@@ -591,3 +580,5 @@ evaluate-commands %sh{
     echo "source ./.kakrc"
   fi
 }
+
+source "%val{config}/jump-stack.kak"

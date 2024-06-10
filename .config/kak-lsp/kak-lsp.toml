@@ -17,17 +17,17 @@ roots = ["package.json", ".git", ".hg"]
 command = "vscode-css-languageserver"
 args = ["--stdio"]
 
-[language_server.fmtk-locale]
-filetypes = ["factorio-locale", "lua"]
-roots = ["info.json"]
-command = "fmtk"
-args = ["lsp", "--stdio"]
+# [language_server.fmtk-locale]
+# filetypes = ["factorio-locale", "lua"]
+# roots = ["info.json"]
+# command = "fmtk"
+# args = ["lsp", "--stdio"]
 
-[language_server.fmtk-changelog]
-filetypes = ["factorio-changelog", "lua"]
-roots = ["info.json"]
-command = "fmtk"
-args = ["lsp", "--stdio"]
+# [language_server.fmtk-changelog]
+# filetypes = ["factorio-changelog", "lua"]
+# roots = ["info.json"]
+# command = "fmtk"
+# args = ["lsp", "--stdio"]
 
 [language_server.gopls]
 filetypes = ["go"]
@@ -69,34 +69,26 @@ command = "texlab"
 [language_server.texlab.settings.texlab]
 build.args = ["--pdf", "%f"]
 
-# [language_server.luapls]
-# filetypes = ["lua"]
-# roots = [".git/"]
-# command = "/home/rai/dev/personal/luapls/luapls"
-# args = ["lsp", "3"]
-
-# [language_server.luapls.settings.luapls.environments.runtime]
-# libraries = ["/home/rai/dev/luals/factorio/library"]
-# roots = ["control.lua"]
-
-# [language_server.luapls.settings.luapls.environments.luapls-test]
-# libraries = ["demo.lua"]
-# roots = ["test.lua"]
-
-[language_server.luals]
+[language_server.luapls]
 filetypes = ["lua"]
-roots = [".git/", ".luarc.json", ".editorconfig", ".kakrc"]
-command = "lua-language-server"
-args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
+roots = [".git/"]
+command = "/home/rai/dev/personal/luapls/luapls"
+args = ["lsp", "3"]
 
-[language_server.luals.settings.Lua]
-diagnostics.disable = ["lowercase-global", "redefined-local"]
-diagnostics.severity = { unused-local = "Error", undefined-global = "Error", undefined-field = "Error" }
-hover.expandAlias = false
-hover.previewFields = 0
-semantic.enable = false
-telemetry.enable = false
-workspace.userThirdParty = ["/home/rai/dev/luals"]
+# [language_server.luals]
+# filetypes = ["lua"]
+# roots = [".git/", ".luarc.json", ".editorconfig", ".kakrc"]
+# command = "lua-language-server"
+# args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
+
+# [language_server.luals.settings.Lua]
+# diagnostics.disable = ["lowercase-global", "redefined-local"]
+# diagnostics.severity = { unused-local = "Error", undefined-global = "Error", undefined-field = "Error" }
+# hover.expandAlias = false
+# hover.previewFields = 0
+# semantic.enable = false
+# telemetry.enable = false
+# workspace.userThirdParty = ["/home/rai/dev/luals"]
 
 [language_server.marksman]
 filetypes = ["markdown"]

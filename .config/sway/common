@@ -142,7 +142,7 @@ client.focused $cyan $cyan $bg $yellow
 client.unfocused $comment $comment $fg
 client.urgent $red $red $bg
 
-font SauceCodePro Nerd Font Medium 9
+font JetBrains Mono Medium 9
 title_align center
 
 smart_borders no_gaps
@@ -163,7 +163,7 @@ input type:keyboard {
 
 # bar {
 #   id bar
-#   font "SauceCodePro Nerd Font Bold 9"
+#   font "JetBrains Mono Bold 9"
 #   position top
 #   status_command ~/.config/sway/status.sh
 #   pango_markup enable
