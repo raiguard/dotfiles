@@ -581,4 +581,5 @@ evaluate-commands %sh{
   fi
 }
 
+source "%val{config}/delete-all-buffers.kak"
 source "%val{config}/jump-stack.kak"
