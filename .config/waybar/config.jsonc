@@ -51,4 +51,7 @@
     "exec": "~/.config/waybar/time.sh",
     "interval": 60,
   },
+  "tray": {
+    "spacing": 3
+  }
 }
