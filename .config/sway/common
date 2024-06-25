@@ -182,6 +182,9 @@ bar {
 
 ### Rules
 
+for_window [class="^.*"] inhibit_idle fullscreen
+for_window [app_id="^.*"] inhibit_idle fullscreen
+
 for_window [title="File Operation Progress"] floating enable
 for_window [app_id="foot.floating"] {
     floating enable

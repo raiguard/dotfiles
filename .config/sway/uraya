@@ -40,7 +40,6 @@ for_window [title="Picture-in-Picture"] {
 
 for_window [title="SpeedCrunch"] {
   floating enable
-  move position 1152 689
 }
 for_window [title="tk"] {
   floating enable
