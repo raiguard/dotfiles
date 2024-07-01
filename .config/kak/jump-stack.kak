@@ -1,5 +1,5 @@
-declare-option str my_jump_buffers \*(grep|find|callers|callees|goto|symbols|diagnostics|make)\b.*\*
-declare-option str my_make_buffers \*(cargo|make)\*
+declare-option str my_jump_buffers \*(grep|find|callers|callees|goto|symbols|diagnostics)\b.*\*
+declare-option str my_make_buffers \*(cargo|make|frun)\*
 
 map global normal <c-a-n> %{:jump-next -matching %opt{my_jump_buffers}<ret>} -docstring 'next location'
 map global normal <c-a-p> %{:jump-previous -matching %opt{my_jump_buffers}<ret>} -docstring 'previous location'
@@ -12,7 +12,7 @@ define-command -override my-push-buffer %{
 	evaluate-commands %sh{
 		if printf %s "${kak_bufname}" | grep -q '^\*'; then {
 			basename=$(printf %s "${kak_bufname}" | sed 's,\(-[0-9]*\)\?\*$,,')
-			echo "rename-buffer $basename-|*"
+			echo "rename-buffer -unique $basename-|*"
 		} else {
 			echo  "
 			%opt{my_push_buffer_safeguard}

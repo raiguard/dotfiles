@@ -1,5 +1,7 @@
 # vim: ft=i3
 
+### Key bindings
+
 set $mod Mod4
 
 set $left h
@@ -7,7 +9,6 @@ set $down j
 set $up k
 set $right l
 
-### Key bindings
 
 bindsym $mod+Return exec alacritty
 bindsym $mod+backspace kill

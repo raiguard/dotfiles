@@ -311,23 +311,6 @@ define-command wrap-paragraph %{
   execute-keys "<a-i>p<a-j>|fold -s -w %opt{autowrap_column}<ret>|sed 's/\s*$//g'<ret><esc>"
 }
 
-# Navigation
-declare-user-mode next-location
-map global user ] ":enter-user-mode next-location<ret>" -docstring "next..."
-map global next-location d ":lsp-next-location *diagnostics*<ret>" -docstring "diagnostics"
-map global next-location g ":lsp-next-location *goto*<ret>" -docstring "goto"
-map global next-location / ":lsp-next-location *grep*<ret>" -docstring "grep"
-map global next-location m ":lsp-next-location *make*<ret>" -docstring "make"
-map global next-location p ":lsp-next-location *spell*<ret>" -docstring "spell"
-
-declare-user-mode previous-location
-map global user [ ":enter-user-mode previous-location<ret>" -docstring "previous..."
-map global previous-location d ":lsp-previous-location *diagnostics*<ret>" -docstring "diagnostics"
-map global previous-location g ":lsp-previous-location *goto*<ret>" -docstring "goto"
-map global previous-location / ":lsp-previous-location *grep*<ret>" -docstring "grep"
-map global previous-location m ":lsp-previous-location *make*<ret>" -docstring "make"
-map global previous-location p ":lsp-previous-location *spell*<ret>" -docstring "spell"
-
 # IDE
 declare-user-mode ide
 map global user i ":enter-user-mode ide<ret>" -docstring "ide..."
@@ -551,8 +534,8 @@ set-option global modelinefmt '%opt{lsp_modeline_message_requests} %opt{lsp_mode
 # OTHER
 
 # Wrapper commands
-define-command -params .. -docstring "fmake [<arguments>]: fmake utility wrapper" fmake %{
-  fifo -name *fmake* -scroll -- fmake %arg{@}
+define-command -params .. -docstring "fmm [<arguments>]: fmm utility wrapper" fmm %{
+  fifo -name *fmm* -scroll -- fmm %arg{@}
   set-option buffer filetype make
   set-option buffer jump_current_line 0
 }
