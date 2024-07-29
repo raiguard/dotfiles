@@ -69,26 +69,26 @@ command = "texlab"
 [language_server.texlab.settings.texlab]
 build.args = ["--pdf", "%f"]
 
-[language_server.luapls]
-filetypes = ["lua"]
-roots = [".git/"]
-command = "/home/rai/dev/personal/luapls/luapls"
-args = ["lsp", "3"]
-
-# [language_server.luals]
+# [language_server.luapls]
 # filetypes = ["lua"]
-# roots = [".git/", ".luarc.json", ".editorconfig", ".kakrc"]
-# command = "lua-language-server"
-# args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
+# roots = [".git/"]
+# command = "/home/rai/dev/personal/luapls/luapls"
+# args = ["lsp", "3"]
 
-# [language_server.luals.settings.Lua]
-# diagnostics.disable = ["lowercase-global", "redefined-local"]
-# diagnostics.severity = { unused-local = "Error", undefined-global = "Error", undefined-field = "Error" }
-# hover.expandAlias = false
-# hover.previewFields = 0
-# semantic.enable = false
-# telemetry.enable = false
-# workspace.userThirdParty = ["/home/rai/dev/luals"]
+[language_server.luals]
+filetypes = ["lua"]
+roots = [".git/", ".luarc.json", ".editorconfig", ".kakrc"]
+command = "lua-language-server"
+args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
+
+[language_server.luals.settings.Lua]
+diagnostics.disable = ["lowercase-global", "redefined-local"]
+diagnostics.severity = { unused-local = "Error", undefined-global = "Error", undefined-field = "Error" }
+hover.expandAlias = false
+hover.previewFields = 0
+semantic.enable = false
+telemetry.enable = false
+workspace.userThirdParty = ["/home/rai/dev/luals"]
 
 [language_server.marksman]
 filetypes = ["markdown"]

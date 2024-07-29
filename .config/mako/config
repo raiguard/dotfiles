@@ -29,7 +29,7 @@ on-notify=exec mpv --volume=50 /usr/share/sounds/freedesktop/stereo/suspend-erro
 # Hide most notifications, but continue to show system notifications
 
 [urgency=normal category=compilation]
-on-notify=exec mpv --volume=50 /usr/share/sounds/freedesktop/stereo/complete.oga
+on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/complete.oga
 
 [urgency=critical category=compilation]
 default-timeout=10000

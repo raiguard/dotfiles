@@ -1,5 +1,5 @@
-declare-option str my_jump_buffers \*(grep|find|callers|callees|goto|symbols|diagnostics)\b.*\*
-declare-option str my_make_buffers \*(cargo|make|frun)\*
+declare-option str my_jump_buffers \*(grep|find|callers|callees|goto|symbols|diagnostics|frun)\b.*\*
+declare-option str my_make_buffers \*(cargo|make)\*
 
 map global normal <c-a-n> %{:jump-next -matching %opt{my_jump_buffers}<ret>} -docstring 'next location'
 map global normal <c-a-p> %{:jump-previous -matching %opt{my_jump_buffers}<ret>} -docstring 'previous location'
