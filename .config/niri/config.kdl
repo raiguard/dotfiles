@@ -11,7 +11,7 @@ input {
     }
 
     // warp-mouse-to-focus
-    focus-follows-mouse max-scroll-amount="80%"
+    focus-follows-mouse max-scroll-amount="0%"
 }
 
 output "eDP-1" {
