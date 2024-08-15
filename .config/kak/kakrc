@@ -59,6 +59,7 @@ bundle kak-lsp "https://github.com/kak-lsp/kak-lsp" %{
   map global lsp m ":lsp-show-message-request-next<ret>"
 
   lsp-inlay-diagnostics-enable global
+  lsp-auto-signature-help-enable
 
   # Custom status line
   declare-option -hidden str lsp_modeline_progress ""
@@ -375,10 +376,10 @@ hook global WinCreate /usr/include/c\+\+/.* %{
   set-option window indentwidth 4
 }
 
-hook global WinCreate changelog\.txt %{
+hook global WinCreate ".*changelog\.txt$" %{
   try %{
     execute-keys -draft ggxs---------------------------------------------------------------------------------------------------<ret>
-    set-option window filetype factorio-changelog
+    set-option buffer filetype factorio-changelog
   }
 }
 hook global WinSetOption filetype=factorio-changelog %{
@@ -404,6 +405,24 @@ hook global WinSetOption filetype=(git-commit|mail) %{
   set-option window autowrap_column 72
   set-option window autowrap_format_paragraph true
   autowrap-enable
+}
+
+hook global BufCreate .*[.](glsl|vert|tesc|tese|geom|frag|comp) %{
+  set-option buffer filetype glsl
+}
+
+hook global WinSetOption filetype=glsl %{
+  add-highlighter window/glsl regions
+  add-highlighter window/glsl/code default-region group
+  add-highlighter window/glsl/line_comment region '//' $ fill comment
+  add-highlighter window/glsl/comment region '/\*' '\*/' fill comment
+  add-highlighter window/glsl/code/operator regex (\+|-|\*|&|=|\\|\?|%|\^|\|-|!|\||->|<|>|\^|/|~|\[|\]) 0:operator
+  add-highlighter window/glsl/code/function_call regex \b([a-zA-Z0-9_]*)\h*\( 1:function
+  add-highlighter window/glsl/code/constant regex \b([A-Z0-9_]*)\b 1:value
+  add-highlighter window/glsl/code/types regex \b(void|bool|int|uint|float|double|(b|i|u|d)?vec(2|3|4)|mat(2|3|4)|mat(2|3|4)x(2|3|4)|sampler(1|2|3)D)\b 1:type
+  add-highlighter window/glsl/code/keyword regex \b(out|in|uniform|layout|if|else|for|struct|return)\b 1:keyword
+  add-highlighter window/glsl/code/macro regex (#version) 1:meta
+  add-highlighter window/glsl/code/export regex \b(gl_Position)\b 1:string
 }
 
 hook global WinSetOption filetype=go %{
