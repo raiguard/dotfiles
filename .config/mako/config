@@ -1,10 +1,10 @@
 # kak: filetype=ini
 
-font=Noto Sans 10
+font=Inter 10
 background-color=#1f2335
 border-size=2
 margin=4
-padding=5,8
+padding=10,10
 progress-color=#1f1b26
 
 # No urgency
@@ -24,7 +24,6 @@ default-timeout=10000
 [urgency=critical]
 border-color=#f7768e
 default-timeout=0
-on-notify=exec mpv --volume=50 /usr/share/sounds/freedesktop/stereo/suspend-error.oga
 
 # Do-not-disturb
 # Hide most notifications, but continue to show system notifications
@@ -34,6 +33,7 @@ on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/complete.oga
 
 [urgency=critical category=compilation]
 default-timeout=10000
+on-notify=exec mpv --volume=50 /usr/share/sounds/freedesktop/stereo/suspend-error.oga
 
 [mode=do-not-disturb]
 invisible=1
