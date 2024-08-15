@@ -39,6 +39,7 @@
     "interval": 2,
   },
   "network": {
+    "format-wifi": "{essid}",
     "format-ethernet": "",
     "tooltip-format": "{ifname} via {gwaddr} ",
     "format-linked": "",
