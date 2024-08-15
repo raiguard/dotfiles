@@ -8,6 +8,12 @@ else
     entries="$entries\nEnable do-not-disturb"
 fi
 
+if systemctl --user is-active --quiet wlsunset; then
+  entries="$entries\nDisable night light"
+else
+  entries="$entries\nEnable night light"
+fi
+
 selected=$(echo -e $entries | fuzzel -d -w 24 -l 6)
 
 case "$selected" in
@@ -23,4 +29,8 @@ case "$selected" in
         networkmanager_dmenu;;
     "Bluetooth settings")
         dmenu-bluetooth;;
+    "Disable night light")
+        systemctl --user stop wlsunset;;
+    "Enable night light")
+        systemctl --user start wlsunset;;
 esac

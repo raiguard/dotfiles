@@ -65,7 +65,8 @@ binds {
 
     Mod+T { spawn "alacritty"; }
     Mod+D { spawn "fuzzel"; }
-    Mod+P { spawn "~/.local/bin/fuzzel-power-menu"; }
+    Mod+Escape { spawn "~/.local/bin/fuzzel-power-menu"; }
+    Mod+Grave { spawn "~/.local/bin/fuzzel-util-menu"; }
     Super+Alt+L { spawn "swaylock"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn "~/.config/sway/volume.sh" "i"; }
