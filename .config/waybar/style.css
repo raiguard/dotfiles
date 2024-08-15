@@ -30,6 +30,10 @@ tooltip {
   padding: 5pt 5pt;
 }
 
+#taskbar button {
+  padding: 0 6pt;
+}
+
 #workspaces button {
   color: @comment;
   padding: 0 1pt;
