@@ -2,6 +2,7 @@
   "modules-left": [
     "sway/workspaces",
     "sway/mode",
+    "wlr/taskbar"
   ],
   "modules-center": [
     "sway/window",
@@ -16,6 +17,15 @@
     "custom/time",
     "tray",
   ],
+  "layer": "top",
+  "wlr/taskbar": {
+      // "format": "{icon} {title} {short_state}",
+      "format": "{icon}",
+      "tooltip-format": "{title} | {app_id}",
+      "on-click": "activate",
+      "on-click-middle": "close",
+      "on-click-right": "fullscreen"
+  },
   "cpu": {
     "format": "{usage}%",
     "interval": 2,
@@ -29,7 +39,11 @@
     "interval": 2,
   },
   "network": {
-    "format-wifi": "{essid}",
+    "format-ethernet": "",
+    "tooltip-format": "{ifname} via {gwaddr} ",
+    "format-linked": "",
+    "format-disconnected": "⚠",
+    "format-alt": "{ifname}: {ipaddr}/{cidr}"
   },
   "battery": {
     "states": {

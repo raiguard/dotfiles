@@ -10,6 +10,7 @@ progress-color=#1f1b26
 # No urgency
 text-color=#c0caf5
 border-color=#7aa2f7
+border-radius=4
 default-timeout=10000
 
 [urgency=low]

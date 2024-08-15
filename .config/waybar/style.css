@@ -7,13 +7,13 @@
 
 window#waybar {
   background: @background;
-  font-family: JetBrains Mono;
+  font-family: Inter, 'Font Awesome 6 Free';
 }
 
 tooltip {
   background: @background-light;
   color: @foreground;
-  font-family: Source Sans Pro;
+  font-family: Inter;
 }
 
 #workspaces,
@@ -27,7 +27,7 @@ tooltip {
 #custom-time,
 #tray {
   color: @foreground;
-  padding: 0 5pt;
+  padding: 5pt 5pt;
 }
 
 #workspaces button {
