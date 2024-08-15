@@ -4,8 +4,18 @@ input {
       repeat-delay 300
     }
 
+    touchpad {
+      tap
+      natural-scroll
+      dwt
+    }
+
     // warp-mouse-to-focus
     focus-follows-mouse max-scroll-amount="80%"
+}
+
+output "eDP-1" {
+  scale 1.25
 }
 
 output "DP-2" {
@@ -55,6 +65,7 @@ binds {
 
     Mod+T { spawn "alacritty"; }
     Mod+D { spawn "fuzzel"; }
+    Mod+P { spawn "~/.local/bin/fuzzel-power-menu"; }
     Super+Alt+L { spawn "swaylock"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn "~/.config/sway/volume.sh" "i"; }
@@ -63,6 +74,9 @@ binds {
     XF86AudioPlay allow-when-locked=true { spawn "~/.config/sway/media.sh" "play-pause"; }
     XF86AudioNext allow-when-locked=true { spawn "~/.config/sway/media.sh" "next"; }
     XF86AudioPrev allow-when-locked=true { spawn "~/.config/sway/media.sh" "previous"; }
+
+    XF86MonBrightnessUp allow-when-locked=true { spawn "~/.config/sway/brightness.sh" "-A" "5"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "~/.config/sway/brightness.sh" "-U" "5"; }
 
     Mod+Q { close-window; }
 

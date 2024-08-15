@@ -8,7 +8,7 @@ case "$selected" in
     "Lock screen")
         exec swaylock;;
     "Log out")
-        swaymsg exit;;
+        niri msg action quit -s;;
     "Suspend")
         exec systemctl suspend;;
     "Reboot")

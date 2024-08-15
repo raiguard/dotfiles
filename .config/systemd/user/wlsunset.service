@@ -4,5 +4,5 @@ After=graphical-session.target
 Requisite=graphical-session.target
 
 [Service]
-ExecStart=%h/.cargo/bin/xwayland-satellite
+ExecStart=%h/.local/bin/wlsunset
 Restart=on-failure
