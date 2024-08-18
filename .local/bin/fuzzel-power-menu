@@ -2,7 +2,7 @@
 
 entries="Lock screen\nLog out\nSuspend\nReboot\nShut down"
 
-selected=$(printf "$entries" | tofi --prompt-text="power:")
+selected=$(printf "$entries" | fuzzel -d -w 24 -l 5)
 
 case "$selected" in
     "Lock screen")

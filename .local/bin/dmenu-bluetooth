@@ -304,7 +304,7 @@ original_args=("$@")
 # dmenu command to pipe into. Extra arguments to dmenu-bluetooth are passed through to dmenu. This
 # allows the user to set fonts, sizes, colours, etc.
 run_dmenu() {
-    tofi "${original_args[@]}" --prompt="$1"
+    fuzzel -d "${original_args[@]}" -p "$1"
 }
 
 case "$1" in

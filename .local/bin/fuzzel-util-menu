@@ -14,7 +14,7 @@ else
   entries="$entries\nEnable night light"
 fi
 
-selected=$(echo -e $entries | tofi --prompt-text="utils:")
+selected=$(echo -e $entries | fuzzel -d -w 24 -l 6)
 
 case "$selected" in
     "Disable do-not-disturb")

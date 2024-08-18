@@ -5,5 +5,5 @@ set -euo pipefail
 IFS=$'\n\t'
 
 fd -t f -I -E "gas" ".*" "$HOME"/{documents,school,downloads} |
-    rg "(\.pdf|\.png|\.jpg)" | tofi --prompt-text="documents:" | tr '\n' '\0' | xargs -0 xdg-open
+    rg "(\.pdf|\.png|\.jpg)" | fuzzel -d -w 100 | tr '\n' '\0' | xargs -0 xdg-open
 

@@ -64,7 +64,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     Mod+T { spawn "alacritty"; }
-    Mod+D { spawn "tofi-drun"; }
+    Mod+D { spawn "fuzzel"; }
     Mod+Escape { spawn "~/.local/bin/fuzzel-power-menu"; }
     Mod+Grave { spawn "~/.local/bin/fuzzel-util-menu"; }
     Super+Alt+L { spawn "swaylock"; }
