@@ -2,7 +2,7 @@
 exec inkscape-figures watch
 exec pactl load-module module-switch-on-connect
 exec swayidle
-exec wlsunset -l 40.3 -L -111.8 -t 2500
+exec wlsunset
 exec /usr/libexec/polkit-gnome-authentication-agent-1
 exec kanshi
 

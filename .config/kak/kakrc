@@ -428,6 +428,8 @@ hook global WinSetOption filetype=glsl %{
 hook global WinSetOption filetype=go %{
   noexpandtab
   set-option window indentwidth 0
+  set-option window tabstop 4
+  set-option window softtabstop 4
 
   hook window BufWritePre .* lsp-formatting-sync
 

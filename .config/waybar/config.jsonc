@@ -12,7 +12,6 @@
     "temperature",
     "memory",
     "battery",
-    "network",
     "custom/weather",
     "custom/time",
     "tray",
@@ -35,16 +34,8 @@
     "interval": 2,
   },
   "memory": {
-    "format": "{used} GB",
+    "format": "{percentage}%",
     "interval": 2,
-  },
-  "network": {
-    "format-wifi": "{essid}",
-    "format-ethernet": "",
-    "tooltip-format": "{ifname} via {gwaddr} ",
-    "format-linked": "",
-    "format-disconnected": "⚠",
-    "format-alt": "{ifname}: {ipaddr}/{cidr}"
   },
   "battery": {
     "states": {
