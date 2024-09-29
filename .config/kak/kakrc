@@ -149,6 +149,7 @@ trigger-user-hook ColorschemeLoaded
 add-highlighter global/ number-lines -relative -separator " " -hlcursor
 add-highlighter global/ show-matching
 add-highlighter global/ line '%val{cursor_line}' ",rgb:%opt{subbg}"
+add-highlighter global/ show-whitespaces -indent │ -tab " " -tabpad " " -spc " " -lf " " -nbsp " "
 
 # UI settings
 set-option global ui_options terminal_assistant=off terminal_set_title=false terminal_info_max_width=100 terminal_info_inline_borders=true
