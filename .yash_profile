@@ -1,5 +1,5 @@
 export LANG=en_US.UTF-8
-export PATH="$HOME/.local/bin/$(uname -n):$HOME/.local/bin:$HOME/.cargo/bin:$PATH:$HOME/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin:$HOME/dev/wube/factorio-development-tools:$HOME/dev/wube/factorio/utils/unix:$HOME/go/bin:/usr/sbin"
+export PATH="$HOME/.local/bin/$(uname -n):$HOME/.local/bin:$HOME/.cargo/bin:$PATH:$HOME/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin:$HOME/dev/wube/factorio-development-tools:$HOME/dev/wube/factorio/utils/unix:$HOME/.local/share/go/bin:/usr/sbin"
 
 export EDITOR="kak"
 export PAGER="less"
