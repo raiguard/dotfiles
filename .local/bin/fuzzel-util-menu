@@ -14,6 +14,12 @@ else
   entries="$entries\nEnable night light"
 fi
 
+if systemctl --user is-active --quiet swayidle; then
+  entries="$entries\nDisable idle detection"
+else
+  entries="$entries\nEnable idle detection"
+fi
+
 selected=$(echo -e $entries | fuzzel -d -w 24 -l 6)
 
 case "$selected" in
@@ -33,4 +39,8 @@ case "$selected" in
         systemctl --user stop wlsunset;;
     "Enable night light")
         systemctl --user start wlsunset;;
+    "Disable idle detection")
+        systemctl --user stop swayidle;;
+    "Enable idle detection")
+        systemctl --user start swayidle;;
 esac

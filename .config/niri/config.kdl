@@ -21,6 +21,7 @@ output "eDP-1" {
 output "DP-2" {
     mode "3440x1440@143.975"
     scale 1
+    position x=0 y=0
 }
 
 output "HDMI-A-1" {
@@ -30,9 +31,15 @@ output "HDMI-A-1" {
   position x=0 y=-3840
 }
 
+output "DP-1" {
+  mode "2560x1440@143.998"
+  position x=3440 y=0
+}
+
 layout {
     gaps 8
     center-focused-column "never"
+    always-center-single-column
     preset-column-widths {
         proportion 0.33333
         proportion 0.5

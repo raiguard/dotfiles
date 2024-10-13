@@ -15,7 +15,7 @@ input type:tablet_tool map_to_output DP-2
 
 # Output configuration
 output * bg ~/pictures/wallpaper fill
-output DP-2 mode 3440x1440@143.975Hz
+output DP-2 mode 3440x1440@143.975Hz adaptive_sync on
 output HDMI-A-1 disable mode 3840x2160@120Hz scale 2 adaptive_sync on
 
 bindsym $mod+g mode inhibited
@@ -43,5 +43,8 @@ for_window [app_id=wlroots] {
 for_window [app_id="foot.gdb"] {
   resize set height 25ppt
 }
+
+output DP-2 allow_tearing yes
+for_window [app_id="osu!"] allow_tearing yes
 
 bindsym $mod+z resize set width 2560 px
