@@ -52,3 +52,10 @@ set print static-members off
 set auto-load safe-path /
 
 source ~/.config/gdb/factorio_pretty_printers.py
+
+python
+import sys
+sys.path.insert(0, '/usr/share/gcc-14/python')
+from libstdcxx.v6.printers import register_libstdcxx_printers
+register_libstdcxx_printers (None)
+end
