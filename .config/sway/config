@@ -4,10 +4,6 @@ include ~/.config/sway/common
 
 exec mako
 
-### Keybindings
-
-bindsym $mod+escape exec swaylock
-
 ### Rules
 
 for_window [app_id="org.speedcrunch.speedcrunch"] {

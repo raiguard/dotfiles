@@ -10,8 +10,8 @@ set $up k
 set $right l
 
 
-bindsym $mod+Return exec alacritty
-bindsym $mod+backspace kill
+bindsym $mod+t exec alacritty
+bindsym $mod+q kill
 
 floating_modifier $mod normal
 
@@ -21,12 +21,10 @@ bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. 
 
 # Launcher
 bindsym $mod+y exec fuzzel-util-menu
-bindsym $mod+r exec fuzzel
+bindsym $mod+d exec fuzzel
 bindsym $mod+e exec rofimoji --selector fuzzel
 bindsym $mod+w exec fuzzel-filesearch
-bindsym $mod+q exec fuzzel-power-menu
-
-bindsym $mod+d exec i3-quickterm
+bindsym $mod+escape exec fuzzel-power-menu
 
 # Focus
 bindsym $mod+$down focus down
@@ -93,7 +91,7 @@ bindsym $mod+s sticky toggle
 bindsym $mod+a focus parent
 bindgesture pinch:3:outward focus parent
 
-bindsym $mod+t layout toggle split tabbed stacking
+bindsym $mod+alt+t layout toggle split tabbed stacking
 
 bindsym $mod+Shift+minus move scratchpad
 
