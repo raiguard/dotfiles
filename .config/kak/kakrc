@@ -44,14 +44,25 @@ bundle kak-lsp "https://github.com/kak-lsp/kak-lsp" %{
   set-option global lsp_auto_highlight_references true
   set-option global lsp_hover_max_lines 1000
   set-option global lsp_hover_anchor true
+  set-option global lsp_snippet_support false # This just causes chaos right now
 
   hook global KakEnd .* lsp-exit
+
+  set-option global lsp_cmd "kak-lsp -s %val{session} -v --log /tmp/kak-lsp.log"
 
   map global normal <c-h> ":lsp-hover<ret>"
   map global normal <c-a-h> ":lsp-hover-buffer<ret>"
   map global normal <c-a> ":lsp-code-actions<ret>"
   map global normal <c-r> ":lsp-rename-prompt<ret>"
   map global normal <c-e> ":lsp-diagnostics<ret>"
+
+  map global insert <tab> '<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>' -docstring 'Select next snippet placeholder'
+  map global object a '<a-semicolon>lsp-object<ret>' -docstring 'LSP any symbol'
+  map global object <a-a> '<a-semicolon>lsp-object<ret>' -docstring 'LSP any symbol'
+  map global object f '<a-semicolon>lsp-object Function Method<ret>' -docstring 'LSP function or method'
+  map global object t '<a-semicolon>lsp-object Class Interface Struct<ret>' -docstring 'LSP class interface or struct'
+  map global object d '<a-semicolon>lsp-diagnostic-object --include-warnings<ret>' -docstring 'LSP errors and warnings'
+  map global object D '<a-semicolon>lsp-diagnostic-object<ret>' -docstring 'LSP errors'
 
   map global goto m "<esc><c-s>:lsp-implementation<ret>" -docstring "implementations"
 
@@ -171,7 +182,6 @@ set-option global make_error_pattern "^\h*(?:\w:)?([^:\n]+):(\d+):(?:(\d+):)? (?
 
 # Conveniently edit config
 define-command edit-kakrc %{ e ~/.config/kak/kakrc }
-define-command edit-lsp %{ e ~/.config/kak-lsp/kak-lsp.toml }
 
 # Convenient wrap highlighter
 define-command addwrap %{
@@ -327,23 +337,33 @@ map global user e ":edit -scratch<ret>" -docstring "scratch buffer"
 # FILETYPE HOOKS
 
 # Default window settings
-hook global WinCreate .* %{
+hook global BufCreate .* %{
   # Show and automatically update git diff on write
   evaluate-commands %sh{
     branch=$(git -C "${kak_buffile%/*}" rev-parse --abbrev-ref HEAD 2>/dev/null)
     if [ -n "$branch" ]; then
       printf %s\\n "
         git show-diff
-        hook window BufWritePost .* %{ git update-diff }
-        hook window BufReload .* %{ git update-diff }
+        hook buffer BufWritePost .* %{ git update-diff }
+        hook buffer BufReload .* %{ git update-diff }
       "
     fi
   }
 }
 
-hook global WinSetOption filetype=(c|cpp) %{
-  map global user a ":clangd-switch-source-header<ret>"
+hook global BufSetOption filetype=(c|cpp) %{
+  set-option buffer lsp_servers %{
+    [clangd]
+    filetypes = ["c", "cpp"]
+    root_globs = ["compile_commands.json", ".clangd", ".git", ".hg"]
+    command = "clangd"
+    args = ["-j", "8", "--limit-references=0", "--header-insertion=never", "--pch-storage=memory"]
+  }
 
+  map buffer user a ":clangd-switch-source-header<ret>"
+}
+
+hook global WinSetOption filetype=(c|cpp) %{
   # Better highlighting
   add-highlighter -override "shared/%opt{filetype}/code/operators" regex (\+|-|\*|&|=|\\|\?|%|\^|\|-|!|\||->|<|>|\^|/|~|\[|\]) 0:operator
   add-highlighter -override "shared/%opt{filetype}/code/function_call" regex \b([a-zA-Z0-9_]*)\( 1:function
@@ -371,40 +391,40 @@ hook global WinSetOption filetype=(c|cpp) %{
   add-highlighter "shared/%opt{filetype}/factorio_documentation/tag/string" regex '".*?"' 0:string
 }
 # GNU STL has a really stupid indentation format
-hook global WinCreate /usr/include/c\+\+/.* %{
-  set-option window tabstop 8
-  set-option window softabstop 4
-  set-option window indentwidth 4
+hook global BufCreate /usr/include/c\+\+/.* %{
+  set-option buffer tabstop 8
+  set-option buffer softabstop 4
+  set-option buffer indentwidth 4
 }
 
-hook global WinCreate ".*changelog\.txt$" %{
+hook global BufCreate ".*changelog\.txt$" %{
   try %{
     execute-keys -draft ggxs---------------------------------------------------------------------------------------------------<ret>
     set-option buffer filetype factorio-changelog
   }
 }
-hook global WinSetOption filetype=factorio-changelog %{
-  add-highlighter window/changelog_date regex ^(Date):\s(.*?)$ 1:type 2:function
-  add-highlighter window/changelog_entry regex ^(\s\s)*(-)\s(.*?)$ 2:value 3:string
-  add-highlighter window/changelog_keyword regex ^\s*(Balancing|Bugfixes|Changes|Features|Gui|Info|Optimizations): 1:type
-  add-highlighter window/changelog_separator regex ^-+$ 0:keyword
-  add-highlighter window/changelog_version regex ^(Version):\s(\d+\.\d+\.\d+)$ 1:type 2:value
+hook global BufSetOption filetype=factorio-changelog %{
+  add-highlighter buffer/changelog_date regex ^(Date):\s(.*?)$ 1:type 2:function
+  add-highlighter buffer/changelog_entry regex ^(\s\s)*(-)\s(.*?)$ 2:value 3:string
+  add-highlighter buffer/changelog_keyword regex ^\s*(Balancing|Bugfixes|Changes|Features|Gui|Info|Optimizations): 1:type
+  add-highlighter buffer/changelog_separator regex ^-+$ 0:keyword
+  add-highlighter buffer/changelog_version regex ^(Version):\s(\d+\.\d+\.\d+)$ 1:type 2:value
 }
 
-hook global WinCreate (.*locale/.*/.*\.cfg) %{
+hook global BufCreate (.*locale/.*/.*\.cfg) %{
   set-option buffer filetype factorio-locale
 }
-hook global WinSetOption filetype=factorio-locale %{
+hook global BufSetOption filetype=factorio-locale %{
   require-module conf
-  add-highlighter window/conf ref conf
-  add-highlighter window/locale_macro regex __[^\n]*?__ 0:meta
-  add-highlighter window/locale_rich_text regex \[(achievement|armor|color|entity|fluid|font|gps|item|item-group|recipe|special-item|technology|tile|tooltip|train|train-stop|virtual-signal)=.*?\] 0:function
-  add-highlighter window/locale_rich_text_close regex \[/(achievement|armor|color|entity|fluid|font|gps|item|item-group|recipe|special-item|technology|tile|tooltip|train|train-stop|virtual-signal)\] 0:function
+  add-highlighter buffer/conf ref conf
+  add-highlighter buffer/locale_macro regex __[^\n]*?__ 0:meta
+  add-highlighter buffer/locale_rich_text regex \[(achievement|armor|color|entity|fluid|font|gps|item|item-group|recipe|special-item|technology|tile|tooltip|train|train-stop|virtual-signal)=.*?\] 0:function
+  add-highlighter buffer/locale_rich_text_close regex \[/(achievement|armor|color|entity|fluid|font|gps|item|item-group|recipe|special-item|technology|tile|tooltip|train|train-stop|virtual-signal)\] 0:function
 }
 
-hook global WinSetOption filetype=(git-commit|mail) %{
-  set-option window autowrap_column 72
-  set-option window autowrap_format_paragraph true
+hook global BufSetOption filetype=(git-commit|mail) %{
+  set-option buffer autowrap_column 72
+  set-option buffer autowrap_format_paragraph true
   autowrap-enable
 }
 
@@ -412,66 +432,107 @@ hook global BufCreate .*[.](glsl|vert|tesc|tese|geom|frag|comp) %{
   set-option buffer filetype glsl
 }
 
-hook global WinSetOption filetype=glsl %{
-  add-highlighter window/glsl regions
-  add-highlighter window/glsl/code default-region group
-  add-highlighter window/glsl/line_comment region '//' $ fill comment
-  add-highlighter window/glsl/comment region '/\*' '\*/' fill comment
-  add-highlighter window/glsl/code/operator regex (\+|-|\*|&|=|\\|\?|%|\^|\|-|!|\||->|<|>|\^|/|~|\[|\]) 0:operator
-  add-highlighter window/glsl/code/function_call regex \b([a-zA-Z0-9_]*)\h*\( 1:function
-  add-highlighter window/glsl/code/constant regex \b([A-Z0-9_]*)\b 1:value
-  add-highlighter window/glsl/code/types regex \b(void|bool|int|uint|float|double|(b|i|u|d)?vec(2|3|4)|mat(2|3|4)|mat(2|3|4)x(2|3|4)|sampler(1|2|3)D)\b 1:type
-  add-highlighter window/glsl/code/keyword regex \b(out|in|uniform|layout|if|else|for|struct|return)\b 1:keyword
-  add-highlighter window/glsl/code/macro regex (#version) 1:meta
-  add-highlighter window/glsl/code/export regex \b(gl_Position)\b 1:string
+hook global BufSetOption filetype=glsl %{
+  add-highlighter buffer/glsl regions
+  add-highlighter buffer/glsl/code default-region group
+  add-highlighter buffer/glsl/line_comment region '//' $ fill comment
+  add-highlighter buffer/glsl/comment region '/\*' '\*/' fill comment
+  add-highlighter buffer/glsl/code/operator regex (\+|-|\*|&|=|\\|\?|%|\^|\|-|!|\||->|<|>|\^|/|~|\[|\]) 0:operator
+  add-highlighter buffer/glsl/code/function_call regex \b([a-zA-Z0-9_]*)\h*\( 1:function
+  add-highlighter buffer/glsl/code/constant regex \b([A-Z0-9_]*)\b 1:value
+  add-highlighter buffer/glsl/code/types regex \b(void|bool|int|uint|float|double|(b|i|u|d)?vec(2|3|4)|mat(2|3|4)|mat(2|3|4)x(2|3|4)|sampler(1|2|3)D)\b 1:type
+  add-highlighter buffer/glsl/code/keyword regex \b(out|in|uniform|layout|if|else|for|struct|return)\b 1:keyword
+  add-highlighter buffer/glsl/code/macro regex (#version) 1:meta
+  add-highlighter buffer/glsl/code/export regex \b(gl_Position)\b 1:string
 }
 
-hook global WinSetOption filetype=go %{
+hook global BufSetOption filetype=go %{
   noexpandtab
-  set-option window indentwidth 0
-  set-option window tabstop 4
-  set-option window softtabstop 4
+  set-option buffer indentwidth 0
+  set-option buffer tabstop 4
+  set-option buffer softtabstop 4
 
-  hook window BufWritePre .* lsp-formatting-sync
+  hook buffer BufWritePre .* lsp-formatting-sync
 
-  map window user a :go-alternative-file<ret> -docstring "alternative file"
+  map buffer user a :go-alternative-file<ret> -docstring "alternative file"
 }
 
-hook global WinSetOption filetype=hare %{
+hook global BufSetOption filetype=hare %{
   noexpandtab
-  set-option window tabstop 8
-  set-option window softtabstop 0
-  set-option window indentwidth 0
+  set-option buffer tabstop 8
+  set-option buffer softtabstop 0
+  set-option buffer indentwidth 0
 }
 
-hook global WinSetOption filetype=java %{
-  set-option window tabstop 4
-  set-option window softtabstop 4
-  set-option window indentwidth 4
+hook global BufSetOption filetype=java %{
+  set-option buffer tabstop 4
+  set-option buffer softtabstop 4
+  set-option buffer indentwidth 4
 
   hook global BufWritePre .*\.java lsp-formatting-sync
 
   add-highlighter -override shared/java/code/operator regex (=|==|&&|\|\||\+|-|/|\*|\+=|-=|\*=|/=|!|<=|>=|<|>) 1:operator
 }
 
-hook global WinSetOption filetype=json %{
-  set-option window formatcmd 'jq .'
+hook global BufSetOption filetype=json %{
+  set-option buffer formatcmd 'jq .'
+}
+
+hook global BufSetOption filetype=lua %{
+  set-option buffer lsp_servers %exp{
+    # [luapls]
+    # filetypes = ["lua"]
+    # root_globs = [".git/", ".luarc.json", ".editorconfig", ".kakrc"]
+    # command = "/home/rai/dev/personal/luapls/luapls"
+    # args = ["lsp", "3"]
+    # settings_section = "luapls"
+
+    # [luapls.settings.luapls]
+    # roots = ["demo.lua"]
+
+    [luals]
+    filetypes = ["lua"]
+    root_globs = [".git/", ".luarc.json", ".editorconfig", ".kakrc"]
+    command = "lua-language-server"
+    args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
+
+    [luals.settings.Lua]
+    diagnostics.disable = ["lowercase-global", "redefined-local"]
+    diagnostics.severity = { unused-local = "Error", undefined-global = "Error", undefined-field = "Error" }
+    hover.expandAlias = false
+    hover.previewFields = 0
+    semantic.enable = false
+    telemetry.enable = false
+    workspace.userThirdParty = ["/home/rai/dev/luals"]
+
+    [fmtk-locale]
+    filetypes = ["factorio-locale", "lua"]
+    root_globs = ["info.json"]
+    command = "fmtk"
+    args = ["lsp", "--stdio"]
+
+    [fmtk-changelog]
+    filetypes = ["factorio-changelog", "lua"]
+    root_globs = ["info.json"]
+    command = "fmtk"
+    args = ["lsp", "--stdio"]
+  }
+
+  set-option buffer formatcmd "stylua -"
+  # Only auto-format if it is our own Factorio project
+  evaluate-commands %sh{
+    if [ -f "info.json" ] && [ $(jq -r ".author" < info.json) = "raiguard" ]; then
+      echo "hook buffer BufWritePre .* format"
+    fi
+  }
 }
 
 hook global WinSetOption filetype=lua %{
-  set-option window formatcmd "stylua -"
-
   # Highlight EmmyLua annotations
   add-highlighter window/emmylua_direct regex "---\s*(@(?:alias|as|class|enum|generic|return|type))\s+([^\n]*)" 1:attribute 2:type
   add-highlighter window/emmylua_labeled regex "---\s*(@(?:alias|cast|field|param))\s+([a-zA-Z0-9_]*) ([^\n]*)" 1:attribute 2:variable 3:type
   add-highlighter window/emmylua_enum_variant regex '---\s*\|\s*("[^\n]*")' 1:string
 
-  # Only auto-format if it is our own Factorio project
-  evaluate-commands %sh{
-    if [ -f "info.json" ] && [ $(jq -r ".author" < info.json) = "raiguard" ]; then
-      echo "hook global BufWritePre .*\.lua format"
-    fi
-  }
 }
 
 hook global WinSetOption filetype=makefile %{
