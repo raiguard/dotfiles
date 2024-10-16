@@ -74,7 +74,6 @@ binds {
     Mod+D { spawn "fuzzel"; }
     Mod+Escape { spawn "~/.local/bin/fuzzel-power-menu"; }
     Mod+Grave { spawn "~/.local/bin/fuzzel-util-menu"; }
-    Super+Alt+L { spawn "swaylock"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn "~/.config/sway/volume.sh" "i"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn "~/.config/sway/volume.sh" "d"; }
@@ -111,14 +110,14 @@ binds {
     Mod+Ctrl+Home { move-column-to-first; }
     Mod+Ctrl+End  { move-column-to-last; }
 
-    Mod+Shift+Left  { focus-monitor-left; }
-    Mod+Shift+Down  { focus-monitor-down; }
-    Mod+Shift+Up    { focus-monitor-up; }
-    Mod+Shift+Right { focus-monitor-right; }
-    Mod+Shift+H     { focus-monitor-left; }
-    Mod+Shift+J     { focus-monitor-down; }
-    Mod+Shift+K     { focus-monitor-up; }
-    Mod+Shift+L     { focus-monitor-right; }
+    Mod+Alt+Left  { focus-monitor-left; }
+    Mod+Alt+Down  { focus-monitor-down; }
+    Mod+Alt+Up    { focus-monitor-up; }
+    Mod+Alt+Right { focus-monitor-right; }
+    Mod+Alt+H     { focus-monitor-left; }
+    Mod+Alt+J     { focus-monitor-down; }
+    Mod+Alt+K     { focus-monitor-up; }
+    Mod+Alt+L     { focus-monitor-right; }
 
     Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
     Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
