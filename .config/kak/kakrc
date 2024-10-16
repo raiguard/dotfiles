@@ -529,7 +529,7 @@ hook global BufSetOption filetype=lua %{
 
 hook global WinSetOption filetype=lua %{
   # Highlight EmmyLua annotations
-  add-highlighter window/emmylua_direct regex "---\s*(@(?:alias|as|class|enum|generic|return|type))\s+([^\n]*)" 1:attribute 2:type
+  add-highlighter window/emmylua_direct regex "---\s*(@(?:alias|as|class|enum|generic|return|type|overload))\s+([^\n]*)" 1:attribute 2:type
   add-highlighter window/emmylua_labeled regex "---\s*(@(?:alias|cast|field|param))\s+([a-zA-Z0-9_]*) ([^\n]*)" 1:attribute 2:variable 3:type
   add-highlighter window/emmylua_enum_variant regex '---\s*\|\s*("[^\n]*")' 1:string
 
