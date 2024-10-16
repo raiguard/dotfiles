@@ -17,13 +17,16 @@
     "tray",
   ],
   "layer": "top",
+  "position": "bottom",
+  "height": 40,
   "wlr/taskbar": {
-      // "format": "{icon} {title} {short_state}",
-      "format": "{icon}",
-      "tooltip-format": "{title} | {app_id}",
-      "on-click": "activate",
-      "on-click-middle": "close",
-      "on-click-right": "fullscreen"
+    // "format": "{icon} {title} {short_state}",
+    "format": "{icon}",
+    "tooltip-format": "{title} | {app_id}",
+    "on-click": "activate",
+    "on-click-middle": "close",
+    "on-click-right": "fullscreen",
+    "icon-size": 24
   },
   "cpu": {
     "format": "{usage}%",
