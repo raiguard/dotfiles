@@ -48,8 +48,6 @@ bundle kak-lsp "https://github.com/kak-lsp/kak-lsp" %{
 
   hook global KakEnd .* lsp-exit
 
-  set-option global lsp_cmd "kak-lsp -s %val{session} -v --log /tmp/kak-lsp.log"
-
   map global normal <c-h> ":lsp-hover<ret>"
   map global normal <c-a-h> ":lsp-hover-buffer<ret>"
   map global normal <c-a> ":lsp-code-actions<ret>"
