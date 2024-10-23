@@ -1,5 +1,5 @@
 #!/bin/sh
 
-swaymsg output DP-1 disable
-swaymsg output DP-2 disable
-swaymsg output HDMI-A-1 enable
+niri msg output DP-1 disable
+niri msg output DP-2 disable
+niri msg output HDMI-A-1 enable
