@@ -560,6 +560,12 @@ hook global ModuleLoaded zig %{
   add-highlighter shared/zig/code/builtin_function regex (@[a-zA-Z0-9]+)\( 1:builtin
 }
 
+hook global WinCreate '/tmp/\.nnn.*' %{
+  hook -once window WinDisplay .* %{
+    execute-keys '%<a-s><a-s-k>^#<ret><a-;>;'
+  }
+}
+
 # --------------------------------------------------
 # TODO Mode
 
