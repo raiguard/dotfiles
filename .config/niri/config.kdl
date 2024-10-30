@@ -70,7 +70,7 @@ screenshot-path "~/pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    Mod+T { spawn "alacritty"; }
+    Mod+T { spawn "foot"; }
     Mod+D { spawn "fuzzel"; }
     Mod+Escape { spawn "~/.local/bin/fuzzel-power-menu"; }
     Mod+Grave { spawn "~/.local/bin/fuzzel-util-menu"; }

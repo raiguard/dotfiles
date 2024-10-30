@@ -1,2 +1,0 @@
-#!/bin/sh
-/usr/bin/foot -c "$HOME/.config/foot/$(uname -n).ini" "$@"
