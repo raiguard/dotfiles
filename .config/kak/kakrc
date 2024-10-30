@@ -97,32 +97,6 @@ bundle kakoune-focus "https://github.com/caksoylar/kakoune-focus" %{
   map global user <space> ':focus-toggle<ret>' -docstring "toggle selections focus"
 }
 
-# bundle kakoune-gdb "https://github.com/occivink/kakoune-gdb" %{
-#   define-command tmux-gdb -params 1.. %{
-#     tmux-terminal-impl 'split-window -v -l 25%' %arg{@}
-#   }
-#   define-command custom-gdb-session-connect %{
-#     alias window terminal tmux-gdb
-#     gdb-session-connect
-#     unalias window terminal
-#     osc-yank "new-ui mi3 %opt{gdb_dir}/pty"
-#     gdb-enable-autojump
-#   }
-#   define-command -override -params .. custom-gdb-session-new %{
-#     alias window terminal tmux-gdb
-#     gdb-session-new %arg{@}
-#     unalias window terminal
-#     gdb-enable-autojump
-#     trigger-user-hook GDBPostInit
-#   }
-#   map global normal <F5> ':prompt -menu -shell-script-candidates %{ fd --type f --hidden ".*" bin } file: %{ custom-gdb-session-new %val{text} }<ret>' -docstring "new GDB session"
-#   map global normal <s-F5> ":custom-gdb-session-connect<ret>" -docstring "connect to GDB session"
-#   map global normal <F9> ":gdb-toggle-breakpoint<ret>" -docstring "GDB toggle breakpoint"
-#   map global normal <F10> ":gdb-next<ret>" -docstring "GDB next"
-#   map global normal <F11> ":gdb-step<ret>" -docstring "GDB step"
-#   map global normal <F12> ":gdb-continue<ret>" -docstring "GDB continue"
-# }
-
 bundle kakoune-grep-write "https://github.com/JacobTravers/kakoune-grep-write" %{
   hook global WinSetOption filetype=(grep|lsp-goto) %{
     alias buffer w grep-write
@@ -258,7 +232,11 @@ define-command -hidden osc-yank -params .. \
       copy=$(printf '%s\n%s' "$copy" "$sel")
     done
     encoded=$(printf %s "$copy" | base64 | tr -d '\n')
-    printf "\e]52;c;%s\a" "$encoded" > "$(tmux display-message -p '#{client_tty}')"
+    if [ -n "$TMUX" ]; then
+      printf "\e]52;c;%s\a" "$encoded" > "$(tmux display-message -p '#{client_tty}')"
+    else
+      printf "\e]52;c;%s\a" "$encoded" > /dev/tty
+    fi
   }
 }
 
@@ -608,7 +586,7 @@ hook global WinDisplay .* %{
   }
 }
 
-set-option global modelinefmt '{keyword}%opt{lsp_modeline_breadcrumbs}%opt{lsp_modeline_code_actions}%opt{lsp_modeline_progress}%opt{lsp_modeline_message_requests} {+r@Error}%opt{gdb_indicator}{StatusLine}{string}%opt{modeline_git_branch}{type}%sh{ [ -n "$kak_opt_filetype" ] && echo "$kak_opt_filetype " }{default}%val{bufname}{{context_info}}{default} {{mode_info}} {meta}%val{cursor_line}:%val{cursor_char_column}'
+set-option global modelinefmt '{keyword}%opt{lsp_modeline_breadcrumbs}%opt{lsp_modeline_code_actions}%opt{lsp_modeline_progress}%opt{lsp_modeline_message_requests} {StatusLine}{string}%opt{modeline_git_branch}{type}%sh{ [ -n "$kak_opt_filetype" ] && echo "$kak_opt_filetype " }{default}%val{bufname}{{context_info}}{default} {{mode_info}} {meta}%val{cursor_line}:%val{cursor_char_column}'
 
 # --------------------------------------------------
 # OTHER
