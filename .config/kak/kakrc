@@ -240,7 +240,10 @@ define-command -hidden osc-yank -params .. \
   }
 }
 
-map global normal <F5> ':prompt -menu -shell-script-candidates %{ fd --type f --hidden ".*" bin } file: %{ terminal lldb %val{text} }<ret>' -docstring "new LLDB session"
+map global normal <F5> ':prompt -menu -shell-script-candidates %{ fd --type f --hidden ".*" bin } file: %{ terminal-lldb lldb %val{text} }<ret>' -docstring "new LLDB session"
+define-command terminal-lldb -params 1.. %{
+  tmux-terminal-impl 'split-window -v' %arg{@}
+}
 
 # Jumps centered please
 map global normal <c-o> <c-o>vv
@@ -284,6 +287,10 @@ map global git d ":git diff<ret>" -docstring "diff"
 map global git g ":terminal-overlay lazygit -p %sh{echo $PWD}<ret>" -docstring "lazygit"
 map global git u ":terminal-overlay gitu<ret>" -docstring "gitu"
 map global git f ":lazygit-current-file<ret>" -docstring "file history"
+map global git l ":git-line-history<ret>" -docstring "line history"
+define-command -hidden git-line-history %{
+  git log "-L%val{cursor_line},+1:%val{buffile}"
+}
 define-command lazygit-current-file %{
   terminal-overlay lazygit -f %val{buffile}
 }
