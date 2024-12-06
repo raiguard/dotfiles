@@ -51,10 +51,10 @@ else
   usercolor=$hostcolor hostcolor=  # same username color as hostname for non-root user
 fi
 git_branch() {
-    branch=$(git -C "$PWD" rev-parse --abbrev-ref HEAD 2>/dev/null)
-    if [ -n "$branch" ]; then
-        echo " ($branch)"
-    fi
+  branch=$(git -C "$PWD" rev-parse --abbrev-ref HEAD 2>/dev/null)
+  if [ -n "$branch" ]; then
+    echo " ($branch)"
+  fi
 }
 PS1=$usercolor'$(whoami)'$hostcolor'@$(uname -n)\fd. '\
 '$(echo "$PWD" | sed "s/\/home\/rai/~/")'\
