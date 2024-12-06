@@ -17,8 +17,8 @@
     "tray",
   ],
   "layer": "top",
-  "position": "bottom",
-  "height": 40,
+  "position": "top",
+  "height": 28,
   "wlr/taskbar": {
     // "format": "{icon} {title} {short_state}",
     "format": "{icon}",
