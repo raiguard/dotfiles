@@ -1,6 +1,4 @@
 # vim: ft=i3
-#
-exec autotiling
 
 input type:tablet_tool map_to_output DP-2
 

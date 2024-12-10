@@ -180,6 +180,7 @@ for_window [app_id="qemu"] inhibit_idle open
 
 ### Autostart
 
+exec autotiling
 exec mako
 exec swayidle
 exec /usr/libexec/polkit-gnome-authentication-agent-1
