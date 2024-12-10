@@ -388,7 +388,7 @@ hook global BufCreate ".*changelog\.txt$" %{
 hook global BufSetOption filetype=factorio-changelog %{
   add-highlighter buffer/changelog_date regex ^(Date):\s(.*?)$ 1:type 2:function
   add-highlighter buffer/changelog_entry regex ^(\s\s)*(-)\s(.*?)$ 2:value 3:string
-  add-highlighter buffer/changelog_keyword regex ^\s*(Balancing|Bugfixes|Changes|Features|Gui|Info|Optimizations): 1:type
+  add-highlighter buffer/changelog_section regex "^\s*(Balancing|Bugfixes|Changes|Circuit Network|Combat Balancing|Compatibility|Control|Debug|Ease Of Use|Features|Graphics|Gui|Info|Locale|Major Features|Minor Features|Modding|Optimizations|Other|Scripting|Sounds|Translation):" 1:type
   add-highlighter buffer/changelog_separator regex ^-+$ 0:keyword
   add-highlighter buffer/changelog_version regex ^(Version):\s(\d+\.\d+\.\d+)$ 1:type 2:value
 }
