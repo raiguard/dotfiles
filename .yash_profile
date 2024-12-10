@@ -34,9 +34,7 @@ if [ "$(tty)" = "/dev/tty1" ]; then
   export XDG_CURRENT_DESKTOP=sway
   exec sway
 fi
-[ "$(tty)" = "/dev/tty2" ] && exec startx
-[ "$(tty)" = "/dev/tty3" ] && exec Hyprland
-if [ "$(tty)" = "/dev/tty4" ]; then
+if [ "$(tty)" = "/dev/tty2" ]; then
   exec gamescope --adaptive-sync --hdr-enabled -e --nested-width 3840 --nested-height 2160 -- steam -gamepadui
 fi
 

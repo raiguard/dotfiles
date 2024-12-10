@@ -1,9 +1,6 @@
 # Autostart
 exec inkscape-figures watch
 exec pactl load-module module-switch-on-connect
-exec swayidle
-exec wlsunset
-exec /usr/libexec/polkit-gnome-authentication-agent-1
 exec kanshi
 
 # Input configuration
@@ -53,6 +50,6 @@ for_window [app_id="learn-opengl"] {
 
 assign [app_id="factorio"] workspace 3
 assign [app_id="factorio-run"] workspace 3
-# assign [class="factorio"] workspace 3
+assign [class="factorio"] workspace 3
 
 # vim: ft=i3

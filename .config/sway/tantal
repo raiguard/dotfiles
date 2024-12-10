@@ -1,51 +1,18 @@
 # vim: ft=i3
-
-# Autostart
-
-
-exec swayidle
-exec wlsunset
-exec /usr/bin/lxpolkit
-
-# Input configuration
+#
+exec autotiling
 
 input type:tablet_tool map_to_output DP-2
-# input type:tablet_tool map_to_region 440 0 2560 1440
-# input type:tablet_tool map_from_region 0.0x0.0 1.0x0.68
 
-# Output configuration
-output * bg ~/pictures/wallpaper fill
-output DP-2 mode 3440x1440@143.975Hz
-output DP-1 mode 2560x1440@143.975Hz position 3440,0
-output HDMI-A-1 disable mode 3840x2160@120Hz scale 2 adaptive_sync on
+output * allow_tearing yes
+output DP-1 mode 2560x1440@179.877Hz position 0,0 transform 270 bg ~/pictures/wallpaper-dp-1 fill
+output DP-2 mode 3440x1440@143.975Hz position 1440,480 bg ~/pictures/wallpaper-dp-2 fill
+output DP-3 mode 2560x1440@179.877Hz position 4880,0 transform 90 bg ~/pictures/wallpaper-dp-3 fill
+output HDMI-A-1 disable mode 3840x2160@120Hz scale 2 adaptive_sync on bg ~/pictures/wallpaper-hdmi-a-1 fill
 
 bindsym $mod+g mode inhibited
 mode inhibited {
   bindsym $mod+g mode default
 }
 
-for_window [app_id=wlroots] {
-  gaps inner 0
-  move to workspace 8
-  workspace 8
-  exec killall swaybar
-  exec foot
-  border none
-  shadows disable
-  gaps inner 0
-  inhibit_idle open
-}
-
-# for_window [app_id=factorio] {
-#   border none
-#   floating enable
-# }
-
-for_window [app_id="foot.gdb"] {
-  resize set height 25ppt
-}
-
-# output DP-2 allow_tearing yes
-# for_window [app_id="osu!"] allow_tearing yes
-
-bindsym $mod+z resize set width 2560 px
+for_window [app_id="osu!"] allow_tearing yes

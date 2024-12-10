@@ -1,6 +1,8 @@
 show-failed-attempts
 
-image=~/pictures/lockscreen
+image=DP-1:~/pictures/wallpaper-dp-1
+image=DP-2:~/pictures/wallpaper-dp-2
+image=DP-3:~/pictures/wallpaper-dp-3
 
 indicator-idle-visible
 indicator-radius=85
