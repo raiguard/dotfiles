@@ -242,7 +242,7 @@ define-command -hidden osc-yank -params .. \
 
 map global normal <F5> ':prompt -menu -shell-script-candidates %{ fd --type f --hidden ".*" bin } file: %{ terminal-lldb lldb %val{text} }<ret>' -docstring "new LLDB session"
 define-command terminal-lldb -params 1.. %{
-  tmux-terminal-impl 'split-window -v' %arg{@}
+  tmux-terminal-impl 'split-window -h' %arg{@}
 }
 
 # Jumps centered please
@@ -472,6 +472,11 @@ hook global BufSetOption filetype=lua %{
     # [luapls.settings.luapls]
     # roots = ["demo.lua"]
 
+    # [emmylua_ls]
+    # filetypes = ["lua"]
+    # root_globs = [".git/", ".luarc.json", ".editorconfig", ".kakrc"]
+    # command = "/home/rai/dev/other/emmylua-analyzer-rust/target/release/emmylua_ls"
+
     [luals]
     filetypes = ["lua"]
     root_globs = [".git/", ".luarc.json", ".editorconfig", ".kakrc"]
@@ -479,7 +484,7 @@ hook global BufSetOption filetype=lua %{
     args = ["--logpath=/home/rai/.local/share/lua-language-server/log"]
 
     [luals.settings.Lua]
-    diagnostics.disable = ["lowercase-global", "redefined-local"]
+    diagnostics.disable = ["lowercase-global"]
     diagnostics.severity = { unused-local = "Error", undefined-global = "Error", undefined-field = "Error" }
     hover.expandAlias = false
     hover.previewFields = 0

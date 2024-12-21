@@ -167,8 +167,6 @@ for_window [app_id="foot.floating"] {
 for_window [app_id="com.obsproject.Studio"] inhibit_idle open
 for_window [title="xeyes"] floating enable
 
-### Rules
-
 for_window [app_id="org.speedcrunch.speedcrunch"] {
     floating enable
     sticky enable
@@ -177,6 +175,10 @@ for_window [app_id="org.speedcrunch.speedcrunch"] {
 }
 for_window [app_id="org.qutebrowser.qutebrowser"] inhibit_idle fullscreen
 for_window [app_id="qemu"] inhibit_idle open
+
+assign [app_id="factorio"] workspace 3
+assign [app_id="factorio-run"] workspace 3
+assign [class="factorio"] workspace 3
 
 ### Autostart
 
@@ -187,6 +189,8 @@ exec /usr/libexec/polkit-gnome-authentication-agent-1
 exec wlsunset
 
 ### Other
+
+seat seat0 xcursor_theme Bibata-Modern-Ice 24
 
 include "~/.config/sway/`uname -n`"
 include /etc/sway/config.d/*

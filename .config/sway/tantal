@@ -3,9 +3,9 @@
 input type:tablet_tool map_to_output DP-2
 
 output * allow_tearing yes
-output DP-1 mode 2560x1440@179.877Hz position 0,0 transform 270 bg ~/pictures/wallpaper-dp-1 fill
-output DP-2 mode 3440x1440@143.975Hz position 1440,480 bg ~/pictures/wallpaper-dp-2 fill
-output DP-3 mode 2560x1440@179.877Hz position 4880,0 transform 90 bg ~/pictures/wallpaper-dp-3 fill
+output DP-2 mode 2560x1440@179.877Hz position 0,380 bg ~/pictures/wallpaper-dp-2 fill
+output DP-1 mode 2560x1440@179.877Hz position 2560,380 bg ~/pictures/wallpaper-dp-1 fill
+output DP-3 mode 2560x1440@179.877Hz position 5120,0 transform 90 bg ~/pictures/wallpaper-dp-3 fill
 output HDMI-A-1 disable mode 3840x2160@120Hz scale 2 adaptive_sync on bg ~/pictures/wallpaper-hdmi-a-1 fill
 
 bindsym $mod+g mode inhibited

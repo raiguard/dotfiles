@@ -4,3 +4,7 @@
 niri msg output DP-1 on
 niri msg output DP-2 on
 niri msg output HDMI-A-1 off
+
+ssh raspberrypi << EOF
+  echo 'standby 0.0.0.0' | cec-client -s -d 1
+EOF

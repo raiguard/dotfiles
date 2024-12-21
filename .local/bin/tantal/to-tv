@@ -1,5 +1,11 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
-niri msg output DP-1 disable
-niri msg output DP-2 disable
-niri msg output HDMI-A-1 enable
+niri msg output DP-1 off
+niri msg output DP-2 off
+niri msg output HDMI-A-1 on
+
+ssh raspberrypi /bin/sh << EOF
+  echo "on 0.0.0.0" | cec-client -s -d 1
+  sleep 10
+  echo "tx 1F:82:21:00" | cec-client -s -d 1
+EOF

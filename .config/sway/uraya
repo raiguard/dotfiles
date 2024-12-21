@@ -48,8 +48,4 @@ for_window [app_id="learn-opengl"] {
 }
 # for_window [app_id="osu!"] allow_tearing on
 
-assign [app_id="factorio"] workspace 3
-assign [app_id="factorio-run"] workspace 3
-assign [class="factorio"] workspace 3
-
 # vim: ft=i3
