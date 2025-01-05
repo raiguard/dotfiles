@@ -1,5 +1,7 @@
 # vim: ft=i3
 
+output * allow_tearing yes
+
 ### Key bindings
 
 set $mod Mod4
@@ -9,7 +11,7 @@ set $down j
 set $up k
 set $right l
 
-bindsym $mod+t exec foot
+bindsym $mod+t exec alacritty
 bindsym $mod+q kill
 
 floating_modifier $mod normal
@@ -84,7 +86,7 @@ bindsym $mod+s sticky toggle
 bindsym $mod+a focus parent
 bindgesture pinch:3:outward focus parent
 
-bindsym $mod+alt+t layout toggle split tabbed stacking
+bindsym $mod+c layout toggle split tabbed stacking
 
 bindsym $mod+Shift+minus move scratchpad
 
@@ -131,10 +133,10 @@ default_border pixel 2
 default_floating_border pixel 2
 
 client.focused $cyan $cyan $bg $yellow
-client.unfocused $comment $comment $fg
+client.unfocused $comment $comment $bg
 client.urgent $red $red $bg
 
-font JetBrains Mono Medium 9
+font Inter Medium 9
 title_align center
 
 smart_borders no_gaps
@@ -148,6 +150,23 @@ input type:keyboard {
 }
 
 ### Bar
+
+# bar {
+#   id bar
+#   font "Inter Semibold 9"
+#   status_padding 8
+#   position top
+#   status_command ~/.config/sway/status.sh
+#   pango_markup enable
+#   colors {
+#     background $bg
+#     statusline $fg
+#     active_workspace $bg $bg $fg
+#     focused_workspace $bg $bg $cyan
+#     inactive_workspace $bg $bg $comment
+#     urgent_workspace $red $red $bg
+#   }
+# }
 
 bar {
   swaybar_command waybar
@@ -180,9 +199,10 @@ assign [app_id="factorio"] workspace 3
 assign [app_id="factorio-run"] workspace 3
 assign [class="factorio"] workspace 3
 
+for_window [app_id="osu!"] allow_tearing yes
+
 ### Autostart
 
-exec autotiling
 exec mako
 exec swayidle
 exec /usr/libexec/polkit-gnome-authentication-agent-1

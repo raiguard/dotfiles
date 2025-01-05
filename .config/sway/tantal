@@ -2,7 +2,6 @@
 
 input type:tablet_tool map_to_output DP-2
 
-output * allow_tearing yes
 output DP-2 mode 2560x1440@179.877Hz position 0,380 bg ~/pictures/wallpaper-dp-2 fill
 output DP-1 mode 2560x1440@179.877Hz position 2560,380 bg ~/pictures/wallpaper-dp-1 fill
 output DP-3 mode 2560x1440@179.877Hz position 5120,0 transform 90 bg ~/pictures/wallpaper-dp-3 fill
@@ -12,5 +11,3 @@ bindsym $mod+g mode inhibited
 mode inhibited {
   bindsym $mod+g mode default
 }
-
-for_window [app_id="osu!"] allow_tearing yes
