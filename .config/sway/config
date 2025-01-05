@@ -203,6 +203,7 @@ for_window [app_id="osu!"] allow_tearing yes
 
 ### Autostart
 
+exec flatpak run dev.deedles.Trayscale --hide-window
 exec mako
 exec swayidle
 exec /usr/libexec/polkit-gnome-authentication-agent-1
