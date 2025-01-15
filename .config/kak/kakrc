@@ -347,8 +347,8 @@ hook global BufSetOption filetype=(c|cpp) %{
 
 hook global WinSetOption filetype=(c|cpp) %{
   # Better highlighting
-  add-highlighter -override "shared/%opt{filetype}/code/operators" regex (\+|-|\*|&|=|\\|\?|%|\^|\|-|!|\||->|<|>|\^|/|~|\[|\]) 0:operator
-  add-highlighter -override "shared/%opt{filetype}/code/function_call" regex \b([a-zA-Z0-9_]*)\( 1:function
+  add-highlighter -override "shared/%opt{filetype}/code/operator" regex (\+|-|\*|&|=|\\|\?|%|\^|\|-|!|\||->|<|>|\^|/|~|\[|\]) 0:operator
+  add-highlighter -override "shared/%opt{filetype}/code/functioncall" regex \b([a-zA-Z0-9_]*)\( 1:function
   add-highlighter -override "shared/%opt{filetype}/code/constant" regex \b([A-Z0-9_]*)\b 1:value
 
   # Factorio doc comments
@@ -584,8 +584,7 @@ hook global WinCreate '/tmp/\.nnn.*' %{
 # Highlight TODO and other related comment tags
 hook global WinSetOption comment_line=(.*) %{
   add-highlighter -override window/todo regex "\Q%val{hook_param_capture_1}\E\h*(TODO(?: raiguard)?:)[^\n]*" 1:string
-  add-highlighter -override window/fixme regex "\Q%val{hook_param_capture_1}\E\h*((?:BUG|FIXME|TEMPORARY|XXX)(?: raiguard)?:)[^\n]*" 1:Error
-  add-highlighter -override window/note regex "\Q%val{hook_param_capture_1}\E\h*(NOTE:)[^\n]*" 1:function
+  add-highlighter -override window/fixme regex "\Q%val{hook_param_capture_1}\E\h*((?:FIXME|XXX)(?: raiguard)?:)[^\n]*" 1:Error
 }
 # Show list of TODOs in the current project
 map global toggle t ":grep '(BUG|FIXME|TODO|TEMPORARY)( raiguard)?:'<ret>" -docstring "TODOs"
