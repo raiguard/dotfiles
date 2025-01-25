@@ -1,3 +1,9 @@
 #!/bin/sh
 
-niri msg output HDMI-A-1 on
+swaymsg output HDMI-A-1 enable
+
+ssh raspberrypi /bin/sh << EOF
+  echo "on 0.0.0.0" | cec-client -s -d 1
+  sleep 10
+  echo "tx 1F:82:21:00" | cec-client -s -d 1
+EOF

@@ -32,10 +32,14 @@ fi
 # Launch desktop
 if [ "$(tty)" = "/dev/tty1" ]; then
   export XDG_CURRENT_DESKTOP=sway
-  exec sway
+  exec ~/dev/other/sway/build/sway/sway
 fi
 if [ "$(tty)" = "/dev/tty2" ]; then
-  exec gamescope --adaptive-sync --hdr-enabled -e --nested-width 3840 --nested-height 2160 -- steam -gamepadui
+  export DXVK_HDR=1
+  export STEAM_GAMESCOPE_HDR_SUPPORTED=1
+  export ENABLE_GAMESCOPE_WSI=1
+  exec gamescope -O HDMI-A-1 --adaptive-sync --hdr-enabled --hdr-itm-enable -e -W 3840 -H 2160 --nested-width 3840 --nested-height 2160 --disable-color-management -- steam -gamepadui -pipewire-dmabuf
+  # exec gamescope -O HDMI-A-1 --adaptive-sync --hdr-enabled -e --nested-width 3840 --nested-height 2160 -- steam -gamepadui
 fi
 
 # vim: ft=sh

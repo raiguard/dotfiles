@@ -1,7 +1,6 @@
 # Autostart
-exec inkscape-figures watch
-exec pactl load-module module-switch-on-connect
 exec kanshi
+exec pactl load-module module-switch-on-connect
 
 # Input configuration
 input type:touchpad {
@@ -46,6 +45,5 @@ for_window [app_id="learn-opengl"] {
   # border csd
   floating enable
 }
-# for_window [app_id="osu!"] allow_tearing on
 
 # vim: ft=i3

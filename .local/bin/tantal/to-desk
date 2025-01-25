@@ -1,9 +1,10 @@
 #!/bin/sh
 
 # Displays
-niri msg output DP-1 on
-niri msg output DP-2 on
-niri msg output HDMI-A-1 off
+swaymsg output DP-1 enable
+swaymsg output DP-2 enable
+swaymsg output DP-3 enable
+swaymsg output HDMI-A-1 disable
 
 ssh raspberrypi << EOF
   echo 'standby 0.0.0.0' | cec-client -s -d 1

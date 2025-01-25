@@ -3,8 +3,8 @@
 # Lock after 5 minutes
 # Turn off screens after 10 minutes
 # Suspend after 20 minutes
-/usr/bin/swayidle -w \
-    timeout 600 'swaymsg "output * dpms off"' \
-    resume 'swaymsg "output * dpms on"' \
+exec /usr/bin/swayidle -w \
+    timeout 600 'swaymsg "output * power off"' \
+    resume 'swaymsg "output * power on"' \
     before-sleep 'swaylock -f' \
-    after-resume 'swaymsg "output * dpms on"'
+    after-resume 'swaymsg "output * power on"'

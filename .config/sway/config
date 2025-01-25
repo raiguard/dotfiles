@@ -87,6 +87,7 @@ bindsym $mod+a focus parent
 bindgesture pinch:3:outward focus parent
 
 bindsym $mod+c layout toggle split tabbed stacking
+bindsym $mod+Shift+b border toggle
 
 bindsym $mod+Shift+minus move scratchpad
 
@@ -151,26 +152,7 @@ input type:keyboard {
 
 ### Bar
 
-# bar {
-#   id bar
-#   font "Inter Semibold 9"
-#   status_padding 8
-#   position top
-#   status_command ~/.config/sway/status.sh
-#   pango_markup enable
-#   colors {
-#     background $bg
-#     statusline $fg
-#     active_workspace $bg $bg $fg
-#     focused_workspace $bg $bg $cyan
-#     inactive_workspace $bg $bg $comment
-#     urgent_workspace $red $red $bg
-#   }
-# }
-
-bar {
-  swaybar_command waybar
-}
+bar swaybar_command waybar
 
 ### Rules
 
@@ -203,8 +185,10 @@ for_window [app_id="osu!"] allow_tearing yes
 
 ### Autostart
 
+exec blueman-applet
 exec flatpak run dev.deedles.Trayscale --hide-window
 exec mako
+exec nm-applet
 exec swayidle
 exec /usr/libexec/polkit-gnome-authentication-agent-1
 exec wlsunset
